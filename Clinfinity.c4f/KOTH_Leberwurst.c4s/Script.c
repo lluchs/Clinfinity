@@ -1,4 +1,4 @@
-/*-- Neues Szenario --*/
+/*-- Leberwurst --*/
 
 #strict
 
