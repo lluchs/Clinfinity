@@ -1,0 +1,10 @@
+[DefCore]
+id=LPMI
+Name=Info Icon
+Version=4,9,5
+Category=C4D_StaticBack|C4D_Parallax|C4D_Foreground
+Width=60
+Height=30
+Offset=-1,-1
+Value=0
+Mass=1

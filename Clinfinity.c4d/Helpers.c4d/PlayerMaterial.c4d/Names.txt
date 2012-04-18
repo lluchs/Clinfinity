@@ -1,0 +1,2 @@
+DE:Spielermaterialien
+US:Player materials

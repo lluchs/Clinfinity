@@ -1,0 +1,25 @@
+Das Speichersystem liefert Funktionen, um Mengen in Objekten zu Speichern, wie beispielsweise der Druck in der Druckluftflasche.
+Abgeleitet wurde es von den Funktionen des Fasses (daher auch die ähnlichen Namen).
+Es verwendet die HashTable.c von Isilkor, daher kann als Key jeder beliebige Wert verwendet werden.
+Für jeden Speicher muss die maximale Füllmenge mit der Funktion MaxFill_Key() angegeben werden, wobei ID die ID des Objektes mit den Speichern und Key der Key ist. Wenn der Key 0 ist, wird MaxFill() verwendet.
+
+Funktionen
+int DoFill(int iChange, Key, bool fNoSound)
+Verändert die Füllhöhe des Speichers Key um iChange und gibt die tatsächliche Änderung zurück. Wenn fNoSound = true wird FillSound() nicht aufgerufen.
+
+& GetAmount(Key)
+Gibt die Variable des Speichers Key zurück.
+
+int GetMaxFill(Key)
+Gibt die maximale Speichermenge des Speichers Key zurück.
+
+bool IsFull(Key)
+Gibt true zurück, wenn der Speicher Key gefüllt ist, also GetAmount(Key) == GetMaxFill(Key)
+
+
+Callbacks
+FillPicture()
+Wenn ein Key zurückgegeben wird, der != -1 ist wird in die Grafik des Objektes die Füllmenge des Speichers des Rückgabewertes im Pfeilpaket - Stil angezeigt. Dazu werden die Overlays 0-2 verwendet, d.h. maximal 3 Stellen der Zahl werden angezeigt. Wenn eine Füllgrafik angezeigt werden soll, sollte Construction() im Speichersystem (von der Engine) aufgerufen werden.
+
+FillSound(Key, int iChange)
+Wird in DoFill() aufgerufen. Hier kann bei Bedarf ein Sound abgespielt werden. Rückgabewert egal.
