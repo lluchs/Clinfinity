@@ -33,7 +33,7 @@ public func GetMaxFill(Key) {
 		else
 			szFunc2 = Format("%s_%v", szFunc, Key);
 	}
-	if(!(szFunc2 && (iFill = Call(szFunc2))))
+	if(!(szFunc2 && (iFill = eval(Format("this->~%s()", szFunc2)))))
 		iFill = Call(szFunc);
 	
 	return iFill;
