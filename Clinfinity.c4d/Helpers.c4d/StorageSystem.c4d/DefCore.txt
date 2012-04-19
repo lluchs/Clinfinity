@@ -1,0 +1,10 @@
+[DefCore]
+id=L_SS
+Name=Speichersystem
+Version=4,9,5
+Category=1
+Width=1
+Height=1
+Offset=0,0
+Picture=0,0,1,1
+ 
