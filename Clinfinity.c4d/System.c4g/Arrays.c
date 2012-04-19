@@ -142,9 +142,11 @@ global func PopElements(array &aArray, int iStart, int iCount) {
 	SetLength(aArray, GetLength(aArray)-iCount);
 }
 
-
-
-
-
-
+global func ConcatArrays(array a, array b) {
+	var lenA = GetLength(a), lenB = GetLength(b);
+	SetLength(a, lenA + lenB);
+	for(var i = 0; i < lenB; i++)
+		a[lenA + i] = b[i];
+	return a;
+}
 

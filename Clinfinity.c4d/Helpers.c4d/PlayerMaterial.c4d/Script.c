@@ -46,12 +46,12 @@ public func Timer() {
 		return;
 	var iter = HashIter(hIcons), node;
 	while(node = HashIterNext(iter))
-		node[1] -> SetStatusMessage(Format("@%d", GetAmount(node[0])));
+		node[1] -> SetStatusMessage(Format("@%d", GetFill(node[0])));
 }
 
 public func MaterialCheck(id idType) {
 	fNoStatusMessage = 1;
 	var iter = HashIter(hIcons), node;
 	while(node = HashIterNext(iter))
-		node[1] -> BuildMessage(GetComponent(node[0], 0, 0, idType), GetAmount(node[0]));
+		node[1] -> BuildMessage(GetComponent(node[0], 0, 0, idType), GetFill(node[0]));
 }

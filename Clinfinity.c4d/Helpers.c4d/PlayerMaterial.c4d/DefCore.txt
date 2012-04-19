@@ -1,5 +1,5 @@
 [DefCore]
-id=LHMS
+id=MSYS
 Name=Player materials
 Version=4,9,5
 Category=1
