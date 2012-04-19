@@ -3,7 +3,7 @@
 #strict 2
 
 protected func Construction() {
-	if(GetID() == SAVS) {
+	if(GetID() == L_SS) {
 		DebugLog("ERROR: Dieses Objekt darf nicht erstellt werden");
 		RemoveObject();
 	}
