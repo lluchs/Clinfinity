@@ -3,16 +3,16 @@
 #strict 2
 
 func Initialize() {
-  SetVisibility(VIS_Owner);
-  return 1;
+	SetVisibility(VIS_Owner);
+	return 1;
 }
 
 public func Set(id idObj) {
-  SetGraphics(0, this, idObj, GFX_Overlay, GFXOV_MODE_IngamePicture);
+	SetGraphics(0, this, idObj, GFX_Overlay, GFXOV_MODE_IngamePicture);
 }
 
 public func SetStatusMessage(string msg, int iLines) {
-  CustomMessage(msg, this, GetOwner(), 30, 60 + iLines * 95 / 10); // jede Zeile hat 9,5px
+	CustomMessage(msg, this, GetOwner(), 30, 60 + iLines * 95 / 10); // jede Zeile hat 9,5px
 }
 
 public func BuildMessage(int iNeededMaterial, int iMaterial) {
@@ -29,3 +29,4 @@ public func BuildMessage(int iNeededMaterial, int iMaterial) {
 private func Add(string &szString1, string szString2) {
 	return szString1 = Format("%s%s", szString1, szString2);
 }
+
