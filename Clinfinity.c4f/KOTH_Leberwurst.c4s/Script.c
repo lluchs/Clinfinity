@@ -1,4 +1,4 @@
-/*-- Testszenario --*/
+/*-- Leberwurst --*/
 
 #strict 2
 
