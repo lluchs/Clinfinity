@@ -40,13 +40,29 @@ private func OnFillChange(Key, int iChange) {
 	return 1;
 }
 
+// checks for global effects defining the fill level
+// these effects must define a function FxMatSys<ID>Update
+private func UpdateFill(id ID) {
+	var effectName = Format("MatSys%i", ID), i = GetEffectCount(effectName);
+	if(i > 0) {
+		var fill = 0;
+		while(i--)
+			fill += EffectCall(0, GetEffect(effectName, 0, i), "Update");
+		DoFill(fill - GetFill(ID), ID);
+		return true;
+	}
+	return false;
+}
+
 local fNoStatusMessage;
 public func Timer() {
 	if(fNoStatusMessage)
 		return;
 	var iter = HashIter(hIcons), node;
-	while(node = HashIterNext(iter))
+	while(node = HashIterNext(iter)) {
+		UpdateFill(node[0]);
 		node[1] -> SetStatusMessage(Format("@%d", GetFill(node[0])));
+	}
 }
 
 public func MaterialCheck(id idType) {
