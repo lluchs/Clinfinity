@@ -6,6 +6,14 @@
 // Anzahl Materialpixel, die in einen Fänger passen
 private func MaxFill() { return 1000; }
 
+protected func Initialize() {
+	// create dummy effect if this is the first Raincatcher
+	// this ensures that when the last Raincatcher gets destroyed, the display is reset to 0
+	if(!GetEffect("MatSysWBRL"))
+		AddEffect("MatSysWBRL", 0, 1, 0);
+	AddEffect("MatSysWBRL", 0, 1, 0, this);
+}
+
 protected func LiquidCheck() {
 	if(GetFill() == MaxFill())
 		return;
@@ -44,3 +52,11 @@ protected func ContextFillBarrel() {
 	[$TxtFillBarrel$, Image=WBRL]
 	return ControlDig(...);
 }
+
+/* Material System fill level */
+public func FxMatSysWBRLUpdate(object target, int effectNum, int plr) {
+	if(!this || Hostile(GetOwner(), plr))
+		return 0;
+	return GetFill();
+}
+
