@@ -1,0 +1,14 @@
+[DefCore]
+id=_BAR
+Name=Anzeige
+Version=4,9,5
+Category=1154
+MaxUserSelect=1
+Width=6
+Height=20
+Offset=-3,-10
+Value=1
+Mass=1
+Components=_BAR=1;
+Picture=0,0,6,20
+

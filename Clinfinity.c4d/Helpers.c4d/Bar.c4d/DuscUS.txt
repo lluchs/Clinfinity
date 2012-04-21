@@ -1,0 +1,1 @@
+Shows charging/liquid level.

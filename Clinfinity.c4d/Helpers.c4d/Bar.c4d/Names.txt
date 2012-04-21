@@ -1,0 +1,2 @@
+DE:Anzeige
+US:Bar

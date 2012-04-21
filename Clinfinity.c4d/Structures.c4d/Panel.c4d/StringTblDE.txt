@@ -1,0 +1,2 @@
+TxtShowEnergy=Aktuelle Energieproduktion anzeigen
+TxtShowEnergyMsg=Aktuelle Energieproduktion:|%d kW
