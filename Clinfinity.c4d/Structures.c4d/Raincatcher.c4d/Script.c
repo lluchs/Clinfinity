@@ -1,15 +1,13 @@
-/*-- Sägewerk --*/
+/*-- Raincatcher --*/
 
 #strict 2
-#include L035
-#include LHSS
+#include L_SS
 
 // Anzahl Materialpixel, die in einen Fänger passen
-//static const LRCR_MaxFill = 1000;
 private func MaxFill() { return 1000; }
 
 protected func LiquidCheck() {
-	if(GetAmount() == MaxFill())
+	if(GetFill() == MaxFill())
 		return;
 	var iX = 0, iY = -16;
 	var iAmount 	= ExtractMaterialAmount(iX, iY, Material("Water"), 10),
@@ -36,7 +34,7 @@ private func FillBarrel(object pFass) {
 protected func ControlDig(object pClonk) {
 	[$TxtFillBarrel$, Image=WBRL]
 	var pFass = FindObject2(Find_Container(pClonk), Find_Or(Find_ID(EmptyBarrelID()), Find_ID(WBRL)), Find_Not(Find_Func("BarrelIsFull")));
-	if(pFass && GetAmount())
+	if(pFass && GetFill())
 		return FillBarrel(pFass);
 	Sound("Error");
 	return;
