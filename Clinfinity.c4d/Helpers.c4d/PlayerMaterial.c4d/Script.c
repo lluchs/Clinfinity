@@ -4,7 +4,7 @@
 
 #include L_SS
 
-private func MaxFill() { return 1000; }
+private func MaxFill() { return 9999; }
 
 static aMaterialSystem;
 
