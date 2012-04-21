@@ -60,3 +60,9 @@ public func FxMatSysWBRLUpdate(object target, int effectNum, int plr) {
 	return GetFill();
 }
 
+public func FxMatSysWBRLChange(object target, int effectNum, int plr, int change) {
+	if(!this || Hostile(GetOwner(), plr))
+		return 0;
+	return DoFill(change);
+}
+

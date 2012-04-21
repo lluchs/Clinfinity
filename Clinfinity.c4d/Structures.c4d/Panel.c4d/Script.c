@@ -2,65 +2,25 @@
 
 #strict 2
 
-#include PWRG // Ist ein Energieerzeuger
-#include B_40
-#include DACT //Damagecontrol
-#include L_CA
-
-public func GetCapacity() {
-	return 150;
-}
-
-public func GetGeneratorPriority() {
-	return 10;
-}
-
 local iPhases, iEnergy;
 
 protected func Initialize() {
 	iPhases = GetActMapVal("Length", "Panel", GetID());
 	SetAction("Panel");
-	AdjustSolarPanel();
 }
 
 protected func CheckDay() { // TimerCall
-	AdjustSolarPanel();
-	if(IsDay()) {
-		ProduceEnergy();
-	}
-	else	
-		iEnergy = 0;
+	// might add some time check
+	ProduceSteam();
 }
 
-private func ProduceEnergy() {
+private func ProduceSteam() {
 	//regulates Power-producing by Sunstrength (powered by Luchs)
-	iEnergy = (15 - GetDarkness(15)) * PhaseFree() / 3;
-	return DoPower(iEnergy);
-}
-
-private func AdjustSolarPanel() {
-	if(GetAction() != "Panel")
-		return;
-	var pTime = FindObject2(Find_ID(TIME));
-	if(!pTime)
-		return SetPhase(iPhases / 2);
-	
-	var iTime = pTime -> Local(1), iLight = pTime -> Local(2);
-	if(!iLight) {
-		if(GetPhase())
-			SetAction("Back");
-		return;
-	}
-	
-	var evening, morning;
-	GetTimePoints(evening, morning);
-	
-	if(iTime < TimeResolution() / 2) {
-		SetPhase(iPhases / 2 + iPhases / 2 * iTime / evening);
-	}
-	else {
-		SetPhase((iPhases / 2) * (iTime - morning) / (TimeResolution() - morning));
-	}
+	iEnergy = 15 * PhaseFree() / 3;
+	var water = MatSysGetFill(GetOwner(), WBRL);
+	var change = Min(iEnergy, water);
+	var actualChange = MatSysDoFill(-change, GetOwner(), WBRL);
+	MatSysDoFill(-actualChange, GetOwner(), STEM);
 }
 
 private func PhaseFree() {
@@ -93,16 +53,20 @@ protected func ContextShowEnergy() {
 	ControlUp();
 }
 
-/* Upgrade */
-protected func PExtended(){
-  //2do: mehr Energieproduzieren
-  SetGraphics("Graphics_ext",this());
+protected func ControlLeft() {
+	var phase = GetPhase() - 1;
+	if(phase >= 0)
+		SetPhase(phase);
+	else
+		Sound("Click");
 }
 
-/* Erforschbar */
-
-public func MarsResearch() {
-	return true;
+protected func ControlRight() {
+	var phase = GetPhase() + 1;
+	if(phase < iPhases)
+		SetPhase(phase);
+	else
+		Sound("Click");
 }
 
 public func MaxDamage() { return 21; } //Maximaler Schaden

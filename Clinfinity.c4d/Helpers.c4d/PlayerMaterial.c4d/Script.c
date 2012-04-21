@@ -35,8 +35,9 @@ public func Initialize() {
 	}
 }
 
-private func OnFillChange(Key, int iChange) {
+private func OnFillChange(Key, &iChange) {
 	DoScore(GetOwner(), iChange * GetValue(0, Key));
+	iChange = UpdateFillEffects(Key, iChange);
 	return 1;
 }
 
@@ -47,11 +48,23 @@ private func UpdateFill(id ID) {
 	if(i > 0) {
 		var fill = 0;
 		while(i--)
-			fill += EffectCall(0, GetEffect(effectName, 0, i), "Update");
+			fill += EffectCall(0, GetEffect(effectName, 0, i), "Update", GetOwner());
 		DoFill(fill - GetFill(ID), ID);
 		return true;
 	}
 	return false;
+}
+
+// changes the actual fill if defined by effects
+private func UpdateFillEffects(id ID, int change) {
+	var effectName = Format("MatSys%i", ID), i = GetEffectCount(effectName);
+	if(i > 0) {
+		var original = change;
+		while(i-- && change != 0)
+			change -= EffectCall(0, GetEffect(effectName, 0, i), "Change", GetOwner(), change);
+		return original - change;
+	}
+	return change;
 }
 
 local fNoStatusMessage;
