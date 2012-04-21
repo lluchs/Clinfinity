@@ -18,11 +18,6 @@ Exclusive=1
 LineConnect=C4D_PowerOutput
 Construction=1
 ContainBlast=1
-TimerCall=Act
-Timer=20
 ColorByOwner=1
 Grab=2
-
-[Physical]
-Energy=1500000
  
