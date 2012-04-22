@@ -1,8 +1,11 @@
 /*-- Leberwurst --*/
 
-#strict
+#strict 2
 
 func Initialize() {
-   
-  return(1);
 }
+
+func InitializePlayer(int iPlr) {
+	CreateMatSys(iPlr);
+}
+
