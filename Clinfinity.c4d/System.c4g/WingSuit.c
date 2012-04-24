@@ -23,10 +23,6 @@ protected func ControlDownDouble() {
 	return 0;
 }
 
-protected func FxWingSuitStart(object target, int effectNumber, int temporary) {
-	// WingSuitFlight-Action setzen
-}
-
 protected func FxWingSuitTimer(object target, int effectNumber, int effectTime) {
 	if(target->GetAction() == "Jump") {
 		// Maximale Sinkgeschwindigkeit
@@ -41,6 +37,8 @@ protected func FxWingSuitTimer(object target, int effectNumber, int effectTime) 
 		} else if(currentXDir > targetXDir) {
 			target->SetXDir( target->GetXDir() - 1 );
 		}
+		// Rotiert die Jump-Animation, sodass es aussieht, als würde der Clonk einen Wingsuit tragen.
+		SetDTRotation(90 - target->GetDir() * 180, 0, 0, target);
 		return 0;
 	} else {
 		return -1;
@@ -49,6 +47,17 @@ protected func FxWingSuitTimer(object target, int effectNumber, int effectTime) 
 
 protected func FxWingSuitStop(object target, int effectNumber, int reason, bool temporary) {
 	if(!temporary) {
-		// Wieder normale Jump-Action setzen, Geschwindigkeit eventuell auch setzen.
+		SetDTRotation(0, 0, 0, target);
 	}
+}
+
+/* Aus der Doku kopiert */
+global func SetDTRotation (int r, int xoff, int yoff, object obj) {
+  var fsin=Sin(r, 1000), fcos=Cos(r, 1000);
+  // set matrix values
+  SetObjDrawTransform (
+    +fcos, +fsin, (1000-fcos)*xoff - fsin*yoff,
+    -fsin, +fcos, (1000-fcos)*yoff + fsin*xoff,
+    obj
+  );
 }
