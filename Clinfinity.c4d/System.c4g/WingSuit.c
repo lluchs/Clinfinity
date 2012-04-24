@@ -3,10 +3,12 @@
 #appendto CLNK
 
 local maxGlideSpeedY, glideSpeedXFactor;
+local glideParticleColour;
 
 protected func Initialize() {
 	maxGlideSpeedY = 30;
 	glideSpeedXFactor = 2;
+	glideParticleColour = RGBa(255, 255, 255, 210);
 	return _inherited();
 }
 
@@ -43,6 +45,9 @@ protected func FxWingSuitTimer(object target, int effectNumber, int effectTime) 
 		}
 		// Rotiert die Jump-Animation, sodass es aussieht, als würde der Clonk einen Wingsuit tragen.
 		SetObjDrawTransform(0, 1000 - 2000 * target->GetDir(), 0, -1000, 0, 0);
+		if(!Random(9)) {
+			CreateParticle("NoGravSpark", RandomX(-7, 7), RandomX(-3, 3), target->GetXDir() / 2, target->GetYDir() / 2, 40, glideParticleColour);
+		}
 		return 0;
 	} else {
 		return -1;
