@@ -23,6 +23,10 @@ protected func ControlDownDouble() {
 	return 0;
 }
 
+protected func FxWingSuitStart(object target, int effectNumber, int temporary) {
+	Sound("SailDown", false, target, 50);
+}
+
 protected func FxWingSuitTimer(object target, int effectNumber, int effectTime) {
 	if(target->GetAction() == "Jump") {
 		// Maximale Sinkgeschwindigkeit
@@ -47,6 +51,7 @@ protected func FxWingSuitTimer(object target, int effectNumber, int effectTime) 
 
 protected func FxWingSuitStop(object target, int effectNumber, int reason, bool temporary) {
 	if(!temporary) {
+		Sound("SailUp", false, target, 50);
 		SetDTRotation(0, 0, 0, target);
 	}
 }
