@@ -12,7 +12,7 @@ protected func Initialize() {
 	return _inherited();
 }
 
-protected func ControlDownDouble() {
+protected func ControlDownSingle() {
 	if( _inherited() == 0 ) {
 		if( GetAction() == "Jump" ) {
 			if(GetEffect("WingSuit", this) == 0) {
