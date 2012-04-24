@@ -7,6 +7,8 @@ protected func ControlDownDouble() {
 		if( GetAction() == "Jump" ) {
 			if(GetEffect("WingSuit", this) == 0) {
 				AddEffect("WingSuit", this, 150, 1, this);
+			} else {
+				RemoveEffect("WingSuit", this);
 			}
 		}
 	}
