@@ -14,11 +14,34 @@ protected func Initialize() {
 	return _inherited();
 }
 
+protected func ControlLeft() {
+	if( _inherited() == 0 ) {
+		if( GetAction() == "Jump" ) {
+			SetDir( DIR_Left );
+		}
+	}
+	return 0;
+}
+
+protected func ControlRight() {
+	if( _inherited() == 0 ) {
+		if( GetAction() == "Jump" ) {
+			SetDir( DIR_Right );
+		}
+	}
+	return 0;
+}
+
 protected func ControlUp() {
 	if( _inherited() == 0 ) {
 		if( GetAction() == "Jump" ) {
 			if( doubleJumpPossible && Inside( GetYDir(), minDoubleJumpStartSpeed, maxDoubleJumpStartSpeed ) ) {
 				doubleJumpPossible = false;
+				if( GetDir() == DIR_Left ) {
+					SetXDir( -1 * Abs( GetXDir() ) );
+				} else {
+					SetXDir( Abs( GetXDir() ) );
+				}
 				SetYDir( -34 );
 				for( var i = 0; i < 7; i++ ) {
 					CreateParticle("MSpark", -3 + i, 9 + Random(3), -3 + i, 8 - Random(3), 40, jumpParticleColour);
