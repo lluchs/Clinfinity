@@ -5,15 +5,19 @@
 local doubleJumpPossible;
 local jumpParticleColour;
 
+local minDoubleJumpStartSpeed, maxDoubleJumpStartSpeed;
+
 protected func Initialize() {
 	jumpParticleColour = RGBa(255, 255, 255, 150);
+	minDoubleJumpStartSpeed = -10;
+	maxDoubleJumpStartSpeed = 40;
 	return _inherited();
 }
 
 protected func ControlUp() {
 	if( _inherited() == 0 ) {
 		if( GetAction() == "Jump" ) {
-			if( doubleJumpPossible && GetYDir() <= 10 && GetYDir() >= -10 ) {
+			if( doubleJumpPossible && Inside( GetYDir(), minDoubleJumpStartSpeed, maxDoubleJumpStartSpeed ) ) {
 				doubleJumpPossible = false;
 				SetYDir( -34 );
 				for( var i = 0; i < 7; i++ ) {
