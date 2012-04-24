@@ -2,6 +2,14 @@
 
 #appendto CLNK
 
+local maxGlideSpeedY, glideSpeedXFactor;
+
+protected func Initialize() {
+	maxGlideSpeedY = 30;
+	glideSpeedXFactor = 2;
+	return _inherited();
+}
+
 protected func ControlDownDouble() {
 	if( _inherited() == 0 ) {
 		if( GetAction() == "Jump" ) {
@@ -20,8 +28,19 @@ protected func FxWingSuitStart(object target, int effectNumber, int temporary) {
 }
 
 protected func FxWingSuitTimer(object target, int effectNumber, int effectTime) {
-	if(target->GetAction() == "WingSuitFlight") {
-		// Geschwindigkeit berechnen und setzen
+	if(target->GetAction() == "Jump") {
+		// Maximale Sinkgeschwindigkeit
+		if( target->GetYDir() > maxGlideSpeedY ) {
+			target->SetYDir( target->GetYDir() - 2 );
+		}
+		// Horizontale Geschwindigkeit berechnen und anpassen
+		var targetXDir = Abs(target->GetYDir()) * (-glideSpeedXFactor + 2 * glideSpeedXFactor * target->GetDir());
+		var currentXDir = target->GetXDir();
+		if(currentXDir < targetXDir) {
+			target->SetXDir( target->GetXDir() + 1 );
+		} else if(currentXDir > targetXDir) {
+			target->SetXDir( target->GetXDir() - 1 );
+		}
 		return 0;
 	} else {
 		return -1;
