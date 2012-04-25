@@ -15,14 +15,18 @@ protected func Initialize() {
 protected func ControlDownSingle() {
 	if( _inherited() == 0 ) {
 		if( GetAction() == "Jump" ) {
-			if(GetEffect("WingSuit", this) == 0) {
-				AddEffect("WingSuit", this, 150, 1, this);
-			} else {
+			if(IsGliding()) {
 				RemoveEffect("WingSuit", this);
+			} else {
+				AddEffect("WingSuit", this, 150, 1, this);
 			}
 		}
 	}
 	return 0;
+}
+
+public func IsGliding() {
+	return GetEffect("WingSuit", this) != 0;
 }
 
 protected func FxWingSuitStart(object target, int effectNumber, int temporary) {
