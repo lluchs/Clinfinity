@@ -113,3 +113,5 @@ private func RndRelaunchMsg()
   if (!--Var())            return("$MsgDeath10$");
                            return("$MsgDeath11$");
 }                           
+
+public func IsUpdraftPermanent() { return true; }
