@@ -13,14 +13,18 @@ protected func Initialize() {
 }
 
 protected func ControlDownSingle() {
-	if( _inherited() == 0 ) {
+	var result = _inherited();
+	if( result == 0 ) {
 		if( GetAction() == "Jump" ) {
 			if(IsGliding()) {
 				RemoveEffect("WingSuit", this);
 			} else {
 				AddEffect("WingSuit", this, 150, 1, this);
 			}
+			return true;
 		}
+	} else {
+		return result;
 	}
 	return 0;
 }

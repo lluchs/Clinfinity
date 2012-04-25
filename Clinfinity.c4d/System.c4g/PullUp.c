@@ -10,7 +10,8 @@ protected func Initialize() {
 }
 
 protected func ControlUp() {
-	if( _inherited() == 0 ) {
+	var result = _inherited();
+	if( result == 0 ) {
 		if( GetAction() == "Hangle" && GetComDir() == COMD_None ) {
 			for(var i = -11; i > -11 - maxPullUpHeight; i--) {
 				if(!GBackSemiSolid(0, i)) {
@@ -19,7 +20,10 @@ protected func ControlUp() {
 					break;
 				}
 			}
+			return true;
 		}
+	} else {
+		return result;
 	}
 	return 0;
 }
