@@ -1,6 +1,7 @@
 #strict 2
 
 local draftWidth, draftHeight, draftParticleColour;
+local minDraftDuration, maxDraftDuration;
 local maxGliderSpeedUpwards, gliderAcceleration;
 
 protected func Activate(byPlayer) {
@@ -12,6 +13,8 @@ protected func Initialize() {
 	draftWidth = 50;
 	draftHeight = 150;
 	draftParticleColour = RGBa(255, 255, 255, 210);
+	minDraftDuration = 1050;
+	maxDraftDuration = 2100;
 	maxGliderSpeedUpwards = -60;
 	gliderAcceleration = -5;
 	SetRandomPosition();
@@ -39,7 +42,7 @@ protected func SetRandomPosition() {
 		ScheduleCall(this, "SetRandomPosition", 1);
 	} else {
 		// Kein anderes Aufwind-Objekt: Neue Position erst in einer Weile suchen.
-		ScheduleCall(this, "SetRandomPosition", RandomX(350, 700));
+		ScheduleCall(this, "SetRandomPosition", RandomX(minDraftDuration, maxDraftDuration));
 		SetPosition(x, y);
 	}
 }
