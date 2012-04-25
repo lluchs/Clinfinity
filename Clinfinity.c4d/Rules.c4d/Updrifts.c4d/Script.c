@@ -3,6 +3,7 @@
 local draftWidth, draftHeight, draftParticleColour;
 local minDraftDuration, maxDraftDuration;
 local maxGliderSpeedUpwards, gliderAcceleration;
+local permanentUpdrafts;
 
 protected func Activate(byPlayer) {
 	MessageWindow(GetDesc(), byPlayer);
@@ -17,6 +18,7 @@ protected func Initialize() {
 	maxDraftDuration = 2100;
 	maxGliderSpeedUpwards = -60;
 	gliderAcceleration = -5;
+	permanentUpdrafts = true;
 	SetRandomPosition();
 	Updraft();
 }
@@ -41,8 +43,10 @@ protected func SetRandomPosition() {
 		// Anderes Aufwind-Objekt schon an der Stelle: Nächstes Frame neue Position suchen.
 		ScheduleCall(this, "SetRandomPosition", 1);
 	} else {
-		// Kein anderes Aufwind-Objekt: Neue Position erst in einer Weile suchen.
-		ScheduleCall(this, "SetRandomPosition", RandomX(minDraftDuration, maxDraftDuration));
+		if( !permanentUpdrafts ) {
+			// Kein anderes Aufwind-Objekt: Neue Position erst in einer Weile suchen.
+			ScheduleCall(this, "SetRandomPosition", RandomX(minDraftDuration, maxDraftDuration));
+		}
 		SetPosition(x, y);
 	}
 }
