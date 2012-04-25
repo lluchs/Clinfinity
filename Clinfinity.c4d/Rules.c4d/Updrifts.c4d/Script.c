@@ -19,7 +19,7 @@ protected func Initialize() {
 }
 
 protected func Updraft() {
-	CreateParticle("NoGravSpark", RandomX(-draftWidth / 2, draftWidth / 2), RandomX(-3, 3), 0, RandomX(-draftHeight / 6,-draftHeight / 4), 40, draftParticleColour);
+	CreateParticle("WindSpark", RandomX(-draftWidth / 2, draftWidth / 2), RandomX(-3, 3), 0, RandomX(-draftHeight / 6,-draftHeight / 4), 40, draftParticleColour);
 	var gliders = FindObjects( Find_And( Find_NoContainer(), Find_InRect(-draftWidth / 2, -draftHeight, draftWidth, draftHeight), Find_Category(C4D_Living), Find_Func("IsGliding") ) );
 	for( var glider in gliders ) {
 		var yDir = glider->GetYDir();
