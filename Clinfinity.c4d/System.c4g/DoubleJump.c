@@ -33,7 +33,8 @@ protected func ControlRight() {
 }
 
 protected func ControlUp() {
-	if( _inherited() == 0 ) {
+	var result = _inherited();
+	if( result == 0 ) {
 		if( GetAction() == "Jump" ) {
 			if( doubleJumpPossible && Inside( GetYDir(), minDoubleJumpStartSpeed, maxDoubleJumpStartSpeed ) ) {
 				doubleJumpPossible = false;
@@ -46,8 +47,11 @@ protected func ControlUp() {
 				for( var i = 0; i < 7; i++ ) {
 					CreateParticle("MSpark", -3 + i, 9 + Random(3), -3 + i, 8 - Random(3), 40, jumpParticleColour);
 				}
+				return true;
 			}
 		}
+	} else {
+		return result;
 	}
 	return 0;
 }
