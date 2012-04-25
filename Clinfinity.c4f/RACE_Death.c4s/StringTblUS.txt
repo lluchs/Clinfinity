@@ -1,0 +1,19 @@
+MsgGo=Here we go!
+
+MsgRelaunch1=%s joins the %dth time.
+MsgRelaunch2=%s reaches the %d-join-mark.
+MsgRelaunch3=%s, for the %dth!
+MsgRelaunch4=%s shows his profession with this %dth join.
+MsgRelaunch5=Well done, %s, that's the %dth join.
+
+MsgDeath1=%s has failed.
+MsgDeath2=Nice try, %s!
+MsgDeath3=%s does it again.
+MsgDeath4=Stupid %s...
+MsgDeath5=This is the end of %s's path.
+MsgDeath6=Another rejoin for %s
+MsgDeath7=Well done %s. You're dead.
+MsgDeath8=%s should become a stuntman.
+MsgDeath9=%s checks out the valleys.
+MsgDeath10=%s is dead.
+MsgDeath11=%s deserves a memorial.
