@@ -40,7 +40,7 @@ protected func FxWingSuitTimer(object target, int effectNumber, int effectTime) 
 			target->SetYDir( target->GetYDir() - 2 );
 		}
 		// Horizontale Geschwindigkeit berechnen und anpassen
-		var targetXDir = Abs(target->GetYDir()) * (-glideSpeedXFactor + 2 * glideSpeedXFactor * target->GetDir());
+		var targetXDir = Max( Abs(target->GetYDir()), 5 ) * (-glideSpeedXFactor + 2 * glideSpeedXFactor * target->GetDir());
 		var currentXDir = target->GetXDir();
 		if(currentXDir < targetXDir) {
 			target->SetXDir( target->GetXDir() + 1 );
