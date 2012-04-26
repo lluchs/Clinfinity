@@ -8,7 +8,7 @@ local maxDoubleJumpStartSpeed, doubleJumpAcceleration;
 
 protected func Initialize() {
 	jumpParticleColour = RGBa(255, 255, 255, 150);
-	maxDoubleJumpStartSpeed = 40;
+	maxDoubleJumpStartSpeed = 50;
 	doubleJumpAcceleration = 34;
 	return _inherited();
 }
