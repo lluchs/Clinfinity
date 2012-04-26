@@ -15,11 +15,13 @@ protected func Initialize() {
 protected func ControlDownSingle() {
 	var result = _inherited();
 	if( result == 0 ) {
-		if( GetAction() == "Jump" ) {
+		if(GetAction() == "Jump") {
 			if(IsGliding()) {
 				RemoveEffect("WingSuit", this);
-			} else {
+			} else if(GetPhase() > 3) {
 				AddEffect("WingSuit", this, 150, 1, this);
+			} else {
+				return 0;
 			}
 			return true;
 		}
