@@ -36,9 +36,10 @@ private func JoinPlayer(int plr) {
 
 /* Neubeitritt */
 
-public func RelaunchPlayer(plr) {
+public func OnClonkDeath(object oldClonk) {
+	var plr = oldClonk -> GetOwner();
 	var clnk = CreateObject(CLNK, 0, 0, plr);
-	MakeCrewMember(clnk, plr);
+	clnk -> GrabObjectInfo(oldClonk);
 	SelectCrew(plr, clnk, 1);
 	Log(RndRelaunchMsg(), GetPlayerName(plr));
 	return JoinPlayer(plr);
