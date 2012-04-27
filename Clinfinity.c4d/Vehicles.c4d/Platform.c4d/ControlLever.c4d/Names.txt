@@ -1,0 +1,2 @@
+DE:Steuerhebel
+US:Control lever

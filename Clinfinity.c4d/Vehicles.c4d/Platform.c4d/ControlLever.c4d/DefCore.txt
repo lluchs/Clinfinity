@@ -1,0 +1,15 @@
+[DefCore]
+id=_CLV
+Version=4,9,5
+Category=C4D_Vehicle|C4D_MouseSelect
+Width=24
+Height=17
+Offset=-12,-8
+Components=WOOD=1;METL=1
+Picture=0,0,24,17
+Vertices=1
+VertexY=8
+VertexFriction=100
+Grab=2
+NoPushEnter=1
+VehicleControl=1
