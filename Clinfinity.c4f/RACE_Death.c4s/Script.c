@@ -1,4 +1,4 @@
-/*--- Skylands - Parcour ---*/
+/*--- geklaut von Himmelsrennen, aber psst ---*/
 
 #strict
 
