@@ -1,0 +1,15 @@
+[Particle]
+Name=WindSpark
+MaxCount=100000
+InitFn=StdInit
+ExecFn=StdExec
+DrawFn=Std
+Face=0,0,32,32,-16,-16
+Delay=1
+Repeats=10
+Reverse=1
+FadeOutLen=4
+FadeOutDelay=4
+AlphaFade=0
+Additive=1
+Attach=1

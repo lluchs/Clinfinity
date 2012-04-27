@@ -1,0 +1,1 @@
+Clonks gliding with the wing suit can gain height by riding on updrafts, which are placed randomly in the landscape.

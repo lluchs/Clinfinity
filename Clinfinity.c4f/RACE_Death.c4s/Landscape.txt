@@ -1,0 +1,49 @@
+/* Skylands parcour */
+
+map SkyParcour {
+
+  // island shape
+  overlay { algo=bozo; turbulence=100; zoomX=50; } &
+  overlay { algo=bozo; turbulence=100; zoomX=50; } ^
+  overlay { algo=bozo; turbulence=1000; a=20; zoomX=50; } &
+  overlay { algo=rndchecker; turbulence=1000; a=1; zoomY=-100;
+    mat=Earth; tex=Rough;
+
+    // earth altering
+    overlay { algo=random; mat=Earth; tex=Smooth; };
+
+    // water
+    overlay { algo=bozo; a=6; turbulence=1000; mat=Water; tex=Smooth; };
+
+    // safe borders
+    overlay { algo=border; a=1; b=1; mat=Earth; tex=Rough; };
+
+    // rock
+    overlay InEarth { grp=1; invert=1;
+      overlay { algo=bozo; a=6; turbulence=1000; } &
+      overlay { algo=rndchecker; a=2; turbulence=1000; mat=Rock; tex=Rough; };
+      };
+
+    // gold
+    InEarth & overlay { mat=Gold; tex=Rough; };
+
+    // coal
+    InEarth & overlay { mat=Coal; tex=Swirl; };
+
+    };
+
+  // upper area
+  overlay { x=-50; y=-50; wdt=200; hgt=60; loosebounds=1; turbulence=10; };
+
+  // start
+  overlay { wdt=5; hgt=50; };
+  overlay { y=50; wdt=5; hgt=20; mat=Granite; tex=Rough;
+    overlay { algo=bozo; a=1; turbulence=1000; zoomX=-50; zoomY=-50; mat=Granite; tex=Rock; };
+    };
+
+  // goal
+  overlay { x=96; wdt=5; hgt=50; };
+  overlay { x=96; y=50; wdt=5; hgt=20; mat=Gold; tex=Rough;
+    overlay { algo=bozo; a=1; turbulence=1000; zoomX=-50; zoomY=-50; mat=Sulphur; tex=Swirl; };
+    };
+  };
