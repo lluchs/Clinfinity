@@ -62,4 +62,4 @@ private func RndRelaunchMsg() {
 	return "$MsgDeath11$";
 }                           
 
-public func IsUpdraftPermanent() { return true; }
+public func IsDraftPermanent() { return true; }
