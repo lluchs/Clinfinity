@@ -10,9 +10,7 @@ protected func Activate(byPlayer) {
 }
 
 protected func Initialize() {
-	draftWidth = 50;
-	draftHeight = 150;
-	draftDistance = Sqrt(Pow(draftWidth, 2) + Pow(draftHeight, 2)) / 2;
+	SetSize(50, 150);
 	draftParticleColour = RGBa(255, 255, 255, 210);
 	minDraftDuration = 1050;
 	maxDraftDuration = 2100;
@@ -20,6 +18,13 @@ protected func Initialize() {
 	gliderAcceleration = 5;
 	SetRandomPosition();
 	Draft();
+}
+
+/** Sets the draft's size. */
+public func SetSize(int wdt, int hgt) {
+	draftWidth = wdt;
+	draftHeight = hgt;
+	draftDistance = Sqrt(Pow(draftWidth, 2) + Pow(draftHeight, 2)) / 2;
 }
 
 protected func Draft() {
@@ -34,16 +39,22 @@ protected func Draft() {
 	}
 	var x = 0, y = -draftHeight / 2;
 	Rotate(draftDirection, x, y);
-	var gliders = FindObjects( Find_And( Find_NoContainer(), Find_Distance(draftDistance, x, y), Find_Category(C4D_Living), Find_Func("IsGliding") ) );
+	var gliders = FindObjects(Find_NoContainer(), Find_Distance(draftDistance, x, y), Find_Category(C4D_Living));
 	for( var glider in gliders ) {
 		var gx = glider->GetX() - GetX(), gy = glider->GetY() - GetY();
 		Rotate(-draftDirection, gx, gy);
 		if(Inside(gx, -draftWidth / 2, draftWidth / 2) && Inside(gy, -draftHeight, 0)) {
 			var xDir = glider->GetXDir(0, 100), yDir = glider->GetYDir(0, 100);
-			glider->SetXDir(xDir + Sin(draftDirection, gliderAcceleration * 10), 0, 100);
-			//Message("X: %d, Y: %d", this, Sin(draftDirection, gliderAcceleration * 10), -Cos(draftDirection, gliderAcceleration * 10));
+			var xAcc = Sin(draftDirection, gliderAcceleration * 10), yAcc = -Cos(draftDirection, gliderAcceleration * 10);
+			// Not actually gliding? Less acceleration!
+			if(!glider->~IsGliding()) {
+				xAcc /= 3;
+				yAcc /= 3;
+			}
+			glider->SetXDir(xDir + xAcc, 0, 100);
+			//Message("X: %d, Y: %d", this, xAcc, yAcc);
 			if(yDir > -maxGliderSpeedUpwards * 10) {
-				glider->SetYDir(yDir - Cos(draftDirection, gliderAcceleration * 10), 0, 100);
+				glider->SetYDir(yDir + yAcc, 0, 100);
 			}
 		}
 	}
