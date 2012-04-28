@@ -12,4 +12,3 @@ protected func FxNoChopDownDamage(object target, int effectNumber, int damage, i
 		return 0;
 	}
 }
-
