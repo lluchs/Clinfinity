@@ -70,3 +70,14 @@ protected func FxWingSuitStop(object target, int effectNumber, int reason, bool 
 		SetObjDrawTransform(1000, 0, 0, 0, 1000, 0, 0);
 	}
 }
+
+/* Prevents the Clonk from tumbling after hitting something while gliding. */
+protected func Hit(int xdir, int ydir) {
+	if(IsGliding() && GetAction() == "Tumble") {
+		SetXDir(BoundBy(xdir, -10, 10));
+		SetYDir(BoundBy(ydir, -10, 10));
+		SetAction("Jump");
+	}
+	return _inherited(xdir, ydir, ...);
+}
+
