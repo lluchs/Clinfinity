@@ -2,6 +2,15 @@
 
 #strict 2
 
+protected func Initialize() {
+	// rotate drafts
+	for(var draft in FindObjects(Find_ID(DRFT))) {
+		if(!Random(2)) {
+			draft->SetR(Random(360));
+		}
+	}
+}
+
 // -- Callbacks des Rennen-Spielziels --
 // wenn diese Funktionen nicht im Szenarioscript sind
 // oder 0 zurück geben, wird der Default-Wert verwendet
