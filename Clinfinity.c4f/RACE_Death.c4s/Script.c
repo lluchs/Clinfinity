@@ -38,11 +38,13 @@ private func JoinPlayer(int plr) {
 
 public func OnClonkDeath(object oldClonk) {
 	var plr = oldClonk -> GetOwner();
-	var clnk = CreateObject(CLNK, 0, 0, plr);
-	clnk -> GrabObjectInfo(oldClonk);
-	SelectCrew(plr, clnk, 1);
-	Log(RndRelaunchMsg(), GetPlayerName(plr));
-	return JoinPlayer(plr);
+	if(GetPlayerType(plr)) {
+		var clnk = CreateObject(CLNK, 0, 0, plr);
+		clnk -> GrabObjectInfo(oldClonk);
+		SelectCrew(plr, clnk, 1);
+		Log(RndRelaunchMsg(), GetPlayerName(plr));
+		return JoinPlayer(plr);
+	}
 }
 
 private func RndRelaunchMsg() {
