@@ -11,10 +11,10 @@ public func GetRight() { return pRight; }
 public func IsMaster() { return pMaster == this; }
 public func GetMaster() { return pMaster; }
 
-protected func Initialize()
-{  
-  pMaster = 0;
-  SetAction("Fly");
+protected func Initialize() {
+	pMaster = 0;
+	SetAction("Fly");
+	_CLV->CreateLever(GetX() - 10, GetY() - 5, this);
 }
 
 protected func Flying()
@@ -22,6 +22,19 @@ protected func Flying()
   SetSolidMask(0, 11, 72, 3);
   SoundLevel("Propel", 100, this);
   AddEffect("IntFly", this, 10, 1, this, 0);
+}
+
+public func FloatStop() {
+	SetComDir(COMD_None);
+	SetYDir(0);
+}
+
+public func FloatUp() {
+	SetComDir(COMD_Up);
+}
+
+public func FloatDown() {
+	SetComDir(COMD_Down);
 }
 
 /* Master/Slave-System */
@@ -142,8 +155,8 @@ public func SavePosition() {
 
 public func FxIntFlyTimer(object pTarget, int iNr, int iTime)
 {
-  SetXDir(0); SetYDir(0);
-  SetPosition(GetX(), GetY());
+  //SetXDir(0); SetYDir(0);
+  //SetPosition(GetX(), GetY());
   
  // SetPosition(GetX(), GetY()+Sin(iTime%360, 360, 1000));
   

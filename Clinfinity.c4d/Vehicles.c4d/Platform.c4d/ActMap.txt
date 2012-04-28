@@ -1,5 +1,6 @@
 [Action]
 Name=Fly
+Procedure=FLOAT
 Length=1
 Facet=72,0,72,11
 NextAction=Fly

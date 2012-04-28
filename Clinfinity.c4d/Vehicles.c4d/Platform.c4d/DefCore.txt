@@ -17,3 +17,6 @@ Components=METL=5
 Picture=0,14,70,50
 Rotate=1
 RotatedSolidmasks=1
+
+[Physical]
+Float=10
