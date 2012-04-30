@@ -5,9 +5,7 @@
 protected func Initialize() {
 	// rotate drafts
 	for(var draft in FindObjects(Find_ID(DRFT))) {
-		if(!Random(2)) {
-			draft->SetR(Random(360));
-		}
+		draft->SetR(Random(360));
 	}
 }
 
