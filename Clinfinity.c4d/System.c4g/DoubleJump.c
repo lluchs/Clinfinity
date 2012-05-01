@@ -51,6 +51,7 @@ protected func ControlUp() {
 				for( var i = 0; i < 7; i++ ) {
 					CreateParticle("MSpark", -3 + i, 9 + Random(3), -3 + i, 8 - Random(3), 40, jumpParticleColour);
 				}
+				Sound("DoubleJump");
 				return true;
 			}
 		}

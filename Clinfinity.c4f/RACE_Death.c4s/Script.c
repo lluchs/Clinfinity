@@ -5,15 +5,22 @@
 protected func Initialize() {
 	// rotate drafts
 	for(var draft in FindObjects(Find_ID(DRFT))) {
-		if(!Random(2)) {
-			draft->SetR(Random(360));
-		}
+		draft->SetR(Random(360));
 	}
 }
 
 // -- Callbacks des Rennen-Spielziels --
 // wenn diese Funktionen nicht im Szenarioscript sind
 // oder 0 zurück geben, wird der Default-Wert verwendet
+
+// Race left -> right; additional condition: on top of the golden platform
+func CheckRACEGoal(int plr) {
+	var cursor = GetCursor(plr);
+	if(cursor && cursor->GetX() > LandscapeWidth() - GetRACEEndOffset() && cursor->GetY() < LandscapeHeight() / 2)
+		return 1;
+	else
+		return -1;
+}
 
 // Richtung:
 // 1: links -> rechts

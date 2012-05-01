@@ -30,7 +30,7 @@ global func MatSysDoFill(int iChange, int iPlr, id Key) {
 }
 
 global func GetMatSysIDs() {
-	var aIDs = [WOOD, METL];
+	var aIDs = [WOOD, ROCK, METL];
 	ConcatArrays(aIDs, GameCall("SpecialMatSysIDs")); // vertauschte Reihenfolge, da von rechts nach links
 	return aIDs;
 }

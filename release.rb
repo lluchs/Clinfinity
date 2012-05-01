@@ -19,3 +19,6 @@ Dir.glob 'Clinfinity.c4f/*/Scenario.txt' do |f|
   end
 end
 
+# rename the README
+mv 'README.md', 'README.txt'
+
