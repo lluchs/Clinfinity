@@ -1,8 +1,32 @@
+/*	Script: Drafts
+	Rule: When activated, local drafts are placed in the landscape.
+	These drafts accelerate Clonks in the air, although those using the wing suit get a much greater boost.
+	By riding the drafts, gliding Clonks can reach higher or more distant places which are normally inaccessible.
+
+	Drafts have limited bounds, inside which they accelerate Clonks in the draft's direction.
+	The number of drafts is determined by the number of activated drafts rules: For each rule, one draft is placed.
+
+	A draft's position is chosen randomly, where it will stay for a configurable duration.
+	*Note:* This behaviour can be overridden by implementing a function called "IsDraftPermanent" that returns true.
+	This function may be defined in the scenario script or any rule, goal or environment object.
+	If such a function exists, drafts will only set their position once and then stay. */
+
 #strict 2
 
+/*	Variables: Draft size and appearance
+	draftWidth			- Width of the draft's bounds, without rotation applied.
+	draftHeight			- Height of the draft's bounds, without rotation applied.
+	draftDistance		- Distance in which Clonks are searched for, automatically calculated from draftWidth and draftHeight.
+	draftParticleColour	- Colour and opacity of emitted draft particles. */
 local draftWidth, draftHeight, draftDistance, draftParticleColour;
+/*	Variables: Random placement
+	minDraftDuration	- Minimum duration that a draft keeps its position.
+	maxDraftDuration	- Maximum duration that a draft keeps its position. */
 local minDraftDuration, maxDraftDuration;
-local maxGliderSpeedUpwards, gliderAcceleration; // 1/10 pixels per frame
+/*	 Variables: Clonk acceleration
+	maxGliderSpeedUpwards	- Maximum speed a glider is accelerated to.
+	gliderAcceleration		- Acceleration rate for gliders. Unit is 1/10 pixels per frame. */
+local maxGliderSpeedUpwards, gliderAcceleration;
 
 protected func Activate(byPlayer) {
 	MessageWindow(GetDesc(), byPlayer);
@@ -20,10 +44,15 @@ protected func Initialize() {
 	Draft();
 }
 
-/** Sets the draft's size. */
-public func SetSize(int wdt, int hgt) {
-	draftWidth = wdt;
-	draftHeight = hgt;
+/*	Function: SetSize
+	Sets the draft's bounds inside which it accelerates Clonks.
+
+	Parameters:
+	width 	- Bounds width, without rotation applied.
+	height	- Bounds height, without rotation applied. */
+public func SetSize(int width, int height) {
+	draftWidth = width;
+	draftHeight = height;
 	draftDistance = Sqrt(Pow(draftWidth, 2) + Pow(draftHeight, 2)) / 2;
 }
 
