@@ -7,6 +7,7 @@
 	The number of drafts is determined by the number of activated drafts rules: For each rule, one draft is placed.
 
 	A draft's position is chosen randomly, where it will stay for a configurable duration.
+	You can specify a minimum and maximum value, the actual duration a draft stays is then randomised within these bounds.
 	*Note:* This behaviour can be overridden by implementing a function called "IsDraftPermanent" that returns true.
 	This function may be defined in the scenario script or any rule, goal or environment object.
 	If such a function exists, drafts will only set their position once and then stay. */
@@ -20,8 +21,10 @@
 	draftParticleColour	- Colour and opacity of emitted draft particles. */
 local draftWidth, draftHeight, draftDistance, draftParticleColour;
 /*	Variables: Random placement
-	minDraftDuration	- Minimum duration that a draft keeps its position.
-	maxDraftDuration	- Maximum duration that a draft keeps its position. */
+	These variables determine the duration that a draft keeps its position, before repositioning itself randomly.
+
+	minDraftDuration	- Minimum duration.
+	maxDraftDuration	- Maximum duration. */
 local minDraftDuration, maxDraftDuration;
 /*	 Variables: Clonk acceleration
 	maxGliderSpeedUpwards	- Maximum speed a glider is accelerated to.
@@ -46,10 +49,12 @@ protected func Initialize() {
 
 /*	Function: SetSize
 	Sets the draft's bounds inside which it accelerates Clonks.
+	The bounds are specified for unrotated drafts.
+	If a draft is rotated, the searching area is rotated automatically as well.
 
 	Parameters:
-	width 	- Bounds width, without rotation applied.
-	height	- Bounds height, without rotation applied. */
+	width 	- Bounds width.
+	height	- Bounds height. */
 public func SetSize(int width, int height) {
 	draftWidth = width;
 	draftHeight = height;
