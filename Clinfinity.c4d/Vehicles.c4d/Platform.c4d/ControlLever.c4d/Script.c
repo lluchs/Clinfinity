@@ -1,8 +1,18 @@
+/*	Script: Control lever
+	Floating platforms are controlled with this lever. */
+
 #strict 2
 
 local controlledPlatform;
 
-/** Factory method for levers */
+/*	Constructor: CreateLever
+	Factory method for levers.
+	*Note:*	You should always create a lever using this method.
+
+	Parameters:
+	x			- Horizontal coordinate
+	y			- Vertical coordinate
+	forPlatform	- The platform this lever controls. */
 public func CreateLever(int x, int y, object forPlatform) {
 	var lever = CreateObject(COLV, x, y, forPlatform->GetOwner());
 	lever->	LocalN("controlledPlatform") = forPlatform;
