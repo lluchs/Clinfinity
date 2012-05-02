@@ -16,3 +16,11 @@ global func Round(int iValue, int iNum, int iDir) {
 global func ChangeRange(int iValue, int iOldMin, int iOldMax, int iMin, int iMax) {
 	return (iValue - iOldMin) * (iMax - iMin) / (iOldMax - iOldMin) + iMin;
 }
+
+/* Rotates the point (x, y) around (ox, oy) by angle degrees. */
+global func Rotate(int angle, int &x, int &y, int ox, int oy, int prec) {
+	var xr = Cos(angle, x, prec) - Sin(angle, y, prec),
+	    yr = Sin(angle, x, prec) + Cos(angle, y, prec);
+	x = xr;
+	y = yr;
+}
