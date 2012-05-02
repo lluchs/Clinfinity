@@ -1,0 +1,15 @@
+[DefCore]
+id=XXXX
+Version=4,9,5
+Category=C4D_Vehicle|C4D_MouseSelect
+Width=90
+Height=10
+Offset=-45,-5
+Components=WOOD=1;METL=1
+Picture=0,0,90,10
+Vertices=1
+VertexY=8
+VertexFriction=100
+Grab=2
+NoPushEnter=1
+VehicleControl=1
