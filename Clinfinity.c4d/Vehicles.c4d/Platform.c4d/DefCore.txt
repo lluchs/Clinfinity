@@ -3,19 +3,19 @@ id=PLTF
 Version=4,9,5
 Category=C4D_Vehicle
 Width=90
-Height=6
-Offset=-45,-3
+Height=4
+Offset=-45,-2
 Vertices=2
 VertexX=-45,44
-VertexY=1,1
+VertexY=3,3
 VertexCNAT=9,10
 VertexFriction=20,20
 Value=5
 Mass=100
 Components=METL=5
-Picture=0,0,90,6
+Picture=0,0,90,4
 Rotate=1
 RotatedSolidmasks=1
 
 [Physical]
-Float=10
+Float=50

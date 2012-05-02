@@ -14,7 +14,7 @@ public func GetMaster() { return pMaster; }
 protected func Initialize() {
 	pMaster = 0;
 	SetAction("Fly");
-	COLV->CreateLever(GetX() - 10, GetY() - 5, this);
+	COLV->CreateLever(GetX() - 35, GetY() - 2, this);
 }
 
 protected func Flying()

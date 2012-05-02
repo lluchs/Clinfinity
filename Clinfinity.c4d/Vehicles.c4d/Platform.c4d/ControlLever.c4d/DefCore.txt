@@ -2,13 +2,13 @@
 id=COLV
 Version=4,9,5
 Category=C4D_Vehicle|C4D_MouseSelect
-Width=26
+Width=17
 Height=20
-Offset=-13,-10
+Offset=-8,-10
 Components=WOOD=1;METL=1
-Picture=0,0,26,20
+Picture=9,0,17,20
 Vertices=1
-VertexY=8
+VertexY=9
 VertexFriction=100
 Grab=2
 NoPushEnter=1
