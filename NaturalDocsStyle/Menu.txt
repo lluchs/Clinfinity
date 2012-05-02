@@ -46,6 +46,7 @@ Format: 1.52
 # --------------------------------------------------------------------------
 
 
+File: Control lever  (Clinfinity.c4d\Vehicles.c4d\Platform.c4d\ControlLever.c4d\Script.c)
 File: Drafts  (Clinfinity.c4d\Rules.c4d\Draft.c4d\Script.c)
 
 Group: Index  {
