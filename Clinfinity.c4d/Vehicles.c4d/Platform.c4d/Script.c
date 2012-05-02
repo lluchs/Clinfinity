@@ -19,7 +19,7 @@ protected func Initialize() {
 
 protected func Flying()
 {
-  SetSolidMask(0, 11, 72, 3);
+  SetSolidMask(0, 4, 90, 4);
   SoundLevel("Propel", 100, this);
   AddEffect("IntFly", this, 10, 1, this, 0);
 }

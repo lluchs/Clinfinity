@@ -2,6 +2,6 @@
 Name=Fly
 Procedure=FLOAT
 Length=1
-Facet=72,0,72,11
+Facet=0,0,90,4
 NextAction=Fly
 StartCall=Flying
