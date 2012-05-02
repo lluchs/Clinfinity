@@ -2,11 +2,11 @@
 id=_CLV
 Version=4,9,5
 Category=C4D_Vehicle|C4D_MouseSelect
-Width=24
-Height=17
-Offset=-12,-8
+Width=26
+Height=20
+Offset=-13,-10
 Components=WOOD=1;METL=1
-Picture=0,0,24,17
+Picture=0,0,26,20
 Vertices=1
 VertexY=8
 VertexFriction=100
