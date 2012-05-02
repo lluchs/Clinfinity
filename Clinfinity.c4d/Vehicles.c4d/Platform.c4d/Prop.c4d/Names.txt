@@ -1,0 +1,2 @@
+DE:Propeller
+US:Prop
