@@ -23,6 +23,22 @@ protected func Flying()
   AddEffect("IntFly", this, 10, 1, this, 0);
 }
 
+protected func ContactLeft() {
+	FloatStop();
+}
+
+protected func ContactRight() {
+	FloatStop();
+}
+
+protected func ContactTop() {
+	FloatStop();
+}
+
+protected func ContactBottom() {
+	FloatStop();
+}
+
 public func FloatStop() {
 	SetComDir(COMD_None);
 	SetYDir(0);
