@@ -1,4 +1,7 @@
-/*-- Speichersystem --*/
+/*  Script: Storage System
+    Library: Provides functionality for saving arbitrary integer values in a hash.
+    It allows the definition of maximum fill levels, a sound to play when changing the fill level and overlaying numbers
+    indicating the fill level. These options can be configured by overloading functions, see below. */
 
 #strict 2
 
@@ -21,10 +24,24 @@ private func TypeCheck() {
 }
 /* Füllung */
 
-// Aktuelle Füllung
+/*  Function: GetFill
+    
+	Parameters:
+	Key - The hash key.
+
+	Returns:
+	A reference to the fill level. */
 public func & GetFill(Key) { TypeCheck(); return HashGet(hFillLevel, Key); }
 
-// Maximale Füllung
+/*  Function: GetMaxFill
+    Checks for the maximum fill by first calling MaxFill_[Key] and then, if that function does not exist or returns
+	zero, the function MaxFill. These functions must be declared public.
+
+	Parameters:
+	Key - The hash key.
+
+    Returns:
+	The maximum fill for the given key. */
 public func GetMaxFill(Key) {
 	var szFunc = "MaxFill", szFunc2, iFill;
 	if(Key) {
@@ -39,65 +56,99 @@ public func GetMaxFill(Key) {
 	return iFill;
 }
 
-// Füllung erhöhen/verringern
-public func DoFill(int iChange, Key, bool fNoSound)
-{
-  var iNewFill = BoundBy(GetFill(Key) + iChange, 0, GetMaxFill(Key));
-  if (iNewFill == GetFill(Key)) return;
-  iChange = iNewFill - GetFill(Key);
-  OnFillChange(Key, iChange);
-  if(!fNoSound)
-  	FillSound(Key, iChange);
-  HashPut(hFillLevel, Key, iNewFill);
-  UpdatePicture();
-  // Tatsächliche Änderung des Füllstandes zurückgeben
-  return iChange;
+/*  Function: DoFill
+    Changes the fill level, optionally playing the fill change sound.
+
+	This function will check for the fill bounds: 0 is the fixed lower bound and GetMaxFill(Key) is the upper bound.
+
+	Parameters:
+	iChange  - The fill level will be changed by adding this number.
+	Key      - The hash key.
+	fNoSound - No sound will be played if this variable is true.
+	
+	Returns:
+	The actual change of the fill level. */
+public func DoFill(int iChange, Key, bool fNoSound) {
+	var iNewFill = BoundBy(GetFill(Key) + iChange, 0, GetMaxFill(Key));
+	if (iNewFill == GetFill(Key)) return;
+	iChange = iNewFill - GetFill(Key);
+	OnFillChange(Key, iChange);
+	if(!fNoSound)
+		FillSound(Key, iChange);
+	HashPut(hFillLevel, Key, iNewFill);
+	UpdatePicture();
+	// Tatsächliche Änderung des Füllstandes zurückgeben
+	return iChange;
 }
 
-// Voll?
-public func IsFull(Key) 
-{ 
-  return GetFill(Key) == GetMaxFill(Key);
+/*  Function: IsFull
+
+	Parameters:
+	Key - The hash key.
+
+	Returns:
+	Whether the fill level for the given key is full. */
+public func IsFull(Key) { 
+	return GetFill(Key) == GetMaxFill(Key);
 }
 
-/* Grafik anpassen */
-public func UpdatePicture()
-{
+/*  Function: UpdatePicture
+    Updates the fill picture.
+
+	This function is automatically called by DoFill, but you will need to call it when updating the fill level via
+	GetFill's reference.
+
+	Returns:
+	true if the picture was successfully updated, false otherwise. */
+public func UpdatePicture() {
 	var Key = FillPicture();
 	if(Key == -1)
-		return;
-	if(GetFill(Key)>99)
-  {
-    SetGraphics(0,0,GetNumberID(GetFill(Key) / 100),1,GFXOV_MODE_Picture);    
-    SetObjDrawTransform(400,0,-14000,0,400,+10000, this, 1);
-  }
-  else SetGraphics(0,0,0,1,0);
-  
-  if(GetFill(Key)>9)
-  {
-    SetGraphics(0,0,GetNumberID(GetFill(Key) / 10 - GetFill(Key) / 100 * 10),2,GFXOV_MODE_Picture);    
-    SetObjDrawTransform(400,0,-7000,0,400,+10000, this, 2);
-  }
-  else SetGraphics(0,0,0,2,0);  
+		return false;
+	if(GetFill(Key)>99) {
+		SetGraphics(0,0,GetNumberID(GetFill(Key) / 100),1,GFXOV_MODE_Picture);    
+		SetObjDrawTransform(400,0,-14000,0,400,+10000, this, 1);
+	}
+	else SetGraphics(0,0,0,1,0);
 
-  SetGraphics(0,0,GetNumberID(GetFill(Key) % 10),3,GFXOV_MODE_Picture);   
-  SetObjDrawTransform(400,0,0,0,400,+10000, this, 3);
-  return 1;
+	if(GetFill(Key)>9) {
+		SetGraphics(0,0,GetNumberID(GetFill(Key) / 10 - GetFill(Key) / 100 * 10),2,GFXOV_MODE_Picture);    
+		SetObjDrawTransform(400,0,-7000,0,400,+10000, this, 2);
+	}
+	else SetGraphics(0,0,0,2,0);  
+
+	SetGraphics(0,0,GetNumberID(GetFill(Key) % 10),3,GFXOV_MODE_Picture);   
+	SetObjDrawTransform(400,0,0,0,400,+10000, this, 3);
+	return true;
 }
 
 /* ID des passenden Zahlobjektes ausgeben */
-private func GetNumberID(i)
-{
-  return(C4Id(Format("SNB%d", i)));
+private func GetNumberID(i) {
+	return(C4Id(Format("SNB%d", i)));
 }
 
 /* Bei Bedarf überladen */
 
-// Füllstand als Menügrafik? Wenn ja, Key des gewünschten Füllstandes zurückgeben
+/*  Function: FillPicture
+    This function needs to be overwritten to use the fill level indicator.
+
+	Returns:
+	The hash key for the fill level to show or -1 (default) if there should not be an indicator. */
 private func FillPicture() { return -1; }
 
-// Sound beim Verändern des Füllstandes? (Wenn ja: komplettes Sound() muss in der Funktion stattfinden)
+/*  Function: FillSound
+    This function will be called to play a fill sound. It doesn't do anything as default action.
+
+	When overriding, the function shouldn't do anything but calling Sound().
+
+	Parameters:
+	Key     - The hash key.
+	iChange - The amount by which the fill level was changed. */
 private func FillSound(Key, int iChange) { return; }
 
-// Wird bei Füllstandsveränderung aufgerufen
+/*  Function: OnFillChange
+    This function will be called whenever any fill level changes. It doesn't do anything as default action.
+
+	Parameters:
+	Key     - The hash key.
+	iChange - The amount by which the fill level was changed. */
 private func OnFillChange(Key, int iChange) { return; }
