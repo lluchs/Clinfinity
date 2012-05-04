@@ -3,20 +3,32 @@
 
 #strict 2
 
-local controlledPlatform;
+local controlMediator;
+local gearStop, gearUp, gearDown;
 
 /*	Constructor: CreateLever
 	Factory method for levers.
+	The coordinates are relative to the calling object in local calls, otherwise global.
 	*Note:*	You should always create a lever using this method.
 
 	Parameters:
 	x			- Horizontal coordinate
 	y			- Vertical coordinate
-	forPlatform	- The platform this lever controls. */
-public func CreateLever(int x, int y, object forPlatform) {
-	var lever = CreateObject(COLV, x, y, forPlatform->GetOwner());
-	lever->	LocalN("controlledPlatform") = forPlatform;
+	forMediator	- The control mediator this lever sends its events to.
+
+	Returns:
+	The created lever. */
+public func CreateLever(int x, int y, object forMediator) {
+	var lever = CreateObject(COLV, x, y, forMediator->GetOwner());
+	lever->LocalN("controlMediator") = forMediator;
 	lever->SetAction("Control");
+	return lever;
+}
+
+protected func Initialize() {
+	gearStop = 0;
+	gearUp = 1;
+	gearDown = 2;
 }
 
 protected func MouseSelection(int player) {
@@ -24,29 +36,37 @@ protected func MouseSelection(int player) {
 }
 
 protected func ControlUp(object controller) {
-	if(controlledPlatform->GetComDir() == COMD_Down) {
-		controlledPlatform->FloatStop();
-		SetDir(0);
-	} else if(controlledPlatform->GetComDir() == COMD_Stop) {
-		controlledPlatform->FloatUp();
-		SetDir(1);
+	if(GetDir() == gearDown) {
+		controlMediator->ControlEvent(COMD_Stop, this);
+	} else if(GetDir() == gearStop) {
+		controlMediator->ControlEvent(COMD_Up, this);
 	} else {
 		return false;
 	}
-	Sound("SignalClick", false, this, 15);
 	return true;
 }
 
 protected func ControlDownSingle(object controller) {
-	if(controlledPlatform->GetComDir() == COMD_Up) {
-		controlledPlatform->FloatStop();
-		SetDir(0);
-	} else if(controlledPlatform->GetComDir() == COMD_Stop) {
-		controlledPlatform->FloatDown();
-		SetDir(2);
+	if(GetDir() == gearUp) {
+		controlMediator->ControlEvent(COMD_Stop, this);
+	} else if(GetDir() == gearStop) {
+		controlMediator->ControlEvent(COMD_Down, this);
 	} else {
 		return false;
 	}
-	Sound("SignalClick", false, this, 15);
 	return true;
+}
+
+public func MovementEvent(int direction, object source) {
+	var oldDirection = GetDir();
+	if(direction == COMD_Stop) {
+		SetDir(gearStop);
+	} else if(direction == COMD_Up) {
+		SetDir(gearUp);
+	} else if(direction == COMD_Down) {
+		SetDir(gearDown);
+	}
+	if(GetDir() != oldDirection) {
+		Sound("SignalClick", false, this, 15);
+	}
 }

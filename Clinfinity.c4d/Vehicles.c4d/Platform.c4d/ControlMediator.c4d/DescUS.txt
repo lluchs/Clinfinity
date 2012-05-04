@@ -1,0 +1,1 @@
+Encapsulates the interactions between levers and platforms.

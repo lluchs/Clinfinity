@@ -1,20 +1,36 @@
-/*-- Plattform --*/
+/*	Script: Platform
+	A controllable, floating platform, powered by steam. */
 
 #strict 2
 
-local pLeft, pRight, pMaster;
+local pLeft, pRight, master;
 local iX, iY, iR;
+local controlMediator;
 
 public func IsPlatform() { return true; }
 public func GetLeft() { return pLeft; }
 public func GetRight() { return pRight; }
-public func IsMaster() { return pMaster == this; }
-public func GetMaster() { return pMaster; }
+public func IsMaster() { return master == this; }
+public func GetMaster() { return master; }
 
-protected func Initialize() {
-	pMaster = 0;
-	SetAction("Fly");
-	COLV->CreateLever(GetX() - 35, GetY() - 3, this);
+/*	Constructor: CreatePlatform
+	Factory method for platforms.
+	The coordinates are relative to the calling object in local calls, otherwise global.
+	*Note:* You should always create a platform using this method.
+
+	Parameters:
+	x		- Horizontal coordinate.
+	y		- Vertical coordinate.
+	owner	- Owner of the created platform: Player index. Use NO_OWNER for ownerless platforms. */
+public func CreatePlatform(int x, int y, int owner) {
+	var mediator = CreateObject(COMD, AbsX(3), AbsY(3), owner);
+	var platform = CreateObject(PLTF, x, y, owner);
+	platform->LocalN("controlMediator") = mediator;
+	platform->LocalN("master") = 0;
+	platform->SetAction("Fly");
+	var lever = COLV->CreateLever(platform->GetX() - 35, platform->GetY() - 3, mediator);
+	mediator->LocalN("controlledPlatform") = platform;
+	mediator->LocalN("controlLever") = lever;
 }
 
 protected func Flying()
@@ -22,6 +38,8 @@ protected func Flying()
   SetSolidMask(0, 4, 90, 4);
   AddEffect("IntFly", this, 10, 1, this, 0);
 }
+
+/*	Section: Contact calls */
 
 protected func ContactLeft() {
 	FloatStop();
@@ -39,17 +57,32 @@ protected func ContactBottom() {
 	FloatStop();
 }
 
-public func FloatStop() {
+/*	Section: Control */
+
+public func ControlEvent(int direction, object source) {
+	if(direction == COMD_Stop) {
+		FloatStop();
+	} else if(direction == COMD_Up) {
+		FloatUp();
+	} else if(direction == COMD_Down) {
+		FloatDown();
+	}
+}
+
+private func FloatStop() {
 	SetComDir(COMD_None);
 	SetYDir(0);
+	controlMediator->MovementEvent(COMD_Stop, this);
 }
 
-public func FloatUp() {
+private func FloatUp() {
 	SetComDir(COMD_Up);
+	controlMediator->MovementEvent(COMD_Up, this);
 }
 
-public func FloatDown() {
+private func FloatDown() {
 	SetComDir(COMD_Down);
+	controlMediator->MovementEvent(COMD_Down, this);
 }
 
 /* Master/Slave-System */
@@ -63,8 +96,8 @@ public func ConnectLeft(object pPlatform, bool fSlave) {
     Sound("Connect");
     pPlatform->ConnectRight(this, true);
   }
-  
-  pMaster = FindMaster(this);
+
+  master = FindMaster(this);
 }
 
 public func ConnectRight(object pPlatform, bool fSlave) {
@@ -77,13 +110,13 @@ public func ConnectRight(object pPlatform, bool fSlave) {
     pPlatform->ConnectLeft(this, true);
   }
 
-  pMaster = FindMaster(this);
+  master = FindMaster(this);
 }
 
 public func FindMaster(object pBy) {
-  if(pMaster) return pMaster;
+  if(master) return master;
   if(!pBy) pBy = this;
- 
+
   var pResult = 0;
 
   //Von links kommend müssen wir nach rechts
@@ -94,20 +127,20 @@ public func FindMaster(object pBy) {
   if(pLeft && (this == pBy || pRight == pBy)) {
     pResult = pLeft->FindMaster(this);
   }
-  
+
   if(pResult) return pResult;
 
   //Keiner? Dann sind wir der neue
-  pMaster = this;
-  SetMaster(pMaster);
+  master = this;
+  SetMaster(master);
   return this;
 }
 
 public func SetMaster(object pNewMaster, object pBy) {
   if(!pBy) pBy = this;
-  
-  pMaster = pNewMaster;
-  
+
+  master = pNewMaster;
+
   //Von links kommend müssen wir nach rechts
   if(pRight && (this == pBy || pLeft == pBy)) {
     pRight->SetMaster(pNewMaster, this);
@@ -116,7 +149,7 @@ public func SetMaster(object pNewMaster, object pBy) {
   if(pLeft && (this == pBy || pRight == pBy)) {
     pLeft->SetMaster(pNewMaster, this);
   }
-  
+
   return true;
 }
 
@@ -172,12 +205,12 @@ public func FxIntFlyTimer(object pTarget, int iNr, int iTime)
 {
   //SetXDir(0); SetYDir(0);
   //SetPosition(GetX(), GetY());
-  
+
  // SetPosition(GetX(), GetY()+Sin(iTime%360, 360, 1000));
-  
-  if(pMaster) {
+
+  if(master) {
 		if(iX != GetX() || iY != GetY()) {
-			pMaster->CalculatePositions(pTarget);
+			master->CalculatePositions(pTarget);
 		}
 	}
 	//SavePosition();
