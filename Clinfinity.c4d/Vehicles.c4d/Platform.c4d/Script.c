@@ -21,7 +21,10 @@ public func GetMaster() { return master; }
 	Parameters:
 	x		- Horizontal coordinate.
 	y		- Vertical coordinate.
-	owner	- Owner of the created platform: Player index. Use NO_OWNER for ownerless platforms. */
+	owner	- Owner of the created platform: Player index. Use NO_OWNER for ownerless platforms.
+
+	Returns:
+	The created platform. */
 public func CreatePlatform(int x, int y, int owner) {
 	var mediator = CreateObject(COMD, AbsX(3), AbsY(3), owner);
 	var platform = CreateObject(PLTF, x, y, owner);
@@ -31,6 +34,7 @@ public func CreatePlatform(int x, int y, int owner) {
 	var lever = COLV->CreateLever(platform->GetX() - 35, platform->GetY() - 3, mediator);
 	mediator->LocalN("controlledPlatform") = platform;
 	mediator->LocalN("controlLever") = lever;
+	return platform;
 }
 
 protected func Flying()
