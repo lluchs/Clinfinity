@@ -43,8 +43,6 @@ protected func Flying()
   AddEffect("IntFly", this, 10, 1, this, 0);
 }
 
-/*	Section: Contact calls */
-
 protected func ContactLeft() {
 	FloatStop();
 }
@@ -63,6 +61,15 @@ protected func ContactBottom() {
 
 /*	Section: Control */
 
+/*	Function: ControlEvent
+	Event handler for control events.
+
+	Parameters:
+	direction	- Direction of control, specified by one of the COMD_* constants.
+	source		- Source of the event.
+
+	See Also:
+	<Control mediator> */
 public func ControlEvent(int direction, object source) {
 	if(direction == COMD_Stop) {
 		FloatStop();
