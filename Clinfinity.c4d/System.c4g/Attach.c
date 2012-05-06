@@ -28,13 +28,13 @@ global func AttachTo(object to, int callerVertex, int targetVertex) {
 		if(targetVertex == 0)
 			// use first vertex
 			targetVertex = 1;
-		var tx = GetVertex(targetVertex - 1, false), ty = GetVertex(targetVertex - 1, true);
-		AddVertex(AbsX(tx + to->GetX()) - GetOffsetX(), AbsY(ty + to->GetY()) - GetOffsetY());
+		var tx = to->GetVertex(targetVertex - 1, false), ty = to->GetVertex(targetVertex - 1, true);
+		AddVertex(AbsX(tx + to->GetX()), AbsY(ty + to->GetY()));
 		callerVertex = GetVertexNum();
 	}
 	else if(targetVertex == 0) {
 		var cx = GetVertex(callerVertex - 1, false), cy = GetVertex(callerVertex - 1, true);
-		to->AddVertex(to->AbsX(tx + GetX()) - to->GetOffsetX(), to->AbsY(ty + GetY()) - to->GetOffsetY());
+		to->AddVertex(to->AbsX(cx + GetX()), to->AbsY(cy + GetY()));
 		targetVertex = to->GetVertexNum();
 	}
 
@@ -43,7 +43,3 @@ global func AttachTo(object to, int callerVertex, int targetVertex) {
 	
 	SetActionData(256 * callerVertex + targetVertex);
 }
-
-global func GetOffsetX() { return GetDefCoreVal("Offset", "DefCore", 0, 0); }
-global func GetOffsetY() { return GetDefCoreVal("Offset", "DefCore", 0, 1); }
-
