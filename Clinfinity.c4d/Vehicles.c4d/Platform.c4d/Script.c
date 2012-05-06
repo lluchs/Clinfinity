@@ -23,6 +23,7 @@ public func CreatePlatform(int x, int y, int owner) {
 	platform->LocalN("controlMediator") = mediator;
 	platform->SetAction("Fly");
 	var lever = COLV->CreateLever(platform->GetX() - 35, platform->GetY() - 3, mediator);
+	lever->AttachTo(platform);
 	mediator->LocalN("controlledPlatform") = platform;
 	mediator->LocalN("controlLever") = lever;
 	return platform;
