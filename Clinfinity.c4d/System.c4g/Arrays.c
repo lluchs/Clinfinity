@@ -5,7 +5,7 @@
 // Testet ob ein Wert im Array drin ist
 global func InArray(Test, array aArray)
 {
-  return GetIndexOf(Test, aArray);
+  return GetIndexOf(Test, aArray) != -1;
 }
 
 // Sucht einen Wert im Array und löscht diesen
