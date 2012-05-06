@@ -1,0 +1,1 @@
+This clonk undertands to use the control stick and - if the worst comes to the worst - to keep cool.
