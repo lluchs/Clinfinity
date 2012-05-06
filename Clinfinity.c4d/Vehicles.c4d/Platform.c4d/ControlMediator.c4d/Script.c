@@ -14,11 +14,26 @@ local masterMediator, leftSlaveMediator, rightSlaveMediator;
 	direction	- Direction of control. Must be one of the COMD_* constants.
 	source		- Source of the event. */
 public func ControlEvent(int direction, object source) {
-	controlledPlatform->ControlEvent(direction, source);
-	// Kein master: Event an plattform leiten
-	// Master vorhanden
-		// Event vom Master: An Plattform und Slaves geben
-		// Nicht vom Master: An Master geben
+	if(masterMediator == 0) {
+		controlledPlatform->ControlEvent(direction, this);
+		ControlEventToSlaves(direction);
+	} else {
+		if(source == masterMediator) {
+			controlledPlatform->ControlEvent(direction, this);
+			ControlEventToSlaves(direction);
+		} else {
+			masterMediator->ControlEvent(direction, this);
+		}
+	}
+}
+
+private func ControlEventToSlaves(int direction) {
+	if(leftSlaveMediator != 0) {
+		leftSlaveMediator->ControlEvent(direction, this);
+	}
+	if(rightSlaveMediator != 0) {
+		rightSlaveMediator->ControlEvent(direction, this);
+	}
 }
 
 /*	Function: MovementEvent
@@ -29,11 +44,26 @@ public func ControlEvent(int direction, object source) {
 	direction	- Direction of movement. Must be one of the COMD_* constants.
 	source		- Source of the event. */
 public func MovementEvent(int direction, object source) {
-	controlLever->MovementEvent(direction, source);
-	// Kein master: Event an Hebel leiten
-	// Master vorhanden
-		// Event vom master: An Hebel und Slaves geben
-		// Nicht vom Master: An Master geben
+	if(masterMediator == 0) {
+		controlLever->MovementEvent(direction, this);
+		MovementEventToSlaves(direction);
+	} else {
+		if(source == masterMediator) {
+			controlLever->MovementEvent(direction, this);
+			MovementEventToSlaves(direction);
+		} else {
+			masterMediator->MovementEvent(direction, this);
+		}
+	}
+}
+
+private func MovementEventToSlaves(int direction) {
+	if(leftSlaveMediator != 0) {
+		leftSlaveMediator->MovementEvent(direction, this);
+	}
+	if(rightSlaveMediator != 0) {
+		rightSlaveMediator->MovementEvent(direction, this);
+	}
 }
 
 public func SetLeftSlave(object mediator) {
