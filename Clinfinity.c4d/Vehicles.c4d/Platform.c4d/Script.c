@@ -21,7 +21,6 @@ public func CreatePlatform(int x, int y, int owner) {
 	var mediator = CreateObject(COMD, AbsX(3), AbsY(3), owner);
 	var platform = CreateObject(PLTF, x, y, owner);
 	platform->LocalN("controlMediator") = mediator;
-	platform->LocalN("master") = 0;
 	platform->SetAction("Fly");
 	var lever = COLV->CreateLever(platform->GetX() - 35, platform->GetY() - 3, mediator);
 	mediator->LocalN("controlledPlatform") = platform;
