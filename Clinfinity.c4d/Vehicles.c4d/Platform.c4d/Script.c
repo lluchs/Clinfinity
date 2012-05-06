@@ -3,15 +3,16 @@
 
 #strict 2
 
-local pLeft, pRight, master;
+local nextLeft, nextRight, master;
 local iX, iY, iR;
 local controlMediator;
 
 public func IsPlatform() { return true; }
-public func GetLeft() { return pLeft; }
-public func GetRight() { return pRight; }
+public func GetLeft() { return nextLeft; }
+public func GetRight() { return nextRight; }
 public func IsMaster() { return master == this; }
 public func GetMaster() { return master; }
+private func GetControlMediator() { return controlMediator; }
 
 /*	Constructor: CreatePlatform
 	Factory method for platforms.
@@ -98,11 +99,25 @@ private func FloatDown() {
 
 /* Master/Slave-System */
 
+public func SetLeftSlave(object platform) {
+	if(platform == 0 || platform == this || !platform->~IsPlatform()) {
+		return false;
+	}
+	return controlMediator->SetLeftSlave(platform->GetControlMediator());
+}
+
+public func SetRightSlave(object platform) {
+	if(platform == 0 || platform == this || !platform->~IsPlatform()) {
+		return false;
+	}
+	return controlMediator->SetRightSlave(platform->GetControlMediator());
+}
+
 public func ConnectLeft(object pPlatform, bool fSlave) {
   if(!pPlatform->~IsPlatform()) return false;
   if(pPlatform == this) return false;
 
-  pLeft = pPlatform;
+  nextLeft = pPlatform;
   if(!fSlave) {
     Sound("Connect");
     pPlatform->ConnectRight(this, true);
@@ -115,7 +130,7 @@ public func ConnectRight(object pPlatform, bool fSlave) {
   if(!pPlatform->~IsPlatform()) return false;
   if(pPlatform == this) return false;
 
-  pRight = pPlatform;
+  nextRight = pPlatform;
   if(!fSlave) {
     Sound("Connect");
     pPlatform->ConnectLeft(this, true);
@@ -131,12 +146,12 @@ public func FindMaster(object pBy) {
   var pResult = 0;
 
   //Von links kommend müssen wir nach rechts
-  if(pRight && (this == pBy || pLeft == pBy)) {
-    pResult = pRight->FindMaster(this);
+  if(nextRight && (this == pBy || nextLeft == pBy)) {
+    pResult = nextRight->FindMaster(this);
   }
   //Von rechts kommend müssen wir nach links
-  if(pLeft && (this == pBy || pRight == pBy)) {
-    pResult = pLeft->FindMaster(this);
+  if(nextLeft && (this == pBy || nextRight == pBy)) {
+    pResult = nextLeft->FindMaster(this);
   }
 
   if(pResult) return pResult;
@@ -153,12 +168,12 @@ public func SetMaster(object pNewMaster, object pBy) {
   master = pNewMaster;
 
   //Von links kommend müssen wir nach rechts
-  if(pRight && (this == pBy || pLeft == pBy)) {
-    pRight->SetMaster(pNewMaster, this);
+  if(nextRight && (this == pBy || nextLeft == pBy)) {
+    nextRight->SetMaster(pNewMaster, this);
   }
   //Von rechts kommend müssen wir nach links
-  if(pLeft && (this == pBy || pRight == pBy)) {
-    pLeft->SetMaster(pNewMaster, this);
+  if(nextLeft && (this == pBy || nextRight == pBy)) {
+    nextLeft->SetMaster(pNewMaster, this);
   }
 
   return true;
@@ -171,12 +186,12 @@ public func ConnectedTo(object pPlatform, object pBy) {
   var fResult = false;
 
   //Von links kommend müssen wir nach rechts
-  if(pRight && (this == pBy || pLeft == pBy)) {
-    fResult = pRight->ConnectedTo(pPlatform, this);
+  if(nextRight && (this == pBy || nextLeft == pBy)) {
+    fResult = nextRight->ConnectedTo(pPlatform, this);
   }
   //Von rechts kommend müssen wir nach links
-  if(pLeft && (this == pBy || pRight == pBy)) {
-    fResult = pLeft->ConnectedTo(pPlatform, this);
+  if(nextLeft && (this == pBy || nextRight == pBy)) {
+    fResult = nextLeft->ConnectedTo(pPlatform, this);
   }
 
   return fResult;

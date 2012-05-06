@@ -5,3 +5,11 @@ Length=1
 Facet=0,0,90,6
 NextAction=Fly
 StartCall=Flying
+
+[Action]
+Name=FlySlave
+Procedure=ATTACH
+Length=1
+Facet=0,0,90,6
+NextAction=FlySlave
+StartCall=Flying
