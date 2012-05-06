@@ -3,16 +3,7 @@
 
 #strict 2
 
-local nextLeft, nextRight, master;
-local iX, iY, iR;
 local controlMediator;
-
-public func IsPlatform() { return true; }
-public func GetLeft() { return nextLeft; }
-public func GetRight() { return nextRight; }
-public func IsMaster() { return master == this; }
-public func GetMaster() { return master; }
-private func GetControlMediator() { return controlMediator; }
 
 /*	Constructor: CreatePlatform
 	Factory method for platforms.
@@ -38,10 +29,12 @@ public func CreatePlatform(int x, int y, int owner) {
 	return platform;
 }
 
-protected func Flying()
-{
+/*	Function: IsPlatform
+	Marks objects to have platform-like capabilities. */
+public func IsPlatform() { return true; }
+
+protected func Flying() {
   SetSolidMask(0, 4, 90, 4);
-  AddEffect("IntFly", this, 10, 1, this, 0);
 }
 
 protected func ContactLeft() {
@@ -61,6 +54,8 @@ protected func ContactBottom() {
 }
 
 /*	Section: Control */
+
+private func GetControlMediator() { return controlMediator; }
 
 /*	Function: ControlEvent
 	Event handler for control events.
@@ -97,8 +92,17 @@ private func FloatDown() {
 	controlMediator->MovementEvent(COMD_Down, this);
 }
 
-/* Master/Slave-System */
+/*	Section: Master/Slave system */
 
+/*	Function: SetLeftSlave
+	Connects a platform to the left of this platform.
+	When connected, both platforms will move in sync and can be controlled from either control lever.
+
+	Parameters:
+	platform	- The platform to connect.
+	
+	Returns:
+	*true* if connecting the platforms was successful, *false* otherwise. */
 public func SetLeftSlave(object platform) {
 	if(platform == 0 || platform == this || !platform->~IsPlatform()) {
 		return false;
@@ -106,148 +110,12 @@ public func SetLeftSlave(object platform) {
 	return controlMediator->SetLeftSlave(platform->GetControlMediator());
 }
 
+/*	Function: SetRightSlave
+	Connects a platform to the right of this platform.
+	See <SetLeftSlave> for details. */
 public func SetRightSlave(object platform) {
 	if(platform == 0 || platform == this || !platform->~IsPlatform()) {
 		return false;
 	}
 	return controlMediator->SetRightSlave(platform->GetControlMediator());
-}
-
-public func ConnectLeft(object pPlatform, bool fSlave) {
-  if(!pPlatform->~IsPlatform()) return false;
-  if(pPlatform == this) return false;
-
-  nextLeft = pPlatform;
-  if(!fSlave) {
-    Sound("Connect");
-    pPlatform->ConnectRight(this, true);
-  }
-
-  master = FindMaster(this);
-}
-
-public func ConnectRight(object pPlatform, bool fSlave) {
-  if(!pPlatform->~IsPlatform()) return false;
-  if(pPlatform == this) return false;
-
-  nextRight = pPlatform;
-  if(!fSlave) {
-    Sound("Connect");
-    pPlatform->ConnectLeft(this, true);
-  }
-
-  master = FindMaster(this);
-}
-
-public func FindMaster(object pBy) {
-  if(master) return master;
-  if(!pBy) pBy = this;
-
-  var pResult = 0;
-
-  //Von links kommend müssen wir nach rechts
-  if(nextRight && (this == pBy || nextLeft == pBy)) {
-    pResult = nextRight->FindMaster(this);
-  }
-  //Von rechts kommend müssen wir nach links
-  if(nextLeft && (this == pBy || nextRight == pBy)) {
-    pResult = nextLeft->FindMaster(this);
-  }
-
-  if(pResult) return pResult;
-
-  //Keiner? Dann sind wir der neue
-  master = this;
-  SetMaster(master);
-  return this;
-}
-
-public func SetMaster(object pNewMaster, object pBy) {
-  if(!pBy) pBy = this;
-
-  master = pNewMaster;
-
-  //Von links kommend müssen wir nach rechts
-  if(nextRight && (this == pBy || nextLeft == pBy)) {
-    nextRight->SetMaster(pNewMaster, this);
-  }
-  //Von rechts kommend müssen wir nach links
-  if(nextLeft && (this == pBy || nextRight == pBy)) {
-    nextLeft->SetMaster(pNewMaster, this);
-  }
-
-  return true;
-}
-
-public func ConnectedTo(object pPlatform, object pBy) {
-  if(pPlatform == this) return true;
-  if(!pBy) pBy = this;
-
-  var fResult = false;
-
-  //Von links kommend müssen wir nach rechts
-  if(nextRight && (this == pBy || nextLeft == pBy)) {
-    fResult = nextRight->ConnectedTo(pPlatform, this);
-  }
-  //Von rechts kommend müssen wir nach links
-  if(nextLeft && (this == pBy || nextRight == pBy)) {
-    fResult = nextLeft->ConnectedTo(pPlatform, this);
-  }
-
-  return fResult;
-}
-
-/* Physics */
-
-public func CalculatePositions() {
-  var i, pPlatform;
-  pPlatform = this;
-  i = 1;
-  while(pPlatform) {
-    pPlatform = pPlatform->GetLeft();
-    if(!pPlatform) break;
-    SetPosition(GetX()-i*GetDefWidth(), GetY(), pPlatform);
-    pPlatform->SavePosition();
-    i++;
-  }
-  pPlatform = this;
-  i = 1;
-  while(pPlatform) {
-    pPlatform = pPlatform->GetRight();
-    if(!pPlatform) break;
-    SetPosition(GetX()+i*GetDefWidth(), GetY(), pPlatform);
-    pPlatform->SavePosition();
-    i++;
-  }
-}
-
-public func SavePosition() {
-  iX = GetX();
-  iY = GetY();
-  iR = GetR();
-}
-
-public func FxIntFlyTimer(object pTarget, int iNr, int iTime)
-{
-  //SetXDir(0); SetYDir(0);
-  //SetPosition(GetX(), GetY());
-
- // SetPosition(GetX(), GetY()+Sin(iTime%360, 360, 1000));
-
-  if(master) {
-		if(iX != GetX() || iY != GetY()) {
-			master->CalculatePositions(pTarget);
-		}
-	}
-	//SavePosition();
-
-  var pWeights = FindObjects(Find_Not(Find_Func("IsPlatform")), Find_OnLine(-GetDefWidth()/2, -GetDefHeight()/2-5, GetDefWidth()/2, -GetDefHeight()/2-5));
-  var iMass = 0;
-  for(var pWeight in pWeights) {
-    iMass += GetMass(pWeight);
-    Message("%d", pWeight, GetMass(pWeight));
-  }
-  Message("%d", this, iMass);
-
-  return true;
 }
