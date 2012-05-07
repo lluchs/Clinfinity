@@ -86,10 +86,14 @@ global func GetArrayItemPosition(&value,&aArray) { //2do: remove that
 	return GetIndexOf(value, aArray);
 }
 
-//Fügt ein Item am Ende eines Array ein
-global func PushBack(value,&aArray)
-{
- return aArray[GetLength(aArray)]=value;
+/*	Function: PushBack
+	Appends an element to an array.
+
+	Parameters:
+	value	- The element to append.
+	aArray	- The array that gets appended to. */
+global func PushBack(value, &aArray) {
+	aArray[GetLength(aArray)] = value;
 }
 
 //Fügt ein Item am Anfang ein
