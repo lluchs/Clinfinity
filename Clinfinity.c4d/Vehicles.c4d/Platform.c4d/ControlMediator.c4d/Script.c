@@ -1,5 +1,8 @@
 /*	Script: Control mediator
-	Encapsulates the interactions between levers and platforms.*/
+	Encapsulates the interactions between levers and platforms.
+	
+	See Also:
+	General information on the <mediator pattern at http://en.wikipedia.org/wiki/Mediator_pattern>. */
 
 #strict 2
 
