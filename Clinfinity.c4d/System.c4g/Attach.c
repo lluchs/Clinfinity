@@ -9,7 +9,7 @@
 	If the calling object isn't already in an action with procedure ATTACH the function will set the action "Attach".
 
 	When callerVertex or targetVertex are omitted, this function will add new vertices so that the object won't move.
-	Vertex indices are starting at 1.
+	*Important:* Vertex indices are starting at 1 instead of 0.
 	
 	Parameters:
 	to - Object to which the caller should be attached.
