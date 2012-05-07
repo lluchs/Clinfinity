@@ -1,8 +1,17 @@
-/*-- Arrays --*/
+/*	Script: Arrays
+	Various helper functions for working with arrays. */
 
 #strict 2
 
-// Testet ob ein Wert im Array drin ist
+/*	Function: InArray
+	Tests if a value is contained in an array.
+
+	Parameters:
+	Test	- The value to test.
+	aArray	- The array that might contain the value.
+	
+	Returns:
+	*true* if Test is in aArray, *false* otherwise. */
 global func InArray(Test, array aArray)
 {
   return GetIndexOf(Test, aArray) != -1;
@@ -150,3 +159,28 @@ global func ConcatArrays(array a, array b) {
 	return a;
 }
 
+/*	Function: RemoveElement
+	Removes the indicated element from the array.
+	Might not preserve the order of elements.
+	
+	Parameters:
+	element		- The element to remove.
+	targetArray - The array to remove the element from.
+	
+	Returns:
+	*true* if the element was removed, *false* otherwise. */
+global func RemoveElement(element, array &targetArray) {
+	var length = GetLength(targetArray);
+	for(var i = 0; i < length; i++) {
+		if(targetArray[i] == element) {
+			if(i <= length - 1) {
+				// Move last element here
+				targetArray[i] = targetArray[length - 1];
+			}
+			// Shorten by one
+			SetLength(targetArray, length - 1);
+			return true;
+		}
+	}
+	return false;
+}
