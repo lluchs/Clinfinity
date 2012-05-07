@@ -44,3 +44,47 @@ global func AttachTo(object to, int callerVertex, int targetVertex) {
 	
 	SetActionData(256 * callerVertex + targetVertex);
 }
+
+/*  Function: CopyVertices
+    Copies all *DefCore-defined* vertices from another object.
+
+	The copied vertices are saved using an Effect, allowing easy removal using _RemoveCopiedVertices_.
+
+	Parameters:
+	from - Object from which the vertices are copied. */
+global func CopyVertices(object from) {
+	var start = GetVertexNum();
+	for(var num = from->GetDefCoreVal("Vertices", "DefCore"), i = 0; i < num; i++) {
+		var vx = from->GetDefCoreVal("VertexX", "DefCore", 0, i),
+		    vy = from->GetDefCoreVal("VertexY", "DefCore", 0, i);
+		AddVertex(AbsX(vx + from->GetX()), AbsY(vy + from->GetY()));
+		SetVertex(start + i, 2, from->GetDefCoreVal("VertexCNAT", "DefCore", 0, i));
+		SetVertex(start + i, 3, from->GetDefCoreVal("VertexFriction", "DefCore", 0, i));
+	}
+	// save vertices
+	var effect = AddEffect("CopiedVertices", this, 1);
+	EffectVar(0, this, effect) = from;
+	EffectVar(1, this, effect) = start;
+	EffectVar(2, this, effect) = start + num;
+}
+
+/*  Function: RemoveCopiedVertices
+    Removes vertices which were previously copied using _CopyVertices_.
+
+	Parameters:
+	from - Object from which the vertices were copied. */
+global func RemoveCopiedVertices(object from) {
+	var i = GetEffectCount("CopiedVertices", this);
+	while(i--) {
+		var effect = GetEffect("CopiedVertices", this, i);
+		if(EffectVar(0, this, effect) == from) {
+			var start = EffectVar(1, this, effect), end = EffectVar(2, this, effect);
+			// indexes will shift, so counting up won't work
+			for(var i = end - 1; i >= start; i--)
+				RemoveVertex(i);
+			RemoveEffect(0, this, effect);
+			return true;
+		}
+	}
+	return false;
+}
