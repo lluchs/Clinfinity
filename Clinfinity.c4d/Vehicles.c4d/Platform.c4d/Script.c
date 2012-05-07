@@ -26,8 +26,7 @@ public func CreatePlatform(int x, int y, int owner) {
 	lever->AttachTo(platform);
 	mediator->LocalN("controlledPlatform") = platform;
 	mediator->LocalN("controlLever") = lever;
-	var prop = CreateObject(PROP, AbsX(platform->GetX()), AbsY(platform->GetY() + 12), owner);
-	prop->AttachTo(platform);
+	PROP->CreateProp(platform->GetX(), platform->GetY() + 12, platform, mediator);
 	return platform;
 }
 

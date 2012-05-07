@@ -12,8 +12,8 @@ local gearStop, gearUp, gearDown;
 	*Note:*	You should always create a lever using this method.
 
 	Parameters:
-	x			- Horizontal coordinate
-	y			- Vertical coordinate
+	x			- Horizontal coordinate.
+	y			- Vertical coordinate.
 	forMediator	- The control mediator this lever sends its events to.
 
 	Returns:
