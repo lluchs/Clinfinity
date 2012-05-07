@@ -1,0 +1,7 @@
+[Action]
+Name=Attach
+Procedure=ATTACH
+Length=20
+Delay=1
+Facet=0,0,90,10
+NextAction=Attach
