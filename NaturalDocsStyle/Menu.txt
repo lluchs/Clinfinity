@@ -46,12 +46,23 @@ Format: 1.52
 # --------------------------------------------------------------------------
 
 
-File: Control lever  (Clinfinity.c4d\Vehicles.c4d\Platform.c4d\ControlLever.c4d\Script.c)
-File: Control mediator  (Clinfinity.c4d\Vehicles.c4d\Platform.c4d\ControlMediator.c4d\Script.c)
 File: Drafts  (Clinfinity.c4d\Rules.c4d\Draft.c4d\Script.c)
-File: MatSys.c  (Clinfinity.c4d\System.c4g\MatSys.c)
-File: Platform  (Clinfinity.c4d\Vehicles.c4d\Platform.c4d\Script.c)
 File: Storage System  (Clinfinity.c4d\Helpers.c4d\StorageSystem.c4d\Script.c)
+
+Group: Vehicles.c4d  {
+
+   File: Control lever  (Clinfinity.c4d\Vehicles.c4d\Platform.c4d\ControlLever.c4d\Script.c)
+   File: Control mediator  (Clinfinity.c4d\Vehicles.c4d\Platform.c4d\ControlMediator.c4d\Script.c)
+   File: Platform  (Clinfinity.c4d\Vehicles.c4d\Platform.c4d\Script.c)
+   File: Prop  (Clinfinity.c4d\Vehicles.c4d\Platform.c4d\Prop.c4d\Script.c)
+   }  # Group: Vehicles.c4d
+
+Group: System.c4g  {
+
+   File: Arrays  (Clinfinity.c4d\System.c4g\Arrays.c)
+   File: Attach.c  (Clinfinity.c4d\System.c4g\Attach.c)
+   File: MatSys.c  (Clinfinity.c4d\System.c4g\MatSys.c)
+   }  # Group: System.c4g
 
 Group: Index  {
 
