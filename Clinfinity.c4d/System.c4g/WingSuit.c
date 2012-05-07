@@ -36,7 +36,9 @@ public func IsGliding() {
 }
 
 protected func FxWingSuitStart(object target, int effectNumber, int temporary) {
-	Sound("SailDown", false, target, 50);
+	if(temporary == 0) {
+		Sound("SailDown", false, target, 50);
+	}
 }
 
 protected func FxWingSuitTimer(object target, int effectNumber, int effectTime) {
