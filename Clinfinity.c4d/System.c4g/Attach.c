@@ -5,6 +5,7 @@
 
 /*  Function: AttachTo
 	Attaches the calling object to the object _to_.
+	*Note:* This also changes the object order, so _to_ is internally sorted before the calling object.
 
 	If the calling object isn't already in an action with procedure ATTACH the function will set the action "Attach".
 
