@@ -57,7 +57,7 @@ protected func CreateConstructionSite(id idType) {
 		var hNeeded = CreateHash(), iNeeded, ID;
 		for(ID in GetMatSysIDs()) {
 			if(iNeeded = GetComponent(ID, 0, 0, idType)) {
-				if(MatSysGetFill(GetOwner(Contained()), ID) < iNeeded) {
+				if(MatSysGetTeamFill(GetOwner(Contained()), ID) < iNeeded) {
 					PlayerMessage(GetOwner(Contained()), "<c ff0000>$TxtNotEnoughMaterial$</c>", this);
 					return;
 				}
@@ -75,7 +75,7 @@ protected func CreateConstructionSite(id idType) {
 	if(fNeedMaterial) {
 		var iter = HashIter(hNeeded), node;
 		while(node = HashIterNext(iter)) {
-			MatSysDoFill(-node[1], GetOwner(), node[0]);
+			MatSysDoTeamFill(-node[1], GetOwner(), node[0]);
 			pSite -> SetComponent(node[0], node[1]);
 		}
 	}
