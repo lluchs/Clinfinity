@@ -26,8 +26,19 @@ public func Initialize() {
 	}
 }
 
-private func OnFillChange(Key, int iChange) {
-	DoScore(GetOwner(), iChange * GetValue(0, Key));
+public func OnFillChange(Key, int iChange, bool dontNotify) {
+	// notify other team member's MatSys
+	var owner = GetOwner();
+	if(!dontNotify) {
+		for(var count = GetPlayerCount(), i = 0; i < count; i++) {
+			var p = GetPlayerByIndex(i);
+			if(p != owner && !Hostile(p, owner))
+				GetMatSys(p)->OnFillChange(Key, iChange, true);
+		}
+	}
+
+	// add to the score
+	DoScore(owner, iChange * GetValue(0, Key));
 	// highlight change
 	HashGet(hIcons, Key)->Flash(iChange);
 	return 1;
@@ -37,14 +48,20 @@ local fNoStatusMessage;
 public func Timer() {
 	if(fNoStatusMessage)
 		return;
+	var owner = GetOwner();
 	var iter = HashIter(hIcons), node;
-	while(node = HashIterNext(iter))
-		node[1] -> SetStatusMessage(Format("@%d", GetFill(node[0])));
+	while(node = HashIterNext(iter)) {
+		var fill = MatSysGetTeamFill(owner, node[0]);
+		node[1] -> SetStatusMessage(Format("@%d", fill));
+	}
 }
 
 public func MaterialCheck(id idType) {
 	fNoStatusMessage = 1;
+	var owner = GetOwner();
 	var iter = HashIter(hIcons), node;
-	while(node = HashIterNext(iter))
-		node[1] -> BuildMessage(GetComponent(node[0], 0, 0, idType), GetFill(node[0]));
+	while(node = HashIterNext(iter)) {
+		var fill = MatSysGetTeamFill(owner, node[0]);
+		node[1] -> BuildMessage(GetComponent(node[0], 0, 0, idType), fill);
+	}
 }
