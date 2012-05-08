@@ -40,7 +40,7 @@ private func AdjustGraphic(id idObj, int overlay) {
 	msg   - The message to show.
 	lines - The number of lines the message has. */
 public func SetStatusMessage(string msg, int lines) {
-	CustomMessage(msg, this, GetOwner(), 30, 60 + lines * 95 / 10); // jede Zeile hat 9,5px
+	CustomMessage(msg, this, GetOwner(), 30, 60 + lines * 125 / 10); // jede Zeile hat 12,5px
 }
 
 /*  Function: BuildMessage
