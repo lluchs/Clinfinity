@@ -4,25 +4,35 @@ global func DrawResource(int x, int y, int materialNumber, string materialTextur
 	AddEffect("DrawResource", 0, 1, 1, 0, 0, x, y, materialNumber, materialTexture);
 }
 
+static const DrawResourceX = 0;
+static const DrawResourceY = 1;
+static const DrawResourceMaterialNumber = 2;
+static const DrawResourceMaterialTexture = 3;
+static const DrawResourceOldX = 4;
+static const DrawResourceOldY = 5;
+static const DrawResourceSize = 6;
+static const DrawResourceNewX = 7;
+static const DrawResourceNewY = 8;
+
 global func FxDrawResourceStart(object target, int effectNumber, int temporary, x, y, materialNumber, materialTexture) {
 	if(temporary == 0) {
-		EffectVar(0, target, effectNumber) = x;
-		EffectVar(1, target, effectNumber) = y;
-		EffectVar(2, target, effectNumber) = materialNumber;
-		EffectVar(10, target, effectNumber) = materialTexture;
+		EffectVar(DrawResourceX, target, effectNumber) = x;
+		EffectVar(DrawResourceY, target, effectNumber) = y;
+		EffectVar(DrawResourceMaterialNumber, target, effectNumber) = materialNumber;
+		EffectVar(DrawResourceMaterialTexture, target, effectNumber) = materialTexture;
 	}
 }
 
 global func FxDrawResourceTimer(object target, int effectNumber, int effectTime) {
-	var iX = EffectVar(0, target, effectNumber);
-	var iY = EffectVar(1, target, effectNumber);
-	var iMat = EffectVar(2, target, effectNumber);
-	var materialTexture = EffectVar(10, target, effectNumber);
+	var iX = EffectVar(DrawResourceX, target, effectNumber);
+	var iY = EffectVar(DrawResourceY, target, effectNumber);
+	var iMat = EffectVar(DrawResourceMaterialNumber, target, effectNumber);
+	var materialTexture = EffectVar(DrawResourceMaterialTexture, target, effectNumber);
 	var sMat = Format("%s-%s", MaterialName(iMat), materialTexture);
-	var xOld = EffectVar(3, target, effectNumber);
-	var yOld = EffectVar(4, target, effectNumber);
+	var xOld = EffectVar(DrawResourceOldX, target, effectNumber);
+	var yOld = EffectVar(DrawResourceOldY, target, effectNumber);
 
-	var iSize = EffectVar(5, target, effectNumber);
+	var iSize = EffectVar(DrawResourceSize, target, effectNumber);
 	if(!iSize)
 		iSize = RandomX(20, 25);
 	else
@@ -32,15 +42,15 @@ global func FxDrawResourceTimer(object target, int effectNumber, int effectTime)
 	var yNew = Sin(effectTime * 5, iSize) / 2;
 
 	if(effectTime <= 2) {
-		EffectVar(8, target, effectNumber) = xNew;
-		EffectVar(9, target, effectNumber) = yNew;
+		EffectVar(DrawResourceNewX, target, effectNumber) = xNew;
+		EffectVar(DrawResourceNewY, target, effectNumber) = yNew;
 	} else if(effectTime > 72 * 2) {
-		xNew = EffectVar(8, target, effectNumber);
-		yNew = EffectVar(9, target, effectNumber);
+		xNew = EffectVar(DrawResourceNewX, target, effectNumber);
+		yNew = EffectVar(DrawResourceNewY, target, effectNumber);
 	}
-	EffectVar(3, target, effectNumber) = xNew;
-	EffectVar(4, target, effectNumber) = yNew;
-	EffectVar(5, target, effectNumber) = iSize;
+	EffectVar(DrawResourceOldX, target, effectNumber) = xNew;
+	EffectVar(DrawResourceOldY, target, effectNumber) = yNew;
+	EffectVar(DrawResourceSize, target, effectNumber) = iSize;
 
 	DrawMaterialQuad(sMat, iX, iY, iX + xOld, iY + yOld, iX + xNew, iY + yNew, iX, iY, true);
 
