@@ -11,7 +11,7 @@ private func Chopping() {
 
 		var matSys = GetMatSys(GetOwner(), true);
 		if(matSys != 0 && InArray(WOOD, GetMatSysIDs())) {
-			MatSysDoFill(1, GetOwner(), WOOD);
+			matSys->DoFill(1, WOOD);
 		} else {
 			CreateContents(WOOD);
 		}
