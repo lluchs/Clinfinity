@@ -21,15 +21,6 @@ public func Initialize() {
 		pIcon = CreateObject(LPMI, 0, 0, GetOwner());
 		pIcon -> SetPosition(iX);
 		pIcon -> Set(idObj);
-		var iWidth = 566, iHeight = 566, iXAdjust = 28000, iYAdjust = 13000;
-		if(idObj != LHBK && idObj != LHTL) {
-			iXAdjust *= 2;
-			iXAdjust += 3000;
-			iYAdjust *= 2;
-			iWidth += 150;
-			iHeight += 34;
-		}
-		pIcon -> SetObjDrawTransform(iWidth, 0, iXAdjust, 0, iHeight, iYAdjust, 0, GFX_Overlay);
 		HashPut(hIcons, idObj, pIcon);
 		iX -= 40;
 	}
@@ -37,6 +28,8 @@ public func Initialize() {
 
 private func OnFillChange(Key, int iChange) {
 	DoScore(GetOwner(), iChange * GetValue(0, Key));
+	// highlight change
+	HashGet(hIcons, Key)->Flash(iChange);
 	return 1;
 }
 
