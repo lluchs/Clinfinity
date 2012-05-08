@@ -1,10 +1,15 @@
 #strict 2
 
-global func FxDrawResourceStart(object target, int effectNumber, int temporary, x, y, materialNumber) {
+global func DrawResource(int x, int y, int materialNumber, string materialTexture) {
+	AddEffect("DrawResource", 0, 1, 1, 0, 0, x, y, materialNumber, materialTexture);
+}
+
+global func FxDrawResourceStart(object target, int effectNumber, int temporary, x, y, materialNumber, materialTexture) {
 	if(temporary == 0) {
 		EffectVar(0, target, effectNumber) = x;
 		EffectVar(1, target, effectNumber) = y;
 		EffectVar(2, target, effectNumber) = materialNumber;
+		EffectVar(10, target, effectNumber) = materialTexture;
 	}
 }
 
@@ -12,7 +17,8 @@ global func FxDrawResourceTimer(object target, int effectNumber, int effectTime)
 	var iX = EffectVar(0, target, effectNumber);
 	var iY = EffectVar(1, target, effectNumber);
 	var iMat = EffectVar(2, target, effectNumber);
-	var sMat = Format("%s-Flat", MaterialName(iMat));
+	var materialTexture = EffectVar(10, target, effectNumber);
+	var sMat = Format("%s-%s", MaterialName(iMat), materialTexture);
 	var xOld = EffectVar(3, target, effectNumber);
 	var yOld = EffectVar(4, target, effectNumber);
 
