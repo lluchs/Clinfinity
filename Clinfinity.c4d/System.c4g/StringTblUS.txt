@@ -1,5 +1,9 @@
+# Conkit
 TxtCreateconstructionsi=Create construction site
 TxtNoconstructionplansa=No construction plans available
 TxtConstructions=Construction: %s
 TxtCantConstruct=%s can't build.
 TxtNotEnoughMaterial=Not enough building materials available!
+
+# Demolition
+CtxDemolitionDesc=Demolish building
