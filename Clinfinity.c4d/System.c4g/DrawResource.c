@@ -1,5 +1,17 @@
+/*	Script: DrawResource.c
+	Draws a resource vein.
+	The algorithm draws a vein in consecutive triangles, clockwise, around a central point. */
+
 #strict 2
 
+/*	Function: DrawResource
+	Draws a resource vein around a central point.
+	
+	Parameters:
+	materialIndex	- Material the vein will be made of.
+	materialTexture	- The material's texture.
+	x				- Horizontal coordinate of the centre.
+	y				- Vertical coordinate of the centre. */
 global func DrawResource(int materialIndex, string materialTexture, int x, int y) {
 	AddEffect("DrawResource", 0, 1, 1, 0, 0, materialIndex, materialTexture, x, y);
 }
