@@ -20,6 +20,7 @@ static const DrawResourceInitialMinSize = 20;
 static const DrawResourceInitialMaxSize = 25;
 static const DrawResourceSizeChange = 6;
 static const DrawResourceTunnelBackground = true;
+static const DrawResourceMaxEffectTime = 145;
 
 global func FxDrawResourceStart(object target, int effectNumber, int temporary, x, y, materialIndex, materialTexture) {
 	if(temporary == 0) {
@@ -51,7 +52,7 @@ global func FxDrawResourceTimer(object target, int effectNumber, int effectTime)
 	if(effectTime <= 2) {
 		EffectVar(DrawResourceNewEdgeX, target, effectNumber) = xNew;
 		EffectVar(DrawResourceNewEdgeY, target, effectNumber) = yNew;
-	} else if(effectTime > 72 * 2) {
+	} else if(effectTime >= DrawResourceMaxEffectTime) {
 		xNew = EffectVar(DrawResourceNewEdgeX, target, effectNumber);
 		yNew = EffectVar(DrawResourceNewEdgeY, target, effectNumber);
 	}
@@ -63,7 +64,7 @@ global func FxDrawResourceTimer(object target, int effectNumber, int effectTime)
 
 	CreateParticle("PSpark", centreX + xNew / 2, centreY + yNew / 2, 0, 0, size * 25, RGBa(GetMaterialColor(materialIndex, 0, 0), GetMaterialColor(materialIndex, 0, 1), GetMaterialColor(materialIndex, 0, 2), 100));
 
-	if(effectTime > 72 * 2)
+	if(effectTime >= DrawResourceMaxEffectTime)
 		return -1;
 	else
 		return 1;
