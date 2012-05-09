@@ -1,7 +1,7 @@
 #strict 2
 
-global func DrawResource(int x, int y, int materialIndex, string materialTexture) {
-	AddEffect("DrawResource", 0, 1, 1, 0, 0, x, y, materialIndex, materialTexture);
+global func DrawResource(int materialIndex, string materialTexture, int x, int y) {
+	AddEffect("DrawResource", 0, 1, 1, 0, 0, materialIndex, materialTexture, x, y);
 }
 
 static const DrawResourceCentreX = 0;
@@ -23,7 +23,7 @@ static const DrawResourceTunnelBackground = true;
 static const DrawResourceAngularRate = 5;
 static const DrawResourceDrawingCycles = 2;
 
-global func FxDrawResourceStart(object target, int effectNumber, int temporary, x, y, materialIndex, materialTexture) {
+global func FxDrawResourceStart(object target, int effectNumber, int temporary, materialIndex, materialTexture, x, y) {
 	if(temporary == 0) {
 		EffectVar(DrawResourceCentreX, target, effectNumber) = x;
 		EffectVar(DrawResourceCentreY, target, effectNumber) = y;
