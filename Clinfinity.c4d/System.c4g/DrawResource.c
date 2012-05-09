@@ -28,6 +28,7 @@ global func FxDrawResourceStart(object target, int effectNumber, int temporary, 
 		EffectVar(DrawResourceCentreY, target, effectNumber) = y;
 		EffectVar(DrawResourceMaterialIndex, target, effectNumber) = materialIndex;
 		EffectVar(DrawResourceMaterialTexture, target, effectNumber) = materialTexture;
+		EffectVar(DrawResourceSize, target, effectNumber) = RandomX(DrawResourceInitialMinSize, DrawResourceInitialMaxSize);
 	}
 }
 
@@ -41,10 +42,7 @@ global func FxDrawResourceTimer(object target, int effectNumber, int effectTime)
 	var yOld = EffectVar(DrawResourceOldEdgeY, target, effectNumber);
 
 	var size = EffectVar(DrawResourceSize, target, effectNumber);
-	if(!size)
-		size = RandomX(DrawResourceInitialMinSize, DrawResourceInitialMaxSize);
-	else
-		size = BoundBy(size + RandomX(-DrawResourceSizeChange, DrawResourceSizeChange), DrawResourceMinSize, DrawMaterialMaxSize);
+	size = BoundBy(size + RandomX(-DrawResourceSizeChange, DrawResourceSizeChange), DrawResourceMinSize, DrawMaterialMaxSize);
 
 	var xNew = Cos(effectTime * 5, size);
 	var yNew = Sin(effectTime * 5, size) / 2;
