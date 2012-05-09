@@ -8,11 +8,11 @@ static const DrawResourceCentreX = 0;
 static const DrawResourceCentreY = 1;
 static const DrawResourceMaterialIndex = 2;
 static const DrawResourceMaterialTexture = 3;
-static const DrawResourceOldEdgeX = 4;
-static const DrawResourceOldEdgeY = 5;
+static const DrawResourcePreviousEdgeX = 4;
+static const DrawResourcePreviousEdgeY = 5;
 static const DrawResourceSize = 6;
-static const DrawResourceNewEdgeX = 7;
-static const DrawResourceNewEdgeY = 8;
+static const DrawResourceStartEdgeX = 7;
+static const DrawResourceStartEdgeY = 8;
 
 static const DrawResourceMinSize = 10;
 static const DrawMaterialMaxSize = 65;
@@ -20,7 +20,8 @@ static const DrawResourceInitialMinSize = 20;
 static const DrawResourceInitialMaxSize = 25;
 static const DrawResourceSizeChange = 6;
 static const DrawResourceTunnelBackground = true;
-static const DrawResourceMaxEffectTime = 145;
+static const DrawResourceAngularRate = 5;
+static const DrawResourceDrawingCycles = 2;
 
 global func FxDrawResourceStart(object target, int effectNumber, int temporary, x, y, materialIndex, materialTexture) {
 	if(temporary == 0) {
@@ -28,7 +29,13 @@ global func FxDrawResourceStart(object target, int effectNumber, int temporary, 
 		EffectVar(DrawResourceCentreY, target, effectNumber) = y;
 		EffectVar(DrawResourceMaterialIndex, target, effectNumber) = materialIndex;
 		EffectVar(DrawResourceMaterialTexture, target, effectNumber) = materialTexture;
-		EffectVar(DrawResourceSize, target, effectNumber) = RandomX(DrawResourceInitialMinSize, DrawResourceInitialMaxSize);
+
+		var size = RandomX(DrawResourceInitialMinSize, DrawResourceInitialMaxSize);
+		EffectVar(DrawResourceSize, target, effectNumber) = size;
+		EffectVar(DrawResourceStartEdgeX, target, effectNumber) = size;
+		EffectVar(DrawResourceStartEdgeY, target, effectNumber) = 0;
+		EffectVar(DrawResourcePreviousEdgeX, target, effectNumber) = size;
+		EffectVar(DrawResourcePreviousEdgeY, target, effectNumber) = 0;
 	}
 }
 
@@ -38,32 +45,32 @@ global func FxDrawResourceTimer(object target, int effectNumber, int effectTime)
 	var materialIndex = EffectVar(DrawResourceMaterialIndex, target, effectNumber);
 	var materialTexture = EffectVar(DrawResourceMaterialTexture, target, effectNumber);
 	var material = Format("%s-%s", MaterialName(materialIndex), materialTexture);
-	var xOld = EffectVar(DrawResourceOldEdgeX, target, effectNumber);
-	var yOld = EffectVar(DrawResourceOldEdgeY, target, effectNumber);
+	var previousX = EffectVar(DrawResourcePreviousEdgeX, target, effectNumber);
+	var previousY = EffectVar(DrawResourcePreviousEdgeY, target, effectNumber);
+	var result = FX_OK;
 
-	var size = EffectVar(DrawResourceSize, target, effectNumber);
-	size = BoundBy(size + RandomX(-DrawResourceSizeChange, DrawResourceSizeChange), DrawResourceMinSize, DrawMaterialMaxSize);
+	var size, currentX, currentY;
+	if(effectTime < DrawResourceDrawingCycles * 360 / DrawResourceAngularRate) {
+		size = EffectVar(DrawResourceSize, target, effectNumber);
+		size = BoundBy(size + RandomX(-DrawResourceSizeChange, DrawResourceSizeChange), DrawResourceMinSize, DrawMaterialMaxSize);
 
-	var xNew = Cos(effectTime * 5, size);
-	var yNew = Sin(effectTime * 5, size) / 2;
-
-	if(effectTime <= 2) {
-		EffectVar(DrawResourceNewEdgeX, target, effectNumber) = xNew;
-		EffectVar(DrawResourceNewEdgeY, target, effectNumber) = yNew;
-	} else if(effectTime >= DrawResourceMaxEffectTime) {
-		xNew = EffectVar(DrawResourceNewEdgeX, target, effectNumber);
-		yNew = EffectVar(DrawResourceNewEdgeY, target, effectNumber);
+		currentX = Cos(effectTime * DrawResourceAngularRate, size);
+		currentY = Sin(effectTime * DrawResourceAngularRate, size) / 2;
+	} else {
+		// Make start and end fit together
+		size = EffectVar(DrawResourceStartEdgeX, target, effectNumber);
+		currentX = EffectVar(DrawResourceStartEdgeX, target, effectNumber);
+		currentY = EffectVar(DrawResourceStartEdgeY, target, effectNumber);
+		result = FX_Execute_Kill;
 	}
-	EffectVar(DrawResourceOldEdgeX, target, effectNumber) = xNew;
-	EffectVar(DrawResourceOldEdgeY, target, effectNumber) = yNew;
+
+	EffectVar(DrawResourcePreviousEdgeX, target, effectNumber) = currentX;
+	EffectVar(DrawResourcePreviousEdgeY, target, effectNumber) = currentY;
 	EffectVar(DrawResourceSize, target, effectNumber) = size;
 
-	DrawMaterialQuad(material, centreX, centreY, centreX + xOld, centreY + yOld, centreX + xNew, centreY + yNew, centreX, centreY, DrawResourceTunnelBackground);
+	DrawMaterialQuad(material, centreX, centreY, centreX + previousX, centreY + previousY, centreX + currentX, centreY + currentY, centreX, centreY, DrawResourceTunnelBackground);
 
-	CreateParticle("PSpark", centreX + xNew / 2, centreY + yNew / 2, 0, 0, size * 25, RGBa(GetMaterialColor(materialIndex, 0, 0), GetMaterialColor(materialIndex, 0, 1), GetMaterialColor(materialIndex, 0, 2), 100));
+	CreateParticle("PSpark", centreX + currentX / 2, centreY + currentY / 2, 0, 0, size * 25, RGBa(GetMaterialColor(materialIndex, 0, 0), GetMaterialColor(materialIndex, 0, 1), GetMaterialColor(materialIndex, 0, 2), 100));
 
-	if(effectTime >= DrawResourceMaxEffectTime)
-		return -1;
-	else
-		return 1;
+	return result;
 }
