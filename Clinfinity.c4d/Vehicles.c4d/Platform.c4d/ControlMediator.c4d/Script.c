@@ -1,6 +1,6 @@
 /*	Script: Control mediator
-	Encapsulates the interactions between levers and platforms.
-	
+	Encapsulates the interactions between platforms and the event flow for control events and movement events between platforms, levers, and possibly other objects.
+
 	See Also:
 	General information on the <mediator pattern at http://en.wikipedia.org/wiki/Mediator_pattern>. */
 
@@ -75,22 +75,44 @@ private func MovementEventToSlaves(int direction) {
 	}
 }
 
+/*	Function: AddControlEventListener
+	Adds a listener for control events.
+	The control mediator will call the method ControlEvent() in each listener when a control event arrives.
+
+	Parameters:
+	listener	- The listener to add. */
 public func AddControlEventListener(object listener) {
 	if(listener != 0 && !InArray(listener, controlEventListeners)) {
 		PushBack(listener, controlEventListeners);
 	}
 }
 
+/*	Function: AddMovementEventListener
+	Adds a listener for movement events.
+	The control mediator will call the method MovementEvent() in each listener when a movement event arrives.
+
+	Parameters:
+	listener	- The listener to add. */
 public func AddMovementEventListener(object listener) {
 	if(listener != 0 && !InArray(listener, movementEventListeners)) {
 		PushBack(listener, movementEventListeners);
 	}
 }
 
+/*	Function: RemoveControlEventListener
+	Removes a listener for control events.
+
+	Parameters:
+	listener	- The listener to remove. */
 public func RemoveControlEventListener(object listener) {
 	RemoveElement(listener, controlEventListeners);
 }
 
+/*	Function: RemoveMovementEventListener
+	Removes a listener for movement events.
+
+	Parameters:
+	listener	- The listener to remove. */
 public func RemoveMovementEventListener(object listener) {
 	RemoveElement(listener, movementEventListeners);
 }
@@ -112,7 +134,7 @@ private func MovementEventToListeners(int direction, object source) {
 	Each mediator can have a left and a right slave mediator, it then acts as the master to these slaves.
 	Likewise, the slave mediators can have slaves themselves.
 	This way, an entire tree of mediators can be built.
-	
+
 	Each control event and movement event that is fired in a slave gets routed to its master.
 	This is repeated until the event reaches the "absolute" master at the top of the tree.
 	From there, the event gets routed back down in the tree, and additionally, to all listeners for the respective event.
@@ -120,10 +142,10 @@ private func MovementEventToListeners(int direction, object source) {
 
 /*	Function: SetLeftSlave
 	Sets the left slave mediator.
-	
+
 	Parameters:
 	mediator	- The new slave.
-	
+
 	Returns:
 	*true* if the mediator could be made a slave, *false* otherwise. */
 public func SetLeftSlave(object mediator) {

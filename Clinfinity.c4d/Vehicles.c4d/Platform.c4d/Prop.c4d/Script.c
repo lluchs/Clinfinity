@@ -32,5 +32,14 @@ protected func CheckCollision() {
 	}
 }
 
+/*	Function: MovementEvent
+	Event handler for movement events.
+
+	Parameters:
+	direction	- Direction of movement, specified by one of the COMD_* constants.
+	source		- Source of the event.
+
+	See Also:
+	<Control mediator> */
 public func MovementEvent(int direction, object source) {
 }
