@@ -1,0 +1,1 @@
+Knows the materials of a player (wood ...).

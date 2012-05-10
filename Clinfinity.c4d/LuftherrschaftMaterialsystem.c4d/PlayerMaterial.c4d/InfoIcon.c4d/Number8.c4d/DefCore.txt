@@ -1,0 +1,8 @@
+[DefCore]
+id=SN_8
+Version=4,9,8
+Name=SymbolNumber8
+Category=C4D_StaticBack
+Width=1
+Height=1
+Picture=0,0,64,64
