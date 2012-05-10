@@ -25,7 +25,8 @@ public func CreatePlatform(int x, int y, int owner) {
 	var lever = COLV->CreateLever(platform->GetX() - 35, platform->GetY() - 3, mediator);
 	lever->AttachTo(platform);
 	mediator->LocalN("controlledPlatform") = platform;
-	var prop = PROP->CreateProp(platform->GetX(), platform->GetY() + 12, platform, mediator);
+	var prop = PROP->CreateProp(platform->GetX(), platform->GetY() + 12, platform);
+	platform->CopyVertices(prop);
 	mediator->AddControlEventListener(platform);
 	mediator->AddMovementEventListener(lever);
 	mediator->AddMovementEventListener(prop);

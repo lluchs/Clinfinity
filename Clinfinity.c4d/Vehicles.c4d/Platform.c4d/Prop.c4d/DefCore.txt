@@ -2,9 +2,6 @@
 id=PROP
 Version=4,9,5
 Category=C4D_Vehicle
-TimerCall=CheckCollision
-Timer=1
-ContactCalls=1
 Width=90
 Height=10
 Offset=-45,-5
@@ -13,5 +10,5 @@ Picture=0,0,90,10
 Vertices=2
 VertexX=-30,30
 VertexY=5,5
-VertexCNAT=1,2
+VertexCNAT=9,10
 VertexFriction=20,20
