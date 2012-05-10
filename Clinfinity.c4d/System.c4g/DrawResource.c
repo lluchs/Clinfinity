@@ -91,8 +91,7 @@ global func FxDrawResourceStart(object target, int effectNumber, int temporary, 
 
 global func FxDrawResourceTimer(object target, int effectNumber, int effectTime) {
 	var materialIndex = EffectVar(DrawResourceMaterialIndex, target, effectNumber);
-	var materialTexture = EffectVar(DrawResourceMaterialTexture, target, effectNumber);
-	var material = Format("%s-%s", MaterialName(materialIndex), materialTexture);
+	var material = Format("%s-%s", MaterialName(materialIndex), EffectVar(DrawResourceMaterialTexture, target, effectNumber));
 	var tunnelBackground = EffectVar(DrawResourceTunnelBackground, target, effectNumber);
 
 	var centreX = EffectVar(DrawResourceCentreX, target, effectNumber);
@@ -124,19 +123,16 @@ global func FxDrawResourceTimer(object target, int effectNumber, int effectTime)
 	DrawMaterialQuad(material, centreX, centreY, centreX + previousX, centreY + previousY, centreX + currentX, centreY + currentY, centreX, centreY, tunnelBackground);
 
 	var particleMinSize = 300;
-	var particleMaxSize = 2000;
+	var particleMaxSize = EffectVar(DrawResourceMaxSize, target, effectNumber) * 31;
 	var particleMinSpeed = 30;
-	var particleMaxSpeed = 50;
-
+	var particleMaxSpeed = EffectVar(DrawResourceMaxSize, target, effectNumber) * 50 / 65;
 	var particleSize = RandomX(particleMinSize, particleMaxSize);
-	var speedFactor = (particleMaxSize - particleSize) / (particleMaxSize - particleMinSize);
 	var particleSpeed = particleMinSpeed + (particleMaxSize - particleSize) * (particleMaxSpeed - particleMinSpeed) / (particleMaxSize - particleMinSize);
 	var particleMoveAngle = Random(360);
 	var particleSpeedX = Cos(particleMoveAngle, particleSpeed);
 	var particleSpeedY = Sin(particleMoveAngle, particleSpeed);
 
-	//CreateParticle("PSpark", centreX + currentX / 2, centreY + currentY / 2, 0, 0, size * 25, RGBa(GetMaterialColor(materialIndex, 0, 0), GetMaterialColor(materialIndex, 0, 1), GetMaterialColor(materialIndex, 0, 2), 100));
-	CreateParticle("PSpark", centreX, centreY, particleSpeedX, particleSpeedY, particleSize, RGBa(GetMaterialColor(materialIndex, 0, 0), GetMaterialColor(materialIndex, 0, 1), GetMaterialColor(materialIndex, 0, 2), 100));
+	CreateParticle("PSpark", centreX, centreY, particleSpeedX, particleSpeedY, particleSize, RGBa(255, 255, 255, 100));
 
 	return result;
 }
