@@ -1,2 +1,2 @@
-DE:WindstrÃ¶mung
+DE:Windströmung
 US:Draft

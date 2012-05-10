@@ -21,22 +21,26 @@ public func Initialize() {
 		pIcon = CreateObject(LPMI, 0, 0, GetOwner());
 		pIcon -> SetPosition(iX);
 		pIcon -> Set(idObj);
-		var iWidth = 566, iHeight = 566, iXAdjust = 28000, iYAdjust = 13000;
-		if(idObj != LHBK && idObj != LHTL) {
-			iXAdjust *= 2;
-			iXAdjust += 3000;
-			iYAdjust *= 2;
-			iWidth += 150;
-			iHeight += 34;
-		}
-		pIcon -> SetObjDrawTransform(iWidth, 0, iXAdjust, 0, iHeight, iYAdjust, 0, GFX_Overlay);
 		HashPut(hIcons, idObj, pIcon);
 		iX -= 40;
 	}
 }
 
-private func OnFillChange(Key, int iChange) {
-	DoScore(GetOwner(), iChange * GetValue(0, Key));
+public func OnFillChange(Key, int iChange, bool dontNotify) {
+	// notify other team member's MatSys
+	var owner = GetOwner();
+	if(!dontNotify) {
+		for(var count = GetPlayerCount(), i = 0; i < count; i++) {
+			var p = GetPlayerByIndex(i);
+			if(p != owner && !Hostile(p, owner))
+				GetMatSys(p)->OnFillChange(Key, iChange, true);
+		}
+	}
+
+	// add to the score
+	DoScore(owner, iChange * GetValue(0, Key));
+	// highlight change
+	HashGet(hIcons, Key)->Flash(iChange);
 	return 1;
 }
 
@@ -44,14 +48,20 @@ local fNoStatusMessage;
 public func Timer() {
 	if(fNoStatusMessage)
 		return;
+	var owner = GetOwner();
 	var iter = HashIter(hIcons), node;
-	while(node = HashIterNext(iter))
-		node[1] -> SetStatusMessage(Format("@%d", GetFill(node[0])));
+	while(node = HashIterNext(iter)) {
+		var fill = MatSysGetTeamFill(owner, node[0]);
+		node[1] -> SetStatusMessage(Format("@%d", fill));
+	}
 }
 
 public func MaterialCheck(id idType) {
 	fNoStatusMessage = 1;
+	var owner = GetOwner();
 	var iter = HashIter(hIcons), node;
-	while(node = HashIterNext(iter))
-		node[1] -> BuildMessage(GetComponent(node[0], 0, 0, idType), GetFill(node[0]));
+	while(node = HashIterNext(iter)) {
+		var fill = MatSysGetTeamFill(owner, node[0]);
+		node[1] -> BuildMessage(GetComponent(node[0], 0, 0, idType), fill);
+	}
 }

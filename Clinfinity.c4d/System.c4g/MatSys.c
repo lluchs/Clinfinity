@@ -47,6 +47,24 @@ global func MatSysGetFill(int iPlr, id Key) {
 	return GetMatSys(iPlr) -> GetFill(Key);
 }
 
+/*  Function: MatSysGetTeamFill
+    
+	Parameters:
+	plr - A player of the team whose fill level should be returned.
+	Key - The material id.
+
+	Returns:
+	The combined fill level of all team members. */
+global func MatSysGetTeamFill(int plr, id Key) {
+	var fill = 0;
+	for(var count = GetPlayerCount(), i = 0; i < count; i++) {
+		var p = GetPlayerByIndex(i);
+		if(!Hostile(plr, p))
+			fill += MatSysGetFill(p, Key);
+	}
+	return fill;
+}
+
 /*  Function: MatSysDoFill
     Changes the fill level for a given player/id.
     
@@ -59,6 +77,31 @@ global func MatSysGetFill(int iPlr, id Key) {
 	The actual change. */
 global func MatSysDoFill(int iChange, int iPlr, id Key) {
 	return GetMatSys(iPlr) -> DoFill(iChange, Key);
+}
+
+
+/*  Function: MatSysDoTeamFill
+    Changes the fill level for a given team/id.
+    
+	Parameters:
+	change - The amount of change.
+	plr    - A player of the team whose fill level should be changed.
+	Key    - The material id.
+
+	Returns:
+	The actual change. */
+global func MatSysDoTeamFill(int change, int plr, id Key) {
+	var orig = change;
+	// first, try the given player
+	change -= MatSysDoFill(change, plr, Key);
+	// then, loop through the other players
+	for(var count = GetPlayerCount(), i = 0; i < count && change != 0; i++) {
+		var p = GetPlayerByIndex(i);
+		if(!Hostile(plr, p)) {
+			change -= MatSysDoFill(change, p, Key);
+		}
+	}
+	return orig - change;
 }
 
 /*  Function: GetMatSysIDs

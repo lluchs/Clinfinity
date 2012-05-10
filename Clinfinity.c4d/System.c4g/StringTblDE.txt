@@ -1,0 +1,9 @@
+# Conkit
+TxtCreateconstructionsi=Baustelle errichten
+TxtNoconstructionplansa=Keine Baupläne verfügbar
+TxtConstructions=Konstruktion: %s
+TxtCantConstruct=%s kann nicht bauen.
+TxtNotEnoughMaterial=Nicht genug Baumaterial vorhanden!
+
+# Demolition
+CtxDemolitionDesc=Gebäude abreißen
