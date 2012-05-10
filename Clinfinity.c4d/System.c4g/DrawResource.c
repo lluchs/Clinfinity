@@ -1,18 +1,26 @@
 /*	Script: DrawResource.c
 	Draws a resource vein.
-	The algorithm draws a vein in consecutive triangles, clockwise, around a central point. */
+	The algorithm draws a vein in consecutive triangles, clockwise, around a central point.
+
+	This algorithm was originally implemented by <Zapper at http://www.clonkforge.net/user.php?usr=533>. */
 
 #strict 2
 
 /*	Function: DrawResource
 	Draws a resource vein around a central point.
+	The size parameters determine the side lengths of the drawn triangles.
 
 	Parameters:
 	materialIndex		- Material the vein will be made of.
 	materialTexture		- The material's texture.
 	tunnelBackground	- If true, the vein will be drawn as 'underground'.
 	x					- Horizontal coordinate of the centre.
-	y					- Vertical coordinate of the centre. */
+	y					- Vertical coordinate of the centre.
+	minInitialSize		- [optional] Minimal side length for the first triangle.
+	maxInitialSize		- [optional] Maximal side length for the first triangle.
+	minSize				- [optional] Minimal side length for all triangles.
+	maxSize				- [optional] Maximal side length for all triangles.
+	drawingCycles		- [optional] Number of full cycles the vein is drawn. */
 global func DrawResource(int materialIndex, string materialTexture, bool tunnelBackground, int x, int y, int minInitialSize, int maxInitialSize, int minSize, int maxSize, int drawingCycles) {
 	AddEffect("DrawResource", 0, 1, 1, 0, 0, [materialIndex, materialTexture, tunnelBackground], [x, y], [minInitialSize, maxInitialSize, minSize, maxSize], drawingCycles);
 }
