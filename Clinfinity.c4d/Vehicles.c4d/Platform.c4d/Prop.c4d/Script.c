@@ -31,3 +31,6 @@ protected func CheckCollision() {
 		controlMediator->ControlEvent(COMD_Stop, this);
 	}
 }
+
+public func MovementEvent(int direction, object source) {
+}

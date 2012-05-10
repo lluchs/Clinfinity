@@ -6,8 +6,14 @@
 
 #strict 2
 
-local controlLever, controlledPlatform;
+local controlledPlatform;
+local controlEventListeners, movementEventListeners;
 local masterMediator, leftSlaveMediator, rightSlaveMediator;
+
+protected func Initialize() {
+	controlEventListeners = [];
+	movementEventListeners = [];
+}
 
 /*	Function: ControlEvent
 	Called by the source when it wants to broadcast a control event.
@@ -18,11 +24,11 @@ local masterMediator, leftSlaveMediator, rightSlaveMediator;
 	source		- Source of the event. */
 public func ControlEvent(int direction, object source) {
 	if(masterMediator == 0) {
-		controlledPlatform->ControlEvent(direction, this);
+		ControlEventToListeners(direction, this);
 		ControlEventToSlaves(direction);
 	} else {
 		if(source == masterMediator) {
-			controlledPlatform->ControlEvent(direction, this);
+			ControlEventToListeners(direction, this);
 			ControlEventToSlaves(direction);
 		} else {
 			masterMediator->ControlEvent(direction, this);
@@ -48,11 +54,11 @@ private func ControlEventToSlaves(int direction) {
 	source		- Source of the event. */
 public func MovementEvent(int direction, object source) {
 	if(masterMediator == 0) {
-		controlLever->MovementEvent(direction, this);
+		MovementEventToListeners(direction, this);
 		MovementEventToSlaves(direction);
 	} else {
 		if(source == masterMediator) {
-			controlLever->MovementEvent(direction, this);
+			MovementEventToListeners(direction, this);
 			MovementEventToSlaves(direction);
 		} else {
 			masterMediator->MovementEvent(direction, this);
@@ -66,6 +72,38 @@ private func MovementEventToSlaves(int direction) {
 	}
 	if(rightSlaveMediator != 0) {
 		rightSlaveMediator->MovementEvent(direction, this);
+	}
+}
+
+public func AddControlEventListener(object listener) {
+	if(listener != 0 && !InArray(listener, controlEventListeners)) {
+		PushBack(listener, controlEventListeners);
+	}
+}
+
+public func AddMovementEventListener(object listener) {
+	if(listener != 0 && !InArray(listener, movementEventListeners)) {
+		PushBack(listener, movementEventListeners);
+	}
+}
+
+public func RemoveControlEventListener(object listener) {
+	RemoveElement(listener, controlEventListeners);
+}
+
+public func RemoveMovementEventListener(object listener) {
+	RemoveElement(listener, movementEventListeners);
+}
+
+private func ControlEventToListeners(int direction, object source) {
+	for(var listener in controlEventListeners) {
+		listener->ControlEvent(direction, source);
+	}
+}
+
+private func MovementEventToListeners(int direction, object source) {
+	for(var listener in movementEventListeners) {
+		listener->MovementEvent(direction, source);
 	}
 }
 
