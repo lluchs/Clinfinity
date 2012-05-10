@@ -8,33 +8,35 @@
 	Draws a resource vein around a central point.
 	
 	Parameters:
-	materialIndex	- Material the vein will be made of.
-	materialTexture	- The material's texture.
-	x				- Horizontal coordinate of the centre.
-	y				- Vertical coordinate of the centre. */
-global func DrawResource(int materialIndex, string materialTexture, int x, int y) {
-	AddEffect("DrawResource", 0, 1, 1, 0, 0, [materialIndex, materialTexture], x, y);
+	materialIndex		- Material the vein will be made of.
+	materialTexture		- The material's texture.
+	tunnelBackground	- If true, the vein will be drawn as 'underground'.
+	x					- Horizontal coordinate of the centre.
+	y					- Vertical coordinate of the centre. */
+global func DrawResource(int materialIndex, string materialTexture, bool tunnelBackground, int x, int y) {
+	AddEffect("DrawResource", 0, 1, 1, 0, 0, [materialIndex, materialTexture, tunnelBackground], x, y);
 }
 
 static const DrawResourceCentreX = 0;
 static const DrawResourceCentreY = 1;
 static const DrawResourceMaterialIndex = 2;
 static const DrawResourceMaterialTexture = 3;
-static const DrawResourcePreviousEdgeX = 4;
-static const DrawResourcePreviousEdgeY = 5;
-static const DrawResourceSize = 6;
-static const DrawResourceStartEdgeX = 7;
-static const DrawResourceStartEdgeY = 8;
+static const DrawResourceTunnelBackground = 4;
+static const DrawResourcePreviousEdgeX = 5;
+static const DrawResourcePreviousEdgeY = 6;
+static const DrawResourceSize = 7;
+static const DrawResourceStartEdgeX = 8;
+static const DrawResourceStartEdgeY = 9;
 
 static const MaterialDescriptionIndex = 0;
 static const MaterialDescriptionTexture = 1;
+static const MaterialDescriptionTunnelBackground = 2;
 
 static const DrawResourceMinSize = 10; // 1
 static const DrawMaterialMaxSize = 65; // 1
 static const DrawResourceInitialMinSize = 20; // 1
 static const DrawResourceInitialMaxSize = 25; // 1
 static const DrawResourceSizeChange = 6;
-static const DrawResourceTunnelBackground = true; // 2
 static const DrawResourceAngularRate = 5;
 static const DrawResourceDrawingCycles = 2; // 3
 
@@ -44,6 +46,7 @@ global func FxDrawResourceStart(object target, int effectNumber, int temporary, 
 		EffectVar(DrawResourceCentreY, target, effectNumber) = y;
 		EffectVar(DrawResourceMaterialIndex, target, effectNumber) = materialDescription[MaterialDescriptionIndex];
 		EffectVar(DrawResourceMaterialTexture, target, effectNumber) = materialDescription[MaterialDescriptionTexture];
+		EffectVar(DrawResourceTunnelBackground, target, effectNumber) = materialDescription[MaterialDescriptionTunnelBackground];
 
 		var size = RandomX(DrawResourceInitialMinSize, DrawResourceInitialMaxSize);
 		EffectVar(DrawResourceSize, target, effectNumber) = size;
@@ -60,6 +63,7 @@ global func FxDrawResourceTimer(object target, int effectNumber, int effectTime)
 	var materialIndex = EffectVar(DrawResourceMaterialIndex, target, effectNumber);
 	var materialTexture = EffectVar(DrawResourceMaterialTexture, target, effectNumber);
 	var material = Format("%s-%s", MaterialName(materialIndex), materialTexture);
+	var tunnelBackground = EffectVar(DrawResourceTunnelBackground, target, effectNumber);
 	var previousX = EffectVar(DrawResourcePreviousEdgeX, target, effectNumber);
 	var previousY = EffectVar(DrawResourcePreviousEdgeY, target, effectNumber);
 	var result = FX_OK;
@@ -83,7 +87,7 @@ global func FxDrawResourceTimer(object target, int effectNumber, int effectTime)
 	EffectVar(DrawResourcePreviousEdgeY, target, effectNumber) = currentY;
 	EffectVar(DrawResourceSize, target, effectNumber) = size;
 
-	DrawMaterialQuad(material, centreX, centreY, centreX + previousX, centreY + previousY, centreX + currentX, centreY + currentY, centreX, centreY, DrawResourceTunnelBackground);
+	DrawMaterialQuad(material, centreX, centreY, centreX + previousX, centreY + previousY, centreX + currentX, centreY + currentY, centreX, centreY, tunnelBackground);
 
 	var particleMinSize = 300;
 	var particleMaxSize = 2000;
