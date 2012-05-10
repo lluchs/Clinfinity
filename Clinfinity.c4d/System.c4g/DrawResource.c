@@ -13,7 +13,7 @@
 	x				- Horizontal coordinate of the centre.
 	y				- Vertical coordinate of the centre. */
 global func DrawResource(int materialIndex, string materialTexture, int x, int y) {
-	AddEffect("DrawResource", 0, 1, 1, 0, 0, materialIndex, materialTexture, x, y);
+	AddEffect("DrawResource", 0, 1, 1, 0, 0, [materialIndex, materialTexture], x, y);
 }
 
 static const DrawResourceCentreX = 0;
@@ -26,21 +26,24 @@ static const DrawResourceSize = 6;
 static const DrawResourceStartEdgeX = 7;
 static const DrawResourceStartEdgeY = 8;
 
-static const DrawResourceMinSize = 10;
-static const DrawMaterialMaxSize = 65;
-static const DrawResourceInitialMinSize = 20;
-static const DrawResourceInitialMaxSize = 25;
-static const DrawResourceSizeChange = 6;
-static const DrawResourceTunnelBackground = true;
-static const DrawResourceAngularRate = 5;
-static const DrawResourceDrawingCycles = 2;
+static const MaterialDescriptionIndex = 0;
+static const MaterialDescriptionTexture = 1;
 
-global func FxDrawResourceStart(object target, int effectNumber, int temporary, materialIndex, materialTexture, x, y) {
+static const DrawResourceMinSize = 10; // 1
+static const DrawMaterialMaxSize = 65; // 1
+static const DrawResourceInitialMinSize = 20; // 1
+static const DrawResourceInitialMaxSize = 25; // 1
+static const DrawResourceSizeChange = 6;
+static const DrawResourceTunnelBackground = true; // 2
+static const DrawResourceAngularRate = 5;
+static const DrawResourceDrawingCycles = 2; // 3
+
+global func FxDrawResourceStart(object target, int effectNumber, int temporary, array materialDescription, x, y) {
 	if(temporary == 0) {
 		EffectVar(DrawResourceCentreX, target, effectNumber) = x;
 		EffectVar(DrawResourceCentreY, target, effectNumber) = y;
-		EffectVar(DrawResourceMaterialIndex, target, effectNumber) = materialIndex;
-		EffectVar(DrawResourceMaterialTexture, target, effectNumber) = materialTexture;
+		EffectVar(DrawResourceMaterialIndex, target, effectNumber) = materialDescription[MaterialDescriptionIndex];
+		EffectVar(DrawResourceMaterialTexture, target, effectNumber) = materialDescription[MaterialDescriptionTexture];
 
 		var size = RandomX(DrawResourceInitialMinSize, DrawResourceInitialMaxSize);
 		EffectVar(DrawResourceSize, target, effectNumber) = size;
