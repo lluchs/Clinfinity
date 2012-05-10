@@ -6,7 +6,7 @@
 
 /*	Function: DrawResource
 	Draws a resource vein around a central point.
-	
+
 	Parameters:
 	materialIndex		- Material the vein will be made of.
 	materialTexture		- The material's texture.
@@ -17,6 +17,7 @@ global func DrawResource(int materialIndex, string materialTexture, bool tunnelB
 	AddEffect("DrawResource", 0, 1, 1, 0, 0, [materialIndex, materialTexture, tunnelBackground], x, y);
 }
 
+/* Indices */
 static const DrawResourceCentreX = 0;
 static const DrawResourceCentreY = 1;
 static const DrawResourceMaterialIndex = 2;
@@ -32,13 +33,14 @@ static const MaterialDescriptionIndex = 0;
 static const MaterialDescriptionTexture = 1;
 static const MaterialDescriptionTunnelBackground = 2;
 
-static const DrawResourceMinSize = 10; // 1
-static const DrawMaterialMaxSize = 65; // 1
-static const DrawResourceInitialMinSize = 20; // 1
-static const DrawResourceInitialMaxSize = 25; // 1
+/* Standard and constant values */
+static const DrawResourceStandardMinSize = 10; // 1
+static const DrawResourceStandardMaxSize = 65; // 1
+static const DrawResourceStandardMinInitialSize = 20; // 1
+static const DrawResourceStandardMaxInitialSize = 25; // 1
 static const DrawResourceSizeChange = 6;
 static const DrawResourceAngularRate = 5;
-static const DrawResourceDrawingCycles = 2; // 3
+static const DrawResourceStandardDrawingCycles = 2; // 3
 
 global func FxDrawResourceStart(object target, int effectNumber, int temporary, array materialDescription, x, y) {
 	if(temporary == 0) {
@@ -48,7 +50,7 @@ global func FxDrawResourceStart(object target, int effectNumber, int temporary, 
 		EffectVar(DrawResourceMaterialTexture, target, effectNumber) = materialDescription[MaterialDescriptionTexture];
 		EffectVar(DrawResourceTunnelBackground, target, effectNumber) = materialDescription[MaterialDescriptionTunnelBackground];
 
-		var size = RandomX(DrawResourceInitialMinSize, DrawResourceInitialMaxSize);
+		var size = RandomX(DrawResourceStandardMinInitialSize, DrawResourceStandardMaxInitialSize);
 		EffectVar(DrawResourceSize, target, effectNumber) = size;
 		EffectVar(DrawResourceStartEdgeX, target, effectNumber) = size;
 		EffectVar(DrawResourceStartEdgeY, target, effectNumber) = 0;
@@ -69,9 +71,9 @@ global func FxDrawResourceTimer(object target, int effectNumber, int effectTime)
 	var result = FX_OK;
 
 	var size, currentX, currentY;
-	if(effectTime < DrawResourceDrawingCycles * 360 / DrawResourceAngularRate) {
+	if(effectTime < DrawResourceStandardDrawingCycles * 360 / DrawResourceAngularRate) {
 		size = EffectVar(DrawResourceSize, target, effectNumber);
-		size = BoundBy(size + RandomX(-DrawResourceSizeChange, DrawResourceSizeChange), DrawResourceMinSize, DrawMaterialMaxSize);
+		size = BoundBy(size + RandomX(-DrawResourceSizeChange, DrawResourceSizeChange), DrawResourceStandardMinSize, DrawResourceStandardMaxSize);
 
 		currentX = Cos(effectTime * DrawResourceAngularRate, size);
 		currentY = Sin(effectTime * DrawResourceAngularRate, size) / 2;
@@ -93,7 +95,7 @@ global func FxDrawResourceTimer(object target, int effectNumber, int effectTime)
 	var particleMaxSize = 2000;
 	var particleMinSpeed = 30;
 	var particleMaxSpeed = 50;
-	
+
 	var particleSize = RandomX(particleMinSize, particleMaxSize);
 	var speedFactor = (particleMaxSize - particleSize) / (particleMaxSize - particleMinSize);
 	var particleSpeed = particleMinSpeed + (particleMaxSize - particleSize) * (particleMaxSpeed - particleMinSpeed) / (particleMaxSize - particleMinSize);
