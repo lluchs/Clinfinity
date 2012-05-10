@@ -13,67 +13,91 @@
 	tunnelBackground	- If true, the vein will be drawn as 'underground'.
 	x					- Horizontal coordinate of the centre.
 	y					- Vertical coordinate of the centre. */
-global func DrawResource(int materialIndex, string materialTexture, bool tunnelBackground, int x, int y) {
-	AddEffect("DrawResource", 0, 1, 1, 0, 0, [materialIndex, materialTexture, tunnelBackground], x, y);
+global func DrawResource(int materialIndex, string materialTexture, bool tunnelBackground, int x, int y, int minInitialSize, int maxInitialSize, int minSize, int maxSize, int drawingCycles) {
+	AddEffect("DrawResource", 0, 1, 1, 0, 0, [materialIndex, materialTexture, tunnelBackground], [x, y], [minInitialSize, maxInitialSize, minSize, maxSize], drawingCycles);
 }
 
 /* Indices */
-static const DrawResourceCentreX = 0;
-static const DrawResourceCentreY = 1;
-static const DrawResourceMaterialIndex = 2;
-static const DrawResourceMaterialTexture = 3;
-static const DrawResourceTunnelBackground = 4;
-static const DrawResourcePreviousEdgeX = 5;
-static const DrawResourcePreviousEdgeY = 6;
-static const DrawResourceSize = 7;
-static const DrawResourceStartEdgeX = 8;
-static const DrawResourceStartEdgeY = 9;
+static const DrawResourceMaterialIndex = 0;
+static const DrawResourceMaterialTexture = 1;
+static const DrawResourceTunnelBackground = 2;
+static const DrawResourceCentreX = 3;
+static const DrawResourceCentreY = 4;
+static const DrawResourceStartEdgeX = 5;
+static const DrawResourceStartEdgeY = 6;
+static const DrawResourcePreviousEdgeX = 7;
+static const DrawResourcePreviousEdgeY = 8;
+static const DrawResourceMinSize = 9;
+static const DrawResourceMaxSize = 10;
+static const DrawResourceSize = 11;
+static const DrawResourceDrawingCycles = 12;
 
-static const MaterialDescriptionIndex = 0;
-static const MaterialDescriptionTexture = 1;
-static const MaterialDescriptionTunnelBackground = 2;
-
-/* Standard and constant values */
-static const DrawResourceStandardMinSize = 10; // 1
-static const DrawResourceStandardMaxSize = 65; // 1
-static const DrawResourceStandardMinInitialSize = 20; // 1
-static const DrawResourceStandardMaxInitialSize = 25; // 1
+/* Standards and constant values */
+static const DrawResourceStandardMinSize = 10;
+static const DrawResourceStandardMaxSize = 65;
+static const DrawResourceStandardMinInitialSize = 20;
+static const DrawResourceStandardMaxInitialSize = 25;
 static const DrawResourceSizeChange = 6;
 static const DrawResourceAngularRate = 5;
-static const DrawResourceStandardDrawingCycles = 2; // 3
+static const DrawResourceStandardDrawingCycles = 2;
 
-global func FxDrawResourceStart(object target, int effectNumber, int temporary, array materialDescription, x, y) {
+global func FxDrawResourceStart(object target, int effectNumber, int temporary, array materialDescription, array position, array sizeDescription, int drawingCycles) {
 	if(temporary == 0) {
-		EffectVar(DrawResourceCentreX, target, effectNumber) = x;
-		EffectVar(DrawResourceCentreY, target, effectNumber) = y;
-		EffectVar(DrawResourceMaterialIndex, target, effectNumber) = materialDescription[MaterialDescriptionIndex];
-		EffectVar(DrawResourceMaterialTexture, target, effectNumber) = materialDescription[MaterialDescriptionTexture];
-		EffectVar(DrawResourceTunnelBackground, target, effectNumber) = materialDescription[MaterialDescriptionTunnelBackground];
+		EffectVar(DrawResourceMaterialIndex, target, effectNumber) = materialDescription[0];
+		EffectVar(DrawResourceMaterialTexture, target, effectNumber) = materialDescription[1];
+		EffectVar(DrawResourceTunnelBackground, target, effectNumber) = materialDescription[2];
 
-		var size = RandomX(DrawResourceStandardMinInitialSize, DrawResourceStandardMaxInitialSize);
+		EffectVar(DrawResourceCentreX, target, effectNumber) = position[0];
+		EffectVar(DrawResourceCentreY, target, effectNumber) = position[1];
+
+		var minInitialSize = sizeDescription[0];
+		var maxInitialSize = sizeDescription[1];
+		if(minInitialSize == 0) {
+			minInitialSize = DrawResourceStandardMinInitialSize;
+		}
+		if(maxInitialSize == 0) {
+			maxInitialSize = DrawResourceStandardMaxInitialSize;
+		}
+		var size = RandomX(minInitialSize, maxInitialSize);
 		EffectVar(DrawResourceSize, target, effectNumber) = size;
+		EffectVar(DrawResourceMinSize, target, effectNumber) = sizeDescription[2];
+		if(sizeDescription[2] == 0) {
+			EffectVar(DrawResourceMinSize, target, effectNumber) = DrawResourceStandardMinSize;
+		}
+		EffectVar(DrawResourceMaxSize, target, effectNumber) = sizeDescription[3];
+		if(sizeDescription[3] == 0) {
+			EffectVar(DrawResourceMaxSize, target, effectNumber) = DrawResourceStandardMaxSize;
+		}
+
 		EffectVar(DrawResourceStartEdgeX, target, effectNumber) = size;
 		EffectVar(DrawResourceStartEdgeY, target, effectNumber) = 0;
 		EffectVar(DrawResourcePreviousEdgeX, target, effectNumber) = size;
 		EffectVar(DrawResourcePreviousEdgeY, target, effectNumber) = 0;
+
+		EffectVar(DrawResourceDrawingCycles, target, effectNumber) = drawingCycles;
+		if(drawingCycles == 0) {
+			EffectVar(DrawResourceDrawingCycles, target, effectNumber) = DrawResourceStandardDrawingCycles;
+		}
 	}
 }
 
 global func FxDrawResourceTimer(object target, int effectNumber, int effectTime) {
-	var centreX = EffectVar(DrawResourceCentreX, target, effectNumber);
-	var centreY = EffectVar(DrawResourceCentreY, target, effectNumber);
 	var materialIndex = EffectVar(DrawResourceMaterialIndex, target, effectNumber);
 	var materialTexture = EffectVar(DrawResourceMaterialTexture, target, effectNumber);
 	var material = Format("%s-%s", MaterialName(materialIndex), materialTexture);
 	var tunnelBackground = EffectVar(DrawResourceTunnelBackground, target, effectNumber);
+
+	var centreX = EffectVar(DrawResourceCentreX, target, effectNumber);
+	var centreY = EffectVar(DrawResourceCentreY, target, effectNumber);
 	var previousX = EffectVar(DrawResourcePreviousEdgeX, target, effectNumber);
 	var previousY = EffectVar(DrawResourcePreviousEdgeY, target, effectNumber);
+
 	var result = FX_OK;
 
 	var size, currentX, currentY;
-	if(effectTime < DrawResourceStandardDrawingCycles * 360 / DrawResourceAngularRate) {
+	if(effectTime < EffectVar(DrawResourceDrawingCycles, target, effectNumber) * 360 / DrawResourceAngularRate) {
 		size = EffectVar(DrawResourceSize, target, effectNumber);
-		size = BoundBy(size + RandomX(-DrawResourceSizeChange, DrawResourceSizeChange), DrawResourceStandardMinSize, DrawResourceStandardMaxSize);
+		size = BoundBy(size + RandomX(-DrawResourceSizeChange, DrawResourceSizeChange), EffectVar(DrawResourceMinSize, target, effectNumber), EffectVar(DrawResourceMaxSize, target, effectNumber));
 
 		currentX = Cos(effectTime * DrawResourceAngularRate, size);
 		currentY = Sin(effectTime * DrawResourceAngularRate, size) / 2;
