@@ -82,7 +82,20 @@ global func FxDrawResourceTimer(object target, int effectNumber, int effectTime)
 
 	DrawMaterialQuad(material, centreX, centreY, centreX + previousX, centreY + previousY, centreX + currentX, centreY + currentY, centreX, centreY, DrawResourceTunnelBackground);
 
-	CreateParticle("PSpark", centreX + currentX / 2, centreY + currentY / 2, 0, 0, size * 25, RGBa(GetMaterialColor(materialIndex, 0, 0), GetMaterialColor(materialIndex, 0, 1), GetMaterialColor(materialIndex, 0, 2), 100));
+	var particleMinSize = 300;
+	var particleMaxSize = 2000;
+	var particleMinSpeed = 30;
+	var particleMaxSpeed = 50;
+	
+	var particleSize = RandomX(particleMinSize, particleMaxSize);
+	var speedFactor = (particleMaxSize - particleSize) / (particleMaxSize - particleMinSize);
+	var particleSpeed = particleMinSpeed + (particleMaxSize - particleSize) * (particleMaxSpeed - particleMinSpeed) / (particleMaxSize - particleMinSize);
+	var particleMoveAngle = Random(360);
+	var particleSpeedX = Cos(particleMoveAngle, particleSpeed);
+	var particleSpeedY = Sin(particleMoveAngle, particleSpeed);
+
+	//CreateParticle("PSpark", centreX + currentX / 2, centreY + currentY / 2, 0, 0, size * 25, RGBa(GetMaterialColor(materialIndex, 0, 0), GetMaterialColor(materialIndex, 0, 1), GetMaterialColor(materialIndex, 0, 2), 100));
+	CreateParticle("PSpark", centreX, centreY, particleSpeedX, particleSpeedY, particleSize, RGBa(GetMaterialColor(materialIndex, 0, 0), GetMaterialColor(materialIndex, 0, 1), GetMaterialColor(materialIndex, 0, 2), 100));
 
 	return result;
 }
