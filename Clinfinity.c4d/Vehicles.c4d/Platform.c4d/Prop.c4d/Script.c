@@ -42,4 +42,11 @@ protected func CheckCollision() {
 	See Also:
 	<Control mediator> */
 public func MovementEvent(int direction, object source) {
+	if(direction == COMD_Up) {
+		SetAction("AttachFast");
+	} else if(direction == COMD_Down) {
+		SetAction("AttachSlow");
+	} else {
+		SetAction("Attach");
+	}
 }
