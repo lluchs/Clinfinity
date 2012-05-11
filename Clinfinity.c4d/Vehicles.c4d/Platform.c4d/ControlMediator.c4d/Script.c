@@ -178,7 +178,9 @@ private func SetMasterFromRight(object newMasterMediator) {
 	// Already slave to another mediator to the left: Restructure.
 	if(masterMediator != 0) {
 		masterMediator->SetMasterFromRight(this);
+		leftSlaveMediator = masterMediator;
 	}
+	rightSlaveMediator = 0;
 	masterMediator = newMasterMediator;
 	controlledPlatform->SetAction("FlySlave", masterMediator->GetControlledPlatform());
 	controlledPlatform->SetActionData(256 * 1 + 0);
@@ -191,7 +193,9 @@ private func SetMasterFromLeft(object newMasterMediator) {
 	// Already slave to another mediator to the left: Restructure.
 	if(masterMediator != 0) {
 		masterMediator->SetMasterFromLeft(this);
+		rightSlaveMediator = masterMediator;
 	}
+	leftSlaveMediator = 0;
 	masterMediator = newMasterMediator;
 	controlledPlatform->SetAction("FlySlave", masterMediator->GetControlledPlatform());
 	controlledPlatform->SetActionData(256 * 0 + 1);
