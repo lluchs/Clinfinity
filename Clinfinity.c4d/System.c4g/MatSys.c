@@ -113,7 +113,7 @@ global func MatSysDoTeamFill(int change, int plr, id Key) {
 	Returns:
 	An array containing the material system ids. */
 global func GetMatSysIDs() {
-	var aIDs = [WOOD, ROCK, METL];
+	var aIDs = [STEM, WOOD, ROCK, METL];
 	ConcatArrays(aIDs, GameCall("SpecialMatSysIDs")); // vertauschte Reihenfolge, da von rechts nach links
 	return aIDs;
 }
