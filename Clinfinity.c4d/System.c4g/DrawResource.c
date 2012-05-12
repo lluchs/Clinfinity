@@ -16,13 +16,11 @@
 	tunnelBackground	- If true, the vein will be drawn as 'underground'.
 	x					- Horizontal coordinate of the centre.
 	y					- Vertical coordinate of the centre.
-	minInitialSize		- [optional] Minimal side length for the first triangle.
-	maxInitialSize		- [optional] Maximal side length for the first triangle.
-	minSize				- [optional] Minimal side length for all triangles.
-	maxSize				- [optional] Maximal side length for all triangles.
+	minSize				- [optional] Minimal side length.
+	maxSize				- [optional] Maximal side length.
 	drawingCycles		- [optional] Number of full cycles the vein is drawn. */
-global func DrawResource(int materialIndex, string materialTexture, bool tunnelBackground, int x, int y, int minInitialSize, int maxInitialSize, int minSize, int maxSize, int drawingCycles) {
-	AddEffect("DrawResource", 0, 1, 1, 0, 0, [materialIndex, materialTexture, tunnelBackground], [x, y], [minInitialSize, maxInitialSize, minSize, maxSize], drawingCycles);
+global func DrawResource(int materialIndex, string materialTexture, bool tunnelBackground, int x, int y, int minSize, int maxSize, int drawingCycles) {
+	AddEffect("DrawResource", 0, 1, 1, 0, 0, [materialIndex, materialTexture, tunnelBackground], [x, y], [minSize, maxSize], drawingCycles);
 }
 
 /* Indices */
@@ -43,8 +41,6 @@ static const DrawResourceDrawingCycles = 12;
 /* Standards and constant values */
 static const DrawResourceStandardMinSize = 10;
 static const DrawResourceStandardMaxSize = 65;
-static const DrawResourceStandardMinInitialSize = 20;
-static const DrawResourceStandardMaxInitialSize = 25;
 static const DrawResourceSizeChange = 6;
 static const DrawResourceAngularRate = 5;
 static const DrawResourceStandardDrawingCycles = 2;
@@ -58,24 +54,21 @@ global func FxDrawResourceStart(object target, int effectNumber, int temporary, 
 		EffectVar(DrawResourceCentreX, target, effectNumber) = position[0];
 		EffectVar(DrawResourceCentreY, target, effectNumber) = position[1];
 
-		var minInitialSize = sizeDescription[0];
-		var maxInitialSize = sizeDescription[1];
-		if(minInitialSize == 0) {
-			minInitialSize = DrawResourceStandardMinInitialSize;
-		}
-		if(maxInitialSize == 0) {
-			maxInitialSize = DrawResourceStandardMaxInitialSize;
-		}
-		var size = RandomX(minInitialSize, maxInitialSize);
-		EffectVar(DrawResourceSize, target, effectNumber) = size;
-		EffectVar(DrawResourceMinSize, target, effectNumber) = sizeDescription[2];
-		if(sizeDescription[2] == 0) {
+		EffectVar(DrawResourceMinSize, target, effectNumber) = sizeDescription[0];
+		if(sizeDescription[0] == 0) {
 			EffectVar(DrawResourceMinSize, target, effectNumber) = DrawResourceStandardMinSize;
 		}
-		EffectVar(DrawResourceMaxSize, target, effectNumber) = sizeDescription[3];
-		if(sizeDescription[3] == 0) {
+		EffectVar(DrawResourceMaxSize, target, effectNumber) = sizeDescription[1];
+		if(sizeDescription[1] == 0) {
 			EffectVar(DrawResourceMaxSize, target, effectNumber) = DrawResourceStandardMaxSize;
 		}
+
+		// Determine initial size
+		var sizeRange = EffectVar(DrawResourceMaxSize, target, effectNumber) - EffectVar(DrawResourceMinSize, target, effectNumber);
+		var minInitialSize = Min(2 * EffectVar(DrawResourceMinSize, target, effectNumber), EffectVar(DrawResourceMaxSize, target, effectNumber));
+		var maxInitialSize = BoundBy(EffectVar(DrawResourceMinSize, target, effectNumber) + sizeRange / 3, minInitialSize, EffectVar(DrawResourceMaxSize, target, effectNumber));
+		var size = RandomX(minInitialSize, maxInitialSize);
+		EffectVar(DrawResourceSize, target, effectNumber) = size;
 
 		EffectVar(DrawResourceStartEdgeX, target, effectNumber) = size;
 		EffectVar(DrawResourceStartEdgeY, target, effectNumber) = 0;
