@@ -7,7 +7,6 @@ Definition1=Objects.c4d
 Definition2=Clinfinity\Clinfinity.c4d
 
 [Game]
-StructNeedEnergy=0
 Rules=CNMT=1;ENRG=1;FGRV=1;DRFT=15
 
 [Player1]
