@@ -37,9 +37,10 @@ Knowledge=STMT=1
 Magic=MWP2=0;MFFA=0;MVLC=0;MWND=0;MQKE=0;CMFG=0;RMMG=0;MBRG=0;EXTG=0;ETFL=0;MGHL=0;MGUP=0;MGWP=0;MMTR=0;MFFS=0;FRFS=0;MLGT=0;RVLT=0;MINV=0;MGDW=0;MFFW=0
 
 [Landscape]
-Vegetation=TRE4=4
+Vegetation=TRE1=3;TRE2=4;TRE3=2
 VegetationLevel=100,0,0,100
-InEarthLevel=65,0,0,100
+InEarth=FLNT=2
+InEarthLevel=26,0,0,100
 Sky=Clouds1;Default
 MapWidth=80,0,64,250
 MapHeight=80,0,40,250
@@ -54,6 +55,7 @@ Layers=Rock=7;Rock-Ridge=7;Gold=7;Granite=4;Ore=3;Coal-Swirl=4;Water-Smooth=5;Oi
 [Weather]
 Climate=40,10,0,100
 YearSpeed=20,10,0,100
+Rain=45,0,0,100
 Wind=1,100,-100,100
 
 [Environment]
