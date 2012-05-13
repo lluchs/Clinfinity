@@ -1,6 +1,16 @@
-Passanger
+Passenger
+Gardener
+Warehouser
+Skywatcher
+Machinist
+Geologist
 Engineer
-Flight controller
 Stewardess
-Co-Pilot
-Aviator
+Flight Controller
+Co Pilot
+Pilot
+Squadron Chief
+Fleet Commander 
+Peter
+Einstein
+Haxton Sale
