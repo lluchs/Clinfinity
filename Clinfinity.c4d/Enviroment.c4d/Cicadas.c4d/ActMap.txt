@@ -1,0 +1,6 @@
+[Action]
+Name=Cicadas
+Length=1
+Delay=25
+NextAction=Cicadas
+StartCall=Cicadas
