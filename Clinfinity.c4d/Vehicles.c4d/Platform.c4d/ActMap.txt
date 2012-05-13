@@ -5,6 +5,7 @@ Length=1
 Facet=0,0,90,6
 NextAction=Fly
 StartCall=Flying
+Sound=prop
 
 [Action]
 Name=FlySlave
