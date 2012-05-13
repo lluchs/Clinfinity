@@ -67,6 +67,6 @@ public func MovementEvent(int direction, object source) {
 		SetDir(gearDown);
 	}
 	if(GetDir() != oldDirection) {
-		Sound("SignalClick", false, this, 15);
+		Sound("lever", false, this, 15);
 	}
 }
