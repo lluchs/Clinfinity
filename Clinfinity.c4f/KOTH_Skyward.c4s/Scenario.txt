@@ -1,6 +1,6 @@
 [Head]
 Icon=19
-Title=Leberwurst
+Title=KOTH_Skyward
 
 [Definitions]
 Definition1=Objects.c4d
