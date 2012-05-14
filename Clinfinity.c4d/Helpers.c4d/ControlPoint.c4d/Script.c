@@ -33,11 +33,14 @@ static const CP_Interval = 5;
 local capturingPlayer;
 // the current capture time
 local captureTime;
+// are we in overtime?
+local overtime;
 
 protected func Completion() {
 	AddEffect("ControlPoint", this, 1, CP_Interval, this);
 	capturingPlayer = NO_OWNER;
 	captureTime = 0;
+	overtime = false;
 	return _inherited(...);
 }
 
@@ -80,6 +83,9 @@ public func UpdateCaptureTime(int capturing, int defending) {
 	} else if(defending && GetOwner() == NO_OWNER) {
 		// decrease capture time
 		captureTime -= CP_Interval * defending;
+	} else if(overtime) {
+		// overtime! Decrease faster: 150 frames to finish
+		captureTime -= CaptureTime() * CP_Interval / 150;
 	} else {
 		// nobody there
 		captureTime -= CP_Interval / 2;
@@ -103,6 +109,17 @@ public func CheckCapture() {
 			capturingPlayer = NO_OWNER;
 		return false;
 	}
+}
+
+/*  Function: SetOvertime
+	Enables or disables overtime mode.
+
+	In overtime, capture progress decreases much faster if nobody is on point.
+
+	Parameters:
+	val - _true_ to enable overtime mode */
+public func SetOvertime(bool val) {
+	overtime = val;
 }
 
 /*  Function: IsControlPoint

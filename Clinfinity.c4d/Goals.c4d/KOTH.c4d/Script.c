@@ -63,8 +63,14 @@ public func IsFulfilled() {
 		var team = GetPlayerTeam(owner) - 1;
 		// subtract time
 		timer[team] -= FrameCounter() - lastUpdate;
+		timer[team] = Max(timer[team], 0);
 		// has this team won?
 		if(timer[team] <= 0) {
+			if(cp->GetCapturingPlayer() != NO_OWNER) {
+				// go into overtime!
+				cp->SetOvertime(true);
+				return false;
+			}
 			winningTeam = team + 1;
 			return true;
 		}
