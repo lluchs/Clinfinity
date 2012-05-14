@@ -15,4 +15,4 @@ TopFace=300,164,300,164,0,0
 Vertices=1
 VertexY=1
 VertexFriction=20
- 
+ColorByOwner=1
