@@ -7,12 +7,12 @@ TeamColors=1
 	id=1
 	Name=Extraordinary Gentlemen
 	PlrStartIndex=1
-	Color=dd8b16
+	Color=14519062
 	MaxPlayer=0
 
 	[Team]
 	id=2
 	Name=Teh Steamknights
 	PlrStartIndex=2
-	Color=6dc23f
+	Color=7193151
 	MaxPlayer=0
