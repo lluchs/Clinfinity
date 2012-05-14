@@ -107,6 +107,7 @@ public func CheckCapture() {
 		SetOwner(capturingPlayer);
 		capturingPlayer = NO_OWNER;
 		captureTime = 0;
+		overtime = false;
 		return true;
 	} else {
 		if(captureTime == 0)
