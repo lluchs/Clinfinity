@@ -33,6 +33,8 @@ static const CP_Interval = 5;
 local capturingPlayer;
 // the current capture time
 local captureTime;
+// the wait time before the capture time starts decreasing
+local wait;
 // are we in overtime?
 local overtime;
 
@@ -80,6 +82,7 @@ public func UpdateCaptureTime(int capturing, int defending) {
 		}
 		// increase capture time
 		captureTime += CP_Interval * capturing;
+		wait = 5;
 	} else if(defending && GetOwner() == NO_OWNER) {
 		// decrease capture time
 		captureTime -= CP_Interval * defending;
@@ -88,7 +91,8 @@ public func UpdateCaptureTime(int capturing, int defending) {
 		captureTime -= CaptureTime() * CP_Interval / 150;
 	} else {
 		// nobody there
-		captureTime -= CP_Interval / 2;
+		if(wait-- < 0)
+			captureTime -= CP_Interval / 2;
 	}
 	captureTime = Max(captureTime, 0);
 }
