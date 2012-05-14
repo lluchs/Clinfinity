@@ -10,7 +10,7 @@ local flag;
 public func Initialize() {
 	SetAction("MakeSound");
 
-	flag = CreateObject(FLAG);
+	flag = CreateObject(FLAG, 0, 0, NO_OWNER);
 	flag->SetAction("FlyBase", this);
 }
 
