@@ -48,6 +48,7 @@ VegetationLevel=100,0,0,100
 InEarth=FLNT=2
 InEarthLevel=26,0,0,100
 Sky=Sky_Cloudset
+BottomOpen=1
 MapWidth=80,0,64,250
 MapHeight=80,0,40,250
 Amplitude=10,10,0,100
