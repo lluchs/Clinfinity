@@ -1,0 +1,18 @@
+[DefCore]
+id=KOTH
+Name=King of the Hill
+Version=4,9,5
+Category=C4D_StaticBack|C4D_Goal
+MaxUserSelect=1
+Width=32
+Height=32
+Offset=1,1
+Value=1
+Mass=1
+Components=KOTH=1;
+Picture=0,0,64,64
+Vertices=1
+VertexY=1
+VertexFriction=20
+ColorByOwner=1
+ 
