@@ -1,0 +1,1 @@
+This object provides basic functionality for control points.
