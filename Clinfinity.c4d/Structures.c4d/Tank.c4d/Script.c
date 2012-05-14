@@ -22,7 +22,8 @@ protected func Initialize() {
 local generate;
 
 protected func Steam() {
-	CreateParticle("Smoke", 30, -18, 0, 0, 50, RGBa(255, 255, 255, 0));
+	if(GetFill() > MaxFill() * 2 / 3)
+		CreateParticle("Smoke", 30, -18, 0, 0, 50, RGBa(255, 255, 255, 0));
 	// generation
 	if(!generate--) {
 		DoFill(1);
