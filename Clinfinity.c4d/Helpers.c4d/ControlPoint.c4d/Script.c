@@ -108,6 +108,7 @@ public func CheckCapture() {
 		capturingPlayer = NO_OWNER;
 		captureTime = 0;
 		overtime = false;
+		CaptureMsg();
 		return true;
 	} else {
 		if(captureTime == 0)
@@ -124,6 +125,8 @@ public func CheckCapture() {
 	Parameters:
 	val - _true_ to enable overtime mode */
 public func SetOvertime(bool val) {
+	if(val && !overtime)
+		OvertimeMsg();
 	overtime = val;
 }
 
@@ -148,5 +151,19 @@ public func GetCapturingPlayer() {
 	The current capture progress in percent. */
 public func GetCapturePercentage() {
 	return Min(100, 100 * captureTime / CaptureTime());
+}
+
+/*  Function: CaptureMsg
+	Called when the point is captured, will output a message to the log. */
+private func CaptureMsg() {
+	var team = GetPlayerTeam(GetOwner());
+	Log("<c %x>$Capture$</c>", GetTeamColor(team), GetTeamName(team), GetName());
+}
+
+/*  Function: OvertimeMsg
+	Called when the point is captured, will output a message to the log. */
+private func OvertimeMsg() {
+	var team = GetPlayerTeam(GetOwner());
+	Log("<c %x>$Overtime$</c>", GetTeamColor(team));
 }
 
