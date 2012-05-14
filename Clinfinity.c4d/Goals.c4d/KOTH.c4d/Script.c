@@ -12,7 +12,7 @@ static const KOTH_FPS = 30;
 // default win time in 'seconds'
 static const KOTH_WinTime = 180;
 // number of animation faces for capturing
-static const KOTH_CapturePhases = 20;
+static const KOTH_CapturePhases = 100;
 
 // the capture point
 local cp;
