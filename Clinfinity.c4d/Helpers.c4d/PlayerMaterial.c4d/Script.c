@@ -26,7 +26,7 @@ public func Initialize() {
 	}
 }
 
-public func OnFillChange(Key, int iChange, bool dontNotify) {
+public func OnFillChange(Key, &iChange, bool dontNotify) {
 	// notify other team member's MatSys
 	var owner = GetOwner();
 	if(!dontNotify) {
@@ -44,6 +44,12 @@ public func OnFillChange(Key, int iChange, bool dontNotify) {
 	return 1;
 }
 
+public func DoFill(int change, id ID, bool noUpdate) {
+	if(!noUpdate)
+		change = UpdateFillEffects(ID, change);
+	return inherited(change, ID);
+}
+
 // checks for global effects defining the fill level
 // these effects must define a function FxMatSys<ID>Update
 private func UpdateFill(id ID) {
@@ -51,11 +57,24 @@ private func UpdateFill(id ID) {
 	if(i > 0) {
 		var fill = 0;
 		while(i--)
-			fill += EffectCall(0, GetEffect(effectName, 0, i), "Update");
-		DoFill(fill - GetFill(ID), ID);
+			fill += EffectCall(0, GetEffect(effectName, 0, i), "Update", GetOwner());
+		// prevent looping
+		DoFill(fill - GetFill(ID), ID, true);
 		return true;
 	}
 	return false;
+}
+
+// changes the actual fill if defined by effects
+private func UpdateFillEffects(id ID, int change) {
+	var effectName = Format("MatSys%i", ID), i = GetEffectCount(effectName);
+	if(i > 0) {
+		var original = change;
+		while(i-- && change != 0)
+			change -= EffectCall(0, GetEffect(effectName, 0, i), "Change", GetOwner(), change);
+		return original - change;
+	}
+	return change;
 }
 
 local fNoStatusMessage;
