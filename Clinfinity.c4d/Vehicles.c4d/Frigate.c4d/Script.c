@@ -9,14 +9,14 @@ local flag;
 
 public func Initialize() {
 	SetAction("MakeSound");
+
+	flag = CreateObject(FLAG);
+	flag->SetAction("FlyBase", this);
 }
 
 private func CaptureMsg() {
-	if(!flag) {
-		flag = CreateObject(FLAG);
-		flag->SetAction("FlyBase", this);
-	}
 	flag->SetOwner(GetOwner());
+	return inherited(...);
 }
 
 public func CaptureTime() { return 1000; }
