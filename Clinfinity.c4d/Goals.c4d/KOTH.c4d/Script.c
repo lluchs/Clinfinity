@@ -96,12 +96,23 @@ public func UpdateHUD() {
 	// overlay: capturing team
 	team = GetPlayerTeam(cp->GetCapturingPlayer());
 	if(team) {
-		var action = Format("Capturing%d", ChangeRange(cp->GetCapturePercentage(), 0, 100, 0, KOTH_CapturePhases));
+		var action = Format("Capturing%d", ChangeRange(cp->GetCapturePercentage(), 0, 100, 0, KOTH_CapturePhases - 1));
 		SetStillOverlayAction(action, 1);
 		SetClrModulation(GetTeamColor(team), 0, 1);
 	} else {
 		// remove overlay
 		SetGraphics(0, 0, 0, 1);
+	}
+
+	// time
+	// reset
+	for(var i = 0, len = GetLength(timer); i < len; i++) {
+		var t = timer[i] / KOTH_FPS, team = i + 1;
+		var msg = Format("@%d:%.2d", t / 60, t % 60);
+		var flags = 0;
+		if(i > 0)
+			flags = MSG_Multiple;
+		CustomMessage(msg, this, NO_OWNER, 60, 36 + 20 * i, GetTeamColor(team), 0, 0, flags);
 	}
 }
 
