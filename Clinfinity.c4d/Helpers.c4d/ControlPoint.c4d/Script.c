@@ -106,3 +106,26 @@ public func CheckCapture() {
 	}
 }
 
+/*  Function: IsControlPoint
+	This is a control point.
+
+	Returns:
+	_true_ */
+public func IsControlPoint() { return true; }
+
+/*  Function: GetCapturingPlayer
+	
+	Returns:
+	The capturing player or NO_OWNER if nobody is capturing. */
+public func GetCapturingPlayer() {
+	return capturingPlayer;
+}
+
+/*  Function: GetCapturePercentage
+	
+	Returns:
+	The current capture progress in percent. */
+public func GetCapturePercentage() {
+	return Min(100, 100 * captureTime / CaptureTime());
+}
+
