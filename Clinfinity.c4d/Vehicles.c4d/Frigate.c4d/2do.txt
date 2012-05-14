@@ -1,0 +1,2 @@
+KOTH Funktionalität
+Ideal wäre eine Flagge die am Funkturm gehisst ist und sich je nach Capture-Teamfarbe kleidet.
