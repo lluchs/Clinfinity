@@ -6,6 +6,8 @@
 
 // number of animation phases
 static const STMT_Phases = 10;
+// amount needed to respawn one clonk
+static const STMT_RespawnAmount = 100;
 
 public func MaxFill() { return 1500; }
 
@@ -28,6 +30,13 @@ protected func Steam() {
 	if(!generate--) {
 		DoFill(1);
 		generate = 5;
+	}
+	// respawn
+	var clonk = Contents();
+	if(clonk && MatSysGetTeamFill(GetOwner(), STEM) >= STMT_RespawnAmount) {
+		MatSysDoTeamFill(-STMT_RespawnAmount, GetOwner(), STEM);
+		clonk->Exit();
+		SetCursor(clonk->GetOwner(), clonk);
 	}
 }
 
