@@ -4,7 +4,7 @@
 
 #include L_SS
 
-private func MaxFill() { return 1000; }
+private func MaxFill() { return -1; }
 
 static aMaterialSystem;
 
@@ -44,6 +44,20 @@ public func OnFillChange(Key, int iChange, bool dontNotify) {
 	return 1;
 }
 
+// checks for global effects defining the fill level
+// these effects must define a function FxMatSys<ID>Update
+private func UpdateFill(id ID) {
+	var effectName = Format("MatSys%i", ID), i = GetEffectCount(effectName);
+	if(i > 0) {
+		var fill = 0;
+		while(i--)
+			fill += EffectCall(0, GetEffect(effectName, 0, i), "Update");
+		DoFill(fill - GetFill(ID), ID);
+		return true;
+	}
+	return false;
+}
+
 local fNoStatusMessage;
 public func Timer() {
 	if(fNoStatusMessage)
@@ -51,6 +65,7 @@ public func Timer() {
 	var owner = GetOwner();
 	var iter = HashIter(hIcons), node;
 	while(node = HashIterNext(iter)) {
+		UpdateFill(node[0]);
 		var fill = MatSysGetTeamFill(owner, node[0]);
 		node[1] -> SetStatusMessage(Format("@%d", fill));
 	}
