@@ -1,0 +1,7 @@
+[Action]
+Name=MakeSound
+NextAction=MakeSound
+Length=20
+Delay=2
+Facet=0,0,300,200,0,0
+Sound=shipsound
