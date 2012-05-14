@@ -70,7 +70,6 @@ protected func FxControlPointTimer(object target, int effectNum, int effectTime)
 	capturing - the number of capturing clonks
 	defending - the number of defending clonks */
 public func UpdateCaptureTime(int capturing, int defending) {
-	Message("%d, %d", this, capturing, defending);
 	if(capturing) {
 		if(defending) {
 			// don't do anything
