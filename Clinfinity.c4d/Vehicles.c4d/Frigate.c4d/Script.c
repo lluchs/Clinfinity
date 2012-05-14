@@ -5,8 +5,18 @@
 // this is a control point
 #include L_CP
 
+local flag;
+
 public func Initialize() {
 	SetAction("MakeSound");
+}
+
+private func CaptureMsg() {
+	if(!flag) {
+		flag = CreateObject(FLAG);
+		flag->SetAction("FlyBase", this);
+	}
+	flag->SetOwner(GetOwner());
 }
 
 public func CaptureTime() { return 1000; }
