@@ -41,7 +41,7 @@ Vegetation=TRE1=3;TRE2=4;TRE3=2
 VegetationLevel=100,0,0,100
 InEarth=FLNT=2
 InEarthLevel=26,0,0,100
-Sky=Clouds1;Default
+Sky=Sky_Cloudset
 MapWidth=80,0,64,250
 MapHeight=80,0,40,250
 Amplitude=10,10,0,100
