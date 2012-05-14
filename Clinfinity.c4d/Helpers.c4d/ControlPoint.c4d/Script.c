@@ -82,7 +82,7 @@ public func UpdateCaptureTime(int capturing, int defending) {
 		}
 		// increase capture time
 		captureTime += CP_Interval * capturing;
-		wait = 5;
+		wait = 20;
 	} else if(defending && GetOwner() == NO_OWNER) {
 		// decrease capture time
 		captureTime -= CP_Interval * defending;
