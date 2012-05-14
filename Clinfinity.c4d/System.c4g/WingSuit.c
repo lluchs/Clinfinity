@@ -15,10 +15,12 @@ protected func Initialize() {
 }
 
 protected func ControlDownSingle() {
+	DEBUG_controlDownPressedBefore = false;
 	var result = _inherited();
 	if( result == 0 ) {
 		if(GetAction() == "Jump") {
 			DEBUG_controlDownPressedBefore = true;
+			Log("OK: %s pressed [Down]", GetPlayerName(GetOwner()));
 			if(IsGliding()) {
 				RemoveEffect("WingSuit", this);
 			} else if(GetPhase() > 3) {
@@ -43,6 +45,8 @@ protected func FxWingSuitStart(object target, int effectNumber, int temporary) {
 		Sound("SailDown", false, target, 50);
 		if(!target->LocalN("DEBUG_controlDownPressedBefore"))
 			Log("WARNING: [Down] was not pressed before wing suit activates!");
+		else
+			Log("OK: WingSuit opened normally after pressing [Down]");
 		target->LocalN("DEBUG_controlDownPressedBefore") = false;
 	}
 }
