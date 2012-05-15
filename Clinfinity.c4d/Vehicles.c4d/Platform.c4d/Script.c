@@ -100,7 +100,8 @@ private func FloatDown() {
 
 /*	Function: Connect
 	Connects two platforms so they move in unison.
-	The left platform becomes the master of the right platform.
+	When connected, both platforms can be controlled from either control lever.
+	By calling this method, the left platform becomes the master of the right platform.
 
 	Parameters:
 	leftPlatform	- The left platform.
