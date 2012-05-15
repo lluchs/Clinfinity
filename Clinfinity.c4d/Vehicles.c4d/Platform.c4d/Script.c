@@ -98,28 +98,15 @@ private func FloatDown() {
 
 /*	Section: Master/Slave system */
 
-/*	Function: SetLeftSlave
-	Connects a platform to the left of this platform.
-	When connected, both platforms will move in sync and can be controlled from either control lever.
-
-	Parameters:
-	platform	- The platform to connect.
-	
-	Returns:
-	*true* if connecting the platforms was successful, *false* otherwise. */
-public func SetLeftSlave(object platform) {
-	if(platform == 0 || platform == this || !platform->~IsPlatform()) {
-		return false;
+public func Connect(object leftPlatform, object rightPlatform) {
+	if(IsPlatformOkay(leftPlatform) && IsPlatformOkay(rightPlatform) && leftPlatform != rightPlatform) {
+		var leftMediator = leftPlatform->GetControlMediator();
+		var rightMediator = rightPlatform->GetControlMediator();
+		COMD->Connect(leftMediator, rightMediator);
 	}
-	return controlMediator->SetLeftSlave(platform->GetControlMediator());
+	return false;
 }
 
-/*	Function: SetRightSlave
-	Connects a platform to the right of this platform.
-	See <SetLeftSlave> for details. */
-public func SetRightSlave(object platform) {
-	if(platform == 0 || platform == this || !platform->~IsPlatform()) {
-		return false;
-	}
-	return controlMediator->SetRightSlave(platform->GetControlMediator());
+private func IsPlatformOkay(object platform) {
+	return platform != 0 && platform->~IsPlatform();
 }

@@ -8,7 +8,7 @@
 
 local controlledPlatform;
 local controlEventListeners, movementEventListeners;
-local masterMediator, leftSlaveMediator, rightSlaveMediator;
+local masterMediator, slaveMediator;
 
 protected func Initialize() {
 	controlEventListeners = [];
@@ -25,23 +25,12 @@ protected func Initialize() {
 public func ControlEvent(int direction, object source) {
 	if(masterMediator == 0) {
 		ControlEventToListeners(direction, this);
-		ControlEventToSlaves(direction);
 	} else {
 		if(source == masterMediator) {
 			ControlEventToListeners(direction, this);
-			ControlEventToSlaves(direction);
 		} else {
 			masterMediator->ControlEvent(direction, this);
 		}
-	}
-}
-
-private func ControlEventToSlaves(int direction) {
-	if(leftSlaveMediator != 0) {
-		leftSlaveMediator->ControlEvent(direction, this);
-	}
-	if(rightSlaveMediator != 0) {
-		rightSlaveMediator->ControlEvent(direction, this);
 	}
 }
 
@@ -55,23 +44,12 @@ private func ControlEventToSlaves(int direction) {
 public func MovementEvent(int direction, object source) {
 	if(masterMediator == 0) {
 		MovementEventToListeners(direction, this);
-		MovementEventToSlaves(direction);
 	} else {
 		if(source == masterMediator) {
 			MovementEventToListeners(direction, this);
-			MovementEventToSlaves(direction);
 		} else {
 			masterMediator->MovementEvent(direction, this);
 		}
-	}
-}
-
-private func MovementEventToSlaves(int direction) {
-	if(leftSlaveMediator != 0) {
-		leftSlaveMediator->MovementEvent(direction, this);
-	}
-	if(rightSlaveMediator != 0) {
-		rightSlaveMediator->MovementEvent(direction, this);
 	}
 }
 
@@ -152,74 +130,58 @@ private func MovementEventToListeners(int direction, object source) {
 	From there, the event gets routed back down in the tree, and additionally, to all listeners for the respective event.
 	This way, any event fired anywhere in the tree can be received by any listener in the tree. */
 
-/*	Function: SetLeftSlave
-	Sets the left slave mediator.
+/*	Function: Connect
+	Connects two platforms so they move in unison.
+	The left platform becomes the master of the right platform.
 
 	Parameters:
-	mediator	- The new slave.
+	leftMediator	- Control mediator of the left platform.
+	rightMediator	- Control mediator of the right platform.
 
 	Returns:
-	*true* if the mediator could be made a slave, *false* otherwise. */
-public func SetLeftSlave(object mediator) {
-	if(HasLeftSlave() || mediator->HasRightSlave()) {
+	*true* if the platforms could be successfully connected, *false* otherwise. */
+public func Connect(object leftMediator, object rightMediator) {
+	if(leftMediator->HasSlave() || rightMediator->HasMaster()) {
 		return false;
 	}
-	if(!mediator->SetMasterFromRight(this)) {
-		return false;
-	}
-	leftSlaveMediator = mediator;
+	leftMediator->SetSlave(rightMediator);
+	rightMediator->SetMaster(leftMediator);
+
+	var leftPlatform = leftMediator->GetControlledPlatform();
+	var rightPlatform = rightMediator->GetControlledPlatform();
+	rightPlatform->SetAction("FlySlave", leftPlatform);
+	rightPlatform->AttachTo(leftPlatform, 1, 2);
 	return true;
 }
 
-/*	Function: SetRightSlave
-	Sets the right slave mediator. See <SetLeftSlave> for details. */
-public func SetRightSlave(object mediator) {
-	if(HasRightSlave() || mediator->HasLeftSlave()) {
-		return false;
-	}
-	if(!mediator->SetMasterFromLeft(this)) {
-		return false;
-	}
-	rightSlaveMediator = mediator;
-	return true;
+private func HasMaster() {
+	return masterMediator != 0;
 }
 
-private func SetMasterFromRight(object newMasterMediator) {
-	// TODO: Sanity checks
-	SetObjectOrder(newMasterMediator->GetControlledPlatform(), controlledPlatform);
-	// Already slave to another mediator to the left: Restructure.
-	if(masterMediator != 0) {
-		masterMediator->SetMasterFromRight(this);
-		leftSlaveMediator = masterMediator;
+private func HasSlave() {
+	return slaveMediator != 0;
+}
+
+private func SetMaster(object newMaster) {
+	masterMediator = newMaster;
+}
+
+private func RemoveMaster() {
+	masterMediator = 0;
+}
+
+private func SetSlave(object newSlave) {
+	AddControlEventListener(newSlave);
+	AddMovementEventListener(newSlave);
+	slaveMediator = newSlave;
+}
+
+private func RemoveSlave() {
+	if(slaveMediator != 0) {
+		RemoveControlEventListener(slaveMediator);
+		RemoveMovementEventListener(slaveMediator);
+		slaveMediator = 0;
 	}
-	rightSlaveMediator = 0;
-	masterMediator = newMasterMediator;
-	controlledPlatform->SetAction("FlySlave", masterMediator->GetControlledPlatform());
-	controlledPlatform->SetActionData(256 * 1 + 0);
-	return true;
-}
-
-private func SetMasterFromLeft(object newMasterMediator) {
-	// TODO: Sanity checks
-	SetObjectOrder(newMasterMediator->GetControlledPlatform(), controlledPlatform);
-	// Already slave to another mediator to the left: Restructure.
-	if(masterMediator != 0) {
-		masterMediator->SetMasterFromLeft(this);
-		rightSlaveMediator = masterMediator;
-	}
-	leftSlaveMediator = 0;
-	masterMediator = newMasterMediator;
-	controlledPlatform->SetAction("FlySlave", masterMediator->GetControlledPlatform());
-	controlledPlatform->SetActionData(256 * 0 + 1);
-	return true;
-}
-
-private func HasLeftSlave() {
-	return leftSlaveMediator != 0;
-}
-
-private func HasRightSlave() {
-	return rightSlaveMediator != 0;
 }
 
 private func GetControlledPlatform() {
