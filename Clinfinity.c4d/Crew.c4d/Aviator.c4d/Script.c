@@ -9,13 +9,20 @@ public func MaxContentsCount() { return 3; }
 /* Inhalt durchwechseln */
 protected func ControlSpecial() { ShiftContents(); }
 
-/* Respawn */
-protected func Death() {
+protected func Death(int killedBy) {
+	/* Respawn */
 	var tank = FindObject2(Find_ID(STMT), Find_Allied(GetOwner()));
 	if(tank) {
 		var new = CreateObject(GetID(), 0, 0, GetOwner());
 		new->GrabObjectInfo(this);
 		new->Enter(tank);
 	}
-	return _inherited(...);
+
+	// try to award a hat
+	if(Hostile(GetController(), killedBy)) {
+		var clonk = GetCursor(killedBy);
+		if(clonk)
+			clonk->AddHat(C4Id(Format("HAT%d", RandomX(1, 2))));
+	}
+	return _inherited(killedBy, ...);
 }
