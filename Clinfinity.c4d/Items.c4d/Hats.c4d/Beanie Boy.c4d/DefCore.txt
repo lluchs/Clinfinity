@@ -2,7 +2,7 @@
 id=HAT2
 Name=Beanie Boy
 Version=4,9,5
-Category=18960
+Category=C4D_Object
 MaxUserSelect=10
 Width=7
 Height=5
