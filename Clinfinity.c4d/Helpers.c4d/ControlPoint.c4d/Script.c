@@ -161,7 +161,7 @@ private func CaptureMsg() {
 }
 
 /*  Function: OvertimeMsg
-	Called when the point is captured, will output a message to the log. */
+	Called when the point switches to overtime, will output a message to the log. */
 private func OvertimeMsg() {
 	var team = GetPlayerTeam(GetOwner());
 	Log("<c %x>$Overtime$</c>", GetTeamColor(team));
