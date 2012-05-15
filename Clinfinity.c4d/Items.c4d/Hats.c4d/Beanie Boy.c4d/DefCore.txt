@@ -1,5 +1,5 @@
 [DefCore]
-id=HAT1
+id=HAT2
 Name=Beanie Boy
 Version=4,9,5
 Category=18960
