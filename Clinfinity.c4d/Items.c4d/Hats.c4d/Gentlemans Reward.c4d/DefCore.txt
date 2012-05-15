@@ -15,3 +15,4 @@ VertexX=0
 VertexY=2
 VertexFriction=20
 Rotate=1
+ColorByOwner=1
