@@ -12,6 +12,8 @@ Mass=10
 Components=_NEW=1;
 Picture=7,0,64,64
 Vertices=1
-VertexY=1
+VertexX=0
+VertexY=2
 VertexFriction=20
+Rotate=1
 ColorByOwner=1

@@ -1,8 +1,5 @@
-/*-- Neues Objekt --*/
+/*-- Beanie Boy --*/
 
-#strict
+#strict 2
 
-func Initialize() {
-   
-  return(1);
-}
+#include L_HT
