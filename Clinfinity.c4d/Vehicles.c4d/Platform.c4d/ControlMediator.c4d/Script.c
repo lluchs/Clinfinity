@@ -75,6 +75,18 @@ private func MovementEventToSlaves(int direction) {
 	}
 }
 
+/*	Function: AttachEvent
+	Called before an object is attached to a new parent object or detached from it.
+
+	Parameters:
+	attached	- The attached object.
+	attachedTo	- The new parent object.
+	isDetaching	- *true* if the object is about to be detached. *false* if it is about to be attached.
+	source		- Source of the event. */
+public func AttachEvent(object attached, object attachedTo, bool isDetaching, object source) {
+	// TODO
+}
+
 /*	Function: AddControlEventListener
 	Adds a listener for control events.
 	The control mediator will call the method ControlEvent() in each listener when a control event arrives.

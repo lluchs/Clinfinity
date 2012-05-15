@@ -88,3 +88,19 @@ global func RemoveCopiedVertices(object from) {
 	}
 	return false;
 }
+
+global func CopyVerticesRecursively(object from) {
+	CopyVertices(from);
+	var attachedObjects = FindObjects(Find_ActionTarget(this), Find_Func("CompareProdecure", "ATTACH"));
+	for(from in attachedObjects) {
+		CopyVertices(from);
+	}
+}
+
+global func CompareProdecure(string procedure) {
+	return GetProcedure() == procedure;
+}
+
+global func RemoveCopiedVerticesRecursively(object from) {
+	// TODO
+}
