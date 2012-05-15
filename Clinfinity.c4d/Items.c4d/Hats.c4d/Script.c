@@ -60,13 +60,15 @@ protected func FxHatTimer(object target, int effectNumber) {
 		cy = phase*13/7;
 	}
 	else if (action == "Tumble") {
-		rot = phase * 19;
-
-		cx = 23 * phase**3 - 680 * phase**2 + 4833 * phase;
-		cx /= 1000;
-
-		cy = 24 * phase**3 - 340 * phase**2 - 733 * phase;
-		cy /= 1000;
+		// lose hat
+		SetAction("Idle");
+		SetXDir(target->GetXDir());
+		SetYDir(target->GetYDir());
+		if(GetDir() == DIR_Left)
+			SetRDir(10);
+		else
+			SetRDir(-10);
+		return -1;
 	}
 	else if (action == "Build") {
 		rot = 35;
@@ -96,6 +98,11 @@ protected func FxHatTimer(object target, int effectNumber) {
 
 	// direction
 	SetDir(dir);
+}
+
+func FxHatStop(object target, int effectNum, int reason, bool temp) {
+	if(temp) return;
+	SetAction("Idle");
 }
 
 private func MoveTo(int cx, int cy) {
