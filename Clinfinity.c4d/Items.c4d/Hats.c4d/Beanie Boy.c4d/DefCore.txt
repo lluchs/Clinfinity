@@ -1,0 +1,17 @@
+[DefCore]
+id=HAT1
+Name=Beanie Boy
+Version=4,9,5
+Category=18960
+MaxUserSelect=10
+Width=7
+Height=5
+Offset=-3,-3
+Value=10
+Mass=10
+Components=_NEW=1;
+Picture=7,0,64,64
+Vertices=1
+VertexY=1
+VertexFriction=20
+ 
