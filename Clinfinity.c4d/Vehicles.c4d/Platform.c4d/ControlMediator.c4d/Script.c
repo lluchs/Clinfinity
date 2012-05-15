@@ -120,26 +120,25 @@ private func MovementEventToListeners(int direction, object source) {
 }
 
 /*	Section: Master/slave system
-	Methods that concern the tree-like structure of connected control mediators.
-	Each mediator can have a left and a right slave mediator, it then acts as the master to these slaves.
-	Likewise, the slave mediators can have slaves themselves.
-	This way, an entire tree of mediators can be built.
+	Methods that concern the list-like structure of connected control mediators.
+	If the mediators of two adjacent platforms are connected, the mediator of the left platform acts as the master of the right platform's mediator.
+	An arbitrary number of mediators can be connected this way, forming a doubly linked list.
 
-	Each control event and movement event that is fired in a slave gets routed to its master.
-	This is repeated until the event reaches the "absolute" master at the top of the tree.
-	From there, the event gets routed back down in the tree, and additionally, to all listeners for the respective event.
-	This way, any event fired anywhere in the tree can be received by any listener in the tree. */
+	Each event that is fired in a slave gets handed to its master.
+	This is repeated until the event reaches the "absolute" master at the left of the connected mediators.
+	From there, the event gets routed back to the right, and additionally, to all listeners for the respective event.
+	This way, an event fired anywhere in the list can be received by any listener in the list. */
 
 /*	Function: Connect
-	Connects two platforms so they move in unison.
-	The left platform becomes the master of the right platform.
+	Connects the control mediators of two adjacent platforms.
+	The left mediator becomes the master of the right mediator.
 
 	Parameters:
-	leftMediator	- Control mediator of the left platform.
-	rightMediator	- Control mediator of the right platform.
+	leftMediator	- Mediator of the left platform.
+	rightMediator	- Mediator of the right platform.
 
 	Returns:
-	*true* if the platforms could be successfully connected, *false* otherwise. */
+	*true* if the mediators could successfully be connected, *false* otherwise. */
 public func Connect(object leftMediator, object rightMediator) {
 	if(leftMediator->HasSlave() || rightMediator->HasMaster()) {
 		return false;

@@ -98,6 +98,16 @@ private func FloatDown() {
 
 /*	Section: Master/Slave system */
 
+/*	Function: Connect
+	Connects two platforms so they move in unison.
+	The left platform becomes the master of the right platform.
+
+	Parameters:
+	leftPlatform	- The left platform.
+	rightPlatform	- The right platform.
+
+	Returns:
+	*true* if the platforms could successfully be connected, *false* otherwise. */
 public func Connect(object leftPlatform, object rightPlatform) {
 	if(IsPlatformOkay(leftPlatform) && IsPlatformOkay(rightPlatform) && leftPlatform != rightPlatform) {
 		var leftMediator = leftPlatform->GetControlMediator();
