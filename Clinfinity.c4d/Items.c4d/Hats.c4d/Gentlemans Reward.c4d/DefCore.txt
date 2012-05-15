@@ -6,11 +6,12 @@ Category=18960
 MaxUserSelect=10
 Width=9
 Height=5
-Offset=-3,-3
+Offset=-4,-3
 Value=10
 Mass=10
 Picture=9,0,64,64
 Vertices=1
-VertexY=1
+VertexX=0
+VertexY=2
 VertexFriction=20
  
