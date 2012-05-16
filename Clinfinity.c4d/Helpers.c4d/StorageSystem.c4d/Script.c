@@ -41,7 +41,7 @@ public func & GetFill(Key) { TypeCheck(); return HashGet(hFillLevel, Key); }
 	Key - The hash key.
 
     Returns:
-	The maximum fill for the given key. */
+	The maximum fill for the given key or -1 if there is no maximum. */
 public func GetMaxFill(Key) {
 	var szFunc = "MaxFill", szFunc2, iFill;
 	if(Key) {
@@ -69,7 +69,12 @@ public func GetMaxFill(Key) {
 	Returns:
 	The actual change of the fill level. */
 public func DoFill(int iChange, Key, bool fNoSound) {
-	var iNewFill = BoundBy(GetFill(Key) + iChange, 0, GetMaxFill(Key));
+	// fixed minimum: 0
+	var iNewFill = Max(GetFill(Key) + iChange, 0);
+	var maxFill = GetMaxFill(Key);
+	// negative maxFill -> no maximum
+	if(maxFill > 0)
+		iNewFill = Min(iNewFill, maxFill);
 	if (iNewFill == GetFill(Key)) return;
 	iChange = iNewFill - GetFill(Key);
 	OnFillChange(Key, iChange);

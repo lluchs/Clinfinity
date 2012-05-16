@@ -1,16 +1,16 @@
-Zivilist
-Wissenschaftler
-Wetterbeobachter
+Passagier
 Gärtner
 Lagerarbeiter
+Wetterbeobachter
+Maschinist
 Geologe
-Mechaniker
 Techniker
 Stewardess
 Fluglotse
 Co Pilot
 Pilot
-Astrologe
-Geschwaderkommandant
 Flottenoffizier
+Geschwaderkommandant
 Peter
+Einstein
+Haxton Sale

@@ -1,0 +1,2 @@
+Capture=Team %s erobert %s!
+Overtime=Verlängerung!

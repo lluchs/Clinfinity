@@ -84,6 +84,8 @@ protected func FxFlashStart(object target, int effectNum, int temp, int change) 
 
 protected func FxFlashTimer(object target, int effectNum, int effectTime) {
 	if(effectTime > MatSys_FlashDuration) {
+		// reset modulation
+		SetClrModulation(RGB(255, 255, 255), this, 2);
 		return -1;
 	}
 	var color, alpha = 255 * effectTime / MatSys_FlashDuration;
