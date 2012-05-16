@@ -100,10 +100,7 @@ protected func FxHatTimer(object target, int effectNumber) {
 
 	// update
 	SetR(rot);
-	MoveTo(cx, cy);
-
-	// direction
-	SetDir(dir);
+	MoveTo(cx, cy, dir == DIR_Right);
 }
 
 protected func FxHatStop(object target, int effectNum, int reason, bool temp) {
@@ -112,8 +109,11 @@ protected func FxHatStop(object target, int effectNum, int reason, bool temp) {
 	StartFade();
 }
 
-private func MoveTo(int cx, int cy) {
-	SetObjDrawTransform(1000, 0, 1000 * cx, 0, 1000, 1000 * cy);
+private func MoveTo(int cx, int cy, bool flip) {
+	var wdt = 1000;
+	if(flip)
+		wdt *= -1;
+	SetObjDrawTransform(wdt, 0, 1000 * cx, 0, 1000, 1000 * cy);
 }
 
 protected func FxFadeTimer(object target, int effectNum, int effectTime) {
