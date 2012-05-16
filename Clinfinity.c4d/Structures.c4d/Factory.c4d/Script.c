@@ -33,20 +33,15 @@ public func ProductionAmountMenu(object caller, id item, int amount) {
 	}
 	
 	Sound("Click", 0, 0, 100, GetOwner(caller)+1);
-	
-	var dummy = CreateObject(TIM1);
+
 	CreateMenu(CXCN, caller, this, 1, 0, 0, 0, 1);
 
-	SetGraphics("Plus", dummy, MS4C, 1, GFXOV_MODE_Picture);
-	AddMenuItem("$TxtIncrementProduction$", Format("ProductionAmountMenu(Object(%d), %i, %d, 0)", ObjectNumber(caller), item, amount+1), 0, caller, 0, 0, "$TxtIncrementProductionDesc$", 4, dummy);
-	SetGraphics("Minus", dummy, MS4C, 1, GFXOV_MODE_Picture);
-	AddMenuItem("$TxtDecrementProduction$", Format("ProductionAmountMenu(Object(%d), %i, %d, 1)", ObjectNumber(caller), item, Max(amount-1, 1)), 0, caller, 0, 0, "$TxtDecrementProductionDesc$", 4, dummy);
-	SetGraphics("Chosen", dummy, MS4C, 1, GFXOV_MODE_Picture);
-	AddMenuItem("$TxtLaunchProduction$", Format("RequestAmountProduction(%i, Object(%d), %d)", item, ObjectNumber(caller), amount), 0, caller, 0, 0, "OK", 4, dummy);
+	AddMenuItem("$TxtIncrementProduction$", Format("ProductionAmountMenu(Object(%d), %i, %d, 0)", ObjectNumber(caller), item, amount+1), MS4C, caller, 0, 0, "$TxtIncrementProductionDesc$",  2, 1);
+	AddMenuItem("$TxtDecrementProduction$", Format("ProductionAmountMenu(Object(%d), %i, %d, 1)", ObjectNumber(caller), item, Max(amount-1, 1)), MS4C, caller, 0, 0, "$TxtDecrementProductionDesc$",  2, 2);
+	AddMenuItem("$TxtLaunchProduction$", Format("RequestAmountProduction(%i, Object(%d), %d)", item, ObjectNumber(caller), amount), MS4C, caller, 0, 0, "OK", 2, 3);
 	
 	SelectMenuItem(index, caller);
-	dummy->RemoveObject();
-	
+
 	PlayerMessage(GetOwner(caller), "%dx {{%i}}", caller, amount, item);
 }
 
