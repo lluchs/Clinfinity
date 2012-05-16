@@ -2,27 +2,64 @@
 
 #strict 2
 
-local requestedItem;
+local requestedId;
 local remainingTime;
 local remainingAmount;
 local steamWhite;
+local player;
+
+/* Interaktion */
 
 public func ControlDigDouble(object caller) {
-	if(IsProducing()) return;
-	ShowProductionMenu(caller);
+	if(IsProducing()) return AlreadyProducing(caller);
+	ProductionMenu(caller);
 }
 
-public func ShowProductionMenu(object caller) {
-	CreateMenu(CXCN,caller,this,1,"$NoPlrKnowledge$");
+public func ProductionMenu(object caller) {
+	if(IsProducing()) return AlreadyProducing(caller);
+	CreateMenu(CXCN, caller, this, 1, "$TxtNoPlrKnowledge$");
 	var knowledge = ROCK;
-	AddMenuItem("$Production$: %s", "StartProduction", knowledge, caller, 0, caller);
+	AddMenuItem("$TxtProduction$: %s", "RequestProduction", knowledge, caller, 0, caller);
 }
 
-public func StartProduction(id item) {
-	requestedItem = item;
-	remainingAmount = 3;
-	ContinueProduction();
+public func ProductionAmountMenu(object caller, id item) {
+	var amount = 3;
+
+	var dummy = CreateObject(TIM1);
+	SetGraphics("Chosen", dummy, MS4C, 1, GFXOV_MODE_Picture);
+	CreateMenu(CXCN, caller, this, 1);
+	AddMenuItem("$TxtLaunchProduction$", Format("RequestAmountProduction(%i, Object(%d), %d)", item, ObjectNumber(caller), amount), 0, caller, 0, 0, "OK", 4, dummy);
+	dummy->RemoveObject();
+}
+
+protected func RequestProduction(id item, object caller, bool right) {
+	if(IsProducing()) return AlreadyProducing(caller);
+	if(!right) {
+		StartProduction(item, GetOwner(caller), 1);
+	}
+	else {
+		ProductionAmountMenu(caller, item);
+	}
+}
+
+protected func RequestAmountProduction(id item, object caller, int amount) {
+	StartProduction(item, GetOwner(caller), 3);
+}
+
+private func AlreadyProducing(object clonk) {
+	Sound("Error", 0, 0, 100, GetOwner(clonk)+1);
+	PlayerMessage(GetOwner(clonk), "$TxtAlreadyProducing$", clonk);
+}
+
+/* Produktion */
+
+public func StartProduction(id item, int player, int amount) {
+	if(IsProducing()) return;
+	if(!amount) amount = 1;
+	remainingAmount = amount;
+	requestedId = item;
 	SetAction("Produce");
+	ContinueProduction();
 }
 
 protected func ContinueProduction() {
@@ -50,7 +87,13 @@ public func CompleteProduction() {
 	else {
 		CompletedProduction();
 	}
-	var producedItem = CreateObject(requestedItem, 0, 0, GetOwner());
+	var matSys = GetMatSys(GetOwner(), true);
+	if(matSys != 0 && InArray(requestedId, GetMatSysIDs())) {
+		matSys->DoFill(1, requestedId);
+	}
+	else {
+		var producedItem = CreateObject(requestedId, 0, 0, GetOwner());
+	}
 }
 
 public func CompletedProduction() {
@@ -59,6 +102,8 @@ public func CompletedProduction() {
 	remainingTime = 0;
 	steamWhite = 20;
 }
+
+/* Nochwas */
 
 public func IsProducing() {
 	return remainingTime > 0;

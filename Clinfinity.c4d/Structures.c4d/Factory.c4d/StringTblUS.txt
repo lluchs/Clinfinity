@@ -1,3 +1,5 @@
-NoPlrKnowledge=No construction plans
-Construction=Construction
-Production=Production
+TxtNoPlrKnowledge=No construction plans
+TxtConstruction=Construction
+TxtProduction=Production
+TxtLaunchProduction=Launch production
+TxtAlreadyProducing=Already producing!

@@ -1,3 +1,5 @@
-NoPlrKnowledge=Keine Baupläne vorhanden
-Construction=Konstruktion
-Production=Produktion
+TxtNoPlrKnowledge=Keine Baupläne vorhanden
+TxtConstruction=Konstruktion
+TxtProduction=Produktion
+TxtLaunchProduction=Produktion starten
+TxtAlreadyProducing=Produziert bereits!
