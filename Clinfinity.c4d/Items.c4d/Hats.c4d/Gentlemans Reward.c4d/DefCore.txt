@@ -1,0 +1,18 @@
+[DefCore]
+id=HAT1
+Name=Gentleman's Reward
+Version=4,9,5
+Category=C4D_Object
+MaxUserSelect=10
+Width=9
+Height=5
+Offset=-4,-3
+Value=10
+Mass=10
+Picture=9,0,64,64
+Vertices=1
+VertexX=0
+VertexY=2
+VertexFriction=20
+Rotate=1
+ColorByOwner=1
