@@ -62,7 +62,24 @@ public func MovementEvent(int direction, object source) {
 	isDetaching	- *true* if the object is about to be detached. *false* if it is about to be attached.
 	source		- Source of the event. */
 public func AttachEvent(object attached, object attachedTo, bool isDetaching, object source) {
-	// TODO
+	if(masterMediator == 0) {
+		if(isDetaching) {
+			Log("Remove Vertices");
+			GetControlledPlatform()->RemoveCopiedChildrenVertices(attached);
+		} else {
+			GetControlledPlatform()->CopyChildrenVertices(attached);
+		}
+	} else {
+		if(source == masterMediator) {
+			if(isDetaching) {
+				GetControlledPlatform()->RemoveCopiedChildrenVertices(attached);
+			} else {
+				GetControlledPlatform()->CopyChildrenVertices(attached);
+			}
+		} else {
+			masterMediator->AttachEvent(attached, attachedTo, isDetaching, source);
+		}
+	}
 }
 
 /*	Function: AddControlEventListener

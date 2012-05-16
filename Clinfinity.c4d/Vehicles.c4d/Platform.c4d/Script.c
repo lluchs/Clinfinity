@@ -122,3 +122,7 @@ public func Connect(object leftPlatform, object rightPlatform) {
 private func IsPlatformOkay(object platform) {
 	return platform != 0 && platform->~IsPlatform();
 }
+
+public func AttachEvent(object attached, object attachedTo, bool isDetaching, object source) {
+	return GetControlMediator()->AttachEvent(attached, attachedTo, isDetaching, source);
+}
