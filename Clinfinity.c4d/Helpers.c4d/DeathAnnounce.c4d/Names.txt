@@ -1,0 +1,2 @@
+DE:Todesankündigung
+US:DeathAnnounce
