@@ -22,7 +22,7 @@ protected func Death(int killedBy) {
 	if(Hostile(GetController(), killedBy)) {
 		var clonk = GetCursor(killedBy);
 		if(clonk)
-			clonk->AddHat(C4Id(Format("HAT%d", RandomX(1, 2))));
+			clonk->AddHat(C4Id(Format("HAT%d", RandomX(1, 5))));
 	}
 	return _inherited(killedBy, ...);
 }
