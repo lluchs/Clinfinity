@@ -1,5 +1,7 @@
 TxtNoPlrKnowledge=Keine Baupläne vorhanden
 TxtConstruction=Konstruktion
 TxtProduction=Produktion
+TxtIncrementProduction=Erhöhen
+TxtDecrementProduction=Verringern
 TxtLaunchProduction=Produktion starten
 TxtAlreadyProducing=Produziert bereits!
