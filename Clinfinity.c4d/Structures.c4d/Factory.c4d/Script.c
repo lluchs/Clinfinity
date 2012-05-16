@@ -22,14 +22,32 @@ public func ProductionMenu(object caller) {
 	AddMenuItem("$TxtProduction$: %s", "RequestProduction", knowledge, caller, 0, caller);
 }
 
-public func ProductionAmountMenu(object caller, id item) {
-	var amount = 3;
-
+public func ProductionAmountMenu(object caller, id item, int amount) {
+	if(!amount) amount = 1;
+	
+	var index = 0;
+	if(GetMenu(caller)) {
+		index = GetMenuSelection(caller);
+		CloseMenu(caller);
+	}
+	
 	var dummy = CreateObject(TIM1);
+
+	CreateMenu(CXCN, caller, this, 1, 0, 0, 0, 1);
+
+	Sound("Click", 0, 0, 100, GetOwner(caller)+1);
+
+	SetGraphics("Plus", dummy, MS4C, 1, GFXOV_MODE_Picture);
+	AddMenuItem("$TxtIncrementProduction$", Format("ProductionAmountMenu(Object(%d), %i, %d, 0)", ObjectNumber(caller), item, amount+1), 0, caller, 0, 0, "OK", 4, dummy);
+	SetGraphics("Minus", dummy, MS4C, 1, GFXOV_MODE_Picture);
+	AddMenuItem("$TxtDecrementProduction$", Format("ProductionAmountMenu(Object(%d), %i, %d, 1)", ObjectNumber(caller), item, Max(amount-1, 1)), 0, caller, 0, 0, "OK", 4, dummy);
 	SetGraphics("Chosen", dummy, MS4C, 1, GFXOV_MODE_Picture);
-	CreateMenu(CXCN, caller, this, 1);
 	AddMenuItem("$TxtLaunchProduction$", Format("RequestAmountProduction(%i, Object(%d), %d)", item, ObjectNumber(caller), amount), 0, caller, 0, 0, "OK", 4, dummy);
+	
+	SelectMenuItem(index, caller);
 	dummy->RemoveObject();
+	
+	PlayerMessage(GetOwner(caller), "%dx {{%i}}", caller, amount, item);
 }
 
 protected func RequestProduction(id item, object caller, bool right) {
@@ -43,7 +61,8 @@ protected func RequestProduction(id item, object caller, bool right) {
 }
 
 protected func RequestAmountProduction(id item, object caller, int amount) {
-	StartProduction(item, GetOwner(caller), 3);
+	if(GetMenu(caller)) CloseMenu(caller);
+	StartProduction(item, GetOwner(caller), amount);
 }
 
 private func AlreadyProducing(object clonk) {
@@ -103,7 +122,7 @@ public func CompletedProduction() {
 	steamWhite = 20;
 }
 
-/* Nochwas */
+/* Callbacks und Effekte */
 
 public func IsProducing() {
 	return remainingTime > 0;
