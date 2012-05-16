@@ -13,9 +13,9 @@ public func ControlDigDouble(object caller) {
 }
 
 public func ShowProductionMenu(object caller) {
-	CreateMenu(CXCN,caller,this,1,"");
+	CreateMenu(CXCN,caller,this,1,"$NoPlrKnowledge$");
 	var knowledge = ROCK;
-	AddMenuItem("", "StartProduction", knowledge, caller, 0, caller);
+	AddMenuItem("$Production$: %s", "StartProduction", knowledge, caller, 0, caller);
 }
 
 public func StartProduction(id item) {
