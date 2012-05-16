@@ -20,8 +20,8 @@ Construction=1
 ContainBlast=1
 AutoContextMenu=1
 Grab=2
-TimerCall=Smoketest
-Timer=1
+Timer=3
+TimerCall=Smoking
 
 [Physical]
 Energy=100000
