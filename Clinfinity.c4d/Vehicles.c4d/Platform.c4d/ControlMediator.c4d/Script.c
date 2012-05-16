@@ -64,7 +64,6 @@ public func MovementEvent(int direction, object source) {
 public func AttachEvent(object attached, object attachedTo, bool isDetaching, object source) {
 	if(masterMediator == 0) {
 		if(isDetaching) {
-			Log("Remove Vertices");
 			GetControlledPlatform()->RemoveCopiedChildrenVertices(attached);
 		} else {
 			GetControlledPlatform()->CopyChildrenVertices(attached);
