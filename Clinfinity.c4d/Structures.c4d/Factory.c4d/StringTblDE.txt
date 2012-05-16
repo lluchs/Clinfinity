@@ -1,0 +1,9 @@
+TxtNoPlrKnowledge=Keine Baupläne vorhanden
+TxtConstruction=Konstruktion
+TxtProduction=Produktion
+TxtIncrementProduction=Erhöhen
+TxtDecrementProduction=Verringern
+TxtIncrementProductionDesc=Die herzustellende Menge erhöhen.
+TxtDecrementProductionDesc=Die herzustellende Menge verringern.
+TxtLaunchProduction=Produktion starten
+TxtAlreadyProducing=Produziert bereits!

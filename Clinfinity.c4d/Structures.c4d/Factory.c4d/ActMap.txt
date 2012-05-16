@@ -1,0 +1,17 @@
+[Action]
+Name=Produce
+Procedure=NONE
+Length=19
+Delay=1
+Facet=0,0,130,160,0,0
+NextAction=Produce
+StartCall=Produce
+Sound=progress_loop
+
+[Action]
+Name=None
+Procedure=NONE
+Length=19
+Delay=1
+Facet=0,0,130,160,0,0
+NextAction=Idle
