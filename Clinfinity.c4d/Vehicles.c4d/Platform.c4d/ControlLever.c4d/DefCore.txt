@@ -7,9 +7,6 @@ Height=20
 Offset=-8,-10
 Components=WOOD=1;METL=1
 Picture=9,0,17,20
-Vertices=1
-VertexY=9
-VertexFriction=100
 Grab=2
 NoPushEnter=1
 VehicleControl=1
