@@ -1,0 +1,1 @@
+TxtStored=Currently stored:|%dl

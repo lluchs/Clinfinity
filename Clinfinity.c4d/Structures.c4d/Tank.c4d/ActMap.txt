@@ -1,0 +1,5 @@
+[Action]
+Name=Tank
+Facet=0,0,60,80
+Length=10
+NextAction=Hold

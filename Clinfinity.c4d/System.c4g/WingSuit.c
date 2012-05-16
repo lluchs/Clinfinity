@@ -4,18 +4,23 @@
 
 local maxGlideSpeedY, glideSpeedXFactor;
 local glideParticleColour;
+local DEBUG_controlDownPressedBefore; // TODO: Remove this after testing is done!
 
 protected func Initialize() {
 	maxGlideSpeedY = 30;
 	glideSpeedXFactor = 2;
 	glideParticleColour = RGBa(255, 255, 255, 210);
+	DEBUG_controlDownPressedBefore = false;
 	return _inherited();
 }
 
 protected func ControlDownSingle() {
+	DEBUG_controlDownPressedBefore = false;
 	var result = _inherited();
 	if( result == 0 ) {
 		if(GetAction() == "Jump") {
+			DEBUG_controlDownPressedBefore = true;
+			Log("OK: %s pressed [Down]", GetPlayerName(GetOwner()));
 			if(IsGliding()) {
 				RemoveEffect("WingSuit", this);
 			} else if(GetPhase() > 3) {
@@ -38,6 +43,11 @@ public func IsGliding() {
 protected func FxWingSuitStart(object target, int effectNumber, int temporary) {
 	if(temporary == 0) {
 		Sound("SailDown", false, target, 50);
+		if(!target->LocalN("DEBUG_controlDownPressedBefore"))
+			Log("WARNING: [Down] was not pressed before wing suit activates!");
+		else
+			Log("OK: WingSuit opened normally after pressing [Down]");
+		target->LocalN("DEBUG_controlDownPressedBefore") = false;
 	}
 }
 
@@ -70,6 +80,7 @@ protected func FxWingSuitStop(object target, int effectNumber, int reason, bool 
 	if(!temporary) {
 		Sound("SailUp", false, target, 50);
 		SetObjDrawTransform(1000, 0, 0, 0, 1000, 0, 0);
+		target->LocalN("DEBUG_controlDownPressedBefore") = false;
 	}
 }
 

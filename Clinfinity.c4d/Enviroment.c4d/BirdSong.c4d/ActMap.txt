@@ -1,0 +1,6 @@
+[Action]
+Name=Sing
+Length=1
+Delay=25
+NextAction=Sing
+StartCall=Singing
