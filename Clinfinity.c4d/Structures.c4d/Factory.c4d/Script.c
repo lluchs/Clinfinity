@@ -31,11 +31,10 @@ public func ProductionAmountMenu(object caller, id item, int amount) {
 		CloseMenu(caller);
 	}
 	
-	var dummy = CreateObject(TIM1);
-
-	CreateMenu(CXCN, caller, this, 1, 0, 0, 0, 1);
-
 	Sound("Click", 0, 0, 100, GetOwner(caller)+1);
+	
+	var dummy = CreateObject(TIM1);
+	CreateMenu(CXCN, caller, this, 1, 0, 0, 0, 1);
 
 	SetGraphics("Plus", dummy, MS4C, 1, GFXOV_MODE_Picture);
 	AddMenuItem("$TxtIncrementProduction$", Format("ProductionAmountMenu(Object(%d), %i, %d, 0)", ObjectNumber(caller), item, amount+1), 0, caller, 0, 0, "OK", 4, dummy);
@@ -133,12 +132,12 @@ private func Smoking() {
 	var steamColor = 0;
 	if(steamWhite) {
 		steamWhite--;
-		CreateParticle("Smoke",25,-10,0,0,70,RGB(255,255,255));
-		CreateParticle("Smoke",20,-10,0,0,70,RGB(255,255,255));
+		CreateParticle("Smoke", 25, -10, 0, 0, 70, RGB(255, 255, 255));
+		CreateParticle("Smoke", 20, -10, 0, 0, 70, RGB(255, 255, 255));
 	}
 	else {
-		CreateParticle("Smoke",-18,-18,0,0,150,RGBa(0,0,0,0));
-		CreateParticle("Smoke",-40,-18,0,0,150,RGBa(0,0,0,0));
+		CreateParticle("Smoke", -18, -18, 0, 0, 150, RGBa(0, 0, 0, 0));
+		CreateParticle("Smoke", -40, -18, 0, 0, 150, RGBa(0, 0, 0, 0));
 	}
 	
 }
