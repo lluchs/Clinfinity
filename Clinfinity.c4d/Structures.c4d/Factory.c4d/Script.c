@@ -4,8 +4,11 @@
 
 local requestedItem;
 local remainingTime;
+local remainingAmount;
+local steamWhite;
 
 public func ControlDigDouble(object caller) {
+	if(IsProducing()) return;
 	ShowProductionMenu(caller);
 }
 
@@ -17,20 +20,44 @@ public func ShowProductionMenu(object caller) {
 
 public func StartProduction(id item) {
 	requestedItem = item;
-	remainingTime = 10;
+	remainingAmount = 3;
+	ContinueProduction();
 	SetAction("Produce");
 }
 
+protected func ContinueProduction() {
+	remainingTime = 5;
+	steamWhite = 0;
+	//todo: Ressourcen benötigen
+	if(true) {
+		//todo: Ressourcen entfernen
+	}
+	else {
+		CompletedProduction();
+	}
+}
+
 protected func Produce() {
-	if(!remainingTime) return CompleteProduction();
 	remainingTime--;
+	if(!remainingTime) return CompleteProduction();
 }
 
 public func CompleteProduction() {
+	remainingAmount--;
+	if(remainingAmount) {
+		ContinueProduction();
+	}
+	else {
+		CompletedProduction();
+	}
+	var producedItem = CreateObject(requestedItem, 0, 0, GetOwner());
+}
+
+public func CompletedProduction() {
 	SetAction("None");
 	Sound("finish*");
 	remainingTime = 0;
-	var producedItem = CreateObject(requestedItem, 0, 0, GetOwner());
+	steamWhite = 20;
 }
 
 public func IsProducing() {
@@ -38,7 +65,12 @@ public func IsProducing() {
 }
 
 private func Smoking() {
-	if(!IsProducing()) return;
-	CreateParticle("Smoke",-18,-18,0,0,150,RGBa(0,0,0,0));
-	CreateParticle("Smoke",-40,-18,0,0,150,RGBa(0,0,0,0));
+	if(!IsProducing() && !steamWhite) return;
+	var steamColor = 0;
+	if(steamWhite) {
+		steamWhite--;
+		steamColor = RGB(255,255,255);
+	}
+	CreateParticle("Smoke",-18,-18,0,0,150,steamColor);
+	CreateParticle("Smoke",-40,-18,0,0,150,steamColor);
 }
