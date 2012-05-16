@@ -3,6 +3,7 @@
 #strict 2
 
 #include L_SS
+#include STBO
 
 // number of animation phases
 static const STMT_Phases = 10;
@@ -18,6 +19,7 @@ protected func Initialize() {
 	if(!GetEffect("MatSysSTEM"))
 		AddEffect("MatSysSTEM", 0, 1, 0);
 	AddEffect("MatSysSTEM", 0, 1, 0, this);
+	_inherited();
 }
 
 // manages delay for steam generation
