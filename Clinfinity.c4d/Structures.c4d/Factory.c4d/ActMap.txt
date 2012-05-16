@@ -9,7 +9,7 @@ StartCall=Produce
 Sound=progress_loop
 
 [Action]
-Name=Idle
+Name=None
 Procedure=NONE
 Length=19
 Delay=1

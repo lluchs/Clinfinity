@@ -27,7 +27,7 @@ protected func Produce() {
 }
 
 public func CompleteProduction() {
-	SetAction("Idle");
+	SetAction("None");
 	Sound("finish*");
 	remainingTime = 0;
 	var producedItem = CreateObject(requestedItem, 0, 0, GetOwner());
