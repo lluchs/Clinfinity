@@ -1,7 +1,7 @@
 [DefCore]
 id=PLTF
 Version=4,9,5
-Category=C4D_Vehicle
+Category=C4D_Structure
 ContactCalls=1
 Width=90
 Height=6
