@@ -1,0 +1,2 @@
+DE:Gebäude-Basisobjekt
+US:Structure base object
