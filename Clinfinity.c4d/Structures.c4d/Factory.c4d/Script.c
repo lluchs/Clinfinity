@@ -119,7 +119,7 @@ public func CompletedProduction() {
 	SetAction("None");
 	Sound("finish*");
 	remainingTime = 0;
-	steamWhite = 20;
+	steamWhite = 23;
 }
 
 /* Callbacks und Effekte */
@@ -133,8 +133,12 @@ private func Smoking() {
 	var steamColor = 0;
 	if(steamWhite) {
 		steamWhite--;
-		steamColor = RGB(255,255,255);
+		CreateParticle("Smoke",25,-10,0,0,70,RGB(255,255,255));
+		CreateParticle("Smoke",20,-10,0,0,70,RGB(255,255,255));
 	}
-	CreateParticle("Smoke",-18,-18,0,0,150,steamColor);
-	CreateParticle("Smoke",-40,-18,0,0,150,steamColor);
+	else {
+		CreateParticle("Smoke",-18,-18,0,0,150,RGBa(0,0,0,0));
+		CreateParticle("Smoke",-40,-18,0,0,150,RGBa(0,0,0,0));
+	}
+	
 }
