@@ -6,11 +6,8 @@
 
 protected func ContextDemolition(object clonk) {
 	[$CtxDemolitionDesc$|Image=CRYC|Condition=FindBuildingToDemolish]
-	var dummy = CreateObject(TIM1);
-	SetGraphics("Chosen", dummy, MS4C, 1, GFXOV_MODE_Picture);
 	CreateMenu(CXCN, this, this);
-	AddMenuItem("$CtxDemolitionDesc$!", "StartDemolition", 0, this, 0, 0, "OK", 4, dummy);
-	dummy -> RemoveObject();
+	AddMenuItem("$CtxDemolitionDesc$!", "StartDemolition", MS4C, this, 0, 0, "OK", 2, 3);
 }
 
 protected func FindBuildingToDemolish() {
@@ -30,4 +27,3 @@ protected func StartDemolition() {
 		building->RemoveObject();
 	}
 }
-
