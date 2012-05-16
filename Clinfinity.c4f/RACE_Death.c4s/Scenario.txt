@@ -37,7 +37,7 @@ Magic=CMFG=0;MQKE=0;ETFL=0;EXTG=0;FRFS=0;MFFA=0;MBRG=0;MFFS=0;MFFW=0;MGDW=0;MGUP
 
 [Landscape]
 Vegetation=TRE3=3;TRE2=3;TRE1=3;BUSH=1
-VegetationLevel=19,0,0,100
+VegetationLevel=35,0,0,100
 InEarth=LOAM=1
 InEarthLevel=15,0,0,100
 SkyFade=0,0,100,255,255,255
@@ -58,3 +58,6 @@ Lightning=5,5,0,100
 
 [Disasters]
 Meteorite=2,5,0,100
+
+[Environment]
+Objects=EGRS=1
