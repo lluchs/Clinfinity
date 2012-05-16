@@ -3,5 +3,7 @@ TxtConstruction=Construction
 TxtProduction=Production
 TxtIncrementProduction=Add
 TxtDecrementProduction=Reduce
+TxtIncrementProductionDesc=Add to the amount to be produced.
+TxtDecrementProductionDesc=Reduce the amount to be produced.
 TxtLaunchProduction=Launch production
 TxtAlreadyProducing=Already producing!

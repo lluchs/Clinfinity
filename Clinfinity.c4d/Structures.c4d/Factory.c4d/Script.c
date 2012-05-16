@@ -17,7 +17,8 @@ public func ControlDigDouble(object caller) {
 
 public func ProductionMenu(object caller) {
 	if(IsProducing()) return AlreadyProducing(caller);
-	CreateMenu(CXCN, caller, this, 1, "$TxtNoPlrKnowledge$");
+	CreateMenu(CXCN, caller, this, 0, "$TxtNoPlrKnowledge$");
+	//todo: Verfügbare Produktion anzeigen und Kosten im HUD einblenden
 	var knowledge = ROCK;
 	AddMenuItem("$TxtProduction$: %s", "RequestProduction", knowledge, caller, 0, caller);
 }
@@ -37,9 +38,9 @@ public func ProductionAmountMenu(object caller, id item, int amount) {
 	CreateMenu(CXCN, caller, this, 1, 0, 0, 0, 1);
 
 	SetGraphics("Plus", dummy, MS4C, 1, GFXOV_MODE_Picture);
-	AddMenuItem("$TxtIncrementProduction$", Format("ProductionAmountMenu(Object(%d), %i, %d, 0)", ObjectNumber(caller), item, amount+1), 0, caller, 0, 0, "OK", 4, dummy);
+	AddMenuItem("$TxtIncrementProduction$", Format("ProductionAmountMenu(Object(%d), %i, %d, 0)", ObjectNumber(caller), item, amount+1), 0, caller, 0, 0, "$TxtIncrementProductionDesc$", 4, dummy);
 	SetGraphics("Minus", dummy, MS4C, 1, GFXOV_MODE_Picture);
-	AddMenuItem("$TxtDecrementProduction$", Format("ProductionAmountMenu(Object(%d), %i, %d, 1)", ObjectNumber(caller), item, Max(amount-1, 1)), 0, caller, 0, 0, "OK", 4, dummy);
+	AddMenuItem("$TxtDecrementProduction$", Format("ProductionAmountMenu(Object(%d), %i, %d, 1)", ObjectNumber(caller), item, Max(amount-1, 1)), 0, caller, 0, 0, "$TxtDecrementProductionDesc$", 4, dummy);
 	SetGraphics("Chosen", dummy, MS4C, 1, GFXOV_MODE_Picture);
 	AddMenuItem("$TxtLaunchProduction$", Format("RequestAmountProduction(%i, Object(%d), %d)", item, ObjectNumber(caller), amount), 0, caller, 0, 0, "OK", 4, dummy);
 	
@@ -60,6 +61,7 @@ protected func RequestProduction(id item, object caller, bool right) {
 }
 
 protected func RequestAmountProduction(id item, object caller, int amount) {
+	if(IsProducing()) return AlreadyProducing(caller);
 	if(GetMenu(caller)) CloseMenu(caller);
 	StartProduction(item, GetOwner(caller), amount);
 }
@@ -97,7 +99,7 @@ protected func Produce() {
 	if(!remainingTime) return CompleteProduction();
 }
 
-public func CompleteProduction() {
+protected func CompleteProduction() {
 	remainingAmount--;
 	if(remainingAmount) {
 		ContinueProduction();
@@ -114,10 +116,14 @@ public func CompleteProduction() {
 	}
 }
 
-public func CompletedProduction() {
+public func AbortProduction() {
 	SetAction("None");
-	Sound("finish*");
 	remainingTime = 0;
+}
+
+private func CompletedProduction() {
+	AbortProduction();
+	Sound("finish*");
 	steamWhite = 23;
 }
 
