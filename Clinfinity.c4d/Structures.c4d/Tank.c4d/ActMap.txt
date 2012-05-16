@@ -3,3 +3,10 @@ Name=Tank
 Facet=0,0,60,80
 Length=10
 NextAction=Hold
+
+[Action]
+Name=Attach
+Procedure=ATTACH
+Facet=0,0,60,80
+Length=10
+NextAction=Hold
