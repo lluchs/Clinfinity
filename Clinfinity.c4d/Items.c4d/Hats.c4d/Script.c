@@ -22,6 +22,12 @@ public func AttachTo(object clonk) {
 	AddEffect("Hat", clonk, 1, 1, this);
 }
 
+/*  Function: StartFade
+	Starts the fade effect, eventually removing the hat. */
+public func StartFade() {
+	AddEffect("Fade", this, 1, 10, this);
+}
+
 /*  Function: AddHat
 	Adds a hat to the calling clonk.
 
@@ -100,12 +106,25 @@ protected func FxHatTimer(object target, int effectNumber) {
 	SetDir(dir);
 }
 
-func FxHatStop(object target, int effectNum, int reason, bool temp) {
+protected func FxHatStop(object target, int effectNum, int reason, bool temp) {
 	if(temp) return;
 	SetAction("Idle");
+	StartFade();
 }
 
 private func MoveTo(int cx, int cy) {
 	SetObjDrawTransform(1000, 0, 1000 * cx, 0, 1000, 1000 * cy);
+}
+
+protected func FxFadeTimer(object target, int effectNum, int effectTime) {
+	if(effectTime > 500) {
+		var alpha = EffectVar(0, target, effectNum) + 2;
+		if(alpha >= 255)
+			RemoveObject();
+		else {
+			SetClrModulation(RGBa(255, 255, 255, alpha));
+			EffectVar(0, target, effectNum) = alpha;
+		}
+	}
 }
 
