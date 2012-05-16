@@ -150,6 +150,10 @@ public func Connect(object leftMediator, object rightMediator) {
 	var rightPlatform = rightMediator->GetControlledPlatform();
 	rightPlatform->SetAction("FlySlave", leftPlatform);
 	rightPlatform->AttachTo(leftPlatform, 1, 2);
+
+	leftPlatform->CopyChildrenVertices();
+	rightPlatform->RemoveCopiedChildrenVertices();
+
 	return true;
 }
 
@@ -163,12 +167,10 @@ private func HasSlave() {
 
 private func SetMaster(object newMaster) {
 	masterMediator = newMaster;
-	// TODO: Remove all copied vertices recursively
 }
 
 private func RemoveMaster() {
 	masterMediator = 0;
-	// TODO: Copy all vertices of all attached objects recursively
 }
 
 private func SetSlave(object newSlave) {

@@ -11,7 +11,7 @@
 
 	When callerVertex or targetVertex are omitted, this function will add new vertices so that the object won't move.
 	*Important:* Vertex indices are starting at 1 instead of 0.
-	
+
 	Parameters:
 	to - Object to which the caller should be attached.
 	callerVertex - The caller object's vertex which will be attached.
@@ -23,7 +23,7 @@ global func AttachTo(object to, int callerVertex, int targetVertex) {
 
 	// correct z-order
 	SetObjectOrder(to);
-	
+
 	// optionally add vertices
 	if(callerVertex == 0) {
 		if(targetVertex == 0)
@@ -41,7 +41,7 @@ global func AttachTo(object to, int callerVertex, int targetVertex) {
 
 	callerVertex--;
 	targetVertex--;
-	
+
 	SetActionData(256 * callerVertex + targetVertex);
 }
 
@@ -89,18 +89,28 @@ global func RemoveCopiedVertices(object from) {
 	return false;
 }
 
-global func CopyVerticesRecursively(object from) {
-	CopyVertices(from);
-	var attachedObjects = FindObjects(Find_ActionTarget(this), Find_Func("CompareProdecure", "ATTACH"));
-	for(from in attachedObjects) {
-		CopyVertices(from);
+global func CopyChildrenVertices(object child) {
+	if(child == 0) {
+		child = this;
+	}
+	var grandchildren = FindObjects(Find_ActionTarget(child), Find_Func("CompareProdecure", "ATTACH"));
+	for(var grandchild in grandchildren) {
+		CopyVertices(grandchild);
+		CopyChildrenVertices(grandchild);
+	}
+}
+
+global func RemoveCopiedChildrenVertices(object child) {
+	if(child == 0) {
+		child = this;
+	}
+	var grandchildren = FindObjects(Find_ActionTarget(child), Find_Func("CompareProdecure", "ATTACH"));
+	for(var grandchild in grandchildren) {
+		RemoveCopiedVertices(grandchild);
+		RemoveCopiedChildrenVertices(grandchild);
 	}
 }
 
 global func CompareProdecure(string procedure) {
 	return GetProcedure() == procedure;
-}
-
-global func RemoveCopiedVerticesRecursively(object from) {
-	// TODO
 }
