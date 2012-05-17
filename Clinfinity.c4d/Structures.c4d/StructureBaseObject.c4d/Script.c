@@ -9,6 +9,14 @@ protected func Initialize() {
 	return result;
 }
 
+protected func Destruction() {
+	var result = _inherited();
+	if(GetProcedure() == "ATTACH") {
+		GetActionTarget()->~AttachEvent(this, GetActionTarget(), true, this);
+	}
+	return result;
+}
+
 /*	Function: AttachEvent
 	Event handler, called after an object was attached to a new parent object or detached from it.
 	Buildings by default hand the event to their action target, if they are attached to something.
