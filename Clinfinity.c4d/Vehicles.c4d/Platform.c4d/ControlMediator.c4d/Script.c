@@ -173,6 +173,10 @@ public func Connect(object leftMediator, object rightMediator) {
 	return true;
 }
 
+public func Disconnect(object leftMediator, object rightMediator) {
+	return false;
+}
+
 private func HasMaster() {
 	return masterMediator != 0;
 }

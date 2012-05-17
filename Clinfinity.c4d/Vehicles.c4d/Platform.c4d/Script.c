@@ -149,6 +149,15 @@ public func Connect(object leftPlatform, object rightPlatform) {
 	return false;
 }
 
+public func Disconnect(object leftPlatform, object rightPlatform) {
+	if(IsPlatformOkay(leftPlatform) && IsPlatformOkay(rightPlatform) && leftPlatform != rightPlatform) {
+		var leftMediator = leftPlatform->GetControlMediator();
+		var rightMediator = rightPlatform->GetControlMediator();
+		return COMD->Disconnect(leftMediator, rightMediator);
+	}
+	return false;
+}
+
 private func IsPlatformOkay(object platform) {
 	return platform != 0 && platform->~IsPlatform();
 }
