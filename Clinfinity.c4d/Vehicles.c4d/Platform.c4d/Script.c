@@ -144,7 +144,7 @@ public func Connect(object leftPlatform, object rightPlatform) {
 	if(IsPlatformOkay(leftPlatform) && IsPlatformOkay(rightPlatform) && leftPlatform != rightPlatform) {
 		var leftMediator = leftPlatform->GetControlMediator();
 		var rightMediator = rightPlatform->GetControlMediator();
-		COMD->Connect(leftMediator, rightMediator);
+		return COMD->Connect(leftMediator, rightMediator);
 	}
 	return false;
 }
