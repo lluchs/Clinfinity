@@ -16,6 +16,11 @@ global func AddMaterialMenuItem(string caption, string command, id item, object 
 	AddMenuItem(caption, command, item, menuObject, iCount, par, infoCaption, extra, par1, par2);
 }
 
+global func CreateMenu() {
+	if(GetEffect("MaterialMenuCheck", Par(1))) RemoveEffect("MaterialMenuCheck", Par(1));
+	return inherited(...);
+}
+
 global func FxMaterialMenuCheckStart(object target, int effectNum, int temp, id menuId) {
 	EffectVar(0, target, effectNum) = menuId; //menuId
 	EffectVar(1, target, effectNum) = []; //menuItems
