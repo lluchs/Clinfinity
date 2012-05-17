@@ -57,6 +57,14 @@ protected func ControlDownSingle(object controller) {
 	return true;
 }
 
+protected func ControlLeft(object controller) {
+	return ControlUp(controller);
+}
+
+protected func ControlRight(object controller) {
+	return ControlDownSingle(controller);
+}
+
 public func MovementEvent(int direction, object source) {
 	var oldDirection = GetDir();
 	if(direction == COMD_Stop) {
