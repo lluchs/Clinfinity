@@ -1,1 +1,1 @@
-Stellt sicher, dass Gebäude auf Plattformen an selbige angeheftet werden.
+Stellt sicher, dass Gebäude auf Plattformen an selbige automatisch angeheftet beziehungsweise von ihnen gelöst werden.

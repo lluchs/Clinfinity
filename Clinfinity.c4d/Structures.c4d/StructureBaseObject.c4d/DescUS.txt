@@ -1,1 +1,1 @@
-Makes sure structures get attached to platforms below them.
+Automatically handles attaching to and detaching from platforms.

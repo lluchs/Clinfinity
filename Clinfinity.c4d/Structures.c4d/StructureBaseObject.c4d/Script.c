@@ -1,3 +1,6 @@
+/*	Script: Structure base object
+	Automatically handles attaching to and detaching from platforms. */
+
 #strict 2
 
 protected func Initialize() {
