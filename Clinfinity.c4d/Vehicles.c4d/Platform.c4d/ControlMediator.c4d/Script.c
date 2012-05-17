@@ -54,12 +54,12 @@ public func MovementEvent(int direction, object source) {
 }
 
 /*	Function: AttachEvent
-	Called before an object is attached to a new parent object or detached from it.
+	Event handler, called after an object was attached to a new parent object or detached from it.
 
 	Parameters:
 	attached	- The attached object.
 	attachedTo	- The new parent object.
-	isDetaching	- *true* if the object is about to be detached. *false* if it is about to be attached.
+	isDetaching	- *true* if the object was detached. *false* if it was attached.
 	source		- Source of the event. */
 public func AttachEvent(object attached, object attachedTo, bool isDetaching, object source) {
 	if(masterMediator == 0) {

@@ -20,14 +20,16 @@ local controlMediator;
 public func CreatePlatform(int x, int y, int owner) {
 	var mediator = CreateObject(COMD, AbsX(3), AbsY(3), owner);
 	var platform = CreateObject(PLTF, x, y, owner);
+	mediator->LocalN("controlledPlatform") = platform;
 	platform->LocalN("controlMediator") = mediator;
 	platform->SetAction("Fly");
+
 	var lever = COLV->CreateLever(platform->GetX() - 35, platform->GetY() - 3, mediator);
 	lever->AttachTo(platform);
-	mediator->LocalN("controlledPlatform") = platform;
+
 	var prop = PROP->CreateProp(platform->GetX(), platform->GetY() + 12, platform);
 	platform->CopyChildrenVertices();
-	//platform->CopyVertices(prop);
+
 	mediator->AddControlEventListener(platform);
 	mediator->AddMovementEventListener(lever);
 	mediator->AddMovementEventListener(prop);
@@ -56,6 +58,19 @@ protected func ContactTop() {
 
 protected func ContactBottom() {
 	FloatStop();
+}
+
+/*	Function: AttachEvent
+	Event handler, called after an object was attached to a new parent object or detached from it.
+	A platform hands the event to its control mediator.
+
+	Parameters:
+	attached	- The attached object.
+	attachedTo	- The new parent object.
+	isDetaching	- *true* if the object was detached. *false* if it was attached.
+	source		- Source of the event. */
+public func AttachEvent(object attached, object attachedTo, bool isDetaching, object source) {
+	return GetControlMediator()->AttachEvent(attached, attachedTo, isDetaching, source);
 }
 
 /*	Section: Control */
@@ -121,8 +136,4 @@ public func Connect(object leftPlatform, object rightPlatform) {
 
 private func IsPlatformOkay(object platform) {
 	return platform != 0 && platform->~IsPlatform();
-}
-
-public func AttachEvent(object attached, object attachedTo, bool isDetaching, object source) {
-	return GetControlMediator()->AttachEvent(attached, attachedTo, isDetaching, source);
 }
