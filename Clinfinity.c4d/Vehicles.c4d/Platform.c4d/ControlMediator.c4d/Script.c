@@ -66,14 +66,14 @@ public func AttachEvent(object attached, object attachedTo, bool isDetaching, ob
 		if(isDetaching) {
 			GetControlledPlatform()->RemoveCopiedChildrenVertices(attached);
 		} else {
-			GetControlledPlatform()->CopyChildrenVertices(attached);
+			ScheduleCall(GetControlledPlatform(), "CopyChildrenVertices", 2, 0, attached);
 		}
 	} else {
 		if(source == masterMediator) {
 			if(isDetaching) {
 				GetControlledPlatform()->RemoveCopiedChildrenVertices(attached);
 			} else {
-				GetControlledPlatform()->CopyChildrenVertices(attached);
+				ScheduleCall(GetControlledPlatform(), "CopyChildrenVertices", 2, 0, attached);
 			}
 		} else {
 			masterMediator->AttachEvent(attached, attachedTo, isDetaching, source);
@@ -166,15 +166,25 @@ public func Connect(object leftMediator, object rightMediator) {
 	var rightPlatform = rightMediator->GetControlledPlatform();
 	rightPlatform->SetAction("FlySlave", leftPlatform);
 	rightPlatform->AttachTo(leftPlatform, 1, 2);
-
-	leftPlatform->CopyChildrenVertices();
 	rightPlatform->RemoveCopiedChildrenVertices();
 
 	return true;
 }
 
 public func Disconnect(object leftMediator, object rightMediator) {
-	return false;
+	if(!leftMediator->IsMasterOf(rightMediator) || !rightMediator->IsSlaveOf(leftMediator)) {
+		return false;
+	}
+	leftMediator->RemoveSlave();
+	rightMediator->RemoveMaster();
+
+	var leftPlatform = leftMediator->GetControlledPlatform();
+	var rightPlatform = rightMediator->GetControlledPlatform();
+
+	rightPlatform->SetAction("Fly");
+
+	leftMediator->AttachEvent(rightPlatform, leftPlatform, true, this);
+	return true;
 }
 
 private func HasMaster() {
@@ -183,6 +193,14 @@ private func HasMaster() {
 
 private func HasSlave() {
 	return slaveMediator != 0;
+}
+
+private func IsMasterOf(object mediator) {
+	return slaveMediator == mediator;
+}
+
+private func IsSlaveOf(object mediator) {
+	return masterMediator == mediator;
 }
 
 private func SetMaster(object newMaster) {

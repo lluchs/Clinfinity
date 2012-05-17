@@ -33,7 +33,6 @@ private func CreateAdditionalObjectsFor(object platform) {
 	lever->AttachTo(platform);
 
 	var prop = PROP->CreateProp(platform->GetX(), platform->GetY() + 12, platform);
-	platform->CopyChildrenVertices();
 
 	mediator->AddControlEventListener(platform);
 	mediator->AddMovementEventListener(lever);
@@ -160,4 +159,8 @@ public func Disconnect(object leftPlatform, object rightPlatform) {
 
 private func IsPlatformOkay(object platform) {
 	return platform != 0 && platform->~IsPlatform();
+}
+
+public func CopyChildrenVertices(object child) {
+	return inherited(child);
 }
