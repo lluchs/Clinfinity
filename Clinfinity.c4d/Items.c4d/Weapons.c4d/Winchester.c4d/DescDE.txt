@@ -1,0 +1,5 @@
+Zielsichere Langstreckenwaffe.
+
+Anlegen durch Kommando 'Werfen', Zielen durch 'Rauf' und 'Runter', Feuern durch 'Werfen'. Zielen abbrechen durch  doppelt 'Links' oder 'Rechts'.
+
+Einmal Werfen zum Nachladen, sofern der Clonk Patronen bei sich trägt

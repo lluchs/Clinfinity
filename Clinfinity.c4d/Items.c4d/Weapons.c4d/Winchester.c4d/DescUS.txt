@@ -1,0 +1,5 @@
+Precision long range weapon.
+
+Start aiming with hitting 'throw', 'up' and 'down' to aim and fire with 'throw'. Break aiming with press 'right double' or 'left double'.
+
+Press single 'throw' to reload if the clonk carries cartridges.
