@@ -18,8 +18,13 @@ local controlMediator;
 	Returns:
 	The created platform. */
 public func CreatePlatform(int x, int y, int owner) {
-	var mediator = CreateObject(COMD, AbsX(3), AbsY(3), owner);
 	var platform = CreateObject(PLTF, x, y, owner);
+	CreateAdditionalObjectsFor(platform);
+	return platform;
+}
+
+private func CreateAdditionalObjectsFor(object platform) {
+	var mediator = CreateObject(COMD, AbsX(3), AbsY(3), platform->GetOwner());
 	mediator->LocalN("controlledPlatform") = platform;
 	platform->LocalN("controlMediator") = mediator;
 	platform->SetAction("Fly");
@@ -33,7 +38,17 @@ public func CreatePlatform(int x, int y, int owner) {
 	mediator->AddControlEventListener(platform);
 	mediator->AddMovementEventListener(lever);
 	mediator->AddMovementEventListener(prop);
-	return platform;
+}
+
+protected func Construction() {
+	ScheduleCall(this, "CheckAfterConstruction", 1);
+}
+
+protected func CheckAfterConstruction() {
+	if(controlMediator == 0) {
+		Log("Platform: You created a platform without using the factory method. If changing the owner, don't forget to set the correct one of lever and prop, too!");
+		CreateAdditionalObjectsFor(this);
+	}
 }
 
 /*	Function: IsPlatform
