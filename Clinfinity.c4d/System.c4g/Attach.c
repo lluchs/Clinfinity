@@ -92,6 +92,12 @@ global func RemoveCopiedVertices(object from) {
 	return false;
 }
 
+/*	Function: CopyChildrenVertices
+	Copies all *DefCore-defined* vertices from all attached objects.
+	This is done recursively, thus the vertices of both directly and indirectly attached objects are copied.
+
+	Parameters:
+	child	- [optional] The attached object where the copying starts. */
 global func CopyChildrenVertices(object child) {
 	if(child == 0) {
 		child = this;
@@ -104,6 +110,12 @@ global func CopyChildrenVertices(object child) {
 	}
 }
 
+/*	Function: RemoveCopiedChildrenVertices
+	Removes all vertices which were previously copied from all attached objects.
+	This is done recursively, all vertices of directly and indirectly attached objects are removed.
+
+	Parameters:
+	child	- [optional] The attached object where the removal starts. */
 global func RemoveCopiedChildrenVertices(object child) {
 	if(child == 0) {
 		child = this;
@@ -116,6 +128,14 @@ global func RemoveCopiedChildrenVertices(object child) {
 	}
 }
 
+/*	Function: CompareProdecure
+	Compares the procedure of an object to the given procedure.
+
+	Parameters:
+	procedure	- Comparison value.
+
+	Returns:
+	*true* if the procedure matches, *false* otherwise. */
 global func CompareProdecure(string procedure) {
 	return GetProcedure() == procedure;
 }

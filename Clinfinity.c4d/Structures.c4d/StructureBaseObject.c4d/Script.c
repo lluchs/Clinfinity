@@ -31,6 +31,7 @@ protected func Destruction() {
 /*	Function: AttachEvent
 	Event handler, called after an object was attached to a new parent object or detached from it.
 	Buildings by default hand the event to their action target, if they are attached to something.
+	This makes sure platforms (and, in turn, the master platform) get notified of attached/detached objects and can react appropriately.
 
 	Parameters:
 	attached	- The attached object.
