@@ -18,9 +18,9 @@ public func ControlDigDouble(object caller) {
 public func ProductionMenu(object caller) {
 	if(IsProducing()) return AlreadyProducing(caller);
 	CreateMenu(CXCN, caller, this, 0, "$TxtNoPlrKnowledge$");
-	//todo: Verfügbare Produktion anzeigen und Kosten im HUD einblenden
-	var knowledge = ROCK;
-	AddMenuItem("$TxtProduction$: %s", "RequestProduction", knowledge, caller, 0, caller);
+	//todo: Verfügbare Produktion anzeigen
+	var knowledge = CNKT;
+	AddMaterialMenuItem("$TxtProduction$: %s", "RequestProduction", knowledge, caller, 0, caller);
 }
 
 public func ProductionAmountMenu(object caller, id item, int amount) {
