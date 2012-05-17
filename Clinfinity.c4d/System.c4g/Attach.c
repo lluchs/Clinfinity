@@ -72,7 +72,7 @@ global func CopyVertices(object from) {
 }
 
 /*  Function: RemoveCopiedVertices
-    Removes vertices which were previously copied using _CopyVertices_.
+    Removes vertices which were previously copied using <CopyVertices>.
 
 	Parameters:
 	from - Object from which the vertices were copied. */
