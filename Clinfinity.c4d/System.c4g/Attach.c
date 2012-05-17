@@ -6,6 +6,7 @@
 /*  Function: AttachTo
 	Attaches the calling object to the object _to_.
 	*Note:* This also changes the object order, so _to_ is internally sorted before the calling object.
+	Furthermore, the target object may receive an attach event by providing a method called AttachEvent().
 
 	If the calling object isn't already in an action with procedure ATTACH the function will set the action "Attach".
 
@@ -43,6 +44,8 @@ global func AttachTo(object to, int callerVertex, int targetVertex) {
 	targetVertex--;
 
 	SetActionData(256 * callerVertex + targetVertex);
+
+	to->~AttachEvent(this, to, false, this);
 }
 
 /*  Function: CopyVertices
