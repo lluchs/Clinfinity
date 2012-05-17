@@ -1,5 +1,13 @@
 /*	Script: Structure base object
-	Automatically handles attaching to and detaching from platforms. */
+	Automatically handles attaching to and detaching from platforms.
+	All structures created for Clonk Infinity should adhere to the following rules:
+	- Provide an action with the Procedure "ATTACH".
+	  It can either be named "Attach", it will then get set automatically by AttachTo(),
+	  or it can have any other name, in which case you must set the action yourself in your structure's Initialize() function.
+	- Inherit from this base object.
+	- Have no bottom vertices the structure stands on.
+	  Otherwise, when moving, these vertices get stuck in the platform's solid masks.
+	  Other vertices, e.g. at the top, are allowed. Set the proper CNAT values for those. */
 
 #strict 2
 
