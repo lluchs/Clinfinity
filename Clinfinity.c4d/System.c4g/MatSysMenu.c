@@ -5,7 +5,7 @@
 /*  Function: AddMaterialMenuItem
     Adds a menu item to a menu as documented, but also shows required materials
     in the players material system.  */
-global func AddMaterialMenuItem(string caption, string command, id item, object menuObject, int iCount, int parameter, string infoCaption, int extra, par1, par2) {
+global func AddMaterialMenuItem(string caption, string command, id item, object menuObject, int iCount, par, string infoCaption, int extra, par1, par2) {
 	var symbol = GetMenu(menuObject);
 	if(!symbol) return;
 	if(command) {
@@ -13,7 +13,7 @@ global func AddMaterialMenuItem(string caption, string command, id item, object 
 		if(!effect) effect = AddEffect("MaterialMenuCheck", menuObject, 300, 1, menuObject, symbol, symbol);
 		EffectCall(menuObject, effect, "AddItem", item);
 	}
-	AddMenuItem(caption, command, item, menuObject, iCount, parameter, infoCaption, extra, par1, par2);
+	AddMenuItem(caption, command, item, menuObject, iCount, par, infoCaption, extra, par1, par2);
 }
 
 global func FxMaterialMenuCheckStart(object target, int effectNum, int temp, id menuId) {
