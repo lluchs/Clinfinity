@@ -154,10 +154,11 @@ public func GetCapturePercentage() {
 }
 
 /*  Function: CaptureMsg
-	Called when the point is captured, will output a message to the log. */
+	Called when the point is captured, will output a message to the log and play a sound. */
 private func CaptureMsg() {
 	var team = GetPlayerTeam(GetOwner());
 	Log("<c %x>$Capture$</c>", GetTeamColor(team), GetTeamName(team), GetName());
+	Sound("koth_captured");
 }
 
 /*  Function: OvertimeMsg
