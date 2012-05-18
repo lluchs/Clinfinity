@@ -1,0 +1,15 @@
+[DefCore]
+id=CSHO
+Version=4,9,8
+Name=Shot
+Category=C4D_Vehicle
+Width=5
+Height=3
+Offset=-2,-1
+Vertices=1
+VertexFriction=1
+Mass=1
+Components=CSHO=1
+Picture=0,3,64,64
+Rotate=1
+Value=1

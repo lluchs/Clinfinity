@@ -4,7 +4,6 @@ Version=4,9,8
 Name=Winchester
 Category=C4D_Object|C4D_SelectMaterial|C4D_SelectKnowledge|C4D_SelectHomebase
 MaxUserSelect=3
-TimerCall=CheckAmmo
 Width=24
 Height=6
 Offset=-12,-3
