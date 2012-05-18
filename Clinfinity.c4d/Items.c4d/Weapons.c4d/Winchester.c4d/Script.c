@@ -2,16 +2,36 @@
 
 #strict 2
 
+#include L_SS
+
+// clip size
+public func MaxFill() { return 6; }
+private func FillPicture() { return 0; }
+
 /* Steuerung */
 
-public func Load() {}
-public func Abort() {}
+public func CanLoad() {
+	return !IsFull() && MatSysGetTeamFill(Contained()->GetOwner(), METL) >= 1;
+}
 
+public func Load() {
+	if(MatSysDoTeamFill(-1, Contained()->GetOwner(), METL)) {
+		DoFill(6);
+	}
+}
+
+public func Abort() {}
 
 public func Fire(object pClonk, int iAngle) {
 	// cooldown
 	if(GetEffect("ReloadRifle", this))
 		return;
+	
+	// enough ammo in clip?
+	if(!DoFill(-1)) {
+		Sound("CommandFailure1");
+		return;
+	}
 	
     var pObj, pObj2, iX, iY, iR, iXDir, iYDir, iRDir, iDir, iPhase;
 

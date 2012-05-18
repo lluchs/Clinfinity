@@ -134,9 +134,11 @@ public func LoadRifle() {
 		loadingAction = "LoadRifle";
 	else if(action == "RideAimRifle")
 		loadingAction = "RideLoadRifle";
-	if(loadingAction) {
+	if(loadingAction && activeRifle->CanLoad()) {
 		Sound("RifleLoad");
 		SetAction(loadingAction);
+	} else {
+		Sound("CommandFailure1");
 	}
 }
 
