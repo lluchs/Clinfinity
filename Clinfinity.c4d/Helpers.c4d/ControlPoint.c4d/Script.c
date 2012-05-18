@@ -75,11 +75,15 @@ protected func FxControlPointTimer(object target, int effectNum, int effectTime)
 	capturing - the number of capturing clonks
 	defending - the number of defending clonks */
 public func UpdateCaptureTime(int capturing, int defending) {
+	var prev = captureTime;
 	if(capturing) {
 		if(defending) {
 			// don't do anything
 			return;
 		}
+		// callback when capture is just starting
+		if(captureTime == 0)
+			CaptureStarting();
 		// increase capture time
 		captureTime += CP_Interval * capturing;
 		wait = 20;
@@ -94,7 +98,11 @@ public func UpdateCaptureTime(int capturing, int defending) {
 		if(wait-- < 0)
 			captureTime -= CP_Interval / 2;
 	}
-	captureTime = Max(captureTime, 0);
+	if(captureTime <= 0) {
+		captureTime = 0;
+		if(prev)
+			CaptureEnding();
+	}
 }
 
 /*  Function: CheckCapture
@@ -108,7 +116,7 @@ public func CheckCapture() {
 		capturingPlayer = NO_OWNER;
 		captureTime = 0;
 		overtime = false;
-		CaptureMsg();
+		Captured();
 		return true;
 	} else {
 		if(captureTime == 0)
@@ -126,7 +134,7 @@ public func CheckCapture() {
 	val - _true_ to enable overtime mode */
 public func SetOvertime(bool val) {
 	if(val && !overtime)
-		OvertimeMsg();
+		OvertimeStarting();
 	overtime = val;
 }
 
@@ -153,18 +161,34 @@ public func GetCapturePercentage() {
 	return Min(100, 100 * captureTime / CaptureTime());
 }
 
-/*  Function: CaptureMsg
+/*  Function: CaptureStarting
+	Called when someone starts capping the point. */
+private func CaptureStarting() {
+	Sound("koth_startcapture");
+	Sound("koth_capturing", 0, 0, 0, 0, 1);
+}
+
+/*  Function: Captured
 	Called when the point is captured, will output a message to the log and play a sound. */
-private func CaptureMsg() {
+private func Captured() {
 	var team = GetPlayerTeam(GetOwner());
 	Log("<c %x>$Capture$</c>", GetTeamColor(team), GetTeamName(team), GetName());
 	Sound("koth_captured");
+	Sound("koth_sign", true);
 }
 
-/*  Function: OvertimeMsg
+/*  Function: CaptureEnding
+	Called when the point's capture time runs out. */
+private func CaptureEnding() {
+	Sound("koth_captured");
+	Sound("koth_capturing", 0, 0, 0, 0, -1);
+}
+
+/*  Function: OvertimeStarting
 	Called when the point switches to overtime, will output a message to the log. */
-private func OvertimeMsg() {
+private func OvertimeStarting() {
 	var team = GetPlayerTeam(GetOwner());
 	Log("<c %x>$Overtime$</c>", GetTeamColor(team));
+	Sound("koth_overtime");
 }
 
