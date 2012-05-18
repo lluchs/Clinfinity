@@ -9,7 +9,12 @@ func Initialize() {
 	koth->SetCP(cp);
 }
 
-func InitializePlayer(int iPlr) {
-	CreateMatSys(iPlr);
+func InitializePlayer(int plr) {
+	CreateMatSys(plr);
+	// fill with material
+	var msys = GetMatSys(plr);
+	msys->DoFill(5, WOOD);
+	msys->DoFill(10, METL);
+	msys->DoFill(10, ROCK);
 }
 
