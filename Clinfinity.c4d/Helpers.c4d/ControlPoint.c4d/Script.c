@@ -175,6 +175,7 @@ private func Captured() {
 	Log("<c %x>$Capture$</c>", GetTeamColor(team), GetTeamName(team), GetName());
 	Sound("koth_captured");
 	Sound("koth_sign", true);
+	Sound("koth_capturing", 0, 0, 0, 0, -1);
 }
 
 /*  Function: CaptureEnding
