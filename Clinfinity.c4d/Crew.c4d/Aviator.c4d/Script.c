@@ -37,7 +37,7 @@ protected func Death(int killedBy) {
 static const AVTR_MinAimAngle = 0;
 static const AVTR_MaxAimAngle = 140;
 static const AVTR_InitialAimAngle = 84;
-static const AVTR_AimStep = 6;
+static const AVTR_AimStep = 20;
 
 local activeRifle, crosshair, aimAngle;
 
@@ -124,6 +124,35 @@ public func DoAim(int angle) {
 	UpdateAimPhase();
 }
 
+/*  Function: AutoAim
+	Adjusts the current aim by searching for potential targets.
+	
+	Calls _GetTargets()_ in the gun to get a selection of potential targets. */
+public func AutoAim() {
+	if(!IsAiming())
+		return;
+	var x = GetX(), y = GetY(), tx, ty;
+	var targets = activeRifle->GetTargets();
+	for(var target in targets) {
+		tx = target->GetX();
+		ty = target->GetY();
+		// check angle
+		var angle = Angle(x, y, tx, ty);
+		if(GetDir() == DIR_Left)
+			angle = 360 - angle;
+		// roughly in direction of current aim and nothing solid inbetween?
+		if(Inside(angle, AVTR_MinAimAngle, AVTR_MaxAimAngle)
+				&& Inside(angle, aimAngle - AVTR_AimStep, aimAngle + AVTR_AimStep)
+				&& PathFree(x, y, tx, ty)) {
+			// target found!
+			// aim at target
+			aimAngle = angle;
+			UpdateAimPhase();
+			return true;
+		}
+	}
+}
+
 /*  Function: LoadRifle
 	Starts the appropriate rifle loading action when aming and returns to the aim action again.
 	
@@ -177,6 +206,7 @@ protected func AimAgainRide() {
 
 protected func ControlThrow() {
 	if(IsAiming()) {
+		AutoAim();
 		activeRifle->Fire(this, aimAngle);
 		return 1;
 	}
