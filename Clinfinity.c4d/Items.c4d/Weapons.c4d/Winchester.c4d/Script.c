@@ -32,7 +32,8 @@ public func Fire(object pClonk, int iAngle) {
 	
 	// enough ammo in clip?
 	if(!DoFill(-1)) {
-		Sound("CommandFailure1");
+		// try to reload
+		pClonk->LoadRifle();
 		return;
 	}
 	
