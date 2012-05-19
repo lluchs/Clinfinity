@@ -1,0 +1,2 @@
+DE:Mündungsfeuer
+US:Muzzle flash
