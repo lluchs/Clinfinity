@@ -9,6 +9,9 @@ public func MaxFill() { return 6; }
 private func FillPicture() { return 0; }
 
 /* Steuerung */
+public func GetTargets() {
+	return FindObjects(Find_Distance(1000), Find_Hostile(Contained()->GetOwner()), Find_OCF(OCF_Alive), Find_NoContainer(), Sort_Distance());
+}
 
 public func CanLoad() {
 	return !IsFull() && MatSysGetTeamFill(Contained()->GetOwner(), METL) >= 1;
@@ -40,8 +43,8 @@ public func Fire(object pClonk, int iAngle) {
     // Austrittsparameter
     iDir = GetDir(pClonk) * 2 - 1;
     iPhase = GetPhase(pClonk);
-    iX = +Sin(iPhase * 19, 14) * iDir;
-    iY = -Cos(iPhase * 19, 14) - 2;
+    //iX = +Sin(iPhase * 19, 14) * iDir;
+    //iY = -Cos(iPhase * 19, 14) - 2;
     iR = iAngle * iDir + 90;
     iXDir = (Sin(iAngle, 22) + 1) * iDir;
     iYDir = -Cos(iAngle, 22);
