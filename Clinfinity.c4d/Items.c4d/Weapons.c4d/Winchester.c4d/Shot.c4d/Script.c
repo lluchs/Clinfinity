@@ -33,23 +33,28 @@ local iOldX, iOldY;
 
 /* Fliegt */
 private func Travel() {
+	var actTime = GetActTime();
+	// trace flight
+	if(iOldX && actTime > 2) {
+		var color = RGB(255, 255, 255);
+		DrawParticleLine("PSpark", 0, 0, AbsX(iOldX), AbsY(iOldY), 3, 20, color, color);
+	}
+
     // Bewegung
     if(xdir != 0) { // Revolverschuß
         SetXDir(xdir);
         ydir = 0;
-        if(GetActTime() > 20)
+        if(actTime > 20)
             ydir = 5;
     }
 	// fixed ydir
 	SetYDir(ydir);
     // Auf Treffer prüfen
-    if(GetActTime() > 2) CheckHit();
+    if(actTime > 2) CheckHit();
     iOldX = GetX();
     iOldY = GetY();
 
-	// trace flight
-	CreateParticle("PSpark", 0, 0, 0, 0, 20, RGB(255, 255, 255));
-    return();
+    return;
 }
 
 private func CheckHit() {
