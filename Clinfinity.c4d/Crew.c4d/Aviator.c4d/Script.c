@@ -276,7 +276,23 @@ protected func ControlUp() {
 	return inherited(...);
 }
 
+protected func ControlUpDouble() {
+	if(IsAiming()) {
+		DoAim(-AVTR_AimStep);
+		return 1;
+	}
+	return inherited(...);
+}
+
 protected func ControlDown() {
+	if(IsAiming()) {
+		DoAim(AVTR_AimStep);
+		return 1;
+	}
+	return inherited(...);
+}
+
+protected func ControlDownDouble() {
 	if(IsAiming()) {
 		DoAim(AVTR_AimStep);
 		return 1;
