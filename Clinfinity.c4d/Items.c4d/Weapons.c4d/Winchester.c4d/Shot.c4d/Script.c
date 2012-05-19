@@ -4,7 +4,7 @@
 
 #include ARRW
 
-local xdir, dam;
+local xdir, ydir, dam;
 
 /* Eigenschaften */
 // Wird zur korrekten Inventarverwaltung gebraucht
@@ -24,6 +24,7 @@ public func Launch(iDir, iDam) {
     SetCategory(C4D_Vehicle());
     if(iDir == DIR_Left()) xdir = -100;
     if(iDir == DIR_Right()) xdir = +100;
+	ydir = GetYDir();
     dam = iDam;   // Schaden
     SetAction("Travel");
 }
@@ -35,14 +36,19 @@ private func Travel() {
     // Bewegung
     if(xdir != 0) { // Revolverschuß
         SetXDir(xdir);
-        SetYDir(0);
+        ydir = 0;
         if(GetActTime() > 20)
-            SetYDir(5);
+            ydir = 5;
     }
+	// fixed ydir
+	SetYDir(ydir);
     // Auf Treffer prüfen
     if(GetActTime() > 2) CheckHit();
     iOldX = GetX();
     iOldY = GetY();
+
+	// trace flight
+	CreateParticle("PSpark", 0, 0, 0, 0, 20, RGB(255, 255, 255));
     return();
 }
 
