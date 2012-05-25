@@ -66,14 +66,14 @@ public func AttachEvent(object attached, object attachedTo, bool isDetaching, ob
 		if(isDetaching) {
 			GetControlledPlatform()->RemoveCopiedChildrenVertices(attached);
 		} else {
-			ScheduleCall(GetControlledPlatform(), "CopyChildrenVertices", 2, 0, attached);
+			GetControlledPlatform()->CopyChildrenVertices(attached);
 		}
 	} else {
 		if(source == masterMediator) {
 			if(isDetaching) {
 				GetControlledPlatform()->RemoveCopiedChildrenVertices(attached);
 			} else {
-				ScheduleCall(GetControlledPlatform(), "CopyChildrenVertices", 2, 0, attached);
+				GetControlledPlatform()->CopyChildrenVertices(attached);
 			}
 		} else {
 			masterMediator->AttachEvent(attached, attachedTo, isDetaching, source);
