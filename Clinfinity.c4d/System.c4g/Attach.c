@@ -139,3 +139,20 @@ global func RemoveCopiedChildrenVertices(object child) {
 global func CompareProdecure(string procedure) {
 	return GetProcedure() == procedure;
 }
+
+/*	Function: SetPositionWithChildren
+	Sets the position of the calling object, including all objects attached to it.
+	Coordinates are global.
+
+	Parameters:
+	x	- New horizontal coordinate.
+	y	- New vertical coordinate. */
+global func SetPositionWithChildren(int x, int y) {
+	var children = FindObjects(Find_ActionTarget(this), Find_Func("CompareProdecure", "ATTACH"));
+	for(var child in children) {
+		var childX = child->GetX() - GetX() + x;
+		var childY = child->GetY() - GetY() + y;
+		child->SetPositionWithChildren(childX, childY);
+	}
+	SetPosition(x, y);
+}
