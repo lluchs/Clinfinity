@@ -38,6 +38,10 @@ global func AttachTo(object to, int callerVertex, int targetVertex) {
 		var cx = GetVertex(callerVertex - 1, false), cy = GetVertex(callerVertex - 1, true);
 		to->AddVertex(to->AbsX(cx + GetX()), to->AbsY(cy + GetY()));
 		targetVertex = to->GetVertexNum();
+	} else {
+		var newX = to->GetVertex(targetVertex - 1, false) - GetVertex(callerVertex - 1, false) + to->GetX();
+		var newY = to->GetVertex(targetVertex - 1, true) - GetVertex(callerVertex - 1, true) + to->GetY();
+		SetPositionWithChildren(newX, newY);
 	}
 
 	callerVertex--;
