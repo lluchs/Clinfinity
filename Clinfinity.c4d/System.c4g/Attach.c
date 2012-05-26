@@ -78,6 +78,9 @@ global func CopyVertices(object from) {
 /*  Function: RemoveCopiedVertices
     Removes vertices which were previously copied using <CopyVertices>.
 
+	*Important:* You must remove the vertices in reverse order, compared to the order in which they were copied.
+	Otherwise, the vertices cannot be removed properly.
+
 	Parameters:
 	from - Object from which the vertices were copied. */
 global func RemoveCopiedVertices(object from) {
