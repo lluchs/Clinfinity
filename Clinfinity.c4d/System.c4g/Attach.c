@@ -123,12 +123,13 @@ global func CopyChildrenVertices(object child) {
 global func RemoveCopiedChildrenVertices(object child) {
 	if(child == 0) {
 		child = this;
-	} else {
-		RemoveCopiedVertices(child);
 	}
 	var grandchildren = FindObjects(Find_ActionTarget(child), Find_Func("CompareProdecure", "ATTACH"));
 	for(var grandchild in grandchildren) {
 		RemoveCopiedChildrenVertices(grandchild);
+	}
+	if(child != this) {
+		RemoveCopiedVertices(child);
 	}
 }
 
