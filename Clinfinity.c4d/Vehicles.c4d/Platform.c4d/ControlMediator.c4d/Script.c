@@ -182,6 +182,8 @@ public func Disconnect(object leftMediator, object rightMediator) {
 	var rightPlatform = rightMediator->GetControlledPlatform();
 
 	rightPlatform->SetAction("Fly");
+	rightPlatform->SetActionTargets(0, 0);
+	rightPlatform->CopyChildrenVertices();
 
 	leftMediator->AttachEvent(rightPlatform, leftPlatform, true, this);
 	return true;
