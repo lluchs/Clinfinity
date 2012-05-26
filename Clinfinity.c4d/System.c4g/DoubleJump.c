@@ -61,11 +61,12 @@ protected func ControlUp() {
 	return 0;
 }
 
+protected func MakeDoubleJumpPossible() {
+	doubleJumpPossible = true;
+}
+
 protected func CheckStuck() {
 	if(GetAction() == "Jump") {
-		if(GetPhase() == 1) {
-			doubleJumpPossible = true;
-		}
 		// Visual clue that double jump is not available any more: Tumble if falling speed is too high.
 		if(GetYDir() > maxDoubleJumpStartSpeed && !(this->~IsGliding())) {
 			SetAction("Tumble");
