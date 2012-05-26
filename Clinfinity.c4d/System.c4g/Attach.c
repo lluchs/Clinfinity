@@ -71,32 +71,81 @@ global func CopyVertices(object from) {
 	// save vertices
 	var effect = AddEffect("CopiedVertices", this, 1);
 	EffectVar(0, this, effect) = from;
-	EffectVar(1, this, effect) = start;
-	EffectVar(2, this, effect) = start + num;
+	//Log("%v add: %v", this, from);
+}
+
+static vertexRemoveOperation;
+
+/*  Function: StartCopiedVerticesRemoval
+	Improves performance of removing multiple vertices by only re-adding the remaining vertices in the end.
+
+	*Important:* You need to call <EndCopiedVerticesRemoval> after all calls to <RemoveCopiedVertices> are done. */
+global func StartCopiedVerticesRemoval() {
+	vertexRemoveOperation = true;
+}
+
+/*  Function: EndCopiedVerticesRemoval
+	Ends a batch removal using <RemoveCopiedVertices>. */
+global func EndCopiedVerticesRemoval() {
+	vertexRemoveOperation = false;
+	RemoveCopiedVertices();
 }
 
 /*  Function: RemoveCopiedVertices
     Removes vertices which were previously copied using <CopyVertices>.
 
-	*Important:* You must remove the vertices in reverse order, compared to the order in which they were copied.
-	Otherwise, the vertices cannot be removed properly.
+	*Important:* This function will remove all user-defined vertices that aren't copied from other objects.
+	
+	Note: Use <StartCopiedVerticesRemoval> when calling this function repeatedly with different objects.
 
 	Parameters:
 	from - Object from which the vertices were copied. */
 global func RemoveCopiedVertices(object from) {
+	// remove all additional vertices
+	SetR(GetR());
+	var i = GetEffectCount("CopiedVertices", this), success = false;
+	var effects = CreateArray(i);
+	while(i--) {
+		var effect = GetEffect("CopiedVertices", this, i);
+		var obj = EffectVar(0, this, effect);
+		effects[i] = [effect, obj];
+	}
+	for(var e in effects) {
+		var effect = e[0], obj = e[1];
+		if(obj == from) {
+			RemoveEffect(0, this, effect);
+			success = true;
+		} else if(!vertexRemoveOperation) {
+			RemoveEffect(0, this, effect);
+			// re-add vertices
+			CopyVertices(obj);
+		}
+	}
+	//Log("%v remove: %v", this, from);
+	return success;
+}
+
+/*  Function: RemoveAllCopiedVertices
+    Removes all vertices which were previously copied using <CopyVertices>. */
+global func RemoveAllCopiedVertices() {
+	// remove all additional vertices
+	SetR(GetR());
+	var i = GetEffectCount("CopiedVertices", this);
+	while(i--) {
+		RemoveEffect("CopiedVertices", this, i);
+	}
+	return true;
+}
+
+/*  Function: DebugCopiedVertices
+	Prints all objects from which vertices were copied to the log. */
+global func DebugCopiedVertices() {
 	var i = GetEffectCount("CopiedVertices", this);
 	while(i--) {
 		var effect = GetEffect("CopiedVertices", this, i);
-		if(EffectVar(0, this, effect) == from) {
-			var start = EffectVar(1, this, effect), end = EffectVar(2, this, effect);
-			// indexes will shift, so counting up won't work
-			for(var i = end - 1; i >= start; i--)
-				RemoveVertex(i);
-			RemoveEffect(0, this, effect);
-			return true;
-		}
+		var obj = EffectVar(0, this, effect);
+		Log("%v", obj);
 	}
-	return false;
 }
 
 /*	Function: CopyChildrenVertices
@@ -122,18 +171,23 @@ global func CopyChildrenVertices(object child) {
 	This is done recursively, all vertices of directly and indirectly attached objects are removed.
 
 	Parameters:
-	child	- [optional] The attached object where the removal starts. */
-global func RemoveCopiedChildrenVertices(object child) {
+	child	- [optional] The attached object where the removal starts.
+	rec     - internal parameter, ignore. */
+global func RemoveCopiedChildrenVertices(object child, bool rec) {
+	if(!rec)
+		StartCopiedVerticesRemoval();
 	if(child == 0) {
 		child = this;
 	}
 	var grandchildren = FindObjects(Find_ActionTarget(child), Find_Func("CompareProdecure", "ATTACH"));
 	for(var grandchild in grandchildren) {
-		RemoveCopiedChildrenVertices(grandchild);
+		RemoveCopiedChildrenVertices(grandchild, true);
 	}
 	if(child != this) {
 		RemoveCopiedVertices(child);
 	}
+	if(!rec)
+		EndCopiedVerticesRemoval();
 }
 
 /*	Function: CompareProdecure
