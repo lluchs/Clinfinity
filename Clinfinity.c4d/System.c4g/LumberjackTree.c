@@ -11,4 +11,5 @@ protected func FxNoChopDownDamage(object target, int effectNumber, int damage, i
 	if(cause == FX_Call_DmgChop) {
 		return 0;
 	}
+	return damage;
 }
