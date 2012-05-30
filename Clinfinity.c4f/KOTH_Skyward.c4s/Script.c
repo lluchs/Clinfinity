@@ -16,5 +16,20 @@ func InitializePlayer(int plr) {
 	msys->DoFill(5, WOOD);
 	msys->DoFill(10, METL);
 	msys->DoFill(10, ROCK);
+	
+	// Place Fog
+	for(var i;i<160;++i) 
+    CreateParticle("Cloud",Random(LandscapeWidth()),Random(LandscapeHeight()*2/3),RandomX(3,9),0,RandomX(1000,1500));
+	
+	ScriptGo(1);
 }
 
+func Script0()
+{
+  CreateParticle("Cloud",0,Random(LandscapeHeight()*2/3),RandomX(3,9),0,RandomX(1000,1500)); 
+}
+
+func Script4()
+{
+  return(goto(0));
+}
