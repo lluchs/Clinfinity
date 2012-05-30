@@ -1,5 +1,5 @@
 [Head]
-Icon=28
+Icon=35
 Title=DeathRace
 Version=4,9,5
 Difficulty=40

@@ -1,5 +1,5 @@
 [Head]
-Icon=19
+Icon=35
 Title=KOTH_Skyward
 
 [Definitions]
