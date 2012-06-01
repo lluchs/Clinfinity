@@ -99,3 +99,7 @@ public func MaterialCheck(id idType) {
 		node[1] -> BuildMessage(GetComponent(node[0], 0, 0, idType), fill);
 	}
 }
+
+public func ClearMaterialCheck() {
+	fNoStatusMessage = 0;
+}

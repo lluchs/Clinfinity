@@ -1,5 +1,5 @@
 [Head]
-Icon=28
+Icon=35
 Title=DeathRace
 Version=4,9,5
 Difficulty=40
@@ -41,6 +41,7 @@ VegetationLevel=35,0,0,100
 InEarth=LOAM=1
 InEarthLevel=15,0,0,100
 SkyFade=0,0,100,255,255,255
+Sky=Sky_Friendly
 BottomOpen=1
 MapWidth=250,0,64,250
 MapHeight=40,0,40,250

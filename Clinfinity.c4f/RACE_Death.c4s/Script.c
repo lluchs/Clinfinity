@@ -3,6 +3,9 @@
 #strict 2
 
 protected func Initialize() {
+    //ozone
+	SetGamma(RGB(0,0,8), RGB(115,125,125), RGB(255,255,255));
+  
 	// rotate drafts
 	for(var draft in FindObjects(Find_ID(DRFT))) {
 		draft->SetR(Random(360));
@@ -14,6 +17,7 @@ protected func Initialize() {
 // oder 0 zurück geben, wird der Default-Wert verwendet
 
 // Race left -> right; additional condition: on top of the golden platform
+
 func CheckRACEGoal(int plr) {
 	var cursor = GetCursor(plr);
 	if(cursor && cursor->GetX() > LandscapeWidth() - GetRACEEndOffset() && cursor->GetY() < LandscapeHeight() / 2)

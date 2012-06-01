@@ -38,7 +38,9 @@ protected func Steam() {
 	if(clonk && MatSysGetTeamFill(GetOwner(), STEM) >= STMT_RespawnAmount) {
 		MatSysDoTeamFill(-STMT_RespawnAmount, GetOwner(), STEM);
 		clonk->Exit();
-		SetCursor(clonk->GetOwner(), clonk);
+		var plr = clonk->GetOwner();
+		if(!GetCursor(plr))
+			SetCursor(plr, clonk);
 	}
 }
 

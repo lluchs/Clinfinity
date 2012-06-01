@@ -1,0 +1,7 @@
+DeathMsg1=%s ist tot.
+DeathMsg2=%s ist|von uns gegangen.
+DeathMsg3=%s|ruht in Frieden.
+DeathMsg4=%s war einmal...
+DeathMsg5=%s|hat's erwischt.
+DeathMsg6=%s|ist verstorben.
+DeathMsg7=%s|hat uns verlassen.

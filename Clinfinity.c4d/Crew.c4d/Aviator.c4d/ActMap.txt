@@ -102,6 +102,7 @@ Delay=3
 Facet=0,120,16,20
 NextAction=Hold
 InLiquidAction=Swim
+StartCall=MakeDoubleJumpPossible
 PhaseCall=CheckStuck
 
 [Action]

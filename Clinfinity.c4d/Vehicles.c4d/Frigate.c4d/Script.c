@@ -14,7 +14,7 @@ public func Initialize() {
 	flag->SetAction("FlyBase", this);
 }
 
-private func CaptureMsg() {
+private func Captured() {
 	flag->SetOwner(GetOwner());
 	return inherited(...);
 }

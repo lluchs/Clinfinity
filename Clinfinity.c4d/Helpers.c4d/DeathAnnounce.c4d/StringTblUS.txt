@@ -1,0 +1,7 @@
+DeathMsg1=%s is dead.
+DeathMsg2=%s has|deceased.
+DeathMsg3=%s|rests in peace.
+DeathMsg4=%s is dead.
+DeathMsg5=%s has|deceased.
+DeathMsg6=%s|rests in peace.
+DeathMsg7=%s is dead.

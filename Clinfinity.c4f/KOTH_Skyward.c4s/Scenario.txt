@@ -1,5 +1,5 @@
 [Head]
-Icon=19
+Icon=35
 Title=KOTH_Skyward
 
 [Definitions]
@@ -7,44 +7,23 @@ Definition1=Objects.c4d
 Definition2=Clinfinity\Clinfinity.c4d
 
 [Game]
-StructNeedEnergy=0
 Rules=CNMT=1;ENRG=1;FGRV=1;DRFT=15
 
 [Player1]
-Position=20,40
+Position=20,41
 Crew=AVTR=2
 Buildings=STMT=1
 Vehicles=CATA=1
-Material=WOOD=5;METL=10;ROCK=10
+Material=
 Knowledge=STMT=1
-Magic=MWP2=0;MFFA=0;MVLC=0;MWND=0;MQKE=0;CMFG=0;RMMG=0;MBRG=0;EXTG=0;ETFL=0;MGHL=0;MGUP=0;MGWP=0;MMTR=0;MFFS=0;FRFS=0;MLGT=0;RVLT=0;MINV=0;MGDW=0;MFFW=0
 
 [Player2]
-Position=20,40
+Position=171,44
 Crew=AVTR=2
 Buildings=STMT=1
 Vehicles=CATA=1
-Material=WOOD=5;METL=10;ROCK=10
+Material=
 Knowledge=STMT=1
-Magic=MWP2=0;MFFA=0;MVLC=0;MWND=0;MQKE=0;CMFG=0;RMMG=0;MBRG=0;EXTG=0;ETFL=0;MGHL=0;MGUP=0;MGWP=0;MMTR=0;MFFS=0;FRFS=0;MLGT=0;RVLT=0;MINV=0;MGDW=0;MFFW=0
-
-[Player3]
-Position=20,40
-Crew=AVTR=2
-Buildings=STMT=1
-Vehicles=CATA=1
-Material=WOOD=5;METL=10;ROCK=10
-Knowledge=STMT=1
-Magic=MWP2=0;MFFA=0;MVLC=0;MWND=0;MQKE=0;CMFG=0;RMMG=0;MBRG=0;EXTG=0;ETFL=0;MGHL=0;MGUP=0;MGWP=0;MMTR=0;MFFS=0;FRFS=0;MLGT=0;RVLT=0;MINV=0;MGDW=0;MFFW=0
-
-[Player4]
-Position=20,40
-Crew=AVTR=2
-Buildings=STMT=1
-Vehicles=CATA=1
-Material=WOOD=5;METL=10;ROCK=10
-Knowledge=STMT=1
-Magic=MWP2=0;MFFA=0;MVLC=0;MWND=0;MQKE=0;CMFG=0;RMMG=0;MBRG=0;EXTG=0;ETFL=0;MGHL=0;MGUP=0;MGWP=0;MMTR=0;MFFS=0;FRFS=0;MLGT=0;RVLT=0;MINV=0;MGDW=0;MFFW=0
 
 [Landscape]
 Vegetation=TRE1=3;TRE2=4;TRE3=2

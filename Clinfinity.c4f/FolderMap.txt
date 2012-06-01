@@ -1,0 +1,31 @@
+[FolderMap]
+MinResX=800
+MinResY=600
+ScenInfoArea=20,60,260,550
+FullscreenBG=1
+
+	[Scenario]
+	File=RACE_Death.c4s
+	OverlayImage=Highlight.png
+	Area=444,160,254,30
+	Title=TITLE
+	TitleFontSize=20
+	TitleColorInactive=
+	TitleColorActive=39935
+	TitleOffX=120
+	TitleOffY=4
+	TitleAlign=1
+	TitleUseBookFont=0
+
+	[Scenario]
+	File=KOTH_Skyward.c4s
+	OverlayImage=Highlight.png
+	Area=708,160,254,30
+	Title=TITLE
+	TitleFontSize=20
+	TitleColorInactive=
+	TitleColorActive=16747520
+	TitleOffX=120
+	TitleOffY=4
+	TitleAlign=1
+	TitleUseBookFont=0

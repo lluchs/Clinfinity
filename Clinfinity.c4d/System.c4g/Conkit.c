@@ -4,8 +4,6 @@
 
 #appendto CNKT
 
-local aMenuItems;
-
 public func Activate(pClonk) { 
 	[$TxtCreateconstructionsi$]
 	// Clonk anhalten
@@ -18,35 +16,15 @@ public func Activate(pClonk) {
 	// Menü erzeugen und mit Bauplänen des Spielers füllen
 	CreateMenu(CXCN, pClonk, this, 1, "$TxtNoconstructionplansa$");
 	var idType, i = 0;
-	aMenuItems = CreateArray();
 	while (idType = GetPlrKnowledge(GetOwner(pClonk), 0, i++, C4D_Structure))
 		// Keine Trapper/Indianer Sachen mit Bausatz bauen. (Außer für Wachtürme/Palisaden, die es ausdrücklich zulassen)
 		if(idType->~IsConkitBuilding() || (!idType->~IsIndianHandcraft() && !idType->~IsTrapperHandcraft())) {
-			AddMenuItem("$TxtConstructions$", "CreateConstructionSite", idType, pClonk);
-			aMenuItems[i - 1] = idType;
+			AddMaterialMenuItem("$TxtConstructions$", "CreateConstructionSite", idType, pClonk);
 		}
-	CheckMenu();
 	return 1;
 }
 
-protected func CheckMenu() {
-	var pMatSys = GetMatSys(GetOwner(Contained()));
-	if(GetMenu(Contained()) != CXCN || !pMatSys)
-		return;
-	var idType = aMenuItems[GetMenuSelection(Contained())];
-	if(!idType)
-		return;
-	pMatSys -> MaterialCheck(idType);
-	ScheduleCall(this, "CheckMenu", 5);
-}
-
-protected func MenuQueryCancel() {
-	GetMatSys(GetOwner(Contained())) -> LocalN("fNoStatusMessage") = 0;
-	ClearScheduleCall(this, "CheckMenu");
-}
-
 protected func CreateConstructionSite(id idType) {
-	MenuQueryCancel();
 	// Nur wenn der Clonk steht und sich im Freien befindet
 	if (GetAction(Contained()) != "Walk") return;
 	if (Contained(Contained())) return;
