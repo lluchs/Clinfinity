@@ -22,14 +22,14 @@ func InitializePlayer(int plr) {
 	
 	// place fog
 	for(var i;i<160;++i) 
-    CreateParticle("Cloud",Random(LandscapeWidth()),Random(LandscapeHeight()*2/3),RandomX(3,9),0,RandomX(1000,1500));
+    CreateParticle("Cloud",Random(LandscapeWidth()),Random(LandscapeHeight()*2/3),RandomX(3,9),0,RandomX(1000,1500),RGBa(116,131,145,0));
 	
 	ScriptGo(1);
 }
 
 func Script0()
 {
-  CreateParticle("Cloud",0,Random(LandscapeHeight()*2/3),RandomX(3,9),0,RandomX(1000,1500)); 
+  CreateParticle("Cloud",0,Random(LandscapeHeight()*2/3),RandomX(3,9),0,RandomX(1000,1500), RGBa(116,131,145,0)); 
 }
 
 func Script4()
