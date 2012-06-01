@@ -1,0 +1,2 @@
+NewPlatform=New platform
+Disconnect=Disconnect

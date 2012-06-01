@@ -197,6 +197,14 @@ private func HasSlave() {
 	return slaveMediator != 0;
 }
 
+private func GetMaster() {
+	return masterMediator;
+}
+
+private func GetSlave() {
+	return slaveMediator;
+}
+
 private func IsMasterOf(object mediator) {
 	return slaveMediator == mediator;
 }

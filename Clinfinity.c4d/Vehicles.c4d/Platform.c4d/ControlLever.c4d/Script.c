@@ -78,3 +78,58 @@ public func MovementEvent(int direction, object source) {
 		Sound("lever", false, this, 15);
 	}
 }
+
+/* -- Platform Connection Control -- */
+protected func ControlDigDouble(object controller) {
+	CreateMenu(PLTF, controller, this);
+	ConnectionMenuItem(controller, controlMediator->GetMaster(), controlMediator);
+	ConnectionMenuItem(controller, controlMediator, controlMediator->GetSlave());
+}
+
+private func ConnectionMenuItem(object clonk, object master, object slave) {
+	if(master)
+		master = ObjectNumber(master);
+	if(slave)
+		slave = ObjectNumber(slave);
+	var command;
+	if(master && slave) {
+		command = Format("DisconnectPlatforms(Object(%d), Object(%d))", master, slave);
+		var dummy = CreateObject(TIM1);
+		SetGraphics("NotChosen", dummy, MS4C, 1, GFXOV_MODE_Picture);
+		AddMenuItem("$Disconnect$", command, 0, clonk, 0, 0, 0, 4, dummy);
+		dummy->RemoveObject();
+	} else {
+		command = Format("AddPlatform(Object(%d), Object(%d))", master, slave);
+		AddMenuItem("$NewPlatform$", command, PLTF, clonk);
+	}
+}
+
+protected func AddPlatform(object master, object slave) {
+	// subtract components
+	var components = [];
+	for(var i = 0, comp, num; (comp = GetComponent(0, i, 0, PLTF)) && (num = GetComponent(comp, i, 0, PLTF)); i++) {
+		if(MatSysGetTeamFill(GetOwner(), comp) < num) {
+			Sound("Error");
+			return;
+		}
+		PushBack([comp, num], components);
+	}
+	for(var c in components)
+		MatSysDoTeamFill(-c[1], GetOwner(), c[0]);
+
+	Sound("Connect");
+	var new = controlMediator->GetControlledPlatform()->CreatePlatform(-GetDefWidth(PLTF), GetDefHeight(PLTF) / 2, GetOwner())->GetControlMediator();
+	if(master)
+		slave = new;
+	else
+		master = new;
+	COMD->Connect(master, slave);
+}
+
+protected func DisconnectPlatforms(object master, object slave) {
+	Sound("Connect");
+	COMD->Disconnect(master, slave);
+	// move slave a bit to the right so the platforms aren't stuck
+	var platform = slave->GetControlledPlatform();
+	platform->SetPosition(platform->GetX() + 5, platform->GetY());
+}

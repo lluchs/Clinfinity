@@ -1,0 +1,2 @@
+NewPlatform=Neue Plattform
+Disconnect=Verbindung trennen
