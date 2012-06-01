@@ -22,9 +22,9 @@ OverloadTextures
 36=Ore-Rough
 37=Ore-Rock
 38=Ore-Ridge
-40=Granite-Rough
-41=Granite-Ridge
-42=Granite-Rock
+40=Granite-Metalearth
+41=Granite-Metalearth
+42=Granite-Metalearth
 45=Gold-Rough
 50=Rock-Rough
 51=Rock-Ridge
