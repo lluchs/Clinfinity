@@ -100,7 +100,7 @@ private func ConnectionMenuItem(object clonk, object master, object slave) {
 		dummy->RemoveObject();
 	} else {
 		command = Format("AddPlatform(Object(%d), Object(%d))", master, slave);
-		AddMenuItem("$NewPlatform$", command, PLTF, clonk);
+		AddMaterialMenuItem("$NewPlatform$", command, PLTF, clonk);
 	}
 }
 
