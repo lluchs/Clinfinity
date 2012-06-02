@@ -4,6 +4,13 @@
 
 #strict 2
 
+local leftDraft, rightDraft;
+
+// width of one propeller
+static const PROP_Width = 25;
+// height of draft
+static const PROP_DraftHeight = 50;
+
 /*	Constructor: CreateProp
 	Factory method for propellers.
 	The coordinates are relative to the calling object in local calls, otherwise global.
@@ -34,9 +41,31 @@ public func CreateProp(int x, int y, object forPlatform) {
 public func MovementEvent(int direction, object source) {
 	if(direction == COMD_Up) {
 		SetAction("AttachFast");
+		var height = PROP_DraftHeight * 5 / 4;
+		leftDraft->SetSize(PROP_Width, height);
+		rightDraft->SetSize(PROP_Width, height);
 	} else if(direction == COMD_Down) {
 		SetAction("AttachSlow");
+		var height = PROP_DraftHeight * 3 / 4;
+		leftDraft->SetSize(PROP_Width, height);
+		rightDraft->SetSize(PROP_Width, height);
 	} else {
 		SetAction("Attach");
+		leftDraft->SetSize(PROP_Width, PROP_DraftHeight);
+		rightDraft->SetSize(PROP_Width, PROP_DraftHeight);
 	}
+}
+
+protected func Initialize() {
+	leftDraft = CreateDraft();
+	rightDraft = CreateDraft();
+	rightDraft->SetActionData(1);
+}
+
+private func CreateDraft() {
+	var draft = CreateObject(DRFT);
+	draft->SetR(180);
+	draft->SetSize(25, 50);
+	draft->SetAction("Attach", this);
+	return draft;
 }
