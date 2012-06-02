@@ -29,3 +29,16 @@ FullscreenBG=1
 	TitleOffY=4
 	TitleAlign=1
 	TitleUseBookFont=0
+	
+	[Scenario]
+	File=KOTH_Planetary.c4s
+	OverlayImage=Highlight.png
+	Area=708,260,254,30
+	Title=TITLE
+	TitleFontSize=20
+	TitleColorInactive=
+	TitleColorActive=16747520
+	TitleOffX=120
+	TitleOffY=4
+	TitleAlign=1
+	TitleUseBookFont=0
