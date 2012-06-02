@@ -4,7 +4,7 @@
 
 local name, deathMessage;
 
-protected func Initialize() {
+protected func Recruitment() {
 	name = GetName();
 	deathMessage = GetObjCoreDeathMessage();
 	return inherited(...);
