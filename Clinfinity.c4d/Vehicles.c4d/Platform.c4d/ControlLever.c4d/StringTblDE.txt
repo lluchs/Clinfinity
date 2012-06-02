@@ -1,2 +1,3 @@
 NewPlatform=Neue Plattform
+Connect=Verbinden
 Disconnect=Verbindung trennen

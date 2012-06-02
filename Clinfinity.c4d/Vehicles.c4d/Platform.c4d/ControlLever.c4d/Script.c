@@ -82,21 +82,40 @@ public func MovementEvent(int direction, object source) {
 /* -- Platform Connection Control -- */
 protected func ControlDigDouble(object controller) {
 	CreateMenu(CXCN, controller, this, C4MN_Extra_Components);
-	ConnectionMenuItem(controller, controlMediator->GetMaster(), controlMediator);
-	ConnectionMenuItem(controller, controlMediator, controlMediator->GetSlave());
+	var left  = controlMediator->GetMaster() || PlatformMediator(FindPlatform(false));
+	var right = controlMediator->GetSlave()  || PlatformMediator(FindPlatform(true));
+	ConnectionMenuItem(controller, left, controlMediator);
+	ConnectionMenuItem(controller, controlMediator, right);
+}
+
+// Finds platforms to the left/right
+private func FindPlatform(bool right) {
+	right = right * 2 - 1;
+	var platform = controlMediator->GetControlledPlatform();
+	return FindObject2(platform->Find_AtPoint(right * GetDefWidth(PLTF)), Find_Allied(GetOwner()), Find_Func("IsPlatform"));
+}
+
+private func PlatformMediator(object platform) {
+	return platform && platform->GetControlMediator();
 }
 
 private func ConnectionMenuItem(object clonk, object master, object slave) {
+	var mn, sn;
 	if(master)
-		master = ObjectNumber(master);
+		mn = ObjectNumber(master);
 	if(slave)
-		slave = ObjectNumber(slave);
+		sn = ObjectNumber(slave);
 	var command;
 	if(master && slave) {
-		command = Format("DisconnectPlatforms(Object(%d), Object(%d))", master, slave);
-		AddMaterialMenuItem("$Disconnect$", command, MS4C, clonk, 0, 0, "", 2, 4);
+		if(master->IsMasterOf(slave)) {
+			command = Format("DisconnectPlatforms(Object(%d), Object(%d))", mn, sn);
+			AddMaterialMenuItem("$Disconnect$", command, MS4C, clonk, 0, 0, "", 2, 4);
+		} else {
+			command = Format("ConnectPlatforms(Object(%d), Object(%d))", mn, sn);
+			AddMaterialMenuItem("$Connect$", command, MS4C, clonk, 0, 0, "", 2, 1);
+		}
 	} else {
-		command = Format("AddPlatform(Object(%d), Object(%d))", master, slave);
+		command = Format("AddPlatform(Object(%d), Object(%d))", mn, sn);
 		AddMaterialMenuItem("$NewPlatform$", command, PLTF, clonk, 0, 0, "", 2, !slave);
 	}
 }
@@ -123,10 +142,15 @@ protected func AddPlatform(object master, object slave) {
 	COMD->Connect(master, slave);
 }
 
+protected func ConnectPlatforms(object master, object slave) {
+	Sound("Connect");
+	COMD->Connect(master, slave);
+}
+
 protected func DisconnectPlatforms(object master, object slave) {
 	Sound("Connect");
 	COMD->Disconnect(master, slave);
 	// move slave a bit to the right so the platforms aren't stuck
 	var platform = slave->GetControlledPlatform();
-	platform->SetPosition(platform->GetX() + 5, platform->GetY());
+	platform->SetPosition(platform->GetX() + 2, platform->GetY());
 }
