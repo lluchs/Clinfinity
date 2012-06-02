@@ -12,17 +12,11 @@ Rules=CNMT=1;ENRG=1;FGRV=1;DRFT=15
 [Player1]
 Position=20,41
 Crew=AVTR=2
-Buildings=STMT=1
-Vehicles=CATA=1
-Material=
 Knowledge=STMT=1
 
 [Player2]
 Position=171,44
 Crew=AVTR=2
-Buildings=STMT=1
-Vehicles=CATA=1
-Material=
 Knowledge=STMT=1
 
 [Landscape]
