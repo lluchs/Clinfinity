@@ -94,10 +94,7 @@ private func ConnectionMenuItem(object clonk, object master, object slave) {
 	var command;
 	if(master && slave) {
 		command = Format("DisconnectPlatforms(Object(%d), Object(%d))", master, slave);
-		var dummy = CreateObject(TIM1);
-		SetGraphics("NotChosen", dummy, MS4C, 1, GFXOV_MODE_Picture);
-		AddMenuItem("$Disconnect$", command, 0, clonk, 0, 0, 0, 4, dummy);
-		dummy->RemoveObject();
+		AddMaterialMenuItem("$Disconnect$", command, MS4C, clonk, 0, 0, "", 2, 4);
 	} else {
 		command = Format("AddPlatform(Object(%d), Object(%d))", master, slave);
 		AddMaterialMenuItem("$NewPlatform$", command, PLTF, clonk);
