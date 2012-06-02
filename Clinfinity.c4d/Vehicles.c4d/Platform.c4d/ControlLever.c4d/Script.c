@@ -81,7 +81,7 @@ public func MovementEvent(int direction, object source) {
 
 /* -- Platform Connection Control -- */
 protected func ControlDigDouble(object controller) {
-	CreateMenu(PLTF, controller, this);
+	CreateMenu(CXCN, controller, this, C4MN_Extra_Components);
 	ConnectionMenuItem(controller, controlMediator->GetMaster(), controlMediator);
 	ConnectionMenuItem(controller, controlMediator, controlMediator->GetSlave());
 }
@@ -97,7 +97,7 @@ private func ConnectionMenuItem(object clonk, object master, object slave) {
 		AddMaterialMenuItem("$Disconnect$", command, MS4C, clonk, 0, 0, "", 2, 4);
 	} else {
 		command = Format("AddPlatform(Object(%d), Object(%d))", master, slave);
-		AddMaterialMenuItem("$NewPlatform$", command, PLTF, clonk);
+		AddMaterialMenuItem("$NewPlatform$", command, PLTF, clonk, 0, 0, "", 2, !slave);
 	}
 }
 
