@@ -38,8 +38,8 @@ protected func Steam() {
 	}
 	// generation
 	if(!generate--) {
-		DoFill(1);
-		generate = 5;
+		DoFill(100 + RandomX(-10, 10));
+		generate = 500;
 	}
 	// respawn
 	var clonk = Contents();
