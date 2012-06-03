@@ -4,16 +4,35 @@
 
 #include L_SS
 
+static plr;
 
-//nur als Animationstest
+protected func ControlUp(pCaller){
+  //GetPlayer
+  var plr = pCaller->GetOwner();
+  
+  if(MatSysGetFill(plr, ROCK) >= 1){
+    SetAction("Start");
+    Message("produziert!");
+    MatSysDoFill(-1, plr, ROCK);
+    }
+  else{ 
+    Sound("Error"); 
+    Message("Nicht genügend Baumaterial"); 
+    }
+}
+
+protected func Finish(){
+  //GetPlayer
+  MatSysDoFill(1, plr, METL);
+  }
+
+/*nur als Animationstest
 
 public func ControlDigDouble() {
-  SetAction("Start");
-  Message("produziert!");
   }
 
 public func ControlUp() {
   SetAction("Stop");
   Message("fertig");
   Sound("Pshshsh");
-  }
+  }*/
