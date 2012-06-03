@@ -12,12 +12,11 @@ protected func ControlUp(pCaller){
   
   if(MatSysGetFill(plr, ROCK) >= 1){
     SetAction("Start");
-    Message("produziert!");
     MatSysDoFill(-1, plr, ROCK);
     }
   else{ 
     Sound("Error"); 
-    Message("Nicht genügend Baumaterial"); 
+    Message("$TxtNotEnoughInput$", pCaller); 
     }
 }
 
