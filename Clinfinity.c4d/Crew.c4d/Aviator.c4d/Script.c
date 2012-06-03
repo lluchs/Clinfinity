@@ -26,3 +26,20 @@ protected func Death(int killedBy) {
 	}
 	return _inherited(killedBy, ...);
 }
+
+/* Conkit Ability */
+public func ContextConkit(object caller) {
+	[$CtxConkit$|Image=CCNT]
+
+	// get player
+	var plr = caller->GetOwner();
+
+	if(MatSysGetTeamFill(plr, WOOD) >= 1 && MatSysGetTeamFill(plr, METL) >= 1) {
+		MatSysDoTeamFill(-1, plr, WOOD);
+		MatSysDoTeamFill(-1, plr, METL);
+		caller->CreateContents(CNKT);
+	} else {
+		Sound("Error");
+		Message("$TxtNoMaterial$", caller);
+	}
+}

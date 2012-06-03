@@ -7,3 +7,5 @@ CtrlMenuDesc=Menü
 TxtDescend=Abspringen
 TxtEnergysupply=Energieversorgung
 CtrlInventoryDesc=Inventar auswählen
+CtxConkit=Bausatz herstellen
+TxtNoMaterial=Benötigt 1x{{WOOD}} und 1x{{METL}}
