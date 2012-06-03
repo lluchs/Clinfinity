@@ -4,34 +4,27 @@
 
 #include L_SS
 
-static plr;
+protected func ControlUp(object caller) {
+	var plr = caller->GetOwner();
+	// wrong team?
+	if(Hostile(plr, GetOwner())) {
+		Sound("CommandFailure1");
+		return;
+	}
+	SetOwner(plr);
 
-protected func ControlUp(pCaller){
-  //GetPlayer
-  var plr = pCaller->GetOwner();
-  
-  if(MatSysGetFill(plr, ROCK) >= 1){
-    SetAction("Start");
-    MatSysDoFill(-1, plr, ROCK);
-    }
-  else{ 
-    Sound("Error"); 
-    Message("$TxtNotEnoughInput$", pCaller); 
-    }
+	if(MatSysGetTeamFill(plr, ROCK) >= 1) {
+		if(GetAction() != "Start") {
+			SetAction("Start");
+			MatSysDoTeamFill(-1, plr, ROCK);
+		}
+	} else {
+		Sound("Error");
+		Message("$TxtNotEnoughInput$", this);
+	}
 }
 
-protected func Finish(){
-  //GetPlayer
-  MatSysDoFill(1, plr, METL);
-  }
+protected func Finish() {
+	MatSysDoTeamFill(1, GetOwner(), METL);
+}
 
-/*nur als Animationstest
-
-public func ControlDigDouble() {
-  }
-
-public func ControlUp() {
-  SetAction("Stop");
-  Message("fertig");
-  Sound("Pshshsh");
-  }*/
