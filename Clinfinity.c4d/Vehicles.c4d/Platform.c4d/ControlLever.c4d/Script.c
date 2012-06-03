@@ -35,7 +35,23 @@ protected func MouseSelection(int player) {
 	Sound("Ding");
 }
 
+private func HostileCheck(object clonk) {
+	if(Hostile(GetOwner(), clonk->GetOwner())) {
+		SetCommand(clonk, "UnGrab");
+		return true;
+	}
+}
+
+protected func Grabbed(object controller, bool grab) {
+	if(grab && Hostile(GetOwner(), controller->GetOwner())) {
+		Sound("CommandFailure1");
+		SetCommand(controller, "UnGrab");
+	}
+}
+
 protected func ControlUp(object controller) {
+	if(HostileCheck(controller))
+		return false;
 	if(GetDir() == gearDown) {
 		controlMediator->ControlEvent(COMD_Stop, this);
 	} else if(GetDir() == gearStop) {
@@ -47,6 +63,8 @@ protected func ControlUp(object controller) {
 }
 
 protected func ControlDownSingle(object controller) {
+	if(HostileCheck(controller))
+		return false;
 	if(GetDir() == gearUp) {
 		controlMediator->ControlEvent(COMD_Stop, this);
 	} else if(GetDir() == gearStop) {
@@ -81,6 +99,8 @@ public func MovementEvent(int direction, object source) {
 
 /* -- Platform Connection Control -- */
 protected func ControlDigDouble(object controller) {
+	if(HostileCheck(controller))
+		return false;
 	CreateMenu(CXCN, controller, this, C4MN_Extra_Components);
 	var left  = controlMediator->GetMaster() || PlatformMediator(FindPlatform(false));
 	var right = controlMediator->GetSlave()  || PlatformMediator(FindPlatform(true));
