@@ -189,6 +189,21 @@ public func Disconnect(object leftMediator, object rightMediator) {
 	return true;
 }
 
+/*  Function: GetNumberOfPlatforms
+	Counts all connected platforms.
+
+	Returns:
+	The number of platforms connected with this platform (including this one). */
+public func GetNumberOfPlatforms() {
+	var platform = this, result = 1;
+	while(platform = platform->GetMaster())
+		result++;
+	platform = this;
+	while(platform = platform->GetSlave())
+		result++;
+	return result;
+}
+
 private func HasMaster() {
 	return masterMediator != 0;
 }

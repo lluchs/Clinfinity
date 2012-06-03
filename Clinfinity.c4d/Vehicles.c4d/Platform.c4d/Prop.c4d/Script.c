@@ -69,3 +69,8 @@ private func CreateDraft() {
 	draft->SetAction("Attach", this);
 	return draft;
 }
+
+protected func Destruction() {
+	leftDraft->RemoveObject();
+	rightDraft->RemoveObject();
+}

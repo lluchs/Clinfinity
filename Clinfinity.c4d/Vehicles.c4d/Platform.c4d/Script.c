@@ -3,6 +3,9 @@
 
 #strict 2
 
+static const PLTF_SteamUsage = 10;
+static const PLTF_Explode = -1;
+
 local controlMediator;
 
 /*	Constructor: CreatePlatform
@@ -41,6 +44,14 @@ private func CreateAdditionalObjectsFor(object platform) {
 
 protected func Construction() {
 	ScheduleCall(this, "CheckAfterConstruction", 1);
+}
+
+protected func Destruction() {
+	// remove everything that's connected
+	controlMediator->RemoveObject();
+	for(var obj in FindObjects(Find_ActionTarget(this), Find_Not(Find_ID(PLTF)), Find_Procedure("ATTACH"))) {
+		obj->Schedule("RemoveObject()", 1);
+	}
 }
 
 protected func CheckAfterConstruction() {
@@ -107,10 +118,16 @@ public func ControlEvent(int direction, object source) {
 		FloatUp();
 	} else if(direction == COMD_Down) {
 		FloatDown();
+	} else if(direction == PLTF_Explode) {
+		Explode(GetDefWidth() / 2);
 	}
 }
 
 private func FloatStop() {
+	if(missingSteam) {
+		controlMediator->ControlEvent(PLTF_Explode, this);
+		return;
+	}
 	SetComDir(COMD_None);
 	SetYDir(0);
 	controlMediator->MovementEvent(COMD_Stop, this);
@@ -163,4 +180,37 @@ private func IsPlatformOkay(object platform) {
 
 public func CopyChildrenVertices(object child) {
 	return inherited(child);
+}
+
+/* -- Steam Usage -- */
+local missingSteam;
+
+protected func CheckSteam() {
+	if(missingSteam) {
+			missingSteam += MatSysDoTeamFill(-missingSteam, GetOwner(), STEM);
+			if(missingSteam)
+				ScheduleCall(this, "CheckSteam", 1);
+			else
+				StopFall();
+	}
+	// only if this is the master
+	else if(!GetControlMediator()->HasMaster()) {
+		var platforms = GetControlMediator()->GetNumberOfPlatforms();
+		var usage = platforms * PLTF_SteamUsage;
+		missingSteam = usage + MatSysDoTeamFill(-usage, GetOwner(), STEM);
+		if(missingSteam) {
+			FreeFall();
+			ScheduleCall(this, "CheckSteam", 1);
+		}
+	}
+}
+
+private func FreeFall() {
+	SetAction("Idle");
+	SetYDir(1);
+}
+
+private func StopFall() {
+	SetAction("Fly");
+	FloatStop();
 }
