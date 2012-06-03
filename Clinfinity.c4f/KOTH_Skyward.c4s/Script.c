@@ -2,16 +2,12 @@
 
 #strict 2
 
-static joinedTeams;
-
 func Initialize() {
 	// create goal
 	var cp = CreateObject(SHIP, LandscapeWidth() / 2, LandscapeHeight() / 2, NO_OWNER);
 	var koth = CreateObject(KOTH, 0, 0, NO_OWNER);
 	koth->SetCP(cp);
 
-	joinedTeams = [];
-	
 	// steampunky flair
 	SetGamma(RGB(15, 15, 20), RGB(118, 118, 118), RGB(210, 215, 255));
 	
