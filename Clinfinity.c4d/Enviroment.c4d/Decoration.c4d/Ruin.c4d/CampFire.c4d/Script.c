@@ -8,8 +8,7 @@ protected func ControlThrow(caller){
 
 	if(MatSysGetTeamFill(plr, WOOD) >= 1) {
 		MatSysDoTeamFill(-1, plr, WOOD);
-		var campfire = FindObject(CPFR); //ziemlicher hardcode :(
-		CreateContents(WOOD, campfire, 1);
+		CreateContents(WOOD);
 	} else {
 		Sound("Error");
 		Message("$TxtNoWood$", caller);
