@@ -21,7 +21,8 @@ func Initialize() {
 	
 	CreateObject(RUIN,863,613,-1); // ruin in the middle
 	
-
+	//place skylands
+	CreateObject(SKYL, 293, 500, -1) -> SetClrModulation(RGBa(150, 180, 255, 150));
 	
 	ScriptGo(1);
 }
