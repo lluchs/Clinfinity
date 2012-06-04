@@ -16,8 +16,8 @@ func Initialize() {
     CreateParticle("Cloud",Random(LandscapeWidth()),Random(LandscapeHeight()*2/3),RandomX(3,9),0,RandomX(1000,1500),RGBa(116,131,145,0));
 	
 	// place decoration
-	CreateObject(BEAM, 318, 441, -1) -> Left->SetAction("Right"); //beam big-Left
-	CreateObject(BEAM, 1610, 472, -1) -> Right->SetAction("Left"); //beam big-right
+	CreateObject(BEAM, 318, 441, -1) -> SetAction("Right"); //beam big-Left
+	CreateObject(BEAM, 1610, 472, -1) -> SetAction("Left"); //beam big-right
 	
 	CreateObject(RUIN,863,613,-1); // ruin in the middle
 	
