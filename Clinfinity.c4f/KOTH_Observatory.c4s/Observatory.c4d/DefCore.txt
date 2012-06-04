@@ -15,6 +15,3 @@ SolidMask=2000,0,2000,2000,0,0
 Vertices=1
 VertexY=1
 VertexFriction=20
-Rebuy=1
-Collectible=1
- 
