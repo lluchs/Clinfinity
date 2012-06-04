@@ -1,0 +1,9 @@
+[Action]
+Name=Burn
+Procedure=NONE
+Length=20
+Delay=3
+Facet=20,0,20,25
+FacetBase=0
+NextAction=Burn
+PhaseCall=Smoking

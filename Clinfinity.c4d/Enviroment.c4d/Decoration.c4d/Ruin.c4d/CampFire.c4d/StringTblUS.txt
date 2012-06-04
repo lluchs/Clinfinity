@@ -1,0 +1,1 @@
+TxtNoWood=You can't create fire without wood!

@@ -17,10 +17,11 @@ func Initialize() {
 	
 	// place decoration
 	var Left = CreateObject(BEAM, 318, 441, -1); 
-	Left->SetAction("Right"); //Beam Big-Left
+	Left->SetAction("Right"); //beam big-Left
+		var Right = CreateObject(BEAM, 1610, 472, -1); 
+	Right->SetAction("Left"); //beam big-right
 	
-	var Right = CreateObject(BEAM, 1610, 472, -1); 
-	Right->SetAction("Left"); //Beam Big-Right
+	CreateObject(RUIN,863,613,-1); // ruin in the middle
 	
 	ScriptGo(1);
 }
