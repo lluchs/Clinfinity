@@ -1,0 +1,7 @@
+[Action]
+Name=1
+Facet=0,0,300,300
+
+[Action]
+Name=2
+Facet=300,0,300,300
