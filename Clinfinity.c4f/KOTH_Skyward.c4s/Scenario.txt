@@ -52,7 +52,7 @@ LiquidLevel=20,30,0,100
 Layers=Rock=7;Rock-Ridge=7;Gold=7;Granite=4;Ore=3;Coal-Swirl=4;Water-Smooth=5;Oil-Smooth=5;Earth-Rough=50;Earth-Smooth2=50
 
 [Weather]
-Climate=40,10,0,100
+Climate=11,0,0,100
 YearSpeed=20,10,0,100
 Rain=45,0,0,100
 Wind=1,100,-100,100
