@@ -2,7 +2,7 @@
 id=SKYL
 Name=Himmelsinsel
 Version=4,9,5
-Category=C4D_Parallax
+Category=1
 MaxUserSelect=0
 Width=300
 Height=300
