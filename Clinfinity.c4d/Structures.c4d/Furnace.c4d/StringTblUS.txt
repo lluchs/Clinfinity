@@ -1,1 +1,1 @@
-TxtNotEnoughInput=Needs 1x{{ROCK}}
+TxtNotEnoughInput=Needs 1x{{ROCK}} and %d{{STEM}}

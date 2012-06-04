@@ -4,6 +4,8 @@
 
 #include L_SS
 
+static const FNCE_SteamUsage = 25;
+
 protected func ControlUp(object caller) {
 	var plr = caller->GetOwner();
 	// wrong team?
@@ -13,14 +15,15 @@ protected func ControlUp(object caller) {
 	}
 	SetOwner(plr);
 
-	if(MatSysGetTeamFill(plr, ROCK) >= 1) {
+	if(MatSysGetTeamFill(plr, ROCK) >= 1 && MatSysGetTeamFill(plr, STEM) >= FNCE_SteamUsage) {
 		if(GetAction() != "Start") {
 			SetAction("Start");
 			MatSysDoTeamFill(-1, plr, ROCK);
+			MatSysDoTeamFill(-FNCE_SteamUsage, plr, STEM);
 		}
 	} else {
 		Sound("Error");
-		Message("$TxtNotEnoughInput$", this);
+		Message("$TxtNotEnoughInput$", this, FNCE_SteamUsage);
 	}
 }
 
