@@ -15,6 +15,13 @@ func Initialize() {
 	for(var i;i<160;++i) 
     CreateParticle("Cloud",Random(LandscapeWidth()),Random(LandscapeHeight()*2/3),RandomX(3,9),0,RandomX(1000,1500),RGBa(116,131,145,0));
 	
+	// place decoration
+	var Left = CreateObject(BEAM, 318, 441, -1); 
+	Left->SetAction("Right"); //Beam Big-Left
+	
+	var Right = CreateObject(BEAM, 1610, 472, -1); 
+	Right->SetAction("Left"); //Beam Big-Right
+	
 	ScriptGo(1);
 }
 
