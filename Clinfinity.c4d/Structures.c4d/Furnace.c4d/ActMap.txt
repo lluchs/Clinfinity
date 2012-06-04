@@ -3,9 +3,9 @@ Name=Start
 Facet=40,0,40,60
 Delay=1
 Length=20
-NextAction=Stop
+NextAction=Start
 Sound=Elevator
-EndCall=Finish
+EndCall=Progress
 
 [Action]
 Name=Stop

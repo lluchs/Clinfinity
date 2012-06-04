@@ -24,7 +24,10 @@ protected func ControlUp(object caller) {
 	}
 }
 
-protected func Finish() {
-	MatSysDoTeamFill(1, GetOwner(), METL);
+protected func Progress() {
+	if(GetActTime() >= 60) {
+		MatSysDoTeamFill(1, GetOwner(), METL);
+		SetAction("Stop");
+	}
 }
 
