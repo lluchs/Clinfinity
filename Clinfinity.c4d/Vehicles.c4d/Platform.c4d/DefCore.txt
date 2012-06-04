@@ -15,8 +15,6 @@ Value=5
 Mass=100
 Components=METL=5
 Picture=0,12,64,64
-Rotate=1
-RotatedSolidmasks=1
 Timer=10
 TimerCall=CheckSteam
 
