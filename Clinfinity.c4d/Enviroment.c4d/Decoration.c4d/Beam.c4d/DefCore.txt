@@ -15,4 +15,5 @@ SolidMask=0,22,41,22,0,0
 Vertices=1
 VertexY=1
 VertexFriction=20
- 
+TimerCall=CheckClonk
+Timer=40
