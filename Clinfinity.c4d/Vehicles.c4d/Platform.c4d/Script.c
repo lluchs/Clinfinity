@@ -213,8 +213,8 @@ protected func CheckSteam() {
 	}
 
 	// every platform: calculate steam usage
-	// TODO: mass calculation
 	steamUsage += PLTF_SteamUsage;
+	steamUsage += CalculateWeight() / 50;
 }
 
 /*  Function: ResetSteamUsage
