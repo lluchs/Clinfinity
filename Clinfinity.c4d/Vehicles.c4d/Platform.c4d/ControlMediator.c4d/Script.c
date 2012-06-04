@@ -204,6 +204,23 @@ public func GetNumberOfPlatforms() {
 	return result;
 }
 
+/*  Function: AccumulateSteamUsage
+	Calculates the steam usage of all platforms connected with this one.
+
+	Works by calling <ResetSteamUsage> in the platforms.
+
+	Returns:
+	The steam usage of all platforms connected with this one (including this one). */
+public func AccumulateSteamUsage() {
+	var mediator = this, result = GetControlledPlatform()->ResetSteamUsage();
+	while(mediator = mediator->GetMaster())
+		result += mediator->GetControlledPlatform()->ResetSteamUsage();
+	mediator = this;
+	while(mediator = mediator->GetSlave())
+		result += mediator->GetControlledPlatform()->ResetSteamUsage();
+	return result;
+}
+
 private func HasMaster() {
 	return masterMediator != 0;
 }

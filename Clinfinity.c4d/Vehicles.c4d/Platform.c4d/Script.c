@@ -3,7 +3,13 @@
 
 #strict 2
 
+// Interval in frames which times steam transactions
+static const PLTF_SteamPayTimer = 250;
+// Timer interval as defined in the DefCore
+static const PLTF_SteamTimer = 10;
+// Steam a single platform uses on its own every PLTF_SteamPayTimer frames
 static const PLTF_SteamUsage = 10;
+// Helper 'direction' for ControlMediator
 static const PLTF_Explode = -1;
 
 local controlMediator;
@@ -183,7 +189,7 @@ public func CopyChildrenVertices(object child) {
 }
 
 /* -- Steam Usage -- */
-local missingSteam;
+local missingSteam, steamUsage;
 
 protected func CheckSteam() {
 	if(missingSteam) {
@@ -192,17 +198,34 @@ protected func CheckSteam() {
 				ScheduleCall(this, "CheckSteam", 1);
 			else
 				StopFall();
+			return; // nothing else to do
 	}
-	// only if this is the master
-	else if(!GetControlMediator()->HasMaster()) {
-		var platforms = GetControlMediator()->GetNumberOfPlatforms();
-		var usage = platforms * PLTF_SteamUsage;
+	// only if this is the master and it's pay time
+	else if(GetActTime() % PLTF_SteamPayTimer < PLTF_SteamTimer && !GetControlMediator()->HasMaster()) {
+		var usage = GetControlMediator()->AccumulateSteamUsage();
+		usage /= PLTF_SteamPayTimer / PLTF_SteamTimer;
+		Message("Need %d{{STEM}}", this, usage);
 		missingSteam = usage + MatSysDoTeamFill(-usage, GetOwner(), STEM);
 		if(missingSteam) {
 			FreeFall();
 			ScheduleCall(this, "CheckSteam", 1);
 		}
 	}
+
+	// every platform: calculate steam usage
+	// TODO: mass calculation
+	steamUsage += PLTF_SteamUsage;
+}
+
+/*  Function: ResetSteamUsage
+	Resets the steam usage variable for the current period.
+
+	Returns:
+	The counter before the reset. */
+public func ResetSteamUsage() {
+	var temp = steamUsage;
+	steamUsage = 0;
+	return temp;
 }
 
 private func FreeFall() {
