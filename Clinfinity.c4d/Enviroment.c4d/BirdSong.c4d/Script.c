@@ -1,6 +1,6 @@
-/*-- Vogelgezwitscher --*/
+/*-- BirdTweet --*/
 
-#strict
+#strict 2
 
 protected func Initialize()
 {
@@ -9,12 +9,17 @@ protected func Initialize()
   return(1);
 }
 
-private func Singing()
-{
-  // Bei Nacht schlafen die Vögelchen
+private func Singing(){
+  // is night? Sleep!
   if (IsNight())
     return(0);
-  // Bei Tag singen sie
-  if (!Random(8))
-    Sound("BirdSong*",1);
+    
+  // check if there are some trees left and is day
+    if(Random(8)){
+      if(ObjectCount2(Find_Func("IsTree")) >= 10)
+      Sound("BirdSong*",1);
+      }
+    else{
+      Sound("Crow*",1);
+      }
 }  
