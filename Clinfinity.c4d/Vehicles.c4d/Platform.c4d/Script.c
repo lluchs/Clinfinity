@@ -244,7 +244,9 @@ private func StopFall() {
 	Returns:
 	The corresponding sum of masses. */
 public func CalculateWeight() {
-	var weights = FindObjects(Find_Not(Find_Or(Find_Func("IsPlatform"), Find_Category(1))), Find_OnLine(-GetDefWidth()/2, -GetDefHeight()/2-2, GetDefWidth()/2, -GetDefHeight()/2-2));
+	var weights = FindObjects(Find_Not(Find_Or(Find_Func("IsPlatform"), Find_Category(1))),
+	                          Find_OnLine(-GetDefWidth()/2, -GetDefHeight()/2-2, GetDefWidth()/2, -GetDefHeight()/2-2),
+							  Find_Not(Find_And(Find_Not(Find_ActionTarget(this)), Find_Procedure("ATTACH"))));
 	var mass = 0;
 	for(var weight in weights) {
 		mass += GetMass(weight);
