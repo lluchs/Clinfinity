@@ -2,6 +2,8 @@
 
 #strict 2
 
+#include STBO
+
 local requestedId;
 local remainingTime;
 local remainingAmount;
@@ -112,7 +114,7 @@ protected func CompleteProduction() {
 }
 
 public func AbortProduction() {
-	SetAction("None");
+	SetAction("Attach");
 	remainingTime = 0;
 }
 

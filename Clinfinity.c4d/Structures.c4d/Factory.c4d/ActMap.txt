@@ -1,6 +1,6 @@
 [Action]
 Name=Produce
-Procedure=NONE
+Procedure=ATTACH
 Length=19
 Delay=1
 Facet=0,0,130,160,0,0
@@ -9,9 +9,9 @@ StartCall=Produce
 Sound=progress_loop
 
 [Action]
-Name=None
-Procedure=NONE
+Name=Attach
+Procedure=ATTACH
 Length=19
 Delay=1
 Facet=0,0,130,160,0,0
-NextAction=Idle
+NextAction=Hold
