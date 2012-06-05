@@ -1,0 +1,14 @@
+[Action]
+Name=Drain
+Length=1
+Delay=1
+NextAction=Drain
+StartCall=Draining
+Sound=Water
+
+[Action]
+Name=DrainCalm
+Length=1
+Delay=1
+NextAction=DrainCalm
+StartCall=Draining

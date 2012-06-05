@@ -1,0 +1,6 @@
+[Action]
+Name=Drain
+Length=1
+Delay=5
+NextAction=Drain
+StartCall=Draining
