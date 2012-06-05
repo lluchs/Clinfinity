@@ -52,7 +52,7 @@ func InitializePlayer(int plr) {
 	}
 
 	var tank = FindObject2(Find_ID(STMT), Find_Allied(plr));
-	tank->DoFill(200);
+	tank->DoFill(300);
 	var i = 0, clonk;
 	while(clonk = GetCrew(plr, i++))
 		clonk->Enter(tank);
