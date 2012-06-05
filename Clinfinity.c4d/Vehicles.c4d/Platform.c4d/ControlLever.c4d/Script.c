@@ -168,6 +168,12 @@ protected func ConnectPlatforms(object master, object slave) {
 }
 
 protected func DisconnectPlatforms(object master, object slave) {
+	var masterPlatform = master->GetControlledPlatform(), slavePlatform = slave->GetControlledPlatform();
+	if(masterPlatform->HasSharedBuildingsWith(slavePlatform) || slavePlatform->HasSharedBuildingsWith(masterPlatform)) {
+		Message("$DisconnectNotPossible$", this);
+		Sound("Error");
+		return;
+	}
 	Sound("Connect");
 	COMD->Disconnect(master, slave);
 	// move slave a bit to the right so the platforms aren't stuck

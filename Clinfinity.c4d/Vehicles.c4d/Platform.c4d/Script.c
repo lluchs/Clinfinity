@@ -188,6 +188,24 @@ public func CopyChildrenVertices(object child) {
 	return inherited(child);
 }
 
+/*  Function: HasSharedBuildingsWith
+	Checks whether there are any buildings standing on this platform that are
+	shared with another platform.
+
+	This function will only check for buildings that aren't attached to this
+	platform but seem to be visually standing on this platform.
+
+	Note: Control levers (COLV) are excluded from search.
+
+	Parameters:
+	otherPlatform - The other platform.
+
+	Returns:
+	true when there is a shared building. */
+public func HasSharedBuildingsWith(object otherPlatform) {
+	return !!FindObject2(Find_Not(Find_ID(COLV)), Find_ActionTarget(otherPlatform), Find_Procedure("ATTACH"), Find_OnPlatform());
+}
+
 /* -- Steam Usage -- */
 local missingSteam, steamUsage;
 
@@ -238,14 +256,25 @@ private func StopFall() {
 	FloatStop();
 }
 
+/*  Function: Find_OnPlatform
+	FindObject2/FindObjects search criteria: Find all objects standing on this platform
+
+	Note: This function might also find objects that aren't actually standing
+	on the platform, but are on a platform further down and overlapping with
+	this platform, for example. */
+public func Find_OnPlatform() {
+	return Find_And(Find_OnLine(-GetDefWidth()/2, -GetDefHeight()/2-2, GetDefWidth()/2, -GetDefHeight()/2-2),
+	                Find_Not(Find_Or(Find_Func("IsPlatform"), Find_Category(C4D_StaticBack))));
+	                          
+}
+
 /*  Function: CalculateWeight
 	Adds the mass of everything on top of the platform.
 
 	Returns:
 	The corresponding sum of masses. */
 public func CalculateWeight() {
-	var weights = FindObjects(Find_Not(Find_Or(Find_Func("IsPlatform"), Find_Category(1))),
-	                          Find_OnLine(-GetDefWidth()/2, -GetDefHeight()/2-2, GetDefWidth()/2, -GetDefHeight()/2-2),
+	var weights = FindObjects(Find_OnPlatform(),
 							  Find_Not(Find_And(Find_Not(Find_ActionTarget(this)), Find_Procedure("ATTACH"))));
 	var mass = 0;
 	for(var weight in weights) {

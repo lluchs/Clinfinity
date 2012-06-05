@@ -1,3 +1,4 @@
 NewPlatform=Neue Plattform
 Connect=Verbinden
 Disconnect=Verbindung trennen
+DisconnectNotPossible=Verbindung kann wegen dem Gebäude nicht getrennt werden!
