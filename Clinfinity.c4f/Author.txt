@@ -4,5 +4,5 @@ Nachtschatten
 Luchs
 B_E
 
-Used objects:
-Waterfall (Randrian)
+Additional objects:
+ - Waterfall (Randrian)
