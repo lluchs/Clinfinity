@@ -1,0 +1,1 @@
+OnlyOnPlatform=Dieses Gebäude kann nur auf Plattformen gebaut werden.

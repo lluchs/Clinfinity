@@ -28,6 +28,15 @@ protected func Destruction() {
 	return result;
 }
 
+protected func RejectConstruction(int x, int y, object clonk) {
+	// only allow building on platform
+	if(!FindObject2(Find_ID(PLTF), clonk->Find_AtPoint(x, y + 1))) {
+		Sound("Error");
+		Message("$OnlyOnPlatform$", clonk);
+		return true;
+	}
+}
+
 /*	Function: AttachEvent
 	Event handler, called after an object was attached to a new parent object or detached from it.
 	Buildings by default hand the event to their action target, if they are attached to something.
