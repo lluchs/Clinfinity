@@ -1,0 +1,17 @@
+[DefCore]
+id=RUIN
+Name=Ruine
+Version=4,9,5
+Category=1
+MaxUserSelect=0
+Width=126
+Height=46
+Offset=-63,-23
+Value=1
+Mass=1
+Components=RUIN=1;
+Picture=0,0,126,46
+Vertices=1
+VertexY=1
+VertexFriction=20
+ 

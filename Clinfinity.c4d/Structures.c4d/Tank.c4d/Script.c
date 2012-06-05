@@ -24,14 +24,24 @@ protected func Initialize() {
 
 // manages delay for steam generation
 local generate;
+// bubbling?
+local bubbling;
 
 protected func Steam() {
-	if(GetFill() > MaxFill() * 2 / 3)
+	if(GetFill() > MaxFill() * 2 / 3) {
 		CreateParticle("Smoke", 30, -18, 0, 0, 50, RGBa(255, 255, 255, 0));
+		if(!bubbling) {
+			Sound("steam_exhaust", 0, 0, 0, 0, 1);
+			bubbling = true;
+		}
+	} else if(bubbling) {
+		Sound("steam_exhaust", 0, 0, 0, 0, -1);
+		bubbling = false;
+	}
 	// generation
 	if(!generate--) {
-		DoFill(1);
-		generate = 5;
+		DoFill(100 + RandomX(-10, 10));
+		generate = 500;
 	}
 	// respawn
 	var clonk = Contents();

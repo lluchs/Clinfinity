@@ -1,0 +1,2 @@
+DE:Lagerfeuer
+US:Camp fire

@@ -3,7 +3,9 @@
 
 #strict 2
 
-local message;
+static const DANN_Duration = 350;
+
+local message, posEase, alphaEase;
 
 /*  Function: Announce
 	Announces the death of the given Clonk.
@@ -15,7 +17,9 @@ public func Announce(object clonk) {
 	message = clonk->LocalN("deathMessage");
 	if(!GetLength(message))
 		message = Format(messages[Random(7)], clonk->LocalN("name"));
-	AddEffect("Fade", this, 1, 5, this);
+	posEase = CreateEaseFunction("cubic-in-out", DANN_Duration);
+	alphaEase = CreateEaseFunction("quad-in-out", DANN_Duration);
+	AddEffect("Fade", this, 1, 1, this);
 }
 
 /*  Function: DeathAnnounce
@@ -26,7 +30,8 @@ global func DeathAnnounce() {
 }
 
 func FxFadeTimer(object target, int effectNum, int effectTime) {
-	CustomMessage(message, this, NO_OWNER, 0, -effectTime / 10, RGBa(200, 200, 200, effectTime));
-	if(effectTime > 255)
+	var color = RGBa(200, 200, 200, ChangeRange(EvalEase(alphaEase, effectTime), 0, DANN_Duration, 0, 255));
+	CustomMessage(message, this, NO_OWNER, 0, -EvalEase(posEase, effectTime), color);
+	if(effectTime > DANN_Duration)
 		RemoveObject();
 }
