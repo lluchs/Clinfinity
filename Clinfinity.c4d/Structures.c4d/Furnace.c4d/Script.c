@@ -3,6 +3,7 @@
 #strict 2
 
 #include L_SS
+#include STBO
 
 static const FNCE_SteamUsage = 25;
 
@@ -30,7 +31,7 @@ protected func ControlUp(object caller) {
 protected func Progress() {
 	if(GetActTime() >= 60) {
 		MatSysDoTeamFill(1, GetOwner(), METL);
-		SetAction("Stop");
+		SetAction("Attach");
 	}
 }
 
