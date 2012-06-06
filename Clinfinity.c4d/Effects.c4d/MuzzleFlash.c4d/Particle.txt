@@ -1,0 +1,11 @@
+[Particle]
+Name=MuzzleFlash
+MaxCount=300
+InitFn=StdInit
+ExecFn=StdExec
+DrawFn=Std
+Face=0,0,7,7,-3,-3
+Delay=2
+Repeats=1
+RByV=2
+Attach=1
