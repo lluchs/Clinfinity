@@ -40,7 +40,8 @@ protected func Steam() {
 	}
 	// generation
 	if(!generate--) {
-		DoFill(100 + RandomX(-10, 10));
+		var change = DoFill(100 + RandomX(-10, 10));
+		MatSysMessage(change, STEM);
 		generate = 500;
 	}
 	// respawn
