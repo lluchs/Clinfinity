@@ -231,7 +231,11 @@ protected func CheckSteam() {
 	}
 
 	// every platform: calculate steam usage
-	steamUsage += PLTF_SteamUsage;
+	if(GetControlMediator()->HasMaster())
+		// connected platforms use less steam
+		steamUsage += PLTF_SteamUsage / 2;
+	else
+		steamUsage += PLTF_SteamUsage;
 	steamUsage += CalculateWeight() / 50;
 }
 
