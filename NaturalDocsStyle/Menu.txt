@@ -46,7 +46,30 @@ Format: 1.52
 # --------------------------------------------------------------------------
 
 
+Group: System.c4g  {
+
+   File: AddMaterialMenuItem  (Clinfinity.c4d\System.c4g\MatSysMenu.c)
+   File: Arrays  (Clinfinity.c4d\System.c4g\Arrays.c)
+   File: Attach.c  (Clinfinity.c4d\System.c4g\Attach.c)
+   File: DrawResource.c  (Clinfinity.c4d\System.c4g\DrawResource.c)
+   File: Ease.c  (Clinfinity.c4d\System.c4g\Ease.c)
+   File: Find_Procedure.c  (Clinfinity.c4d\System.c4g\Find_Procedure.c)
+   File: GetPlayersByTeam  (Clinfinity.c4d\System.c4g\GetPlayersByTeam.c)
+   File: MatSys.c  (Clinfinity.c4d\System.c4g\MatSys.c)
+   File: String.c  (Clinfinity.c4d\System.c4g\String.c)
+   }  # Group: System.c4g
+
+Group: Vehicles.c4d  {
+
+   File: Control lever  (Clinfinity.c4d\Vehicles.c4d\Platform.c4d\ControlLever.c4d\Script.c)
+   File: Control mediator  (Clinfinity.c4d\Vehicles.c4d\Platform.c4d\ControlMediator.c4d\Script.c)
+   File: Platform  (Clinfinity.c4d\Vehicles.c4d\Platform.c4d\Script.c)
+   File: Prop  (Clinfinity.c4d\Vehicles.c4d\Platform.c4d\Prop.c4d\Script.c)
+   }  # Group: Vehicles.c4d
+
+File: DeathAnnounce  (Clinfinity.c4d\Helpers.c4d\DeathAnnounce.c4d\Script.c)
 File: Drafts  (Clinfinity.c4d\Rules.c4d\Draft.c4d\Script.c)
+File: Hats  (Clinfinity.c4d\Items.c4d\Hats.c4d\Script.c)
 
 Group: Helpers.c4d  {
 
@@ -57,22 +80,6 @@ Group: Helpers.c4d  {
 
 File: King of the Hill  (Clinfinity.c4d\Goals.c4d\KOTH.c4d\Script.c)
 File: Structure base object  (Clinfinity.c4d\Structures.c4d\StructureBaseObject.c4d\Script.c)
-
-Group: System.c4g  {
-
-   File: Arrays  (Clinfinity.c4d\System.c4g\Arrays.c)
-   File: Attach.c  (Clinfinity.c4d\System.c4g\Attach.c)
-   File: DrawResource.c  (Clinfinity.c4d\System.c4g\DrawResource.c)
-   File: MatSys.c  (Clinfinity.c4d\System.c4g\MatSys.c)
-   }  # Group: System.c4g
-
-Group: Vehicles.c4d  {
-
-   File: Control lever  (Clinfinity.c4d\Vehicles.c4d\Platform.c4d\ControlLever.c4d\Script.c)
-   File: Control mediator  (Clinfinity.c4d\Vehicles.c4d\Platform.c4d\ControlMediator.c4d\Script.c)
-   File: Platform  (Clinfinity.c4d\Vehicles.c4d\Platform.c4d\Script.c)
-   File: Prop  (Clinfinity.c4d\Vehicles.c4d\Platform.c4d\Prop.c4d\Script.c)
-   }  # Group: Vehicles.c4d
 
 Group: Index  {
 
