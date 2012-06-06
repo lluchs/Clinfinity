@@ -31,11 +31,17 @@ public func Fire(object pClonk, int iAngle) {
 		return;
 	
 	// enough ammo in clip?
-	if(!DoFill(-1)) {
+	if(!GetFill()) {
 		// try to reload
 		pClonk->LoadRifle();
 		return;
 	}
+	// enough steam?
+	var owner = pClonk->GetOwner();
+	if(MatSysGetTeamFill(owner, STEM) < 5)
+		return;
+	MatSysDoTeamFill(-5, owner, STEM);
+	DoFill(-1);
 	
     var pObj, pObj2, iX, iY, iR, iXDir, iYDir, iRDir, iDir, iPhase;
 
