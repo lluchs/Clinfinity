@@ -21,7 +21,7 @@ public func ProductionMenu(object caller) {
 	if(IsProducing()) return AlreadyProducing(caller);
 	CreateMenu(CXCN, caller, this, 0, "$TxtNoPlrKnowledge$");
 	//todo: Verfügbare Produktion anzeigen
-	var knowledge = CNKT;
+	var knowledge = MUSK;
 	AddMaterialMenuItem("$TxtProduction$: %s", "RequestProduction", knowledge, caller, 0, caller);
 }
 
@@ -82,9 +82,10 @@ public func StartProduction(id item, int player, int amount) {
 protected func ContinueProduction() {
 	remainingTime = 5;
 	steamWhite = 0;
-	//todo: Ressourcen benötigen
-	if(true) {
-		//todo: Ressourcen entfernen
+	if(MatSysGetTeamFill(GetOwner(), STEM) >= 50 && MatSysGetTeamFill(GetOwner(), WOOD) >= 1 && MatSysGetTeamFill(GetOwner(), METL) >= 1) {
+		MatSysDoTeamFill(-50, GetOwner(), STEM);
+		MatSysDoTeamFill(-1, GetOwner(), WOOD);
+		MatSysDoTeamFill(-1, GetOwner(), METL);
 	}
 	else {
 		CompletedProduction();
