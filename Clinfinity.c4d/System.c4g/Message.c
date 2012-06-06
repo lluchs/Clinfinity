@@ -5,6 +5,8 @@
 /*  Function: FadingMessage
 	Creates a moving and fading message.
 
+	These messages will be queued if multiple are created at the same time.
+
 	Parameters:
 	message - The content of the message.
 	x - Start position (relative to normal message position)
@@ -15,7 +17,14 @@
 	color - Color of the message text.
 	ease - Easing function, see <CreateEaseFunction>. */
 global func FadingMessage(string message, int x, int y, int tx, int ty, int duration, int color, string ease) {
-	var effectNum = AddEffect("FadingMessage", this, 1, 1, this, 0);
+	var timer = 1;
+	// wait if there's another message
+	var i = 0, existing;
+	// find running effect
+	while((existing = GetEffect("FadingMessage", this, i++)) && !GetEffect(0, this, existing, 3));
+	if(existing)
+		timer = 0;
+	var effectNum = AddEffect("FadingMessage", this, 10, timer, this, 0);
 	EffectVar(0, this, effectNum) = message;
 	EffectVar(1, this, effectNum) = x;
 	EffectVar(2, this, effectNum) = y;
@@ -24,6 +33,11 @@ global func FadingMessage(string message, int x, int y, int tx, int ty, int dura
 	EffectVar(5, this, effectNum) = duration;
 	EffectVar(6, this, effectNum) = color;
 	EffectVar(7, this, effectNum) = CreateEaseFunction(ease || "cubic-out", duration);
+	if(existing) {
+		var waiting = EffectVar(8, this, existing) || [];
+		PushBack(effectNum, waiting);
+		EffectVar(8, this, existing) = waiting;
+	}
 }
 
 global func FxFadingMessageTimer(object target, int effectNum, int effectTime) {
@@ -40,6 +54,17 @@ global func FxFadingMessageTimer(object target, int effectNum, int effectTime) {
 	CustomMessage(EffectVar(0, target, effectNum), this, NO_OWNER, x, y, color);
 	if(effectTime > duration)
 		return -1;
+}
+
+global func FxFadingMessageStop(object target, int effectNum, int reason, bool temp) {
+	if(temp) return;
+	var waiting = EffectVar(8, target, effectNum);
+	if(waiting) {
+		var effect = PopElement(waiting);
+		ChangeEffect(0, this, effect, "FadingMessage", 1);
+		if(GetLength(waiting))
+			EffectVar(8, target, effect) = waiting;
+	}
 }
 
 /*  Function: MatSysMessage
