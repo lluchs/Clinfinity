@@ -53,6 +53,22 @@ global func IndexOf(string str, string searchValue, int fromIndex) {
 	return -1;
 }
 
+/*  Function: IntToStr
+	Converts an integer to a string.
+
+	Parameters:
+	num      - The number to convert.
+	keepSign - Also include a + for positive numbers.
+
+	Returns:
+	The string containing the integer. */
+global func IntToStr(int num, bool keepSign) {
+	if(keepSign && num > 0)
+		return Format("+%d", num);
+	else
+		return Format("%d", num);
+}
+
 /*  Function: GetStrChar
 	Combination of <GetStr> and <GetChar>.
 

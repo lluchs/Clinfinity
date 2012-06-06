@@ -76,7 +76,9 @@ global func MatSysGetTeamFill(int plr, id Key) {
 	Returns:
 	The actual change. */
 global func MatSysDoFill(int iChange, int iPlr, id Key) {
-	return GetMatSys(iPlr) -> DoFill(iChange, Key);
+	var actual = GetMatSys(iPlr) -> DoFill(iChange, Key);
+	MatSysMessage(actual, Key);
+	return actual;
 }
 
 
@@ -101,7 +103,9 @@ global func MatSysDoTeamFill(int change, int plr, id Key) {
 			change -= MatSysDoFill(change, p, Key);
 		}
 	}
-	return orig - change;
+	var actual = orig - change;
+	MatSysMessage(actual, Key);
+	return actual;
 }
 
 /*  Function: GetMatSysIDs
