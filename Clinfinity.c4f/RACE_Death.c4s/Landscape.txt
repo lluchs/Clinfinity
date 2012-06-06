@@ -7,10 +7,10 @@ map SkyParcour {
   overlay { algo=bozo; turbulence=100; zoomX=50; } ^
   overlay { algo=bozo; turbulence=1000; a=20; zoomX=50; } &
   overlay { algo=rndchecker; turbulence=1000; a=1; zoomY=-100;
-    mat=Earth; tex=Rough;
+    mat=Earth; tex=Earth2;
 
     // earth altering
-    overlay { algo=random; mat=Earth; tex=Smooth; };
+    overlay { algo=random; mat=Earth; tex=Earth2; };
 
     // water
     overlay { algo=bozo; a=6; turbulence=1000; mat=Water; tex=Smooth; };

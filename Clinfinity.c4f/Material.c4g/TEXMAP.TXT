@@ -12,10 +12,10 @@ OverloadTextures
 22=Acid-Liquid
 23=Lava-Liquid
 24=DuroLava-Liquid
-29=Earth-Earth2
-30=Earth-Earth2
-31=Earth-Earth2
-32=Earth-Earth2
+29=Earth-Ridge
+30=Earth-Smooth
+31=Earth-Rough
+32=Earth-Smooth2
 33=Ashes-Smooth3
 34=Ashes-Rough
 35=Ashes-Ridge
@@ -49,4 +49,5 @@ OverloadTextures
 80=FlySand-Smooth2
 81=FlySand-Smooth3
 82=Metalearth-Metalearth
+83=Earth-Earth2
 
