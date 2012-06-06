@@ -40,9 +40,9 @@ protected func Steam() {
 	}
 	// generation
 	if(!generate--) {
-		var change = DoFill(100 + RandomX(-10, 10));
+		var change = DoFill(150 + RandomX(-10, 10));
 		MatSysMessage(change, STEM);
-		generate = 500;
+		generate = RandomX(350, 450);
 	}
 	// respawn
 	var clonk = Contents();
