@@ -72,12 +72,14 @@ global func MatSysGetTeamFill(int plr, id Key) {
 	iChange - The amount of change.
 	iPlr    - The player whose fill level should be changed.
 	Key     - The material id.
+	noMsg   - Don't output a message. Note: You should probably define *NoMatSysMessages(id mat) instead, see <MatSysMessage>.
 
 	Returns:
 	The actual change. */
-global func MatSysDoFill(int iChange, int iPlr, id Key) {
+global func MatSysDoFill(int iChange, int iPlr, id Key, bool noMsg) {
 	var actual = GetMatSys(iPlr) -> DoFill(iChange, Key);
-	MatSysMessage(actual, Key);
+	if(!noMsg)
+		MatSysMessage(actual, Key);
 	return actual;
 }
 
@@ -95,7 +97,7 @@ global func MatSysDoFill(int iChange, int iPlr, id Key) {
 global func MatSysDoTeamFill(int change, int plr, id Key) {
 	var orig = change;
 	// first, try the given player
-	change -= MatSysDoFill(change, plr, Key);
+	change -= MatSysDoFill(change, plr, Key, true);
 	// then, loop through the other players
 	for(var count = GetPlayerCount(), i = 0; i < count && change != 0; i++) {
 		var p = GetPlayerByIndex(i);
