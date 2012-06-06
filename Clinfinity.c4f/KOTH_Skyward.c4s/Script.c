@@ -42,7 +42,7 @@ func InitializePlayer(int plr) {
 	// fill with material
 	var msys = GetMatSys(plr);
 	msys->DoFill(5, WOOD);
-	msys->DoFill(10, METL);
+	msys->DoFill(15, METL);
 	msys->DoFill(10, ROCK);
 
 	var team = GetPlayerTeam(plr);
