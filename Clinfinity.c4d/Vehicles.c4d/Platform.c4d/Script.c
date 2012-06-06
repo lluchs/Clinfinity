@@ -222,7 +222,6 @@ protected func CheckSteam() {
 	else if(GetActTime() % PLTF_SteamPayTimer < PLTF_SteamTimer && !GetControlMediator()->HasMaster()) {
 		var usage = GetControlMediator()->AccumulateSteamUsage();
 		usage /= PLTF_SteamPayTimer / PLTF_SteamTimer;
-		Message("Need %d{{STEM}}", this, usage);
 		missingSteam = usage + MatSysDoTeamFill(-usage, GetOwner(), STEM);
 		if(missingSteam) {
 			FreeFall();
