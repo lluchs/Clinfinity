@@ -90,5 +90,5 @@ global func MatSysMessage(int change, id mat) {
 		color = RGB(255, 0, 0);
 	else
 		color = RGB(0, 255, 0);
-	FadingMessage(msg, pos[0], pos[1], pos[0], pos[1] - 50, 100, color, "circle");
+	FadingMessage(msg, pos[0], pos[1], pos[0], pos[1] - 50, 75, color, "circle");
 }
