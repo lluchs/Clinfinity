@@ -1,8 +1,8 @@
-/*-- Neues Objekt --*/
+/*-- Skyland --*/
 
-#strict
+#strict 2
 
 func Initialize() {
-  SetCategory(GetCategory() | C4D_Parallax() | C4D_Background());
-  Local()=90; Local(1)=100;
+	Local(0) = RandomX(60, 80);
+	Local(1) = 90;
 }

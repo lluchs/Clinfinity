@@ -23,7 +23,7 @@ func Initialize() {
 	
 	//place skylands
 	CreateObject(SKYL, 293, 500, -1) -> SetClrModulation(RGBa(150, 180, 255, 150));
-	var isle2=CreateObject(SKYL, 1600, 545, -1);
+	var isle2=CreateObject(SKYL, 1400, 545, -1);
 	isle2 -> SetClrModulation(RGBa(150, 180, 255, 155));
 	isle2 -> SetAction("2");
 	
