@@ -70,6 +70,16 @@ protected func ControlUp() {
 	Message("$TxtStored$", this, GetFill());
 }
 
+protected func ControlDig(object clonk) {
+	if(Hostile(GetOwner(), clonk->GetOwner())) {
+		clonk->Sound("CommandFailure1");
+		return;
+	}
+	var physical = clonk->GetPhysical("Energy");
+	var health = 100 - clonk->GetEnergy() * 100000 / physical;
+	clonk->DoEnergy(-MatSysDoTeamFill(-health, clonk->GetOwner(), STEM) * physical / 100000);
+}
+
 /* Material System fill level */
 public func FxMatSysSTEMUpdate(object target, int effectNum, int plr) {
 	if(!this || GetOwner() != plr)
