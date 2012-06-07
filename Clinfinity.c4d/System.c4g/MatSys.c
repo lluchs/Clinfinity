@@ -110,6 +110,30 @@ global func MatSysDoTeamFill(int change, int plr, id Key) {
 	return actual;
 }
 
+/*  Function: MatSysSubtractComponents
+	Tries to subtract the components of the specified object.
+
+	The function doesn't do anything when the needed materials aren't in storage.
+
+	Parameters:
+	definition - The definition whose components should be subtracted.
+	player     - A player of the team whose MatSys should be used.
+
+	Returns:
+	_true_ if all materials were in storage, _false_ otherwise. */
+global func MatSysSubtractComponents(id definition, int player) {
+	var components = [];
+	for(var i = 0, comp, num; (comp = GetComponent(0, i, 0, definition)) && (num = GetComponent(comp, i, 0, definition)); i++) {
+		if(MatSysGetTeamFill(player, comp) < num) {
+			return false;
+		}
+		PushBack([comp, num], components);
+	}
+	for(var c in components)
+		MatSysDoTeamFill(-c[1], player, c[0]);
+	return true;
+}
+
 /*  Function: GetMatSysIDs
     Defines the material system ids.
 

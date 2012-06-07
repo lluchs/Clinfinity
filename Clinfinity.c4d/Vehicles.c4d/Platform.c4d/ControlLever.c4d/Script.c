@@ -141,17 +141,10 @@ private func ConnectionMenuItem(object clonk, object master, object slave) {
 }
 
 protected func AddPlatform(object master, object slave) {
-	// subtract components
-	var components = [];
-	for(var i = 0, comp, num; (comp = GetComponent(0, i, 0, PLTF)) && (num = GetComponent(comp, i, 0, PLTF)); i++) {
-		if(MatSysGetTeamFill(GetOwner(), comp) < num) {
-			Sound("Error");
-			return;
-		}
-		PushBack([comp, num], components);
+	if(!MatSysSubtractComponents(PLTF, GetOwner())) {
+		Sound("Error");
+		return;
 	}
-	for(var c in components)
-		MatSysDoTeamFill(-c[1], GetOwner(), c[0]);
 
 	Sound("Connect");
 	var new = controlMediator->GetControlledPlatform()->CreatePlatform(-GetDefWidth(PLTF), GetDefHeight(PLTF) / 2, GetOwner())->GetControlMediator();
