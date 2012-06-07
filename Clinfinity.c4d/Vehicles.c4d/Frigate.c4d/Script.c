@@ -19,7 +19,7 @@ private func Captured() {
 	return inherited(...);
 }
 
-public func CaptureTime() { return 1000; }
+public func CaptureTime() { return 400; }
 
 public func CaptureZone() {
 	// on top of the platform, between the cannons
