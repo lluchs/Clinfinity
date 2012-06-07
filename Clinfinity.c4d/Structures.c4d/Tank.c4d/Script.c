@@ -56,7 +56,7 @@ protected func Steam() {
 	}
 	// generation
 	if(!generate--) {
-		var change = DoFill(150 + RandomX(-10, 10));
+		var change = DoFill(125 + RandomX(-10, 10));
 		MatSysMessage(change, STEM);
 		generate = RandomX(350, 450);
 	}
