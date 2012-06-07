@@ -14,6 +14,10 @@ local player;
 
 public func ControlDigDouble(object caller) {
 	if(IsProducing()) return AlreadyProducing(caller);
+	if(Hostile(GetOwner(), caller->GetOwner())) {
+		Sound("CommandFailure1");
+		return;
+	}
 	ProductionMenu(caller);
 }
 
