@@ -38,6 +38,7 @@ public func ContextConkit(object caller) {
 		MatSysDoTeamFill(-1, plr, WOOD);
 		MatSysDoTeamFill(-1, plr, METL);
 		caller->CreateContents(CNKT);
+		Sound("Connect");
 	} else {
 		Sound("Error");
 		Message("$TxtNoMaterial$", caller);
