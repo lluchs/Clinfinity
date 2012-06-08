@@ -13,6 +13,9 @@ private func Chopping() {
 		} else {
 			CreateContents(WOOD);
 		}
+
+		if(!tree)
+			FinishCommand(this, true);
 	}
 	return true;
 }

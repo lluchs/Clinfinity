@@ -22,7 +22,6 @@ public func Shrink() {
 
 	if(rest == 1) {
 		RemoveObject();
-		FinishCommand(this, true);
 	} else {
 		DoCon(-shrinkage);
 		// Unrotated trees shrink towards their offset instead their bottom. Thus, adjust their position so they stay on the ground.
