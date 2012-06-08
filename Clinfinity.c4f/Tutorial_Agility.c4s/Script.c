@@ -78,17 +78,26 @@ func Script80() {
 	SavePosition();
 	TutorialMessage("Gut gemacht. Du solltest wissen: Aufwinde treten im Normalfall zufällig auf und verschwinden auch wieder.");
 	Sound("Applause");
+	AddEffect("GraniteCheck", 0, 100, 5);
 }
 
-func Script105() {
+global func FxGraniteCheckTimer(object target, int effectNum, int effectTime) {
+	if(!FindObject(AVTR, 1000, 390 , 60, 30)) {
+		var clonk = FindObject2(Find_OCF(OCF_CrewMember), Find_InRect(825, 0, 500, 400), Find_Not(Find_Or(Find_Action("Jump"), Find_Action("Tumble"))));
+		if(clonk)
+			clonk->Kill();
+	} else {
+		ScriptGo(1);
+		return -1;
+	}
+}
+
+func Script109() {
 	TutorialMessage("Versuche nun mit deinem Fluganzug auf die nächste Insel zu kommen. Berühre dabei nicht den Fels!");
+	ScriptGo(0);
 }
 
 func Script110() {
-	if(!FindObject(AVTR, 1000, 390 , 60, 30)) {
-		goto(109);
-		return;
-	}
 	SavePosition();
 	TutorialMessage("Wunderbar. Damit hast du die Grundlagen erlernt!");
 	Sound("Applause");
@@ -106,9 +115,10 @@ func RelaunchPlayer(iPlr) {
 	// Comment
 	Sound("Oops");
 	// new Clonk
-	if (!FindObject(AVTR)->GetAlive()) {
+	var old = FindObject(AVTR);
+	if (!old->GetAlive()) {
 		var pClonk = CreateObject(AVTR, iPlrX, iPlrY, iPlr);
-		MakeCrewMember(pClonk, iPlr);
+		pClonk->GrabObjectInfo(old);
 		SetCursor(iPlr, pClonk);
 	}
 }
