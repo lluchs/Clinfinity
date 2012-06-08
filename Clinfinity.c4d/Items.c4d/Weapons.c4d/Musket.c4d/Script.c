@@ -8,6 +8,15 @@
 public func MaxFill() { return 6; }
 private func FillPicture() { return 0; }
 
+// collect clip
+protected func Entrance(object container) {
+	var musket = FindObject2(Find_Container(container), Find_ID(GetID()), Find_Exclude(this));
+	if(musket) {
+		musket->DoFill(GetFill());
+		RemoveObject();
+	}
+}
+
 /* Steuerung */
 public func GetTargets() {
 	return FindObjects(Find_Distance(1000), Find_Hostile(Contained()->GetOwner()), Find_OCF(OCF_Alive), Find_NoContainer(), Sort_Distance());
