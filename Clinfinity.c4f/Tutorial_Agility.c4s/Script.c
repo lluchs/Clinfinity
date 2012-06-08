@@ -38,6 +38,8 @@ func Script15() {
 
 func Script35() {
 	TutorialMessage("Wenn du springst, kannst du einfach noch mal nach oben drücken, dann springt dein Clonk noch höher.|Du kannst dich im Sprung auch drehen und einen weiteren Sprung ausführen! Erreiche die Insel mit dem Pfeil.");
+  SetArrow(180, 60);
+  Sound("Ding");
 }
 
 func Script40() {
@@ -48,10 +50,13 @@ func Script40() {
 	SavePosition();
 	TutorialMessage("Sehr gut!");
 	Sound("Applause");
+	RemoveArrow();
 }
 
 func Script50() {
 	TutorialMessage("Drücke im freien Flug nach unten, um deinen Fluganzug auszuklappen. Mit Links und Rechts kannst du die Richtung steuern, mit Springen ebenfalls einen weiteren Sprung im Flug ausführen. Erreiche die zweite Insel!");
+  SetArrow(650, 350);
+  Sound("Ding");
 }
 
 func Script60() {
@@ -61,13 +66,15 @@ func Script60() {
 	}
 	SavePosition();
 	TutorialMessage("Nicht schlecht!");
-	Sound("Applause");
+	RemoveArrow();
 }
 
 func Script70() {
 	TutorialMessage("Das hier ist ein Aufwind! Du kannst ihn im Flug benutzen um dort hoch zu kommen!");
 	var Draft = CreateObject(DRFT, 700, 330, -1);
 	Draft->SetPermanent();
+	Sound("Wind2");
+  SetArrow(790, 90);
 }
 
 func Script80() {
@@ -77,8 +84,8 @@ func Script80() {
 	}
 	SavePosition();
 	TutorialMessage("Gut gemacht. Du solltest wissen: Aufwinde treten im Normalfall zufällig auf und verschwinden auch wieder.");
-	Sound("Applause");
 	AddEffect("GraniteCheck", 0, 100, 5);
+	RemoveArrow();
 }
 
 global func FxGraniteCheckTimer(object target, int effectNum, int effectTime) {
@@ -93,7 +100,7 @@ global func FxGraniteCheckTimer(object target, int effectNum, int effectTime) {
 }
 
 func Script109() {
-	TutorialMessage("Versuche nun mit deinem Fluganzug auf die nächste Insel zu kommen. Berühre dabei nicht den Fels!");
+	TutorialMessage("Versuche nun mit deinem Fluganzug auf die Insel da unten zu kommen. Berühre dabei nicht den Fels, er ist giftig!");
 	ScriptGo(0);
 }
 
