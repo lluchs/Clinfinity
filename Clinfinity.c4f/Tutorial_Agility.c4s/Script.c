@@ -27,17 +27,17 @@ func InitializePlayer(int plr) {
 }
 
 func Script5() {
-	TutorialMessage(Format("Joho %s! Willkommen in Clinfinity!", GetPlayerName()));
+	TutorialMessage(Format("$TutHelloWorld$", GetPlayerName()));
 }
 
 func Script15() {
 	SetPlrShowControl(0, "____4_678_          __________");
 	Sound("Ding");
-	TutorialMessage("Dein Clonk kann ein paar Sachen mehr als der Standardclonk. Schauen wir uns den Doppelsprung an.");
+	TutorialMessage("$TutDoubleJump$");
 }
 
 func Script35() {
-	TutorialMessage("Wenn du springst, kannst du einfach noch mal nach oben drücken, dann springt dein Clonk noch höher.|Du kannst dich im Sprung auch drehen und einen weiteren Sprung ausführen! Erreiche die Insel mit dem Pfeil.");
+	TutorialMessage("$TutDoubleJumpAdvise$");
   SetArrow(180, 60);
   Sound("Ding");
 }
@@ -48,13 +48,13 @@ func Script40() {
 		return;
 	}
 	SavePosition();
-	TutorialMessage("Sehr gut!");
+	TutorialMessage("$TutNice$");
 	Sound("Applause");
 	RemoveArrow();
 }
 
 func Script50() {
-	TutorialMessage("Drücke im freien Flug nach unten, um deinen Fluganzug auszuklappen. Mit Links und Rechts kannst du die Richtung steuern, mit Springen ebenfalls einen weiteren Sprung im Flug ausführen. Erreiche die zweite Insel!");
+	TutorialMessage("$TutFlyAdvise$");
   SetArrow(650, 350);
   Sound("Ding");
 }
@@ -65,12 +65,12 @@ func Script60() {
 		return;
 	}
 	SavePosition();
-	TutorialMessage("Nicht schlecht!");
+	TutorialMessage("$TutNotBad$");
 	RemoveArrow();
 }
 
 func Script70() {
-	TutorialMessage("Das hier ist ein Aufwind! Du kannst ihn im Flug benutzen um dort hoch zu kommen!");
+	TutorialMessage("$TutIntroduceDraft$");
 	var Draft = CreateObject(DRFT, 700, 330, -1);
 	Draft->SetPermanent();
 	Sound("Wind2");
@@ -83,7 +83,7 @@ func Script80() {
 		return;
 	}
 	SavePosition();
-	TutorialMessage("Gut gemacht. Du solltest wissen: Aufwinde treten im Normalfall zufällig auf und verschwinden auch wieder.");
+	TutorialMessage("$TutDraftNotice$");
 	AddEffect("GraniteCheck", 0, 100, 5);
 	RemoveArrow();
 }
@@ -100,13 +100,13 @@ global func FxGraniteCheckTimer(object target, int effectNum, int effectTime) {
 }
 
 func Script109() {
-	TutorialMessage("Versuche nun mit deinem Fluganzug auf die Insel da unten zu kommen. Berühre dabei nicht den Fels, er ist giftig!");
+	TutorialMessage("$TutGraniteIsAcid$");
 	ScriptGo(0);
 }
 
 func Script110() {
 	SavePosition();
-	TutorialMessage("Wunderbar. Damit hast du die Grundlagen erlernt!");
+	TutorialMessage("$TutDone$");
 	Sound("Applause");
 	FindObject(SCRG)->Fulfill();
 }
