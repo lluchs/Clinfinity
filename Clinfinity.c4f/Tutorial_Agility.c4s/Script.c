@@ -22,9 +22,7 @@ func InitializePlayer(int plr) {
 	SetPlrShowControlPos(plr, SHOWCTRLPOS_TopLeft);
 	SetTutorialMessagePos(MSG_Top | MSG_Left | MSG_WidthRel | MSG_XRel, 50, 50, 30);
 
-	// Positions for Relaunch
-	iPlrX = FindObject(AVTR)->GetX();
-	iPlrY = FindObject(AVTR)->GetY();
+	SavePosition();
 	iCounter = 0;
 }
 
@@ -47,6 +45,7 @@ func Script40() {
 		goto(39);
 		return;
 	}
+	SavePosition();
 	TutorialMessage("Sehr gut!");
 	Sound("Applause");
 }
@@ -60,6 +59,7 @@ func Script60() {
 		goto(59);
 		return;
 	}
+	SavePosition();
 	TutorialMessage("Nicht schlecht!");
 	Sound("Applause");
 }
@@ -75,6 +75,7 @@ func Script80() {
 		goto(79);
 		return;
 	}
+	SavePosition();
 	TutorialMessage("Gut gemacht. Du solltest wissen: Aufwinde treten im Normalfall zufällig auf und verschwinden auch wieder.");
 	Sound("Applause");
 }
@@ -88,9 +89,17 @@ func Script110() {
 		goto(109);
 		return;
 	}
+	SavePosition();
 	TutorialMessage("Wunderbar. Damit hast du die Grundlagen erlernt!");
 	Sound("Applause");
 	FindObject(SCRG)->Fulfill();
+}
+
+func SavePosition() {
+	// Position for Relaunch
+	var clonk = GetCrew();
+	iPlrX = clonk->GetX();
+	iPlrY = clonk->GetY();
 }
 
 func RelaunchPlayer(iPlr) {
