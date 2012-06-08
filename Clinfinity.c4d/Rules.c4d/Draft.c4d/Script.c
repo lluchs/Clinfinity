@@ -23,9 +23,10 @@ local draftWidth, draftHeight, draftDistance, draftParticleColour;
 /*	Variables: Random placement
 	These variables determine the duration that a draft keeps its position, before repositioning itself randomly.
 
+	permanentDraft      - _true_ if this draft is permanent.
 	minDraftDuration	- Minimum duration.
 	maxDraftDuration	- Maximum duration. */
-local minDraftDuration, maxDraftDuration;
+local permanentDraft, minDraftDuration, maxDraftDuration;
 /*	 Variables: Clonk acceleration
 	maxGliderSpeedUpwards	- Maximum speed a glider is accelerated to.
 	gliderAcceleration		- Acceleration rate for gliders. Unit is 1/10 pixels per frame. */
@@ -43,7 +44,8 @@ protected func Initialize() {
 	maxDraftDuration = 2100;
 	maxGliderSpeedUpwards = 60;
 	gliderAcceleration = 5;
-	SetRandomPosition();
+	// allow for setting it permanent
+	ScheduleCall(this, "SetRandomPosition", 1);
 	Draft();
 }
 
@@ -59,6 +61,12 @@ public func SetSize(int width, int height) {
 	draftWidth = width;
 	draftHeight = height;
 	draftDistance = Sqrt(Pow(draftWidth, 2) + Pow(draftHeight, 2)) / 2;
+}
+
+/*  Function: SetPermanent
+	Makes this draft permanent. */
+public func SetPermanent() {
+	permanentDraft = true;
 }
 
 protected func Draft() {
@@ -96,6 +104,8 @@ protected func Draft() {
 }
 
 protected func SetRandomPosition() {
+	if(permanentDraft)
+		return;
 	var x = Random(LandscapeWidth());
 	var y = Random(LandscapeHeight());
 	var otherDraft = FindObject2( Find_And( Find_ID(GetID()), Find_InRect(AbsX(x) - draftWidth / 2, AbsY(y) - draftHeight, draftWidth, draftHeight) ) );
