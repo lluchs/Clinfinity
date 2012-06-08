@@ -6,6 +6,14 @@
 static iPlrX, iPlrY, iCounter;
 
 func Initialize(){
+  //Decoration
+  CreateObject(HUT6, 36, 521, -1);
+  CreateObject(MUSH, 50, 235);
+  CreateObject(MUSH, 80, 235);
+  CreateObject(MUSH, 83, 235);
+  CreateObject(TRE1, 44, 233);
+
+  
   ScriptGo(true);
 }
 

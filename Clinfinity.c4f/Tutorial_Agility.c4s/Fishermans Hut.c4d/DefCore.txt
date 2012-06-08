@@ -1,0 +1,17 @@
+[DefCore]
+id=HUT6
+Name=Fischerhütte
+Version=4,9,5
+Category=1
+MaxUserSelect=0
+Width=150
+Height=350
+Offset=-0,-0
+Value=1
+Mass=500
+Components=WOOD=4;
+Picture=0,0,150,60
+Vertices=1
+VertexY=1
+VertexFriction=20
+ 

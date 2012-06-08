@@ -1,0 +1,2 @@
+TxtEat=Eat
+TxtPick=Pick
