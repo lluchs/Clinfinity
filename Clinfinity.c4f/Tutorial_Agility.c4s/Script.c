@@ -19,7 +19,7 @@ func Initialize() {
 func InitializePlayer(int plr) {
 	GetCrew(plr)->SetPosition(30, 220);
 	// Message positioning
-	SetPlrShowControlPos(plr, SHOWCTRLPOS_TopLeft);
+	//SetPlrShowControlPos(plr, SHOWCTRLPOS_TopLeft);
 	SetTutorialMessagePos(MSG_Top | MSG_Left | MSG_WidthRel | MSG_XRel, 50, 50, 30);
 
 	SavePosition();
@@ -31,7 +31,7 @@ func Script5() {
 }
 
 func Script15() {
-	SetPlrShowControl(0, "____4_678_          __________");
+	//SetPlrShowControl(0, "____4_678_          __________");
 	Sound("Ding");
 	TutorialMessage("$TutDoubleJump$");
 }
