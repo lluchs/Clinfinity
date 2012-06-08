@@ -12,7 +12,7 @@ protected func Right() {
 protected func CheckClonk() {
 	// any clonk on me?
 	if(FindObject2(Find_InRect(-20, -30, 40, 25),
-	               Find_Or(Find_OCF(OCF_Living), Find_Category(C4D_Object)),
+	               Find_Or(Find_OCF(OCF_Alive), Find_Category(C4D_Object)),
 	               Find_Or(Find_Func("GetXDir"), Find_Func("GetYDir")))) {
 		Sound("squeak*");
 	}
