@@ -1,0 +1,19 @@
+[DefCore]
+id=HAT8
+Name=Dat Modem Wombat
+Version=4,9,5
+Category=C4D_Object
+MaxUserSelect=10
+Width=12
+Height=10
+Offset=-6,-3
+Value=10
+Mass=10
+Components=HAT8=1;
+Picture=13,0,64,64
+Vertices=1
+VertexX=0
+VertexY=2
+VertexFriction=20
+Rotate=1
+ColorByOwner=1
