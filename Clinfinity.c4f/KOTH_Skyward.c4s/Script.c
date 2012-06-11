@@ -7,6 +7,15 @@ func Initialize() {
 	var cp = CreateObject(SHIP, LandscapeWidth() / 2, LandscapeHeight() / 2, NO_OWNER);
 	var koth = CreateObject(KOTH, 0, 0, NO_OWNER);
 	koth->SetCP(cp);
+	
+	//static drafts
+	var DraftL=CreateObject(DRFT, 799, 600); 
+	DraftL -> SetPermanent();
+	DraftL -> SetR(-15);
+	
+	var DraftR=CreateObject(DRFT, 1122, 600);
+	DraftR -> SetPermanent();
+	DraftR -> SetR(20);
 
 	// steampunky flair
 	SetGamma(RGB(15, 15, 20), RGB(118, 118, 118), RGB(210, 215, 255));
@@ -69,6 +78,6 @@ func Script0() {
 	CreateParticle("Cloud", 0, Random(LandscapeHeight()*2/3), RandomX(3, 9), 0, RandomX(1000, 1500),  RGBa(116, 131, 145, 0)); 
 }
 
-func Script4() {
+func Script20() {
 	return goto(0);
 }
