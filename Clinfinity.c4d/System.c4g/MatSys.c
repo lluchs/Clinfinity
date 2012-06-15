@@ -124,6 +124,8 @@ global func MatSysDoTeamFill(int change, int plr, id Key) {
 global func MatSysSubtractComponents(id definition, int player) {
 	var components = [];
 	for(var i = 0, comp, num; (comp = GetComponent(0, i, 0, definition)) && (num = GetComponent(comp, i, 0, definition)); i++) {
+		if(!InArray(comp, GetMatSysIDs()))
+			continue;
 		if(MatSysGetTeamFill(player, comp) < num) {
 			return false;
 		}
