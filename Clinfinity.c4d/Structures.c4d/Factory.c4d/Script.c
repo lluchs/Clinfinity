@@ -115,7 +115,7 @@ protected func CompleteProduction() {
 		matSys->DoFill(1, requestedId);
 	}
 	else {
-		var producedItem = CreateObject(requestedId, 49, 66, GetOwner());
+		var producedItem = CreateObject(requestedId, 49, 74, GetOwner());
 	}
 }
 
