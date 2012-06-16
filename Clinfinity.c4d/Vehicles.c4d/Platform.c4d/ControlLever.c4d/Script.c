@@ -102,10 +102,24 @@ protected func ControlDigDouble(object controller) {
 	if(HostileCheck(controller))
 		return false;
 	CreateMenu(CXCN, controller, this, C4MN_Extra_Components);
+
+	// find leftest platform
+	var leftest, prev = controlMediator;
+	while(leftest = prev->GetMaster())
+		prev = leftest;
+	AddPlatformMenuItem(controller, 0, ObjectNumber(prev));
+
+	// dis/connect
 	var left  = controlMediator->GetMaster() || PlatformMediator(FindPlatform(false));
 	var right = controlMediator->GetSlave()  || PlatformMediator(FindPlatform(true));
 	ConnectionMenuItem(controller, left, controlMediator);
 	ConnectionMenuItem(controller, controlMediator, right);
+
+	// find rightest platform
+	var rightest, prev = controlMediator;
+	while(rightest = prev->GetSlave())
+		prev = rightest;
+	AddPlatformMenuItem(controller, ObjectNumber(prev), 0);
 }
 
 // Finds platforms to the left/right
@@ -134,14 +148,16 @@ private func ConnectionMenuItem(object clonk, object master, object slave) {
 			command = Format("ConnectPlatforms(Object(%d), Object(%d))", mn, sn);
 			AddMaterialMenuItem("$Connect$", command, MS4C, clonk, 0, 0, "", 2, 1);
 		}
-	} else {
-		command = Format("AddPlatform(Object(%d), Object(%d))", mn, sn);
-		AddMaterialMenuItem("$NewPlatform$", command, PLTF, clonk, 0, 0, "", 2, !slave);
 	}
 }
 
+private func AddPlatformMenuItem(object clonk, int mn, int sn) {
+	var command = Format("AddPlatform(Object(%d), Object(%d))", mn, sn);
+	AddMaterialMenuItem("$NewPlatform$", command, PLTF, clonk, 0, 0, "", 2, !sn);
+}
+
 protected func AddPlatform(object master, object slave) {
-	var platform = controlMediator->GetControlledPlatform(), width = GetDefWidth(PLTF);
+	var platform = (master || slave)->GetControlledPlatform(), width = GetDefWidth(PLTF);
 	var dir = !!master * 2 - 1;
 	if(!PathFree(platform->GetX() + dir * (width / 2 + 1), platform->GetY(), platform->GetX() + dir * width * 3 / 2, platform->GetY())) {
 		Sound("Error");
