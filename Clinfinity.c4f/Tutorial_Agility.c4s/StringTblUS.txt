@@ -1,0 +1,10 @@
+TutHelloWorld=Hey %s! Welcome to Clonk Infinity!
+TutDoubleJump=Your aviator knows some new tricks the standard Clonk doesn't. Let's have a look at double jumping!
+TutDoubleJumpAdvise=When jumping, you can just press [up] again to make your Clonk fly even higher.|You can also turn in flight and then jump in the other direction! Use this to reach the island with the arrow pointing to it.
+TutNice=Very good!
+TutFlyAdvise=While jumping, press [down] to unfold your wing suit and glide gracefully. Control your direction with [left] and [right]. Press [up] to boost your height, just like double jumping works. Now, get to the second island!
+TutNotBad=That wasn't too hard, was it?
+TutIntroduceDraft=Now, this is an updraft. Use your wing suit and ride the updraft to get up there!
+TutDraftNotice=Well done. You should know that updrafts usually appear randomly and disappear again after a while.
+TutGraniteIsAcid=Finally, try to get to the next island down there using your wing suit. Oh, and don't touch the granite, it's lethal.
+TutDone=Marvellous. With this, you mastered the basics. As a reward, I give you a nice hat!

@@ -1,4 +1,4 @@
-TutHelloWorld=Joho %s! Willkommen in Clinfinity!
+TutHelloWorld=Joho %s! Willkommen in Clonk Infinity!
 TutDoubleJump=Dein Clonk kann ein paar Sachen mehr als der Standardclonk. Schauen wir uns den Doppelsprung an!
 TutDoubleJumpAdvise=Wenn du springst, kannst du einfach noch mal nach oben drücken, dann springt dein Clonk noch höher.|Du kannst dich im Sprung auch drehen und einen weiteren Sprung ausführen! Erreiche die Insel mit dem Pfeil.
 TutNice=Sehr gut!
