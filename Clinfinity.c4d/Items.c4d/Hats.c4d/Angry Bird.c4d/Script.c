@@ -6,6 +6,6 @@
 
 protected func Cackle() {
 	if(!Random(3)) {
-		Sound(Format("Chicken%d", RandomX(1, 7)));
+		Sound(Format("Chicken%d", RandomX(1, 6)));
 	}
 }
