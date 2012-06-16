@@ -141,13 +141,20 @@ private func ConnectionMenuItem(object clonk, object master, object slave) {
 }
 
 protected func AddPlatform(object master, object slave) {
+	var platform = controlMediator->GetControlledPlatform(), width = GetDefWidth(PLTF);
+	var dir = !!master * 2 - 1;
+	if(!PathFree(platform->GetX() + dir * (width / 2 + 1), platform->GetY(), platform->GetX() + dir * width * 3 / 2, platform->GetY())) {
+		Sound("Error");
+		Message("$PathNotFree$", this);
+		return;
+	}
 	if(!MatSysSubtractComponents(PLTF, GetOwner())) {
 		Sound("Error");
 		return;
 	}
 
 	Sound("Connect");
-	var new = controlMediator->GetControlledPlatform()->CreatePlatform(-GetDefWidth(PLTF), GetDefHeight(PLTF) / 2, GetOwner())->GetControlMediator();
+	var new = platform->CreatePlatform(-width, GetDefHeight(PLTF) / 2, GetOwner())->GetControlMediator();
 	if(master)
 		slave = new;
 	else
