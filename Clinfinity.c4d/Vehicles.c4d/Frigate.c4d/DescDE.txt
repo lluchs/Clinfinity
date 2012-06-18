@@ -1,3 +1,5 @@
-Heiß umkämpftes Relikt.
+Dieses Schiff muss erobert und gehalten werden.
 
-Stell' dich an Deck, um die Fregatte in Besitz zu nehmen. Verteidige sie gegen Gegner, sonst verhindern sie die Eroberung. Wenn du die Fregatte halten kannst, bis der Countdown deines Teams abgelaufen ist, habt ihr gewonnen.
+Erobern erfolgt automatisch, sobald du auf dem Deck stehst. Mehrere Teammitglieder beschleunigen die Eroberung. Gegner auf der Plattform blockieren wiederum den Eroberungsvorgang. 
+
+Die Fregatte kann theoretisch beliebig oft erobert werden, jede erfolgreiche Eroberung setzt einen Countdown in Gang der, wenn er abgelaufen ist, das Spiel für das jeweilige Team entscheidet.
