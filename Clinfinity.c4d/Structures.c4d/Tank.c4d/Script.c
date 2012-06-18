@@ -2,6 +2,7 @@
 
 #strict 2
 
+#include L_DC
 #include L_SS
 #include STBO
 
@@ -13,6 +14,8 @@ static const STMT_Phases = 10;
 static const STMT_RespawnAmount = 100;
 
 public func MaxFill() { return 1500; }
+
+public func MaxDamage() { return 50; }
 
 // all previous changes in fill level
 local changes;

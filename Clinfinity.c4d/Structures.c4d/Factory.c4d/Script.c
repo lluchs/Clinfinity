@@ -2,7 +2,10 @@
 
 #strict 2
 
+#include L_DC
 #include STBO
+
+public func MaxDamage() { return 50; }
 
 local requestedId;
 local remainingTime;
