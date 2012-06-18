@@ -41,12 +41,7 @@ public func Damage(int iChange) {
 	
 	if (GetDamage() > MaxDamage())
 		AddEffect("MaxDamageExplosion", this, 1, 20, this, L_DC);
-	else {
-		var type = "BuildingAttack";
-		if(GetID() == CPSL)
-			type = "CapsuleAttack";
-		UpdateHUD(-GetOwner() - 2, HUD_EventLog, type);
-	}
+
 	var ox, oy, wdt, hgt;
 	GetRect(GetID(), ox, oy, wdt, hgt);
 	var glascount = iChange + Random(4);
@@ -113,11 +108,6 @@ public func FxMaxDamageExplosionTimer(object pTarget, int iEffectNumber, int iEf
 private func DestroyBlast(object pTarget) {
 	if(!pTarget) if(!(pTarget=this)) return;
 	
-	var type = "BuildingExplode";
-	if(pTarget -> GetID() == CPSL)
-		type = "CapsuleExplode";
-	UpdateHUD(-(pTarget -> GetOwner()) - 2, HUD_EventLog, type);
-	
 	var ox, oy, wdt, hgt;
 	GetRect(pTarget->GetID(), ox, oy, wdt, hgt);
 	var count = GetComponent(METL, 0, 0, pTarget -> GetID()) + Random(GetComponent(PSTC, 0, 0, pTarget -> GetID()));
@@ -166,8 +156,8 @@ public func GetMissingComponents() {
 	return [aDiffIDs, aDiffNum, aNormal[2] - iNum];
 }
 
-public func DoRepairComponent(id ID) {
-	return HashPut(RepairComp, ID, HashGet(RepairComp, ID) + 1);
+public func DoRepairComponent(id ID, int num) {
+	return HashPut(RepairComp, ID, HashGet(RepairComp, ID) + num);
 }
 
 public func Repair(int percent) {
