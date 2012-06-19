@@ -1,5 +1,5 @@
 Dieses Schiff muss erobert und gehalten werden.
 
-Erobern erfolgt automatisch, sobald du auf dem Deck stehst. Mehrere Teammitglieder beschleunigen die Eroberung. Gegner auf der Plattform blockieren wiederum den Eroberungsvorgang. 
+Erobern erfolgt automatisch, sobald Clonks auf dem Deck stehen. Mehrere Teammitglieder beschleunigen die Eroberung. Gegner auf der Plattform blockieren wiederum den Eroberungsvorgang. 
 
-Die Fregatte kann theoretisch beliebig oft erobert werden, jede erfolgreiche Eroberung setzt einen Countdown in Gang der, wenn er abgelaufen ist, das Spiel für das jeweilige Team entscheidet.
+Die Fregatte kann theoretisch beliebig oft erobert werden. Dabei setzt jede erfolgreiche Eroberung einen Countdown in Gang, der, wenn er abgelaufen ist, das Spiel für das jeweilige Team entscheidet.
