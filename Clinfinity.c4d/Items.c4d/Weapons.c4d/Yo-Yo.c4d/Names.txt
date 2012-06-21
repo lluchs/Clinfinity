@@ -1,2 +1,2 @@
-DE:Kampf Jo-Jo
-US:Yo-Yo
+DE:Kampf-Jo-Jo
+US:War yo-yo
