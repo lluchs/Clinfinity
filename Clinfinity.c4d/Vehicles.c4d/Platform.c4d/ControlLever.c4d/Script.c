@@ -5,6 +5,7 @@
 
 local controlMediator;
 local gearStop, gearUp, gearDown;
+local vertical;
 
 /*	Constructor: CreateLever
 	Factory method for levers.
@@ -52,7 +53,7 @@ protected func Grabbed(object controller, bool grab) {
 protected func ControlUp(object controller) {
 	if(HostileCheck(controller))
 		return false;
-	if(GetDir() == gearDown) {
+	if(vertical || GetDir() == gearDown) {
 		controlMediator->ControlEvent(COMD_Stop, this);
 	} else if(GetDir() == gearStop) {
 		controlMediator->ControlEvent(COMD_Up, this);
@@ -65,7 +66,7 @@ protected func ControlUp(object controller) {
 protected func ControlDownSingle(object controller) {
 	if(HostileCheck(controller))
 		return false;
-	if(GetDir() == gearUp) {
+	if(vertical || GetDir() == gearUp) {
 		controlMediator->ControlEvent(COMD_Stop, this);
 	} else if(GetDir() == gearStop) {
 		controlMediator->ControlEvent(COMD_Down, this);
@@ -76,11 +77,37 @@ protected func ControlDownSingle(object controller) {
 }
 
 protected func ControlLeft(object controller) {
-	return ControlUp(controller);
+	if(HostileCheck(controller))
+		return false;
+	// No horizontal movement when there are connected platforms.
+	if(controlMediator->GetMaster() || controlMediator->GetSlave())
+		return ControlUp(controller);
+	// We need to stop if the platform isn't already moving to the left.
+	if(!vertical && GetDir() || GetDir() == gearDown)
+		controlMediator->ControlEvent(COMD_Stop, this);
+	else if(GetDir() == gearStop) {
+		controlMediator->GetControlledPlatform()->SetComDir(COMD_Left);
+		SetDir(gearUp);
+		Sound("lever", false, this, 15);
+		vertical = true;
+	}
 }
 
 protected func ControlRight(object controller) {
-	return ControlDownSingle(controller);
+	if(HostileCheck(controller))
+		return false;
+	// No horizontal movement when there are connected platforms.
+	if(controlMediator->GetMaster() || controlMediator->GetSlave())
+		return ControlDownSingle(controller);
+	// We need to stop if the platform isn't already moving to the right.
+	if(!vertical && GetDir() || GetDir() == gearUp)
+		controlMediator->ControlEvent(COMD_Stop, this);
+	else if(GetDir() == gearStop) {
+		controlMediator->GetControlledPlatform()->SetComDir(COMD_Right);
+		SetDir(gearDown);
+		Sound("lever", false, this, 15);
+		vertical = true;
+	}
 }
 
 public func MovementEvent(int direction, object source) {
@@ -95,6 +122,7 @@ public func MovementEvent(int direction, object source) {
 	if(GetDir() != oldDirection) {
 		Sound("lever", false, this, 15);
 	}
+	vertical = false;
 }
 
 /* -- Platform Connection Control -- */

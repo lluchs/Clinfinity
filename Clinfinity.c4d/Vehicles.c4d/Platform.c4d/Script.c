@@ -135,6 +135,7 @@ private func FloatStop() {
 		return;
 	}
 	SetComDir(COMD_None);
+	SetXDir(0);
 	SetYDir(0);
 	controlMediator->MovementEvent(COMD_Stop, this);
 }
