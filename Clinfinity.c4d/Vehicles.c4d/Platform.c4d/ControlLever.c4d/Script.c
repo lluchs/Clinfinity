@@ -5,7 +5,7 @@
 
 local controlMediator;
 local gearStop, gearUp, gearDown;
-local vertical;
+local vertical, startPos;
 
 /*	Constructor: CreateLever
 	Factory method for levers.
@@ -30,6 +30,10 @@ protected func Initialize() {
 	gearStop = 0;
 	gearUp = 1;
 	gearDown = 2;
+
+	// save position
+	Schedule("startPos = GetX()", 1);
+	AddEffect("HorizontalBoundsCheck", this, 1, 0, this);
 }
 
 protected func MouseSelection(int player) {
@@ -86,10 +90,16 @@ protected func ControlLeft(object controller) {
 	if(!vertical && GetDir() || GetDir() == gearDown)
 		controlMediator->ControlEvent(COMD_Stop, this);
 	else if(GetDir() == gearStop) {
+		// Are we allowed to go further left?
+		if(GetX() - startPos < -PLTF_HorizontalMovement) {
+			Sound("CommandFailure1");
+			return;
+		}
 		controlMediator->GetControlledPlatform()->SetComDir(COMD_Left);
 		SetDir(gearUp);
 		Sound("lever", false, this, 15);
 		vertical = true;
+		StartHorizontalBoundsCheck();
 	}
 }
 
@@ -103,10 +113,16 @@ protected func ControlRight(object controller) {
 	if(!vertical && GetDir() || GetDir() == gearUp)
 		controlMediator->ControlEvent(COMD_Stop, this);
 	else if(GetDir() == gearStop) {
+		// Are we allowed to go further right?
+		if(GetX() - startPos > PLTF_HorizontalMovement) {
+			Sound("CommandFailure1");
+			return;
+		}
 		controlMediator->GetControlledPlatform()->SetComDir(COMD_Right);
 		SetDir(gearDown);
 		Sound("lever", false, this, 15);
 		vertical = true;
+		StartHorizontalBoundsCheck();
 	}
 }
 
@@ -123,6 +139,20 @@ public func MovementEvent(int direction, object source) {
 		Sound("lever", false, this, 15);
 	}
 	vertical = false;
+	StopHorizontalBoundsCheck();
+}
+
+private func StartHorizontalBoundsCheck() {
+	ChangeEffect("HorizontalBoundsCheck", this, 0, "HorizontalBoundsCheck", 10);
+}
+
+private func StopHorizontalBoundsCheck() {
+	ChangeEffect("HorizontalBoundsCheck", this, 0, "HorizontalBoundsCheck", 0);
+}
+
+protected func FxHorizontalBoundsCheckTimer(object target, int effectNum, int effectTime) {
+	if(Abs(GetX() - startPos) > PLTF_HorizontalMovement)
+		controlMediator->ControlEvent(COMD_Stop, this);
 }
 
 /* -- Platform Connection Control -- */
