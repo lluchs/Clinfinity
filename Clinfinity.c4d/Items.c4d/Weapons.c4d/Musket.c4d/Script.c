@@ -26,10 +26,18 @@ public func CanLoad() {
 	return !IsFull() && MatSysGetTeamFill(Contained()->GetOwner(), METL) >= 1;
 }
 
+public func StartLoading() {
+	Sound("MusketReload");
+}
+
 public func Load() {
 	if(MatSysDoTeamFill(-1, Contained()->GetOwner(), METL)) {
 		DoFill(6);
 	}
+}
+
+public func StartAiming() {
+	Sound("MusketDeploy");
 }
 
 public func Abort() {}
@@ -41,6 +49,7 @@ public func Fire(object pClonk, int iAngle) {
 	
 	// enough ammo in clip?
 	if(!GetFill()) {
+		Sound("MusketEmpty");
 		// try to reload
 		pClonk->LoadRifle();
 		return;
@@ -83,7 +92,7 @@ public func Fire(object pClonk, int iAngle) {
     else  iY = -Cos(iPhase * 15, 14) - 3;
     CreateParticle("MuzzleFlash", AbsX(iX + GetX(pClonk)), AbsY(iY + GetY(pClonk)), iXDir, iYDir, 35, RGBa(255, 255, 255, 0), pClonk);
     // Sound
-    Sound("RifleShot", 0, pClonk);
+    Sound("MusketShoot*", 0, pClonk);
     // Rauch
     Smoke(iX, iY, 2);
     Smoke(iX, iY + Random(2), 3);

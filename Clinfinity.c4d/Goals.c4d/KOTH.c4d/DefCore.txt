@@ -2,7 +2,7 @@
 id=KOTH
 Name=King of the Hill
 Version=4,9,5
-Category=C4D_StaticBack|C4D_Goal|C4D_Parallax|C4D_IgnoreFoW
+Category=C4D_StaticBack|C4D_Goal|C4D_Parallax|C4D_IgnoreFoW|C4D_Foreground
 MaxUserSelect=1
 Width=64
 Height=64

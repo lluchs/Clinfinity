@@ -1,1 +1,1 @@
-Carries either away or doesn't.
+May or may not carry.

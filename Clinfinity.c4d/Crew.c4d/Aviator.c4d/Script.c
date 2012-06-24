@@ -85,6 +85,7 @@ public func StartAiming(object rifle) {
 			SetAction(aimAction);
 			CreateCrosshair();
 			UpdateAimPhase();
+			rifle->~StartAiming(this);
 			return true;
 		}
 	}
@@ -182,7 +183,7 @@ public func LoadRifle() {
 	else if(action == "RideAimRifle")
 		loadingAction = "RideLoadRifle";
 	if(loadingAction && activeRifle->CanLoad()) {
-		Sound("RifleLoad");
+		activeRifle->~StartLoading();
 		SetAction(loadingAction);
 	} else {
 		Sound("CommandFailure1");

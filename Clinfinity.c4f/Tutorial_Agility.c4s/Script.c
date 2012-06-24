@@ -108,6 +108,10 @@ func Script110() {
 	SavePosition();
 	TutorialMessage("$TutDone$");
 	Sound("Applause");
+	GetCrew()->AddHat(HAT1); // Reward!
+}
+
+func Script120() {
 	FindObject(SCRG)->Fulfill();
 }
 

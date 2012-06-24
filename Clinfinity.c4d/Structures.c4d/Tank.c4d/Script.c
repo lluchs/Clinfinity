@@ -61,13 +61,29 @@ protected func Steam() {
 		generate = RandomX(350, 450);
 	}
 	// respawn
-	var clonk = Contents();
-	if(clonk && MatSysGetTeamFill(GetOwner(), STEM) >= STMT_RespawnAmount) {
+	var clonk, i = 0;
+	while(clonk = Contents(i++))
+		StartRespawn(clonk);
+}
+
+private func StartRespawn(object clonk) {
+	if(GetEffect("Respawn", clonk))
+		return;
+	var effectNum = AddEffect("Respawn", clonk, 1, KOTH_FPS, this);
+	EffectVar(0, clonk, effectNum) = GetRespawnTime(GetPlayerTeam(clonk->GetOwner()));
+}
+
+protected func FxRespawnTimer(object target, int effectNum, int effectTime) {
+	var timeToWait = EffectVar(0, target, effectNum);
+	Message("@Respawn in %d...", target, Max(0, timeToWait - effectTime) / KOTH_FPS);
+	if(effectTime >= timeToWait && MatSysGetTeamFill(GetOwner(), STEM) >= STMT_RespawnAmount) {
 		MatSysDoTeamFill(-STMT_RespawnAmount, GetOwner(), STEM);
-		clonk->Exit();
-		var plr = clonk->GetOwner();
+		target->Exit();
+		var plr = target->GetOwner();
 		if(!GetCursor(plr))
-			SetCursor(plr, clonk);
+			SetCursor(plr, target);
+		Message("", target);
+		return -1;
 	}
 }
 

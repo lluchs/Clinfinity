@@ -32,6 +32,8 @@ local permanentDraft, minDraftDuration, maxDraftDuration;
 	gliderAcceleration		- Acceleration rate for gliders. Unit is 1/10 pixels per frame. */
 local maxGliderSpeedUpwards, gliderAcceleration;
 
+local active;
+
 protected func Activate(byPlayer) {
 	MessageWindow(GetDesc(), byPlayer);
 	return 1;
@@ -46,7 +48,8 @@ protected func Initialize() {
 	gliderAcceleration = 5;
 	// allow for setting it permanent
 	ScheduleCall(this, "SetRandomPosition", 1);
-	Draft();
+	AddEffect("Draft", this, 1, 10, this);
+	AddEffect("DraftParticle", this, 1, 1, this);
 }
 
 /*	Function: SetSize
@@ -69,7 +72,7 @@ public func SetPermanent() {
 	permanentDraft = true;
 }
 
-protected func Draft() {
+protected func FxDraftParticleTimer(object target, int effectNum, int effectTime) {
 	var draftDirection = GetR();
 	if( !Random(2) ) {
 		var x = RandomX(-draftWidth / 2, draftWidth / 2),
@@ -79,28 +82,40 @@ protected func Draft() {
 		Rotate(draftDirection, x, y);
 		CreateParticle("WindSpark", x, y, -Sin(draftDirection, speed), Cos(draftDirection, speed), 40, draftParticleColour);
 	}
+}
+
+protected func FxDraftTimer(object target, int effectNum, int effectTime) {
+	var draftDirection = GetR();
 	var x = 0, y = -draftHeight / 2;
 	Rotate(draftDirection, x, y);
 	var gliders = FindObjects(Find_NoContainer(), Find_Distance(draftDistance, x, y), Find_Category(C4D_Living));
-	for( var glider in gliders ) {
-		var gx = glider->GetX() - GetX(), gy = glider->GetY() - GetY();
-		Rotate(-draftDirection, gx, gy);
-		if(Inside(gx, -draftWidth / 2, draftWidth / 2) && Inside(gy, -draftHeight, 0)) {
-			var xDir = glider->GetXDir(0, 100), yDir = glider->GetYDir(0, 100);
-			var xAcc = Sin(draftDirection, gliderAcceleration * 10), yAcc = -Cos(draftDirection, gliderAcceleration * 10);
-			// Not actually gliding? Less acceleration!
-			if(!glider->~IsGliding()) {
-				xAcc /= 3;
-				yAcc /= 3;
-			}
-			glider->SetXDir(xDir + xAcc, 0, 100);
-			//Message("X: %d, Y: %d", this, xAcc, yAcc);
-			if(yDir > -maxGliderSpeedUpwards * 10) {
-				glider->SetYDir(yDir + yAcc, 0, 100);
+	if(GetLength(gliders)) {
+		if(!active) {
+			active = true;
+			ChangeEffect(0, target, effectNum, "Draft", 1);
+		}
+		for( var glider in gliders ) {
+			var gx = glider->GetX() - GetX(), gy = glider->GetY() - GetY();
+			Rotate(-draftDirection, gx, gy);
+			if(Inside(gx, -draftWidth / 2, draftWidth / 2) && Inside(gy, -draftHeight, 0)) {
+				var xDir = glider->GetXDir(0, 100), yDir = glider->GetYDir(0, 100);
+				var xAcc = Sin(draftDirection, gliderAcceleration * 10), yAcc = -Cos(draftDirection, gliderAcceleration * 10);
+				// Not actually gliding? Less acceleration!
+				if(!glider->~IsGliding()) {
+					xAcc /= 3;
+					yAcc /= 3;
+				}
+				glider->SetXDir(xDir + xAcc, 0, 100);
+				//Message("X: %d, Y: %d", this, xAcc, yAcc);
+				if(yDir > -maxGliderSpeedUpwards * 10) {
+					glider->SetYDir(yDir + yAcc, 0, 100);
+				}
 			}
 		}
+	} else if(active) {
+		active = false;
+		ChangeEffect(0, target, effectNum, "Draft", 10);
 	}
-	ScheduleCall(this, "Draft", 1);
 }
 
 protected func SetRandomPosition() {

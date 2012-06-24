@@ -9,6 +9,8 @@ static const PLTF_SteamPayTimer = 250;
 static const PLTF_SteamTimer = 10;
 // Steam a single platform uses on its own every PLTF_SteamPayTimer frames
 static const PLTF_SteamUsage = 10;
+// Allowed horizontal movement in pixel
+static const PLTF_HorizontalMovement = 90;
 // Helper 'direction' for ControlMediator
 static const PLTF_Explode = -1;
 
@@ -135,6 +137,7 @@ private func FloatStop() {
 		return;
 	}
 	SetComDir(COMD_None);
+	SetXDir(0);
 	SetYDir(0);
 	controlMediator->MovementEvent(COMD_Stop, this);
 }

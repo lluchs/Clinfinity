@@ -12,3 +12,4 @@ VertexX=-30,30
 VertexY=5,5
 VertexCNAT=9,10
 VertexFriction=20,20
+ColorByOwner=1

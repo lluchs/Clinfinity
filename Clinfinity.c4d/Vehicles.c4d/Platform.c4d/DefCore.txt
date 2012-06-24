@@ -17,6 +17,7 @@ Components=METL=2; WOOD=1;
 Picture=0,12,64,64
 Timer=10
 TimerCall=CheckSteam
+ColorByOwner=1
 
 [Physical]
 Float=50
