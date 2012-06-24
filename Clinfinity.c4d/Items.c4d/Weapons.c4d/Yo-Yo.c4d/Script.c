@@ -23,7 +23,7 @@ protected func Departure(object from) {
 		// Set speed to fly lower, because it's supposed to hit enemies.
 		SetXDir(GetXDir() * 3);
 		SetYDir(-5);
-		YoyoThrown();
+		YoyoThrown(from);
 	}
 	// TODO: What if used while gliding? Should probably work similarly in that case, just with a different throwing angle.
 }
@@ -41,7 +41,7 @@ protected func RejectEntrance(object into) {
 }
 
 protected func Entrance(object into) {
-	// TODO: Stop returning, remove effect(s)
+	YoyoInactive();
 }
 
 
@@ -61,6 +61,8 @@ public func GetThrower() {
 
 protected func YoyoInactive() {
 	currentState = YOYO_StateInactive;
+	ClearScheduleCall(this, "YoyoReturn");
+	RemoveEffect("YoyoReturning", this);
 }
 
 protected func YoyoThrown(object by) {
@@ -68,15 +70,17 @@ protected func YoyoThrown(object by) {
 	thrower = by;
 	// TODO: Attach yo-yo line to Clonk.
 	// TODO: Start YoyoReturn effect after some frames. (-> ScheduleCall)
+	ScheduleCall(0, "YoyoReturn", 12);
 	// TODO: Yo-yo whirring sound? Different sounds for flying and returning?
 
 }
 
 protected func YoyoReturn() {
 	currentState = YOYO_StateReturning;
-	// TODO: Start YoyoReturn effect, perhaps play a short "whoosh" to tell the player acoustically that the yo-yo returns now.
+	// TODO: Perhaps play a short "whoosh" to tell the player acoustically that the yo-yo returns now.
+	AddEffect("YoyoReturning", this, 150, 1, this);
 	// TODO: If working as a weapon: Remove vertex (? or do something else to deactivate collision with material), return to sender
-	// TODO: Start YoyoReturn effect immediately, stop scheduled call
+	ClearScheduleCall(this, "YoyoReturn");
 	// TODO: While returning, perhaps change the category to vehicle so we don't hit the thrower. OTOH we still want to hit enemy Clonks, right?
 
 }
@@ -84,24 +88,34 @@ protected func YoyoReturn() {
 
 /* Yo-yo returning effect */
 
-protected func FxYoyoReturnStart(object target, int effectNumber, int temporary) {
+protected func FxYoyoReturningStart(object target, int effectNumber, int temporary) {
 	if(temporary == 0) {
 		// TODO: Yoyo pull back sound
 		//Sound("SailDown", false, target, 50);
 	}
 }
 
-protected func FxYoyoReturnTimer(object target, int effectNumber, int effectTime) {
-	if(target->ObjectDistance(target->GetThrower()) > 5) {
-		target->SetXDir(BoundBy( target->GetThrower()->GetY() - target->GetX() ));
-		return 0;
+protected func FxYoyoReturningTimer(object target, int effectNumber, int effectTime) {
+	if(target->ObjectDistance(target->GetThrower()) > 10) {
+		var xDistance = target->GetThrower()->GetX() - target->GetX();
+		var yDistance = target->GetThrower()->GetY() - target->GetY();
+		if(Abs(xDistance) > 5) {
+			var sign = xDistance / Abs(xDistance);
+			target->SetXDir(sign * 50);
+		} else {
+			target->SetXDir(xDistance * 4);
+		}
+		//target->SetXDir(BoundBy(target->GetThrower()->GetX() - target->GetX(), -50, 50));
+		target->SetYDir(BoundBy(target->GetThrower()->GetY() - target->GetY(), -50, 50));
+		return FX_OK;
 	} else {
 		target->Enter(target->GetThrower());
-		return -1;
+		//YoyoInactive();
+		return FX_Execute_Kill;
 	}
 }
 
-protected func FxYoyoReturnStop(object target, int effectNumber, int reason, bool temporary) {
+protected func FxYoyoReturningStop(object target, int effectNumber, int reason, bool temporary) {
 	if(!temporary) {
 		// TODO: Do something on stopping the effect?
 	}
