@@ -1,1 +1,1 @@
-In your face!
+Missile that returns to the original thrower after a short distance.
