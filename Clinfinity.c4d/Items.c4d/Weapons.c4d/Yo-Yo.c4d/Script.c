@@ -1,45 +1,47 @@
 #strict 2
 
-local thrower;
-
 /*	TODO:
 	This yo-yo has a state automaton.
-	* Inactive state
-	* Thrown state
-	* Returning state
 	What are the events that cause state transitions?
 	*/
+static const YOYO_StateInactive = 0;
+static const YOYO_StateThrown = 1;
+static const YOYO_StateReturning = 2;
+
+local thrower;
+local currentState;
 
 /* Engine events */
+
+protected func Initialize() {
+	YoyoInactive();
+}
 
 protected func Departure(object from) {
 	// If the yo-yo was thrown by a Clonk, act as weapon.
 	if((from->GetOCF() & OCF_CrewMember) != 0) {
-		thrower = from;
 		// Set speed to fly lower, because it's supposed to hit enemies.
 		SetXDir(GetXDir() * 3);
 		SetYDir(-5);
-		// TODO: Attach yo-yo line to Clonk.
-		// TODO: Start YoyoReturn effect after some frames. (-> ScheduleCall)
-		// TODO: Yo-yo whirring sound? Different sounds for flying and returning?
+		YoyoThrown();
 	}
 	// TODO: What if used while gliding? Should probably work similarly in that case, just with a different throwing angle.
 }
 
 protected func Hit(int xSpeed, int ySpeed) {
-	// TODO: If working as a weapon: Remove vertex (? or do something else to deactivate collision with material), return to sender
-	// TODO: Start YoyoReturn effect immediately, stop scheduled call
-	// TODO: While returning, perhaps change the category to vehicle so we don't hit the thrower. OTOH we still want to hit enemy Clonks, right?
 	// TODO: Yo-yo hit sound (different sounds for hitting material and hitting Clonks?)
+	if(currentState == YOYO_StateThrown) {
+		YoyoReturn();
+	}
 }
 
 // TODO: Reject entrance to anyone but the throwing clonk (while acting as weapon).
 protected func RejectEntrance(object into) {
-	//if(into != thrower) return true;
+	return (currentState != YOYO_StateInactive && into != thrower);
 }
 
 protected func Entrance(object into) {
-	// TODO: Stop returning, remove effect
+	// TODO: Stop returning, remove effect(s)
 }
 
 
@@ -57,8 +59,26 @@ public func GetThrower() {
 	return thrower;
 }
 
+protected func YoyoInactive() {
+	currentState = YOYO_StateInactive;
+}
+
+protected func YoyoThrown(object by) {
+	currentState = YOYO_StateThrown;
+	thrower = by;
+	// TODO: Attach yo-yo line to Clonk.
+	// TODO: Start YoyoReturn effect after some frames. (-> ScheduleCall)
+	// TODO: Yo-yo whirring sound? Different sounds for flying and returning?
+
+}
+
 protected func YoyoReturn() {
+	currentState = YOYO_StateReturning;
 	// TODO: Start YoyoReturn effect, perhaps play a short "whoosh" to tell the player acoustically that the yo-yo returns now.
+	// TODO: If working as a weapon: Remove vertex (? or do something else to deactivate collision with material), return to sender
+	// TODO: Start YoyoReturn effect immediately, stop scheduled call
+	// TODO: While returning, perhaps change the category to vehicle so we don't hit the thrower. OTOH we still want to hit enemy Clonks, right?
+
 }
 
 
