@@ -20,7 +20,7 @@ protected func Initialize() {
 
 protected func Departure(object from) {
 	// If the yo-yo was thrown by a Clonk, act as weapon.
-	if((from->GetOCF() & OCF_CrewMember) != 0) {
+	if((from->GetOCF() & OCF_CrewMember) != 0 && from->GetAction() == "Throw") {
 		// Set speed to fly lower, because it's supposed to hit enemies.
 		SetXDir(GetXDir() * 3);
 		SetYDir(-5);
