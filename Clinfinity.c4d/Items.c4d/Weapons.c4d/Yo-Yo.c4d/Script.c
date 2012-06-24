@@ -35,7 +35,6 @@ protected func Hit(int xSpeed, int ySpeed) {
 	}
 }
 
-// TODO: Reject entrance to anyone but the throwing clonk (while acting as weapon).
 protected func RejectEntrance(object into) {
 	return (currentState != YOYO_StateInactive && into != thrower);
 }
@@ -46,8 +45,6 @@ protected func Entrance(object into) {
 
 
 /* Yo-yo functionality */
-
-// TODO: Get slower on x axis over time, and pick up speed again when returning to thrower?
 
 /*	TODO:
 	In these cases, returning must be aborted and the yo-yo must be collectible to anyone again:
@@ -69,7 +66,6 @@ protected func YoyoThrown(object by) {
 	currentState = YOYO_StateThrown;
 	thrower = by;
 	// TODO: Attach yo-yo line to Clonk.
-	// TODO: Start YoyoReturn effect after some frames. (-> ScheduleCall)
 	ScheduleCall(0, "YoyoReturn", 12);
 	// TODO: Yo-yo whirring sound? Different sounds for flying and returning?
 
@@ -105,12 +101,10 @@ protected func FxYoyoReturningTimer(object target, int effectNumber, int effectT
 		} else {
 			target->SetXDir(xDistance * 4);
 		}
-		//target->SetXDir(BoundBy(target->GetThrower()->GetX() - target->GetX(), -50, 50));
 		target->SetYDir(BoundBy(target->GetThrower()->GetY() - target->GetY(), -50, 50));
 		return FX_OK;
 	} else {
 		target->Enter(target->GetThrower());
-		//YoyoInactive();
 		return FX_Execute_Kill;
 	}
 }
@@ -118,5 +112,6 @@ protected func FxYoyoReturningTimer(object target, int effectNumber, int effectT
 protected func FxYoyoReturningStop(object target, int effectNumber, int reason, bool temporary) {
 	if(!temporary) {
 		// TODO: Do something on stopping the effect?
+		YoyoInactive();
 	}
 }
