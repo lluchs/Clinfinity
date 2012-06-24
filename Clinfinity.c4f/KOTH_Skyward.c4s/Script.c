@@ -9,13 +9,22 @@ func Initialize() {
 	koth->SetCP(cp);
 	
 	//static drafts
-	var DraftL=CreateObject(DRFT, 799, 600); 
-	DraftL -> SetPermanent();
-	DraftL -> SetR(-15);
 	
-	var DraftR=CreateObject(DRFT, 1122, 600);
+	var DraftL = CreateObject(DRFT,320, 590);
+	DraftL -> SetPermanent();
+	DraftL -> SetR(20);
+	
+	var DraftR = CreateObject(DRFT,1500, 690);
 	DraftR -> SetPermanent();
-	DraftR -> SetR(20);
+	DraftR -> SetR(8);
+	 
+	var DraftL2=CreateObject(DRFT, 799, 600); 
+	DraftL2 -> SetPermanent();
+	DraftL2 -> SetR(-15);
+	
+	var DraftR2=CreateObject(DRFT, 1122, 600);
+	DraftR2 -> SetPermanent();
+	DraftR2 -> SetR(20);
 
 	// steampunky flair
 	SetGamma(RGB(15, 15, 20), RGB(118, 118, 118), RGB(210, 215, 255));
@@ -77,6 +86,7 @@ func CreateStartMaterial(int x, int y, int plr) {
 func Script0() {
 	CreateParticle("Cloud", 0, Random(LandscapeHeight()*2/3), RandomX(3, 9), 0, RandomX(1000, 1500),  RGBa(116, 131, 145, 0)); 
 }
+
 
 func Script20() {
 	return goto(0);
