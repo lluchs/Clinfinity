@@ -9,6 +9,7 @@ static const YOYO_StateThrown = 1;
 static const YOYO_StateReturning = 2;
 
 local thrower;
+local line;
 local currentState;
 
 /* Engine events */
@@ -60,12 +61,16 @@ protected func YoyoInactive() {
 	currentState = YOYO_StateInactive;
 	ClearScheduleCall(this, "YoyoReturn");
 	RemoveEffect("YoyoReturning", this);
+	if(line != 0) {
+		line->RemoveObject();
+	}
 }
 
 protected func YoyoThrown(object by) {
 	currentState = YOYO_StateThrown;
 	thrower = by;
-	// TODO: Attach yo-yo line to Clonk.
+	line = CreateObject(YOLN, 0, 0, GetOwner());
+	ObjectSetAction(line, "Connect", this, by);
 	ScheduleCall(0, "YoyoReturn", 12);
 	// TODO: Yo-yo whirring sound? Different sounds for flying and returning?
 
