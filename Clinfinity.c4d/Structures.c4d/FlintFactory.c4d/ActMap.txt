@@ -1,0 +1,7 @@
+[Action]
+Name=Letsroll
+Procedure=NONE
+Length=58
+Delay=2
+Facet=0,0,100,80,0,0
+NextAction=Idle
