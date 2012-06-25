@@ -8,5 +8,5 @@ func Initialize() {
 }
 
 protected func DoSmoke(){
-  CreateParticle("Smoke", 30, -18, 0, 0, 50, RGBa(255, 255, 255, 0));
+  CreateParticle("Smoke", -13, -18, 0, 0, 70, RGBa(255, 255, 255, 0));
 }
