@@ -77,10 +77,8 @@ protected func YoyoReturn() {
 	// TODO: Perhaps play a short "whoosh" to tell the player acoustically that the yo-yo returns now.
 	ClearScheduleCall(this, "YoyoReturn");
 	AddEffect("YoyoReturning", this, 150, 1, this);
-	// TODO: If working as a weapon: Remove vertex (? or do something else to deactivate collision with material), return to sender
 	SetVertex(0, 2, CNAT_NoCollision);
 	// TODO: While returning, perhaps change the category to vehicle so we don't hit the thrower. OTOH we still want to hit enemy Clonks, right?
-
 }
 
 
