@@ -47,12 +47,6 @@ protected func Entrance(object into) {
 
 /* Yo-yo functionality */
 
-/*	TODO:
-	In these cases, returning must be aborted and the yo-yo must be collectible to anyone again:
-	* Thrower dies
-	* Thrower is removed (either by script (RemoveObject()) or by falling out of the landscape bottom)
-	*/
-
 public func GetThrower() {
 	return thrower;
 }
@@ -97,6 +91,11 @@ protected func FxYoyoReturningStart(object target, int effectNumber, int tempora
 }
 
 protected func FxYoyoReturningTimer(object target, int effectNumber, int effectTime) {
+	// Problem handling
+	if(target->GetThrower() == 0) return FX_Execute_Kill;
+	if(!target->GetThrower()->GetAlive()) return FX_Execute_Kill;
+
+	// Approach until close enough for the Clonk to catch the yo-yo
 	if(target->ObjectDistance(target->GetThrower()) > 10) {
 		var xDistance = target->GetThrower()->GetX() - target->GetX();
 		var yDistance = target->GetThrower()->GetY() - target->GetY();
