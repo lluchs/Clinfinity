@@ -11,11 +11,19 @@ static const YOYO_StateReturning = 2;
 local thrower;
 local line;
 local currentState;
+local currentSound;
 
 /* Engine events */
 
 protected func Initialize() {
 	YoyoInactive();
+	currentSound = 1;
+}
+
+protected func Activate() {
+	currentSound++;
+	if(currentSound == 4)
+		currentSound = 1;
 }
 
 protected func Departure(object from) {
@@ -31,6 +39,7 @@ protected func Departure(object from) {
 
 protected func Hit(int xSpeed, int ySpeed) {
 	// TODO: Yo-yo hit sound (different sounds for hitting material and hitting Clonks?)
+	Sound("Yo-yo hit");
 	if(currentState == YOYO_StateThrown) {
 		YoyoReturn();
 	}
@@ -59,6 +68,7 @@ protected func YoyoInactive() {
 		line->RemoveObject();
 	}
 	SetVertex(0, 2, CNAT_Center);
+	Sound(Format("Yo-yo spin%d", currentSound), false, this, 100, 0, -1);
 }
 
 protected func YoyoThrown(object by) {
@@ -68,6 +78,7 @@ protected func YoyoThrown(object by) {
 	ObjectSetAction(line, "Connect", this, by);
 	ScheduleCall(0, "YoyoReturn", 12);
 	// TODO: Yo-yo whirring sound? Different sounds for flying and returning?
+	Sound(Format("Yo-yo spin%d", currentSound), false, this, 100, 0, 1);
 
 }
 
