@@ -44,7 +44,6 @@ protected func Departure(object from) {
 		SetYDir(-5);
 		YoyoThrown(from);
 	}
-	// TODO: What if used while gliding? Should probably work similarly in that case, just with a different throwing angle.
 }
 
 protected func Hit(int xSpeed, int ySpeed) {
@@ -127,7 +126,6 @@ protected func YoyoReturn() {
 	ClearScheduleCall(this, "YoyoReturn");
 	AddEffect("YoyoReturning", this, 150, 1, this);
 	SetVertex(0, 2, CNAT_NoCollision);
-	// TODO: While returning, perhaps change the category to vehicle so we don't hit the thrower. OTOH we still want to hit enemy Clonks, right?
 }
 
 
