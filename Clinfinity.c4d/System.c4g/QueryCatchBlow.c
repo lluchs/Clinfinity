@@ -5,8 +5,8 @@
 #appendto CLNK
 
 protected func QueryCatchBlow(object obj) {
-	/* Don't collide with hats. */
-	if(obj->~IsHat())
+	/* Counterpart to QueryCatchBlow */
+	if(obj->~QueryStrikeBlow(this))
 		return true;
 	return _inherited(obj, ...);
 }
