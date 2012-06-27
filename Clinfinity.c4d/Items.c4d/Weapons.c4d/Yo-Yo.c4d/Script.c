@@ -70,10 +70,12 @@ protected func QueryStrikeBlow(object target) {
 		if(currentState == YOYO_StateThrown) {
 			HitEffect();
 			// TODO: Inflict damage on target and perhaps fling it a bit
+			target->SetAction("KneelUp");
 			YoyoReturn();
 			return true;
 		} else if(currentState == YOYO_StateReturning) {
 			HitEffect();
+			target->SetAction("KneelUp");
 			return true;
 		}
 	}
