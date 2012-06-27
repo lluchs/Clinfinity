@@ -8,6 +8,13 @@ static const YOYO_StateInactive = 0;
 static const YOYO_StateThrown = 1;
 static const YOYO_StateReturning = 2;
 
+/*	Constants: Yo-yo flight */
+static const YOYO_ThrowFlightTime = 12;
+static const YOYO_ReturnMaxSpeed = 50;
+static const YOYO_ReturnSlowDownDistance = 5;
+static const YOYO_MaxCollectionDistance = 10;
+static const YOYO_Damage = 5;
+
 local thrower;
 local line;
 local currentState;
@@ -117,7 +124,7 @@ protected func YoyoThrown(object by) {
 	thrower = by;
 	line = CreateObject(YOLN, 0, 0, GetOwner());
 	ObjectSetAction(line, "Connect", this, by);
-	ScheduleCall(0, "YoyoReturn", 12);
+	ScheduleCall(0, "YoyoReturn", YOYO_ThrowFlightTime);
 	Sound("Yo-yo spin", false, this, 100, 0, 1);
 
 }
@@ -146,12 +153,14 @@ protected func FxYoyoReturningTimer(object target, int effectNumber, int effectT
 	if(!target->GetThrower()->GetAlive()) return FX_Execute_Kill;
 
 	// Approach until close enough for the Clonk to catch the yo-yo
-	if(target->ObjectDistance(target->GetThrower()) > 10) {
+	if(target->ObjectDistance(target->GetThrower()) > YOYO_MaxCollectionDistance) {
 		var xDistance = target->GetThrower()->GetX() - target->GetX();
 		var yDistance = target->GetThrower()->GetY() - target->GetY();
-		if(Abs(xDistance) > 5) {
+		// Speed calculation: Approach fast when far away but slow when very close.
+		// Otherwise, if too fast the yo-yo hits the thrower and it oscillates strangely around the Clonk.
+		if(Abs(xDistance) > YOYO_ReturnSlowDownDistance) {
 			var sign = xDistance / Abs(xDistance);
-			target->SetXDir(sign * 50);
+			target->SetXDir(sign * YOYO_ReturnMaxSpeed);
 		} else {
 			target->SetXDir(xDistance * 4);
 		}
