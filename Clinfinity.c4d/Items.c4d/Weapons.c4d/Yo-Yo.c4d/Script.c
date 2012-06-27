@@ -3,6 +3,7 @@
 
 #strict 2
 
+/*	Constants: Internal yo-yo states. */
 static const YOYO_StateInactive = 0;
 static const YOYO_StateThrown = 1;
 static const YOYO_StateReturning = 2;
@@ -11,10 +12,28 @@ local thrower;
 local line;
 local currentState;
 
-/* Engine events */
+/*	Section: Events */
 
 protected func Initialize() {
 	YoyoInactive();
+}
+
+public func ContainerThrow() {
+	var container = Contained();
+	// Thrown in flight by a Clonk: Act as weapon.
+	if((container->GetOCF() & OCF_CrewMember) != 0 && container->GetAction() == "Jump") {
+		var exitX = -9 + container->GetDir() * 18;
+		var exitY = 0;
+		var exitXSpeed = -2 + container->GetDir() * 4;
+		var exitYSpeed = 2;
+		if(container->~IsGliding()) {
+			exitX += container->GetXDir() / 10;
+			exitY = 10;
+			exitYSpeed = Max(2, container->GetYDir() * 2 / 10);
+		}
+		Exit(0, exitX, exitY, 0, exitXSpeed, exitYSpeed, 0);
+		YoyoThrown(container);
+	}
 }
 
 protected func Departure(object from) {
@@ -75,7 +94,7 @@ protected func Entrance(object into) {
 }
 
 
-/* Yo-yo functionality */
+/*	Section: Yo-yo functionality */
 
 public func GetThrower() {
 	return thrower;
