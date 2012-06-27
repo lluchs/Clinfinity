@@ -1,9 +1,8 @@
+/*	Script: Yo-yo
+	A short-range throwing weapon. */
+
 #strict 2
 
-/*	TODO:
-	This yo-yo has a state automaton.
-	What are the events that cause state transitions?
-	*/
 static const YOYO_StateInactive = 0;
 static const YOYO_StateThrown = 1;
 static const YOYO_StateReturning = 2;
@@ -36,6 +35,17 @@ protected func Hit(int xSpeed, int ySpeed) {
 	}
 }
 
+/*	Function: QueryStrikeBlow
+	Event call, called before the yo-yo hits another object.
+
+	When it was thrown and therefore used as a weapon,
+	the yo-yo will recoil from living beings instead of hitting them normally.
+
+	Parameters:
+	target - The object the yo-yo is about to hit.
+
+	Returns:
+	_true_ when recoiling from living beings, _false_ otherwise. */
 protected func QueryStrikeBlow(object target) {
 	// Recoil from living beings when used as weapon.
 	if((target->GetOCF() & OCF_Living) != 0) {
