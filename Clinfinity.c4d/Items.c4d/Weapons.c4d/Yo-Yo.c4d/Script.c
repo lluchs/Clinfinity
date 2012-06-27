@@ -36,6 +36,19 @@ protected func Hit(int xSpeed, int ySpeed) {
 	}
 }
 
+protected func QueryStrikeBlow(object target) {
+	// Recoil from Clonks when used as weapon.
+	if(currentState == YOYO_StateThrown) {
+		Sound("Yo-yo hit");
+		// TODO: Inflict damage on target and perhaps fling it a bit
+		YoyoReturn();
+		return true;
+	} else if(currentState == YOYO_StateReturning) {
+		Sound("Yo-yo hit");
+		return true;
+	}
+}
+
 protected func RejectEntrance(object into) {
 	return (currentState != YOYO_StateInactive && into != thrower);
 }
