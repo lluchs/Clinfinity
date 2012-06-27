@@ -29,7 +29,7 @@ protected func Departure(object from) {
 }
 
 protected func Hit(int xSpeed, int ySpeed) {
-	Sound("Yo-yo hit");
+	HitEffect();
 	if(currentState == YOYO_StateThrown) {
 		YoyoReturn();
 	}
@@ -50,15 +50,20 @@ protected func QueryStrikeBlow(object target) {
 	// Recoil from living beings when used as weapon.
 	if((target->GetOCF() & OCF_Living) != 0) {
 		if(currentState == YOYO_StateThrown) {
-			Sound("Yo-yo hit");
+			HitEffect();
 			// TODO: Inflict damage on target and perhaps fling it a bit
 			YoyoReturn();
 			return true;
 		} else if(currentState == YOYO_StateReturning) {
-			Sound("Yo-yo hit");
+			HitEffect();
 			return true;
 		}
 	}
+}
+
+private func HitEffect() {
+	Sound("Yo-yo hit");
+	CastParticles("PxSpark", RandomX(3, 5), 16, 0, 0, 15, 30, RGB(83, 41, 25), RGB(193, 95, 60));
 }
 
 protected func RejectEntrance(object into) {
