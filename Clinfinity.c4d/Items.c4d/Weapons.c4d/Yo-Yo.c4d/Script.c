@@ -74,15 +74,15 @@ protected func Hit(int xSpeed, int ySpeed) {
 protected func QueryStrikeBlow(object target) {
 	// Recoil from living beings when used as weapon.
 	if((target->GetOCF() & OCF_Living) != 0) {
-		if(currentState == YOYO_StateThrown) {
+		if(currentState == YOYO_StateThrown || currentState == YOYO_StateReturning) {
 			HitEffect();
-			// TODO: Inflict damage on target and perhaps fling it a bit
+
+			target->DoEnergy(-YOYO_Damage);
 			target->SetAction("KneelUp");
-			YoyoReturn();
-			return true;
-		} else if(currentState == YOYO_StateReturning) {
-			HitEffect();
-			target->SetAction("KneelUp");
+			// TODO: Perhaps fling target a bit
+
+			if(currentState == YOYO_StateThrown)
+				YoyoReturn();
 			return true;
 		}
 	}
