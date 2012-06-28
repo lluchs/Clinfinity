@@ -13,7 +13,8 @@ static const YOYO_ThrowFlightTime = 12;
 static const YOYO_ReturnMaxSpeed = 50;
 static const YOYO_ReturnSlowDownDistance = 5;
 static const YOYO_MaxCollectionDistance = 10;
-static const YOYO_Damage = 5;
+static const YOYO_Damage = 2;
+static const YOYO_MaxHitMoveDistance = 5;
 
 local thrower;
 local line;
@@ -79,7 +80,16 @@ protected func QueryStrikeBlow(object target) {
 
 			target->DoEnergy(-YOYO_Damage);
 			target->SetAction("KneelUp");
-			// TODO: Perhaps fling target a bit
+			// Move target away from thrower, but don't make it stuck in solid materials.
+			var awayFromThrower = -1;
+			if(GetX() > thrower->GetX()) awayFromThrower = 1;
+			for(var i = 0; i < YOYO_MaxHitMoveDistance; i++) {
+				target->SetPosition(target->GetX() + awayFromThrower, target->GetY());
+				if(target->Stuck()) {
+					target->SetPosition(target->GetX() - awayFromThrower, target->GetY());
+					break;
+				}
+			}
 
 			if(currentState == YOYO_StateThrown)
 				YoyoReturn();
