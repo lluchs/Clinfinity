@@ -13,8 +13,11 @@ static const YOYO_ThrowFlightTime = 12;
 static const YOYO_ReturnMaxSpeed = 50;
 static const YOYO_ReturnSlowDownDistance = 5;
 static const YOYO_MaxCollectionDistance = 10;
+
+/*	Constants: Yo-yo hits */
 static const YOYO_Damage = 2;
 static const YOYO_MaxHitMoveDistance = 5;
+static const YOYO_FlingTargetChance = 6;
 
 local thrower;
 local line;
@@ -79,15 +82,17 @@ protected func QueryStrikeBlow(object target) {
 			HitEffect();
 
 			target->DoEnergy(-YOYO_Damage);
-			target->SetAction("KneelUp");
-			// Move target away from thrower, but don't make it stuck in solid materials.
-			var awayFromThrower = -1;
-			if(GetX() > thrower->GetX()) awayFromThrower = 1;
-			for(var i = 0; i < YOYO_MaxHitMoveDistance; i++) {
-				target->SetPosition(target->GetX() + awayFromThrower, target->GetY());
-				if(target->Stuck()) {
-					target->SetPosition(target->GetX() - awayFromThrower, target->GetY());
-					break;
+			if(target->GetProcedure() != "FLIGHT") {
+				target->SetAction("KneelUp");
+				// Move target away from thrower, but don't make it stuck in solid materials.
+				var awayFromThrower = -1;
+				if(GetX() > thrower->GetX()) awayFromThrower = 1;
+				for(var i = 0; i < YOYO_MaxHitMoveDistance; i++) {
+					target->SetPosition(target->GetX() + awayFromThrower, target->GetY());
+					if(target->Stuck()) {
+						target->SetPosition(target->GetX() - awayFromThrower, target->GetY());
+						break;
+					}
 				}
 			}
 
