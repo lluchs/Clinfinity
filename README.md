@@ -13,3 +13,4 @@ Clonk Infinity uses sounds from the [Freesound project](http://www.freesound.org
 - Yo-yo hit.wav is a mix of three sounds:
 	- pang.wav by [jenc](http://www.freesound.org/people/jenc/)
 	- 5.wav and 38.wav by [adcbicycle](http://www.freesound.org/people/adcbicycle/)
+- Yo-yo whoosh.wav is swosh-22.flac by [qubodup](http://www.freesound.org/people/qubodup/)

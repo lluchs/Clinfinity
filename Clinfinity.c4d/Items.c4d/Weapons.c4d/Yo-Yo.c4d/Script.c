@@ -61,7 +61,7 @@ protected func Departure(object from) {
 protected func Hit(int xSpeed, int ySpeed) {
 	HitEffect();
 	if(currentState == YOYO_StateThrown) {
-		YoyoReturn();
+		YoyoReturn(true);
 	}
 }
 
@@ -102,7 +102,7 @@ protected func QueryStrikeBlow(object target) {
 			}
 
 			if(currentState == YOYO_StateThrown)
-				YoyoReturn();
+				YoyoReturn(true);
 			return true;
 		}
 	}
@@ -149,21 +149,19 @@ protected func YoyoThrown(object by) {
 
 }
 
-protected func YoyoReturn() {
+protected func YoyoReturn(bool byHit) {
 	currentState = YOYO_StateReturning;
-	// TODO: Perhaps play a short "whoosh" to tell the player acoustically that the yo-yo returns now.
 	ClearScheduleCall(this, "YoyoReturn");
-	AddEffect("YoyoReturning", this, 150, 1, this);
+	AddEffect("YoyoReturning", this, 150, 1, this, 0, byHit);
 	SetVertex(0, 2, CNAT_NoCollision);
 }
 
 
 /* Yo-yo returning effect */
 
-protected func FxYoyoReturningStart(object target, int effectNumber, int temporary) {
-	if(temporary == 0) {
-		// TODO: Yoyo pull back sound
-		//Sound("SailDown", false, target, 50);
+protected func FxYoyoReturningStart(object target, int effectNumber, int temporary, bool byHit) {
+	if(temporary == 0 && !byHit) {
+		Sound("Yo-yo whoosh", false, target, 25);
 	}
 }
 
