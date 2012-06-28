@@ -192,7 +192,6 @@ protected func FxYoyoReturningTimer(object target, int effectNumber, int effectT
 
 protected func FxYoyoReturningStop(object target, int effectNumber, int reason, bool temporary) {
 	if(!temporary) {
-		// TODO: Do something on stopping the effect?
 		YoyoInactive();
 	}
 }
