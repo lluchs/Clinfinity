@@ -18,6 +18,7 @@ static const YOYO_MaxCollectionDistance = 10;
 static const YOYO_Damage = 2;
 static const YOYO_MaxHitMoveDistance = 5;
 static const YOYO_FlingTargetChance = 6;
+static const YOYO_FlingSpeed = 2;
 
 local thrower;
 local line;
@@ -82,11 +83,12 @@ protected func QueryStrikeBlow(object target) {
 			HitEffect();
 
 			target->DoEnergy(-YOYO_Damage);
+			var awayFromThrower = -1;
+			if(GetX() > thrower->GetX()) awayFromThrower = 1;
+
 			if(target->GetProcedure() != "FLIGHT") {
 				target->SetAction("KneelUp");
 				// Move target away from thrower, but don't make it stuck in solid materials.
-				var awayFromThrower = -1;
-				if(GetX() > thrower->GetX()) awayFromThrower = 1;
 				for(var i = 0; i < YOYO_MaxHitMoveDistance; i++) {
 					target->SetPosition(target->GetX() + awayFromThrower, target->GetY());
 					if(target->Stuck()) {
@@ -94,6 +96,9 @@ protected func QueryStrikeBlow(object target) {
 						break;
 					}
 				}
+			}
+			if(!Random(YOYO_FlingTargetChance)) {
+				Fling(target, awayFromThrower * YOYO_FlingSpeed, -YOYO_FlingSpeed);
 			}
 
 			if(currentState == YOYO_StateThrown)
