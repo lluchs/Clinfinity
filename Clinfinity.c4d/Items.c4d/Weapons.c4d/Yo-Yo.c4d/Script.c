@@ -1,23 +1,58 @@
 /*	Script: Yo-yo
-	A short-range throwing weapon. */
+	A short-range throwing weapon.
+
+	Technical details:
+	Internally, the yo-yo object is in one of three discrete states:
+	* Inactive
+	* Thrown
+	* Returning
+
+	When inactive, the yo-yo exhibits no special behaviour. This is the default state.
+
+	In the "Thrown" state, activated when a Clonk (or any other type of crew member) throws the yo-yo, the following rules apply
+	* The yo-yo flies in a regular flight path, determined by the Clonk engine.
+	* Its starting speed is different from that of other objects, to be able to hit Clonks standing in front of the thrower.
+	* A line is drawn between the thrower and the yo-yo.
+	* After a set timespan or when hitting a living being, the yo-yo automatically switches do the "Returning" state.
+	* Nobody but its thrower can collect the yo-yo.
+
+	In the returning state, the yo-yo moves back to the original thrower, straight into its current direction.
+	Initially, it moves at a set maximum speed, but slows down to not injure the thrower.
+	When close enough, the following happens
+	* The yo-yo gets moved into the thrower's inventory.
+	* The drawn line is removed.
+	* The yo-yo switches to the "Inactive" state.
+
+	Two events, namely death and removal of the thrower, make the yo-yo switch to the "Inactive" state immediately. */
 
 #strict 2
 
-/*	Constants: Internal yo-yo states. */
+/*	Constants: Internal yo-yo states
+	YOYO_StateInactive	- Denotes the inactive state without special behaviour.
+	YOYO_StateThrown	- Denotes the state: Yo-yo has been thrown.
+	YOYO_StateReturning	- Denotes the state: Yo-yo moves back towards the original thrower. */
 static const YOYO_StateInactive = 0;
 static const YOYO_StateThrown = 1;
 static const YOYO_StateReturning = 2;
 
-/*	Constants: Yo-yo flight */
+/*	Constants: Yo-yo flight
+	YOYO_ThrowFlightTime		- The time between getting thrown and switching to the "Returning" state.
+	YOYO_ReturnMaxSpeed			- Maximum speed the yo-yo moves while returning to the thrower.
+	YOYO_ReturnSlowDownDistance	- Distance where the yo-yo slows down when approaching the thrower.
+	YOYO_MaxCollectionDistance	- Maximum distance in which the yo-yo returns itself to the thrower's inventory. */
 static const YOYO_ThrowFlightTime = 12;
 static const YOYO_ReturnMaxSpeed = 50;
 static const YOYO_ReturnSlowDownDistance = 5;
 static const YOYO_MaxCollectionDistance = 10;
 
-/*	Constants: Yo-yo hits */
+/*	Constants: Yo-yo hits
+	YOYO_Damage				- Damage one single yo-yo hit does.
+	YOYO_MaxHitMoveDistance	- Maximum distance a target that was hit gets knocked away from the thrower.
+	YOYO_FlingTargetChance	- Determines the chance for a "lucky strike" that flings a target. The chance is calculated as 1/YOYO_FlingTargetChance.
+	YOYO_FlingSpeed			- Fling speed for the "lucky strike". */
 static const YOYO_Damage = 2;
-static const YOYO_MaxHitMoveDistance = 5;
-static const YOYO_FlingTargetChance = 6;
+static const YOYO_MaxHitMoveDistance = 5; // 
+static const YOYO_FlingTargetChance = 6; // Chance: 1 of YOYO_FlingTargetChance is a lucky strike/critical hit
 static const YOYO_FlingSpeed = 2;
 
 local thrower;
@@ -128,6 +163,7 @@ public func GetThrower() {
 	return thrower;
 }
 
+/* Sets the yo-yo into inactive state. Clears scheduled call of YoyoReturn and removes returning effects, so it _stays_ inactive. */
 protected func YoyoInactive() {
 	currentState = YOYO_StateInactive;
 	ClearScheduleCall(this, "YoyoReturn");
@@ -139,6 +175,7 @@ protected func YoyoInactive() {
 	Sound("Yo-yo spin", false, this, 100, 0, -1);
 }
 
+/* Sets the yo-yo to thrown state. The yo-yo schedules a call of YoyoReturn so it only flies for a short time. */
 protected func YoyoThrown(object by) {
 	currentState = YOYO_StateThrown;
 	thrower = by;
@@ -149,6 +186,12 @@ protected func YoyoThrown(object by) {
 
 }
 
+/* Makes the yo-yo return to its original thrower.
+	it distinguishes between returning after colliding with solid material or hitting a target,
+	and returning because it reached the end of the string.
+
+	Parameters:
+	byHit - _true_ if the yo-yo returns because it collided with solid material */
 protected func YoyoReturn(bool byHit) {
 	currentState = YOYO_StateReturning;
 	ClearScheduleCall(this, "YoyoReturn");
