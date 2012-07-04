@@ -106,7 +106,7 @@ protected func ControlThrow() {
 
 protected func ControlUpdate(object self, int commandDirection, bool dig, bool throw) {
 	if(Control2Contents("Update", commandDirection, dig, throw)) return true;
-	return inherited(...);
+	return inherited(self, commandDirection, dig, throw);
 }
 
 protected func ControlCommand(string commandName, object target, int targetX, int targetY, object target2, data) {
