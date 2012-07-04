@@ -46,16 +46,22 @@ Format: 1.52
 # --------------------------------------------------------------------------
 
 
+File: Crew.c4d\Aviator.c4d\Script.c  (Clinfinity.c4d\Crew.c4d\Aviator.c4d\Script.c)
+
 Group: System.c4g  {
 
    File: AddMaterialMenuItem  (Clinfinity.c4d\System.c4g\MatSysMenu.c)
    File: Arrays  (Clinfinity.c4d\System.c4g\Arrays.c)
    File: Attach.c  (Clinfinity.c4d\System.c4g\Attach.c)
+   File: ContainerControl.c  (Clinfinity.c4d\System.c4g\ContainerControl.c)
    File: DrawResource.c  (Clinfinity.c4d\System.c4g\DrawResource.c)
    File: Ease.c  (Clinfinity.c4d\System.c4g\Ease.c)
    File: Find_Procedure.c  (Clinfinity.c4d\System.c4g\Find_Procedure.c)
    File: GetPlayersByTeam  (Clinfinity.c4d\System.c4g\GetPlayersByTeam.c)
    File: MatSys.c  (Clinfinity.c4d\System.c4g\MatSys.c)
+   File: Message.c  (Clinfinity.c4d\System.c4g\Message.c)
+   File: QueryCatchBlow.c  (Clinfinity.c4d\System.c4g\QueryCatchBlow.c)
+   File: Respawntime.c  (Clinfinity.c4d\System.c4g\Respawntime.c)
    File: String.c  (Clinfinity.c4d\System.c4g\String.c)
    }  # Group: System.c4g
 
@@ -80,10 +86,12 @@ Group: Helpers.c4d  {
 
 File: King of the Hill  (Clinfinity.c4d\Goals.c4d\KOTH.c4d\Script.c)
 File: Structure base object  (Clinfinity.c4d\Structures.c4d\StructureBaseObject.c4d\Script.c)
+File: Yo-yo  (Clinfinity.c4d\Items.c4d\Weapons.c4d\Yo-Yo.c4d\Script.c)
 
 Group: Index  {
 
    Index: Everything
+   Constant Index: Constants
    File Index: Files
    Function Index: Functions
    Variable Index: Variables
