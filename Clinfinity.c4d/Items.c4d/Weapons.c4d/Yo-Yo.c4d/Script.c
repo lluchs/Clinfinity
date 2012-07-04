@@ -61,10 +61,19 @@ local currentState;
 
 /*	Section: Events */
 
+/*	Function: Initialize
+	Called when the yo-yo is created.
+	The yo-yo is initialised as inactive. */
 protected func Initialize() {
 	YoyoInactive();
 }
 
+/*	Function: ContainerThrow
+	If a Clonk throws the yo-yo in flight (and does not want to drop it),
+	activate the yo-yo and make it fly downwards.
+
+	Returns:
+	_true_ if the yo-yo was activated as weapon, _false_ otherwise. */
 public func ContainerThrow() {
 	var container = Contained();
 	// Thrown in flight by a Clonk: Act as weapon.
@@ -85,6 +94,11 @@ public func ContainerThrow() {
 	return false;
 }
 
+/*	Function: Departure
+	If a Clonk throws the yo-yo while standing, activate the yo-yo.
+
+	Parameters:
+	from	- The object the yo-yo departed from. */
 protected func Departure(object from) {
 	// If the yo-yo was thrown by a Clonk, act as weapon.
 	if((from->GetOCF() & OCF_CrewMember) != 0 && from->GetAction() == "Throw") {
@@ -95,6 +109,13 @@ protected func Departure(object from) {
 	}
 }
 
+/*	Function: Hit
+	Event call when hitting solid materials.
+	If the yo-yo was thrown, it returns to the thrower.
+
+	Parameters:
+	xSpeed	- Horizontal speed.
+	ySpeed	- Vertical speed. */
 protected func Hit(int xSpeed, int ySpeed) {
 	HitEffect();
 	if(currentState == YOYO_StateThrown) {
@@ -150,10 +171,24 @@ private func HitEffect() {
 	CastParticles("PxSpark", RandomX(3, 5), 16, 0, 0, 15, 30, RGB(83, 41, 25), RGB(193, 95, 60));
 }
 
+/*	Function: RejectEntrance
+	Reject entrance into other objects than the original thrower when active or returning.
+
+	Parameters:
+	into	- The object that the yo-yo is about to enter.
+
+	Returns:
+	_true_ if the yo-yo rejects entrance into the object, _false_ if entrance is allowed. */
 protected func RejectEntrance(object into) {
 	return (currentState != YOYO_StateInactive && into != thrower);
 }
 
+/*	Function: Entrance
+	Event call when entering an object.
+	The yo-yo is set to the inactive state.
+
+	Parameters:
+	into	- The object that the yo-yo entered. */
 protected func Entrance(object into) {
 	YoyoInactive();
 }
@@ -161,11 +196,19 @@ protected func Entrance(object into) {
 
 /*	Section: Yo-yo functionality */
 
+/*	Function: GetThrower
+	Returns the object that threw the yo-yo.
+
+	Returns:
+	The original thrower. */
 public func GetThrower() {
 	return thrower;
 }
 
-/* Sets the yo-yo into inactive state. Clears scheduled call of YoyoReturn and removes returning effects, so it _stays_ inactive. */
+/*	Function: YoyoInactive
+	Sets the yo-yo to inactive state.
+	Clears the scheduled call of "YoyoReturn" and removes returning effects, so it stays inactive.
+	Removes the string between the thrower and the yo-yo and resets the yo-yo's vertex. */
 protected func YoyoInactive() {
 	currentState = YOYO_StateInactive;
 	ClearScheduleCall(this, "YoyoReturn");
@@ -177,7 +220,15 @@ protected func YoyoInactive() {
 	Sound("Yo-yo spin", false, this, 100, 0, -1);
 }
 
-/* Sets the yo-yo to thrown state. The yo-yo schedules a call of YoyoReturn so it only flies for a short time. */
+/*	Function: YoyoThrown
+	Sets the yo-yo to thrown state.
+	The yo-yo schedules a call of "YoyoReturn" so it only flies for a short time.
+	Additionally, a string attached to the thrower and to the yo-yo is created.
+
+	_Note_: The flight speed of the yo-yo must be set by the calling code.
+
+	Parameters:
+	by	- The yo-yo was thrown by this object. */
 protected func YoyoThrown(object by) {
 	currentState = YOYO_StateThrown;
 	thrower = by;
@@ -188,12 +239,17 @@ protected func YoyoThrown(object by) {
 
 }
 
-/* Makes the yo-yo return to its original thrower.
-	it distinguishes between returning after colliding with solid material or hitting a target,
-	and returning because it reached the end of the string.
+/*	Function: YoyoReturn
+ 	Makes the yo-yo return to its original thrower.
+	The cause for returning is distinguished between two cases:
+	* Colliding with a solid material or hitting a target.
+	* Reaching the maximum distance (the "end of the string").
+
+	While returning, the yo-yo's vertex is set to not collide with solid materials,
+	so the yo-yo can return to the thrower in any case.
 
 	Parameters:
-	byHit - _true_ if the yo-yo returns because it collided with solid material */
+	byHit - _true_ if the yo-yo returns because it collided with a solid material. */
 protected func YoyoReturn(bool byHit) {
 	currentState = YOYO_StateReturning;
 	ClearScheduleCall(this, "YoyoReturn");
