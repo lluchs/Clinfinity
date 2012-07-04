@@ -4,7 +4,7 @@ Title=KOTH_Skyward
 
 [Definitions]
 Definition1=Objects.c4d
-Definition2=Clinfinity\Clinfinity.c4d
+Definition2=Clinfinity.c4d
 
 [Game]
 Rules=CNMT=1;ENRG=1;FGRV=1;DRFT=15
