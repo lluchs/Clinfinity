@@ -68,7 +68,7 @@ protected func Initialize() {
 public func ContainerThrow() {
 	var container = Contained();
 	// Thrown in flight by a Clonk: Act as weapon.
-	if((container->GetOCF() & OCF_CrewMember) != 0 && container->GetAction() == "Jump") {
+	if((container->GetOCF() & OCF_CrewMember) != 0 && container->GetAction() == "Jump" && !GetPlrDownDouble(container->GetOwner())) {
 		var exitX = -9 + container->GetDir() * 18;
 		var exitY = 0;
 		var exitXSpeed = -2 + container->GetDir() * 4;
@@ -80,7 +80,9 @@ public func ContainerThrow() {
 		}
 		Exit(0, exitX, exitY, 0, exitXSpeed, exitYSpeed, 0);
 		YoyoThrown(container);
+		return true;
 	}
+	return false;
 }
 
 protected func Departure(object from) {
