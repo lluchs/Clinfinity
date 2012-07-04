@@ -10,6 +10,18 @@
 	_true_ */
 public func IsHat() { return true; }
 
+/*	Function: QueryStrikeBlow
+	Hats are not supposed to collide with anything, so this always returns _true_.
+
+	Parameters:
+	target - The target that receives the blow.
+
+	Returns:
+	_true_ */
+public func QueryStrikeBlow(object target) {
+	return true;
+}
+
 /*  Function: AttachTo
 	Attaches the hat to a clonk.
 

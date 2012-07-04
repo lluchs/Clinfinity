@@ -1,0 +1,3 @@
+A missile that returns into your hands after a short distance. A thrown yo-yo flies lower and farther than most other objects, so you can hit nearby enemies. The yo-yo can also be thrown while jumping, to hit enemies on the ground.
+
+When hit, an enemy is knocked away from you a bit - and sometimes, you'll even get a "lucky strike" that flings the enemy really far!
