@@ -1,0 +1,1 @@
+The string where the yo-yo is attached.

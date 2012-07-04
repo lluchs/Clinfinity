@@ -5,7 +5,7 @@ MaxPlayer=1
 
 [Definitions]
 Definition1=Objects.c4d
-Definition2=Clinfinity\Clinfinity.c4d
+Definition2=Clinfinity.c4d
 
 [Game]
 Goals=SCRG=1
