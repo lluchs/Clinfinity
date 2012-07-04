@@ -44,7 +44,7 @@ FullscreenBG=1
 	TitleUseBookFont=0
 	
 	[Scenario]
-	File=KOTH_Planetary.c4s
+	File=KOTH_Observatory.c4s
 	OverlayImage=Highlight.png
 	Area=708,260,254,30
 	Title=TITLE

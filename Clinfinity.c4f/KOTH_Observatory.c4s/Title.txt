@@ -1,2 +1,2 @@
-DE:Neues Szenario
-US:New Scenario
+DE:Infinity - <c de7e30>Observatorium</c>
+US:Infinity - <c de7e30>Observatory</c>
