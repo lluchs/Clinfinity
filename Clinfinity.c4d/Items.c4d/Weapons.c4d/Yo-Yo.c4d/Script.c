@@ -242,14 +242,14 @@ protected func YoyoThrown(object by) {
 /*	Function: YoyoReturn
  	Makes the yo-yo return to its original thrower.
 	The cause for returning is distinguished between two cases:
-	* Colliding with a solid material or hitting a target.
-	* Reaching the maximum distance (the "end of the string").
+	* Hitting a solid material or a target.
+	* Reaching the maximum flight timespan (reaching the "end of the string", so to say).
 
 	While returning, the yo-yo's vertex is set to not collide with solid materials,
 	so the yo-yo can return to the thrower in any case.
 
 	Parameters:
-	byHit - _true_ if the yo-yo returns because it collided with a solid material. */
+	byHit - _true_ if the yo-yo returns because of a hit. */
 protected func YoyoReturn(bool byHit) {
 	currentState = YOYO_StateReturning;
 	ClearScheduleCall(this, "YoyoReturn");

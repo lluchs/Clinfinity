@@ -1,3 +1,3 @@
-Wurfwaffe, die nach kurzer Distanz zum dir zurückkehrt. Das Jo-jo fliegt dabei flacher und weiter als andere geworfene Objekte, damit Gegner in der Nähe direkt getroffen werden können. Im Sprung kann das Jo-jo geworfen werden, um Gegner am Boden zu treffen.
+Wurfwaffe, die nach kurzer Zeit zu dir zurückkehrt. Das Jo-jo fliegt dabei flacher und weiter als andere geworfene Objekte, damit Gegner in der Nähe direkt getroffen werden können. Im Sprung kann das Jo-jo geworfen werden, um Gegner am Boden zu treffen.
 
 Ein Treffer stößt Gegner ein Stück von dir weg - und manchmal wird sogar ein Glückstreffer daraus, der den Gegner regelrecht wegschleudert.
