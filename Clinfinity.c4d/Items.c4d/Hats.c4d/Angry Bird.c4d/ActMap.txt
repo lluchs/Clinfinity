@@ -2,3 +2,6 @@
 Name=Attach
 Procedure=ATTACH
 FacetBase=1
+StartCall=Cackle
+Delay=70
+NextAction=Attach

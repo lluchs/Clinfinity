@@ -22,6 +22,7 @@ global func CreateMenu() {
 }
 
 global func FxMaterialMenuCheckStart(object target, int effectNum, int temp, id menuId) {
+	if(temp) return;
 	EffectVar(0, target, effectNum) = menuId; //menuId
 	EffectVar(1, target, effectNum) = []; //menuItems
 }
@@ -47,7 +48,8 @@ global func FxMaterialMenuCheckTimer(object target, int effectNum) {
 	matSys->MaterialCheck(type);
 }
 
-global func FxMaterialMenuCheckStop(object target, int effectNum) {
+global func FxMaterialMenuCheckStop(object target, int effectNum, int reason, bool temp) {
+	if(temp) return;
 	var menuId = EffectVar(0, target, effectNum);
 	if(GetMenu(target) == menuId) CloseMenu(target);
 	GetMatSys(GetOwner(target))->ClearMaterialCheck();

@@ -13,10 +13,11 @@ VertexCNAT=5,6,9,10
 VertexFriction=20,20
 Value=5
 Mass=100
-Components=METL=5
+Components=METL=2; WOOD=1;
 Picture=0,12,64,64
-Rotate=1
-RotatedSolidmasks=1
+Timer=10
+TimerCall=CheckSteam
+ColorByOwner=1
 
 [Physical]
 Float=50

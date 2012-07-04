@@ -189,6 +189,38 @@ public func Disconnect(object leftMediator, object rightMediator) {
 	return true;
 }
 
+/*  Function: GetNumberOfPlatforms
+	Counts all connected platforms.
+
+	Returns:
+	The number of platforms connected with this platform (including this one). */
+public func GetNumberOfPlatforms() {
+	var platform = this, result = 1;
+	while(platform = platform->GetMaster())
+		result++;
+	platform = this;
+	while(platform = platform->GetSlave())
+		result++;
+	return result;
+}
+
+/*  Function: AccumulateSteamUsage
+	Calculates the steam usage of all platforms connected with this one.
+
+	Works by calling <ResetSteamUsage> in the platforms.
+
+	Returns:
+	The steam usage of all platforms connected with this one (including this one). */
+public func AccumulateSteamUsage() {
+	var mediator = this, result = GetControlledPlatform()->ResetSteamUsage();
+	while(mediator = mediator->GetMaster())
+		result += mediator->GetControlledPlatform()->ResetSteamUsage();
+	mediator = this;
+	while(mediator = mediator->GetSlave())
+		result += mediator->GetControlledPlatform()->ResetSteamUsage();
+	return result;
+}
+
 private func HasMaster() {
 	return masterMediator != 0;
 }

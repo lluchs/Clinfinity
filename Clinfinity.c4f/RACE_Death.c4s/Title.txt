@@ -1,2 +1,2 @@
-DE:Todesrennen
-US:Death Race
+DE:Infinity - <c de7e30>Todesrennen</c>
+US:Infinity - <c de7e30>Death Race</c>

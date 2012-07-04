@@ -1,0 +1,17 @@
+[DefCore]
+id=SKYL
+Name=Himmelsinsel
+Version=4,9,5
+Category=C4D_StaticBack|C4D_Parallax|C4D_Background
+MaxUserSelect=0
+Width=300
+Height=300
+Offset=-150,-150
+Value=1
+Mass=1
+Components=SKYL=1;
+Picture=0,0,300,300
+Vertices=1
+VertexY=1
+VertexFriction=20
+ 

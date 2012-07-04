@@ -1,0 +1,9 @@
+[Action]
+Name=Left
+Facet=0,0,41,22
+StartCall=Left
+
+[Action]
+Name=Right
+Facet=41,0,41,22
+StartCall=Right

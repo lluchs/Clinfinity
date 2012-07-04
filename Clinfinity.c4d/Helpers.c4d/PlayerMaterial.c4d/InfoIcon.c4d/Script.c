@@ -3,8 +3,12 @@
 
 #strict 2
 
+static MatSys_FlashEasing;
+
 func Initialize() {
 	SetVisibility(VIS_Owner);
+	if(!MatSys_FlashEasing)
+		MatSys_FlashEasing = CreateEaseFunction("circle-in-out", 255);
 	return 1;
 }
 
@@ -88,7 +92,7 @@ protected func FxFlashTimer(object target, int effectNum, int effectTime) {
 		SetClrModulation(RGB(255, 255, 255), this, 2);
 		return -1;
 	}
-	var color, alpha = 255 * effectTime / MatSys_FlashDuration;
+	var color, alpha = EvalEase(MatSys_FlashEasing, 255 * effectTime / MatSys_FlashDuration);
 	if(EffectVar(0, target, effectNum) < 0)
 		color = RGBa(255, 0, 0, alpha);
 	else

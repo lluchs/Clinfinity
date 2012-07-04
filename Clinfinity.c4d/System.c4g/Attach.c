@@ -160,7 +160,7 @@ global func CopyChildrenVertices(object child) {
 	} else {
 		CopyVertices(child);
 	}
-	var grandchildren = FindObjects(Find_ActionTarget(child), Find_Func("CompareProdecure", "ATTACH"));
+	var grandchildren = FindObjects(Find_ActionTarget(child), Find_Procedure("ATTACH"));
 	for(var grandchild in grandchildren) {
 		CopyChildrenVertices(grandchild);
 	}
@@ -179,7 +179,7 @@ global func RemoveCopiedChildrenVertices(object child, bool rec) {
 	if(child == 0) {
 		child = this;
 	}
-	var grandchildren = FindObjects(Find_ActionTarget(child), Find_Func("CompareProdecure", "ATTACH"));
+	var grandchildren = FindObjects(Find_ActionTarget(child), Find_Procedure("ATTACH"));
 	for(var grandchild in grandchildren) {
 		RemoveCopiedChildrenVertices(grandchild, true);
 	}
@@ -190,18 +190,6 @@ global func RemoveCopiedChildrenVertices(object child, bool rec) {
 		EndCopiedVerticesRemoval();
 }
 
-/*	Function: CompareProdecure
-	Compares the procedure of an object to the given procedure.
-
-	Parameters:
-	procedure	- Comparison value.
-
-	Returns:
-	*true* if the procedure matches, *false* otherwise. */
-global func CompareProdecure(string procedure) {
-	return GetProcedure() == procedure;
-}
-
 /*	Function: SetPositionWithChildren
 	Sets the position of the calling object, including all objects attached to it.
 	Coordinates are global.
@@ -210,7 +198,7 @@ global func CompareProdecure(string procedure) {
 	x	- New horizontal coordinate.
 	y	- New vertical coordinate. */
 global func SetPositionWithChildren(int x, int y) {
-	var children = FindObjects(Find_ActionTarget(this), Find_Func("CompareProdecure", "ATTACH"));
+	var children = FindObjects(Find_ActionTarget(this), Find_Procedure("ATTACH"));
 	for(var child in children) {
 		var childX = child->GetX() - GetX() + x;
 		var childY = child->GetY() - GetY() + y;

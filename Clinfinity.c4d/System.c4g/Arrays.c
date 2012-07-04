@@ -188,3 +188,17 @@ global func RemoveElement(element, array &targetArray) {
 	}
 	return false;
 }
+
+/*  Function: PopElement
+	Removes the first element from an array without reordering.
+
+	Parameters:
+	targetArray - The array.
+
+	Returns:
+	The removed element. */
+global func PopElement(array &targetArray) {
+	var element = targetArray[0];
+	DeleteArrayItem(0, targetArray);
+	return element;
+}

@@ -1,3 +1,5 @@
 NewPlatform=New platform
 Connect=Connect
 Disconnect=Disconnect
+DisconnectNotPossible=Disconnecting isn't possible due to the building on top!
+PathNotFree=Not enough space for a new platform!

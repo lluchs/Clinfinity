@@ -5,6 +5,7 @@
 
 local controlMediator;
 local gearStop, gearUp, gearDown;
+local vertical, startPos;
 
 /*	Constructor: CreateLever
 	Factory method for levers.
@@ -29,14 +30,34 @@ protected func Initialize() {
 	gearStop = 0;
 	gearUp = 1;
 	gearDown = 2;
+
+	// save position
+	Schedule("startPos = GetX()", 1);
+	AddEffect("HorizontalBoundsCheck", this, 1, 0, this);
 }
 
 protected func MouseSelection(int player) {
 	Sound("Ding");
 }
 
+private func HostileCheck(object clonk) {
+	if(Hostile(GetOwner(), clonk->GetOwner())) {
+		SetCommand(clonk, "UnGrab");
+		return true;
+	}
+}
+
+protected func Grabbed(object controller, bool grab) {
+	if(grab && Hostile(GetOwner(), controller->GetOwner())) {
+		Sound("CommandFailure1");
+		SetCommand(controller, "UnGrab");
+	}
+}
+
 protected func ControlUp(object controller) {
-	if(GetDir() == gearDown) {
+	if(HostileCheck(controller))
+		return false;
+	if(vertical || GetDir() == gearDown) {
 		controlMediator->ControlEvent(COMD_Stop, this);
 	} else if(GetDir() == gearStop) {
 		controlMediator->ControlEvent(COMD_Up, this);
@@ -47,7 +68,9 @@ protected func ControlUp(object controller) {
 }
 
 protected func ControlDownSingle(object controller) {
-	if(GetDir() == gearUp) {
+	if(HostileCheck(controller))
+		return false;
+	if(vertical || GetDir() == gearUp) {
 		controlMediator->ControlEvent(COMD_Stop, this);
 	} else if(GetDir() == gearStop) {
 		controlMediator->ControlEvent(COMD_Down, this);
@@ -58,11 +81,49 @@ protected func ControlDownSingle(object controller) {
 }
 
 protected func ControlLeft(object controller) {
-	return ControlUp(controller);
+	if(HostileCheck(controller))
+		return false;
+	// No horizontal movement when there are connected platforms.
+	if(controlMediator->GetMaster() || controlMediator->GetSlave())
+		return ControlUp(controller);
+	// We need to stop if the platform isn't already moving to the left.
+	if(!vertical && GetDir() || GetDir() == gearDown)
+		controlMediator->ControlEvent(COMD_Stop, this);
+	else if(GetDir() == gearStop) {
+		// Are we allowed to go further left?
+		if(GetX() - startPos < -PLTF_HorizontalMovement) {
+			Sound("CommandFailure1");
+			return;
+		}
+		controlMediator->GetControlledPlatform()->SetComDir(COMD_Left);
+		SetDir(gearUp);
+		Sound("lever", false, this, 15);
+		vertical = true;
+		StartHorizontalBoundsCheck();
+	}
 }
 
 protected func ControlRight(object controller) {
-	return ControlDownSingle(controller);
+	if(HostileCheck(controller))
+		return false;
+	// No horizontal movement when there are connected platforms.
+	if(controlMediator->GetMaster() || controlMediator->GetSlave())
+		return ControlDownSingle(controller);
+	// We need to stop if the platform isn't already moving to the right.
+	if(!vertical && GetDir() || GetDir() == gearUp)
+		controlMediator->ControlEvent(COMD_Stop, this);
+	else if(GetDir() == gearStop) {
+		// Are we allowed to go further right?
+		if(GetX() - startPos > PLTF_HorizontalMovement) {
+			Sound("CommandFailure1");
+			return;
+		}
+		controlMediator->GetControlledPlatform()->SetComDir(COMD_Right);
+		SetDir(gearDown);
+		Sound("lever", false, this, 15);
+		vertical = true;
+		StartHorizontalBoundsCheck();
+	}
 }
 
 public func MovementEvent(int direction, object source) {
@@ -77,15 +138,46 @@ public func MovementEvent(int direction, object source) {
 	if(GetDir() != oldDirection) {
 		Sound("lever", false, this, 15);
 	}
+	vertical = false;
+	StopHorizontalBoundsCheck();
+}
+
+private func StartHorizontalBoundsCheck() {
+	ChangeEffect("HorizontalBoundsCheck", this, 0, "HorizontalBoundsCheck", 10);
+}
+
+private func StopHorizontalBoundsCheck() {
+	ChangeEffect("HorizontalBoundsCheck", this, 0, "HorizontalBoundsCheck", 0);
+}
+
+protected func FxHorizontalBoundsCheckTimer(object target, int effectNum, int effectTime) {
+	if(Abs(GetX() - startPos) > PLTF_HorizontalMovement)
+		controlMediator->ControlEvent(COMD_Stop, this);
 }
 
 /* -- Platform Connection Control -- */
 protected func ControlDigDouble(object controller) {
+	if(HostileCheck(controller))
+		return false;
 	CreateMenu(CXCN, controller, this, C4MN_Extra_Components);
+
+	// find leftest platform
+	var leftest, prev = controlMediator;
+	while(leftest = prev->GetMaster())
+		prev = leftest;
+	AddPlatformMenuItem(controller, 0, ObjectNumber(prev));
+
+	// dis/connect
 	var left  = controlMediator->GetMaster() || PlatformMediator(FindPlatform(false));
 	var right = controlMediator->GetSlave()  || PlatformMediator(FindPlatform(true));
 	ConnectionMenuItem(controller, left, controlMediator);
 	ConnectionMenuItem(controller, controlMediator, right);
+
+	// find rightest platform
+	var rightest, prev = controlMediator;
+	while(rightest = prev->GetSlave())
+		prev = rightest;
+	AddPlatformMenuItem(controller, ObjectNumber(prev), 0);
 }
 
 // Finds platforms to the left/right
@@ -114,27 +206,29 @@ private func ConnectionMenuItem(object clonk, object master, object slave) {
 			command = Format("ConnectPlatforms(Object(%d), Object(%d))", mn, sn);
 			AddMaterialMenuItem("$Connect$", command, MS4C, clonk, 0, 0, "", 2, 1);
 		}
-	} else {
-		command = Format("AddPlatform(Object(%d), Object(%d))", mn, sn);
-		AddMaterialMenuItem("$NewPlatform$", command, PLTF, clonk, 0, 0, "", 2, !slave);
 	}
 }
 
+private func AddPlatformMenuItem(object clonk, int mn, int sn) {
+	var command = Format("AddPlatform(Object(%d), Object(%d))", mn, sn);
+	AddMaterialMenuItem("$NewPlatform$", command, PLTF, clonk, 0, 0, "", 2, !sn);
+}
+
 protected func AddPlatform(object master, object slave) {
-	// subtract components
-	var components = [];
-	for(var i = 0, comp, num; (comp = GetComponent(0, i, 0, PLTF)) && (num = GetComponent(comp, i, 0, PLTF)); i++) {
-		if(MatSysGetTeamFill(GetOwner(), comp) < num) {
-			Sound("Error");
-			return;
-		}
-		PushBack([comp, num], components);
+	var platform = (master || slave)->GetControlledPlatform(), width = GetDefWidth(PLTF);
+	var dir = !!master * 2 - 1;
+	if(!PathFree(platform->GetX() + dir * (width / 2 + 1), platform->GetY(), platform->GetX() + dir * width * 3 / 2, platform->GetY())) {
+		Sound("Error");
+		Message("$PathNotFree$", this);
+		return;
 	}
-	for(var c in components)
-		MatSysDoTeamFill(-c[1], GetOwner(), c[0]);
+	if(!MatSysSubtractComponents(PLTF, GetOwner())) {
+		Sound("Error");
+		return;
+	}
 
 	Sound("Connect");
-	var new = controlMediator->GetControlledPlatform()->CreatePlatform(-GetDefWidth(PLTF), GetDefHeight(PLTF) / 2, GetOwner())->GetControlMediator();
+	var new = platform->CreatePlatform(-width, GetDefHeight(PLTF) / 2, GetOwner())->GetControlMediator();
 	if(master)
 		slave = new;
 	else
@@ -148,6 +242,12 @@ protected func ConnectPlatforms(object master, object slave) {
 }
 
 protected func DisconnectPlatforms(object master, object slave) {
+	var masterPlatform = master->GetControlledPlatform(), slavePlatform = slave->GetControlledPlatform();
+	if(masterPlatform->HasSharedBuildingsWith(slavePlatform) || slavePlatform->HasSharedBuildingsWith(masterPlatform)) {
+		Message("$DisconnectNotPossible$", this);
+		Sound("Error");
+		return;
+	}
 	Sound("Connect");
 	COMD->Disconnect(master, slave);
 	// move slave a bit to the right so the platforms aren't stuck

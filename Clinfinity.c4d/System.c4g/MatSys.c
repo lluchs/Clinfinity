@@ -72,11 +72,15 @@ global func MatSysGetTeamFill(int plr, id Key) {
 	iChange - The amount of change.
 	iPlr    - The player whose fill level should be changed.
 	Key     - The material id.
+	noMsg   - Don't output a message. Note: You should probably define *NoMatSysMessages(id mat) instead, see <MatSysMessage>.
 
 	Returns:
 	The actual change. */
-global func MatSysDoFill(int iChange, int iPlr, id Key) {
-	return GetMatSys(iPlr) -> DoFill(iChange, Key);
+global func MatSysDoFill(int iChange, int iPlr, id Key, bool noMsg) {
+	var actual = GetMatSys(iPlr) -> DoFill(iChange, Key);
+	if(!noMsg)
+		MatSysMessage(actual, Key);
+	return actual;
 }
 
 
@@ -93,7 +97,7 @@ global func MatSysDoFill(int iChange, int iPlr, id Key) {
 global func MatSysDoTeamFill(int change, int plr, id Key) {
 	var orig = change;
 	// first, try the given player
-	change -= MatSysDoFill(change, plr, Key);
+	change -= MatSysDoFill(change, plr, Key, true);
 	// then, loop through the other players
 	for(var count = GetPlayerCount(), i = 0; i < count && change != 0; i++) {
 		var p = GetPlayerByIndex(i);
@@ -101,7 +105,35 @@ global func MatSysDoTeamFill(int change, int plr, id Key) {
 			change -= MatSysDoFill(change, p, Key);
 		}
 	}
-	return orig - change;
+	var actual = orig - change;
+	MatSysMessage(actual, Key);
+	return actual;
+}
+
+/*  Function: MatSysSubtractComponents
+	Tries to subtract the components of the specified object.
+
+	The function doesn't do anything when the needed materials aren't in storage.
+
+	Parameters:
+	definition - The definition whose components should be subtracted.
+	player     - A player of the team whose MatSys should be used.
+
+	Returns:
+	_true_ if all materials were in storage, _false_ otherwise. */
+global func MatSysSubtractComponents(id definition, int player) {
+	var components = [];
+	for(var i = 0, comp, num; (comp = GetComponent(0, i, 0, definition)) && (num = GetComponent(comp, i, 0, definition)); i++) {
+		if(!InArray(comp, GetMatSysIDs()))
+			continue;
+		if(MatSysGetTeamFill(player, comp) < num) {
+			return false;
+		}
+		PushBack([comp, num], components);
+	}
+	for(var c in components)
+		MatSysDoTeamFill(-c[1], player, c[0]);
+	return true;
 }
 
 /*  Function: GetMatSysIDs

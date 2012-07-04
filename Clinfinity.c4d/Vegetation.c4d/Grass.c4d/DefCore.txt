@@ -1,0 +1,16 @@
+[DefCore]
+id=GRAS
+Version=4,9,8
+Name=Grass
+Category=C4D_StaticBack
+Width=40
+Height=30
+Offset=-20,-15
+Picture=0,0,40,30
+TopFace=0,0,40,30,0,0
+Vertices=1
+VertexY=14
+Mass=1
+Rotate=1
+StretchGrowth=1
+IncompleteActivity=1

@@ -7,3 +7,5 @@ CtrlMenuDesc=Menu
 TxtDescend=Jump off
 TxtEnergysupply=Energy supply
 CtrlInventoryDesc=Shift inventory
+CtxConkit=Construct Conkit
+TxtNoMaterial=Needs 1x{{WOOD}} and 1x{{METL}}

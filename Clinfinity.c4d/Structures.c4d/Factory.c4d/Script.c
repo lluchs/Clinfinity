@@ -2,6 +2,8 @@
 
 #strict 2
 
+#include STBO
+
 local requestedId;
 local remainingTime;
 local remainingAmount;
@@ -12,15 +14,21 @@ local player;
 
 public func ControlDigDouble(object caller) {
 	if(IsProducing()) return AlreadyProducing(caller);
+	if(Hostile(GetOwner(), caller->GetOwner())) {
+		Sound("CommandFailure1");
+		return;
+	}
 	ProductionMenu(caller);
 }
 
 public func ProductionMenu(object caller) {
 	if(IsProducing()) return AlreadyProducing(caller);
 	CreateMenu(CXCN, caller, this, 0, "$TxtNoPlrKnowledge$");
-	//todo: Verfügbare Produktion anzeigen
-	var knowledge = CNKT;
-	AddMaterialMenuItem("$TxtProduction$: %s", "RequestProduction", knowledge, caller, 0, caller);
+
+	var plr = caller->GetOwner(), i = 0, knowledge;
+	while(knowledge = GetPlrKnowledge(plr, 0, i++, C4D_Object)) {
+		AddMaterialMenuItem("$TxtProduction$: %s", "RequestProduction", knowledge, caller, 0, caller);
+	}
 }
 
 public func ProductionAmountMenu(object caller, id item, int amount) {
@@ -80,9 +88,9 @@ public func StartProduction(id item, int player, int amount) {
 protected func ContinueProduction() {
 	remainingTime = 5;
 	steamWhite = 0;
-	//todo: Ressourcen benötigen
-	if(true) {
-		//todo: Ressourcen entfernen
+	var steamUsage = requestedId->~FactorySteamUsage() || 50;
+	if(MatSysGetTeamFill(GetOwner(), STEM) >= steamUsage && MatSysSubtractComponents(requestedId, GetOwner())) {
+		MatSysDoTeamFill(-steamUsage, GetOwner(), STEM);
 	}
 	else {
 		CompletedProduction();
@@ -107,12 +115,12 @@ protected func CompleteProduction() {
 		matSys->DoFill(1, requestedId);
 	}
 	else {
-		var producedItem = CreateObject(requestedId, 0, 0, GetOwner());
+		var producedItem = CreateObject(requestedId, 49, 74, GetOwner());
 	}
 }
 
 public func AbortProduction() {
-	SetAction("None");
+	SetAction("Attach");
 	remainingTime = 0;
 }
 

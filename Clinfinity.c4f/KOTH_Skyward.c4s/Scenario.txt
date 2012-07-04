@@ -4,26 +4,20 @@ Title=KOTH_Skyward
 
 [Definitions]
 Definition1=Objects.c4d
-Definition2=Clinfinity\Clinfinity.c4d
+Definition2=Clinfinity.c4d
 
 [Game]
 Rules=CNMT=1;ENRG=1;FGRV=1;DRFT=15
 
 [Player1]
 Position=20,41
-Crew=AVTR=2
-Buildings=STMT=1
-Vehicles=CATA=1
-Material=
-Knowledge=STMT=1
+Crew=AVTR=1
+Knowledge=STMT=1;FTRY=1;FNCE=1;MUSK=1;FLNT=1;YOYO=1;
 
 [Player2]
 Position=171,44
-Crew=AVTR=2
-Buildings=STMT=1
-Vehicles=CATA=1
-Material=
-Knowledge=STMT=1
+Crew=AVTR=1
+Knowledge=STMT=1;FTRY=1;FNCE=1;MUSK=1;FLNT=1;YOYO=1;
 
 [Landscape]
 Vegetation=TRE1=3;TRE2=4;TRE3=2
@@ -43,7 +37,7 @@ LiquidLevel=20,30,0,100
 Layers=Rock=7;Rock-Ridge=7;Gold=7;Granite=4;Ore=3;Coal-Swirl=4;Water-Smooth=5;Oil-Smooth=5;Earth-Rough=50;Earth-Smooth2=50
 
 [Weather]
-Climate=40,10,0,100
+Climate=11,0,0,100
 YearSpeed=20,10,0,100
 Rain=45,0,0,100
 Wind=1,100,-100,100

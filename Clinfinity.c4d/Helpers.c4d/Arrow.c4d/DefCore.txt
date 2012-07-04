@@ -1,0 +1,8 @@
+[DefCore]
+id=_AR1
+Name=Arrow
+Category=8388624
+Width=32
+Height=32
+
+ 

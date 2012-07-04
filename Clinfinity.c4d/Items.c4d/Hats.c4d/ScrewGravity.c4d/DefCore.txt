@@ -1,0 +1,17 @@
+[DefCore]
+id=HAT9
+Name=Screw Gravity
+Version=4,9,5
+Category=C4D_Object
+MaxUserSelect=10
+Width=6
+Height=9
+Offset=-3,-4
+Value=10
+Mass=10
+Picture=6,0,64,64
+Vertices=1
+VertexX=0
+VertexY=2
+VertexFriction=20
+Rotate=1

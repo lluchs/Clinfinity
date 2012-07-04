@@ -20,6 +20,8 @@ local cp;
 local timer;
 // last update frame
 local lastUpdate;
+// last team owning the point
+local lastTeam;
 // the winner or -1
 local winningTeam;
 
@@ -36,6 +38,17 @@ protected func Completion() {
 	
 	// no winner initially
 	winningTeam = -1;
+
+	ScheduleCall(this, "InitialRespawnTime", 30);
+}
+
+protected func InitialRespawnTime() {
+	// initial long respawn time
+	var time = KOTH_FPS * 12;
+	for(var count = GetTeamCount(), i = 0; i < count; i++) {
+		var t = GetTeamByIndex(i);
+		SetRespawnTime(t, time);
+	}
 }
 
 /*  Function: SetCP
@@ -60,7 +73,18 @@ public func IsFulfilled() {
 	// which player holds the control point?
 	var owner = cp->GetOwner();
 	if(owner != NO_OWNER) {
-		var team = GetPlayerTeam(owner) - 1;
+		var team = GetPlayerTeam(owner);
+		if(team != lastTeam) {
+			// shorter respawn times for the attacking team
+			var time = KOTH_FPS * 3;
+			for(var count = GetTeamCount(), i = 0; i < count; i++) {
+				var t = GetTeamByIndex(i);
+				SetRespawnTime(t, time);
+			}
+			SetRespawnTime(team, KOTH_FPS * 7);
+		}
+		lastTeam = team;
+		team--;
 		// subtract time
 		timer[team] -= FrameCounter() - lastUpdate;
 		timer[team] = Max(timer[team], 0);
