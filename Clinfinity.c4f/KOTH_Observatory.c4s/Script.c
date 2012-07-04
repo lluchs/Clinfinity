@@ -23,7 +23,7 @@ func Initialize() {
 	ScriptGo(1);
 	*/
 	
-  CreateObject(PLAN,1200,1412);
+  CreateObject(OBSV,1210,1170);
 }
 
 func InitializePlayer(int plr) {
