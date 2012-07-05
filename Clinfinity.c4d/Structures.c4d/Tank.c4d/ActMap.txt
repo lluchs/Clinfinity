@@ -1,6 +1,6 @@
 [Action]
 Name=Tank
-Facet=0,0,60,80
+Facet=0,80,60,80,9,46
 Length=10
 NextAction=Hold
 
