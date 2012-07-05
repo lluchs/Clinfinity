@@ -35,7 +35,7 @@ protected func Destruction() {
 
 protected func RejectConstruction(int x, int y, object clonk) {
 	// only allow building on platform
-	if(!FindObject2(Find_ID(PLTF), clonk->Find_AtPoint(x, y + 1))) {
+	if(!FindObject2(Find_ID(PLTF), Find_Allied(clonk->GetOwner()), clonk->Find_AtPoint(x, y + 1))) {
 		Sound("Error");
 		Message("$OnlyOnPlatform$", clonk);
 		return true;
