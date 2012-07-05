@@ -1,0 +1,1 @@
+Dieses Objekt stellt die Grundfunktionalität für Gebäudeexplosion zur Verfügung.
