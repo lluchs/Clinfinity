@@ -2,6 +2,7 @@
 
 #strict 2
 
+#include L_DC
 #include L_SS
 #include STBO
 
@@ -13,6 +14,8 @@ static const STMT_Phases = 10;
 static const STMT_RespawnAmount = 100;
 
 public func MaxFill() { return 1500; }
+
+public func MaxDamage() { return 50; }
 
 // all previous changes in fill level
 local changes;
@@ -161,9 +164,12 @@ global func FxSteamTrendWarningTimer(object target, int effectNum, int effectTim
 		next = true;
 	else
 		next = false;
-	if(!warning && next || warning && !next)
+	if(!warning && next || warning && !next) {
 		for(var plr in players)
 			Sound("Warning_blowup", true, 0, 75, plr + 1, next*2 - 1);
+		for(var t in FindObjects(Find_ID(STMT), Find_Allied(players[0])))
+			t->SetClrModulation(RGB(255 * next, 0, 0));
+	}
 	EffectVar(1, target, effectNum) = next;
 }
 
