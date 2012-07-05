@@ -11,6 +11,11 @@
 
 #strict 2
 
+protected func Construction() {
+	if(GetCon() < 100)
+		SetCon(100);
+}
+
 protected func Initialize() {
 	var result = _inherited();
 	var platform = FindObject2(Find_ID(PLTF), Find_AtPoint(0, GetObjHeight() / 2 + 1));
