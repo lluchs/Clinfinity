@@ -12,6 +12,6 @@ protected func Initialize()
 private func Cicadas()
 {
   // Nur bei Nacht aktiv
-  if (!IsNight()) return(0);  
-  if (!Random(20)) Sound("Cicada*",1);
+  //if (!IsNight()) return(0);  
+  if (!Random(20)) Sound("Cricket*",1);
 }
