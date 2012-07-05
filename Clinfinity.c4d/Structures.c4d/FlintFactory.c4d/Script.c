@@ -20,7 +20,7 @@ protected func Initialize() {
 }
 
 private func NumberOfFlints() {
-	return ObjectCount2(Find_Container(this), Find_ID(FLNT));
+	return ObjectCount2(Find_Container(this));
 }
 
 public func UpdateDisplay() {
@@ -42,14 +42,18 @@ private func StartProduction() {
 }
 
 protected func ProduceFlint() {
-	CreateContents(FLNT);
+	var flintID, n = Random(8);
+	if(!n)         flintID = EFLN;
+	else if(n < 4) flintID = SFLN;
+	else           flintID = FLNT;
+	CreateContents(flintID);
 	UpdateDisplay();
 	StartProduction();
 }
 
 protected func ControlDig(object clonk) {
 	if(clonk->GetOwner() == GetOwner()) {
-		var flint = FindObject2(Find_Container(this));
+		var flint = FindObject2(Find_Container(this), Sort_Random());
 		if(flint) {
 			flint->Exit(0, AbsX(clonk->GetX()), AbsY(clonk->GetY()));
 			UpdateDisplay();
