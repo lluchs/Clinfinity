@@ -10,3 +10,11 @@ Procedure=ATTACH
 Facet=0,0,60,80
 Length=10
 NextAction=Hold
+
+[Action]
+Name=DMedium
+Facet=60,0,60,80
+
+[Action]
+Name=DHeavy
+Facet=120,0,60,80
