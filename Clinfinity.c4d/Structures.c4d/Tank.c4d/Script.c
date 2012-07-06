@@ -45,6 +45,13 @@ protected func Initialize() {
 	_inherited();
 }
 
+protected func DestroyBlast() {
+	// remove waiting Clonks
+	for(var obj in FindObjects(Find_Container(this)))
+		obj->RemoveObject();
+	return _inherited(...);
+}
+
 // manages delay for steam generation
 local generate;
 // bubbling?
