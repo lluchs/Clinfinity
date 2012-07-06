@@ -50,6 +50,16 @@ func Initialize() {
   CreateObject(TRE4,1372,961,-1);
   CreateObject(TRE4,1392,1051,-1);
   CreateObject(TRE4,1404,1076,-1);
+  
+  //static Drafts
+  var staticDraftObservatoryL=CreateObject(DRFT, 970, 1025); 
+	staticDraftObservatoryL -> SetPermanent();
+	
+  var staticDraftObservatoryR=CreateObject(DRFT, 1430, 940); 
+	staticDraftObservatoryR -> SetPermanent();
+
+  
+  ScriptGo(1);
 }
 
 func GetStartPosition(int team) {
