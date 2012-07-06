@@ -85,7 +85,10 @@ public func Damage(int iChange) {
 public func DamageGraphics() { return 0; }
 
 private func UpdateDamageGraphic() {
-	var n = ChangeRange(GetDamage(), 0, MaxDamage(), 0, DamageGraphics());
+	var max = MaxDamage();
+	var dmg = Min(GetDamage(), max);
+	var step = max / (DamageGraphics() + 1), n = 0;
+	while((n + 1) * step < dmg) n++;
 	if(n)
 		SetGraphics(Format("Damaged%d", n));
 	else
