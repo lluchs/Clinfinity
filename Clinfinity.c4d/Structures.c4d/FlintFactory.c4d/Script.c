@@ -52,7 +52,7 @@ protected func ProduceFlint() {
 }
 
 protected func ControlDig(object clonk) {
-	if(clonk->GetOwner() == GetOwner()) {
+	if(!Hostile(clonk->GetOwner(), GetOwner())) {
 		var flint = FindObject2(Find_Container(this), Sort_Random());
 		if(flint) {
 			flint->Exit(0, AbsX(clonk->GetX()), AbsY(clonk->GetY()));
