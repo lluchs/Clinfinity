@@ -2,9 +2,9 @@
 
 #strict 2
 
+#include STBO
 #include L_DC
 #include L_SS
-#include STBO
 
 static steamTrendWarnEffects;
 
@@ -16,6 +16,8 @@ static const STMT_RespawnAmount = 100;
 public func MaxFill() { return 1500; }
 
 public func MaxDamage() { return 50; }
+
+public func DamageGraphics() { return 2; }
 
 // all previous changes in fill level
 local changes;

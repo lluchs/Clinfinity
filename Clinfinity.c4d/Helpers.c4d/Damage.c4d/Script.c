@@ -36,6 +36,8 @@ protected func Construction() {
 }
 
 public func Damage(int iChange) {
+	UpdateDamageGraphic();
+
 	if(iChange <= 0)
 		return;
 	
@@ -77,6 +79,17 @@ public func Damage(int iChange) {
 		else
 			i--; // nochmal versuchen
 	}
+}
+
+// overwrite this!
+public func DamageGraphics() { return 0; }
+
+private func UpdateDamageGraphic() {
+	var n = ChangeRange(GetDamage(), 0, MaxDamage(), 0, DamageGraphics());
+	if(n)
+		SetGraphics(Format("Damaged%d", n));
+	else
+		SetGraphics();
 }
 
 public func FxMaxDamageExplosionStart(object pTarget, int iEffectNumber, bool fTemp) {
