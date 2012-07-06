@@ -34,6 +34,8 @@ protected func Initialize() {
 		steamTrendWarnEffects[team] = AddEffect("SteamTrendWarning", 0, 1, 100);
 		EffectVar(0, 0, steamTrendWarnEffects[team]) = team;
 	}
+	SetAlarmLamp(false);
+	SetObjDrawTransform(1000, 0, 3500, 0, 1000, -5000, this, 1);
 
 	// create dummy effect if this is the first Akku
 	// this ensures that when the last Akku gets destroyed, the display is reset to 0
@@ -158,6 +160,17 @@ public func FxMatSysSTEMChange(object target, int effectNum, int plr, int change
 }
 
 /* Steam trend warning */
+
+public func SetAlarmLamp(bool on) {
+	var action;
+	if(on)
+		action = "On";
+	else
+		action = "Off";
+	SetGraphics(0, this, ALRM, 1, GFXOV_MODE_Action, action);
+	return true;
+}
+
 global func FxSteamTrendWarningTimer(object target, int effectNum, int effectTime) {
 	var team = EffectVar(0, target, effectNum), players = GetPlayersByTeam(team);
 	var tank = FindObject2(Find_ID(STMT), Find_Allied(players[0]));
@@ -170,7 +183,7 @@ global func FxSteamTrendWarningTimer(object target, int effectNum, int effectTim
 		for(var plr in players)
 			Sound("Warning_blowup", true, 0, 75, plr + 1, next*2 - 1);
 		for(var t in FindObjects(Find_ID(STMT), Find_Allied(players[0])))
-			t->SetClrModulation(RGB(255 * next, 0, 0));
+			t->SetAlarmLamp(next);
 	}
 	EffectVar(1, target, effectNum) = next;
 }
