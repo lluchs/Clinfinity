@@ -5,14 +5,14 @@ TeamColors=1
 
 	[Team]
 	id=1
-	Name=Neptun
+	Name=Luna
 	PlrStartIndex=1
 	Color=14519062
 	MaxPlayer=0
 
 	[Team]
 	id=2
-	Name=Pluto
+	Name=Sol
 	PlrStartIndex=2
 	Color=7193151
 	MaxPlayer=0
