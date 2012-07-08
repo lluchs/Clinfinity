@@ -1,0 +1,12 @@
+[DefCore]
+id=ISLE
+Version=4,9,5
+Category=C4D_StaticBack|C4D_Parallax|C4D_Background
+Width=200
+Height=150
+Offset=-100,-75
+Value=10
+Mass=10
+Components=_NEW=1;
+Picture=6,0,64,64
+ 

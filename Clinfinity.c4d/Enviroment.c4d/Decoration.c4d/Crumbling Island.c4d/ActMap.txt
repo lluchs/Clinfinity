@@ -1,0 +1,7 @@
+[Action]
+Name=Crumble
+Length=169
+Delay=1
+Facet=0,0,200,150
+Sound=Earthquake
+EndCall=RemoveObj
