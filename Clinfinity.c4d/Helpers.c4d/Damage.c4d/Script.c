@@ -42,7 +42,7 @@ public func Damage(int iChange) {
 		return;
 	
 	if (GetDamage() > MaxDamage())
-		AddEffect("MaxDamageExplosion", this, 1, 20, this, L_DC);
+		DestroyBlast();
 
 	var ox, oy, wdt, hgt;
 	GetRect(GetID(), ox, oy, wdt, hgt);
@@ -93,32 +93,6 @@ private func UpdateDamageGraphic() {
 		SetGraphics(Format("Damaged%d", n));
 	else
 		SetGraphics();
-}
-
-public func FxMaxDamageExplosionStart(object pTarget, int iEffectNumber, bool fTemp) {
-	if(!fTemp) {
-		Sound("Warning_blowup", 0, this, 0, 0, 1);
-	}
-}
-
-public func FxMaxDamageExplosionTimer(object pTarget, int iEffectNumber, int iEffectTime)
-{
-	if (!pTarget) return -1; //Wir sind nicht Global!
-	var ox, oy, wdt, hgt;
-	GetRect(pTarget->GetID(), ox, oy, wdt, hgt);
-	for (var i = 0; i < 10; ++i) {
-		pTarget->CastParticles("Fragment1", 1, RandomX(50,150), ox+Random(wdt), oy+Random(hgt), 20, 30);		
-	}
-	if (iEffectTime > 1 * 35) {
-		for (var i = 0; i < 10; ++i) {
-			pTarget->CastParticles("Fragment2", 1, RandomX(50,150), ox+Random(wdt), oy+Random(hgt), 20, 30);
-			pTarget->CastParticles("Fragment3", 1, RandomX(50,150), ox+Random(wdt), oy+Random(hgt), 20, 30);	
-		}		
-	}
-	if (iEffectTime > 3 * 35) {
-		DestroyBlast(pTarget);
-		return -1;
-	}
 }
 
 private func DestroyBlast(object pTarget) {
