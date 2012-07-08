@@ -12,6 +12,7 @@ Mass=10
 Components=OBSV=1;
 Picture=0,0,500,500
 SolidMask=500,0,500,500,0,0
+TopFace=1000,0,500,500,0,0
 Vertices=1
 VertexY=1
 VertexFriction=20

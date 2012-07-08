@@ -14,6 +14,12 @@ public func Initialize() {
 	flag->SetAction("FlyBase", this);
 }
 
+// insert Point-Opening functionality here
+protected func OpenPoint(){
+  Sound("Boing");
+  SetAction("OpenCupola");
+  }
+
 private func Captured() {
 	flag->SetOwner(GetOwner());
 	return inherited(...);

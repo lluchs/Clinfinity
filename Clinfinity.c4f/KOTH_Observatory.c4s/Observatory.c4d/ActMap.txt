@@ -1,0 +1,8 @@
+[Action]
+Name=OpenCupola
+Procedure=NONE
+Facet=0,500,92,42,215,0
+FacetBase=1
+Delay=2
+Length=101
+Sound=Elevator

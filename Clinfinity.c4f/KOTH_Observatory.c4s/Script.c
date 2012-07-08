@@ -4,9 +4,13 @@
 
 func Initialize() {
 	var cp = CreateObject(OBSV,1210,1170,-1);
-	cp -> SetClrModulation(RGBa(235,230,255,10));
+	cp -> SetClrModulation(RGBa(235,230,255,50));
 	var koth = CreateObject(KOTH, 0, 0, NO_OWNER);
 	koth->SetCP(cp);
+	
+	//Mountains
+	var MtL = CreateObject(MONT,900,1350);
+	var MtR = CreateObject(MONT,1400,1350);
 	
   //Observatory Parts
 	var tw1 = CreateObject(TW_1,1087,825);
@@ -14,9 +18,6 @@ func Initialize() {
 	var tw2 = CreateObject(TW_2,1019,1050);
 	tw2 -> SetClrModulation(RGBa(230,220,255,5));
 
-	//Mountains
-	var MtL = CreateObject(MONT,900,1350);
-	var MtR = CreateObject(MONT,1400,1350);
 	
 	//Moon
 	var moon = CreateObject(MOON,1337,490);
