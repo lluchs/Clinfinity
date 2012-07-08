@@ -1,0 +1,14 @@
+[Action]
+Name=Producing
+FacetBase=1
+Delay=300
+NextAction=Letsroll
+
+[Action]
+Name=Letsroll
+Procedure=NONE
+Length=58
+Delay=2
+Facet=0,0,100,80,0,0
+EndCall=ProduceFlint
+NextAction=Idle
