@@ -1,0 +1,13 @@
+[Particle]
+Name=Raindrop
+MaxCount=2000
+InitFn=StdInit
+ExecFn=StdExec
+CollisionFn=Die
+DrawFn=Std
+Face=0,0,64,64,-32,-32
+Delay=0
+GravityAcc=60
+RByV=1
+VertexCount=1
+Additive=0
