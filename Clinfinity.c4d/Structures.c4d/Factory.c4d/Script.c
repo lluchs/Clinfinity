@@ -2,8 +2,8 @@
 
 #strict 2
 
-#include L_DC
 #include STBO
+#include L_DC
 
 public func MaxDamage() { return 60; }
 
