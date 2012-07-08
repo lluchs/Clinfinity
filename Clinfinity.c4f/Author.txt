@@ -5,4 +5,3 @@ Luchs
 B_E
 
 Additional objects:
- - Waterfall (Randrian)
