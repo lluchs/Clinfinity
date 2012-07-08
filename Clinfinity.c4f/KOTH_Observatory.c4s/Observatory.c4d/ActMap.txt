@@ -3,6 +3,16 @@ Name=OpenCupola
 Procedure=NONE
 Facet=0,500,92,42,215,0
 FacetBase=1
-Delay=2
+Delay=3
 Length=101
 Sound=Elevator
+NextAction=CupolaOpen
+
+[Action]
+Name=CupolaOpen
+Procedure=NONE
+Facet=9200,500,92,42,215,0
+FacetBase=1
+Delay=1
+Length=1
+NextAction=CupolaOpen
