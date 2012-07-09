@@ -84,7 +84,7 @@ public func StartProduction(id item, int player, int amount) {
 	if(!amount) amount = 1;
 	remainingAmount = amount;
 	requestedId = item;
-	SetAction("Produce");
+	SetAction("Produce*");
 	ContinueProduction();
 }
 
@@ -131,6 +131,7 @@ private func CompletedProduction() {
 	AbortProduction();
 	Sound("finish*");
 	steamWhite = 23;
+	SetAction("OpenDoor");
 }
 
 /* Callbacks und Effekte */
