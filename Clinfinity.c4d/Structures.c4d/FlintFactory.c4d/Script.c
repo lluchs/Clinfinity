@@ -29,6 +29,9 @@ public func UpdateDisplay() {
 }
 
 private func Captured() {
+	for(var obj in FindObjects(Find_Container(this)))
+		obj->RemoveObject();
+	UpdateDisplay();
 	StartProduction();
 }
 
