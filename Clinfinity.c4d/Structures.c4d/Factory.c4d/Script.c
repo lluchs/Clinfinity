@@ -5,6 +5,8 @@
 #include STBO
 #include L_DC
 
+static const FTRY_ProductionActions = 3;
+
 public func MaxDamage() { return 60; }
 
 local requestedId;
@@ -84,7 +86,7 @@ public func StartProduction(id item, int player, int amount) {
 	if(!amount) amount = 1;
 	remainingAmount = amount;
 	requestedId = item;
-	SetAction("Produce*");
+	SetAction(Format("Produce%d", Random(FTRY_ProductionActions) + 1));
 	ContinueProduction();
 }
 
@@ -132,6 +134,12 @@ private func CompletedProduction() {
 	Sound("finish*");
 	steamWhite = 23;
 	SetAction("OpenDoor");
+	ScheduleCall(this, "CloseDoor", 60);
+}
+
+protected func CloseDoor() {
+	SetAction("CloseDoor");
+	ScheduleCall(this, "AbortProduction", 20);
 }
 
 /* Callbacks und Effekte */
