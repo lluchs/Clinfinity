@@ -16,8 +16,12 @@ public func Initialize() {
 
 // insert Point-Opening functionality here
 protected func OpenPoint(){
-  Sound("Boing");
   SetAction("OpenCupola");
+  }
+  
+protected func LogMsg(){
+  Log("Punkt ist voll offen.");
+  Sound("cupola_open");
   }
 
 private func Captured() {

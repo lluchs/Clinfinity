@@ -5,7 +5,7 @@ Facet=0,500,92,42,215,0
 FacetBase=1
 Delay=3
 Length=101
-Sound=Elevator
+Sound=cupola_move
 NextAction=CupolaOpen
 
 [Action]
@@ -15,4 +15,14 @@ Facet=9200,500,92,42,215,0
 FacetBase=1
 Delay=1
 Length=1
-NextAction=CupolaOpen
+NextAction=CupolaOpen2
+EndCall=LogMsg
+
+[Action]
+Name=CupolaOpen2
+Procedure=NONE
+Facet=9200,500,92,42,215,0
+FacetBase=1
+Delay=1
+Length=1
+NextAction=CupolaOpen2
