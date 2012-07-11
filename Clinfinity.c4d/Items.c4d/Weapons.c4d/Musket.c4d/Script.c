@@ -16,6 +16,9 @@ static const MUSK_DamageDeviation = 3;
 // charging duration in frames
 static const MUSK_ChargeDuration = 200;
 
+// minimum charge for knockback
+static const MUSK_KnockbackCharge = 30;
+
 // timer interval for charging effect
 static const MUSK_ChargeRefreshRate = 5;
 
@@ -45,6 +48,10 @@ private func StopCharging() {
 private func CalcDamage() {
 	var deviation = RandomX(-MUSK_DamageDeviation, MUSK_DamageDeviation);
 	return ChangeRange(charge, 0, 100, MUSK_MinDamage, MUSK_MaxDamage) + deviation;
+}
+
+private func ChargeKnockback() {
+	return charge >= MUSK_KnockbackCharge;
 }
 
 protected func FxChargingTimer(object target, int effectNum, int effectTime) {
@@ -124,7 +131,7 @@ public func Fire(object pClonk, int iAngle) {
 
     // Abfeuern
     Exit(ammo, AbsX(iX + GetX(pClonk)), AbsY(iY + GetY(pClonk)), iR, iXDir, iYDir, iRDir);
-    ammo->Launch(-1, CalcDamage());
+    ammo->Launch(-1, CalcDamage(), ChargeKnockback());
 
     // Mündungsfeuer
     // hax, weil die Animation nicht genauen Winkeln entspricht und der Partikel seltsam verdreht wird
