@@ -6,6 +6,7 @@
 #include L_CP
 
 local flag;
+local t;
 
 public func Initialize() {
 	SetAction("MakeSound");
@@ -26,3 +27,14 @@ public func CaptureZone() {
 	return Find_InRect(-76, -34, 168, 57);
 }
 
+// pendle around, no solidmask though (yet)
+public func Pendle() {
+  t++;
+  var r = Cos(t, 100);
+  var fsin=Sin(r, 1000, 100);
+  var fcos=Cos(r, 1000, 100);
+  SetObjDrawTransform (
+    +fcos, +fsin, (1000-fcos) - fsin,
+    -fsin, +fcos, (1000-fcos) + fsin
+  );
+}

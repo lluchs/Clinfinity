@@ -1,6 +1,6 @@
 [DefCore]
-id=FLL1
-Name=Fill
+id=FFFD
+Name=Flint Factory Fill Display
 Version=4,9,5
 Category=18960
 MaxUserSelect=10
@@ -9,7 +9,6 @@ Height=11
 Offset=-10,-5
 Value=1
 Mass=10
-Components=FLL1=1;
 Picture=0,0,20,11
 Vertices=1
 VertexY=1

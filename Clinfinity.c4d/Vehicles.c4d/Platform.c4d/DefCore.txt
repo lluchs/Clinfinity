@@ -18,6 +18,7 @@ Picture=0,12,64,64
 Timer=10
 TimerCall=CheckSteam
 ColorByOwner=1
+BorderBound=3
 
 [Physical]
 Float=50

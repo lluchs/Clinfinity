@@ -228,7 +228,7 @@ protected func AddPlatform(object master, object slave) {
 	}
 
 	Sound("Connect");
-	var new = platform->CreatePlatform(-width, GetDefHeight(PLTF) / 2, GetOwner())->GetControlMediator();
+	var new = platform->CreatePlatform(-87, GetDefHeight(PLTF) / 2, GetOwner())->GetControlMediator();
 	if(master)
 		slave = new;
 	else

@@ -7,3 +7,8 @@ TxtNotEnoughMaterial=Nicht genug Baumaterial vorhanden!
 
 # Demolition
 CtxDemolitionDesc=Gebäude abreißen
+
+# Reparation
+CtxRepair=Gebäude reparieren
+NothingtoRepair=Nichts zu reparieren!
+NeededMaterials=Benötigte Materialien: 

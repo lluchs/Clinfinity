@@ -14,7 +14,7 @@ VertexFriction=50,50,100,100
 Value=200
 Mass=1500
 Components=ROCK=5;METL=3
-Picture=0,0,40,60
+Picture=40,0,40,60
 Exclusive=1
 Construction=1
 ContainBlast=1

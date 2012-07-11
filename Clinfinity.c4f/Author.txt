@@ -5,7 +5,6 @@ Luchs
 B_E
 
 Additional objects:
- - Waterfall (Randrian)
  - Webs (Sven2)
  - Firefly (Zapper)
 
