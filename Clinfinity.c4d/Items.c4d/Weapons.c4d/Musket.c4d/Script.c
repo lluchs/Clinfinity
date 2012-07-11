@@ -17,13 +17,17 @@ static const MUSK_DamageDeviation = 3;
 static const MUSK_ChargeDuration = 200;
 
 // minimum charge for knockback
-static const MUSK_KnockbackCharge = 30;
+static const MUSK_KnockbackCharge = 50;
 
 // timer interval for charging effect
 static const MUSK_ChargeRefreshRate = 5;
 
 // charge progress in percent
 local charge;
+
+protected func Initialize() {
+	DoFill(MaxFill());
+}
 
 // collect clip
 protected func Entrance(object container) {
