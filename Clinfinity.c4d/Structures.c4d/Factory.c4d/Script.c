@@ -23,6 +23,7 @@ local steamWhite;
 
 protected func Initialize() {
 	queue = [];
+	SetStillOverlayAction("Door18", 1);
 	return inherited(...);
 }
 
@@ -121,6 +122,7 @@ protected func CompleteProduction() {
 	}
 	else {
 		var producedItem = CreateObject(requestedId, 49, 74, GetOwner());
+		OpenDoor();
 	}
 	// Continue production if requested.
 	remainingAmount--;
@@ -149,13 +151,15 @@ private func CompletedProduction() {
 	AbortProduction();
 	Sound("finish*");
 	steamWhite = 23;
-	SetAction("OpenDoor");
+}
+
+private func OpenDoor() {
+	SetOverlayAction("Door", 1, true);
 	ScheduleCall(this, "CloseDoor", 60);
 }
 
 protected func CloseDoor() {
-	SetAction("CloseDoor");
-	ScheduleCall(this, "AbortProduction", 20);
+	SetOverlayAction("Door", 1);
 }
 
 /* Callbacks und Effekte */
