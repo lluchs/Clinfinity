@@ -2,6 +2,8 @@
 
 #strict 2
 
+public func SetupTime() { return 800; }
+
 // this is a control point
 #include L_CP
 
