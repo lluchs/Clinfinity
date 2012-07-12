@@ -9,16 +9,27 @@ static const FTRY_ProductionActions = 3;
 
 public func MaxDamage() { return 60; }
 
+// Array of items that will be produced next, in format [id, amount].
+local queue;
+// Id of the object that is currently in production.
 local requestedId;
+// Remaining time on the current production in 20f.
+// Will always be set to 5 when starting production.
 local remainingTime;
+// Batch production: number of items of requestedId which will be produced automatically.
 local remainingAmount;
+// Controls the amount of white steam at the end of a production.
 local steamWhite;
-local player;
+
+protected func Initialize() {
+	queue = [];
+	SetStillOverlayAction("Door18", 1);
+	return inherited(...);
+}
 
 /* Interaktion */
 
 public func ControlDigDouble(object caller) {
-	if(IsProducing()) return AlreadyProducing(caller);
 	if(Hostile(GetOwner(), caller->GetOwner())) {
 		Sound("CommandFailure1");
 		return;
@@ -27,7 +38,6 @@ public func ControlDigDouble(object caller) {
 }
 
 public func ProductionMenu(object caller) {
-	if(IsProducing()) return AlreadyProducing(caller);
 	CreateMenu(CXCN, caller, this, 0, "$TxtNoPlrKnowledge$");
 
 	var plr = caller->GetOwner(), i = 0, knowledge;
@@ -59,7 +69,6 @@ public func ProductionAmountMenu(object caller, id item, int amount) {
 }
 
 protected func RequestProduction(id item, object caller, bool right) {
-	if(IsProducing()) return AlreadyProducing(caller);
 	if(!right) {
 		StartProduction(item, GetOwner(caller), 1);
 	}
@@ -69,21 +78,19 @@ protected func RequestProduction(id item, object caller, bool right) {
 }
 
 protected func RequestAmountProduction(id item, object caller, int amount) {
-	if(IsProducing()) return AlreadyProducing(caller);
 	if(GetMenu(caller)) CloseMenu(caller);
 	StartProduction(item, GetOwner(caller), amount);
-}
-
-private func AlreadyProducing(object clonk) {
-	Sound("Error", 0, 0, 100, GetOwner(clonk)+1);
-	PlayerMessage(GetOwner(clonk), "$TxtAlreadyProducing$", clonk);
 }
 
 /* Produktion */
 
 public func StartProduction(id item, int player, int amount) {
-	if(IsProducing()) return;
 	if(!amount) amount = 1;
+	if(IsProducing()) {
+		// Add the new item to the queue.
+		PushBack([item, amount], queue);
+		return;
+	}
 	remainingAmount = amount;
 	requestedId = item;
 	SetAction(Format("Produce%d", Random(FTRY_ProductionActions) + 1));
@@ -108,19 +115,30 @@ protected func Produce() {
 }
 
 protected func CompleteProduction() {
-	remainingAmount--;
-	if(remainingAmount) {
-		ContinueProduction();
-	}
-	else {
-		CompletedProduction();
-	}
+	// Create the produced item.
 	var matSys = GetMatSys(GetOwner(), true);
 	if(matSys != 0 && InArray(requestedId, GetMatSysIDs())) {
 		matSys->DoFill(1, requestedId);
 	}
 	else {
 		var producedItem = CreateObject(requestedId, 49, 74, GetOwner());
+		OpenDoor();
+	}
+	// Continue production if requested.
+	remainingAmount--;
+	if(remainingAmount) {
+		ContinueProduction();
+	}
+	else {
+		var next = PopElement(queue);
+		if(next) {
+			requestedId = next[0];
+			remainingAmount = next[1];
+			ContinueProduction();
+		}
+		else {
+			CompletedProduction();
+		}
 	}
 }
 
@@ -133,13 +151,15 @@ private func CompletedProduction() {
 	AbortProduction();
 	Sound("finish*");
 	steamWhite = 23;
-	SetAction("OpenDoor");
+}
+
+private func OpenDoor() {
+	SetOverlayAction("Door", 1, true);
 	ScheduleCall(this, "CloseDoor", 60);
 }
 
 protected func CloseDoor() {
-	SetAction("CloseDoor");
-	ScheduleCall(this, "AbortProduction", 20);
+	SetOverlayAction("Door", 1);
 }
 
 /* Callbacks und Effekte */
