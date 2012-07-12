@@ -39,7 +39,7 @@ protected func Completion() {
 	// no winner initially
 	winningTeam = -1;
 
-	ScheduleCall(this, "InitialRespawnTime", 30);
+	ScheduleCall(this, "InitialRespawnTime", 300);
 }
 
 protected func InitialRespawnTime() {
