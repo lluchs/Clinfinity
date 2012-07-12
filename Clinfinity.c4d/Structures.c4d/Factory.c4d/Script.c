@@ -9,11 +9,15 @@ static const FTRY_ProductionActions = 3;
 
 public func MaxDamage() { return 60; }
 
+// Id of the object that is currently in production.
 local requestedId;
+// Remaining time on the current production in 20f.
+// Will always be set to 5 when starting production.
 local remainingTime;
+// Batch production: number of items of requestedId which will be produced automatically.
 local remainingAmount;
+// Controls the amount of white steam at the end of a production.
 local steamWhite;
-local player;
 
 /* Interaktion */
 
