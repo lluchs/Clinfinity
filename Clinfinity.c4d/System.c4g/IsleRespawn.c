@@ -86,3 +86,23 @@ global func RestoreIsland(array isle, int ox, int oy) {
 	}
 	return true;
 }
+
+/*  Function: PeriodicIslandRespawn
+	Saves and restores the given island periodically.
+
+	The island won't be restored while there are Clonks inside.
+
+	Parameters:
+	interval - Time interval in which the specified island is restored
+	other parameters - see <SaveIsland> */
+global func PeriodicIslandRespawn(int interval, int x, int y, int wdt, int hgt) {
+	var effectNum = AddEffect("PeriodicIslandRespawn", 0, 1, interval);
+	EffectVar(0, 0, effectNum) = SaveIsland(x, y, wdt, hgt);
+}
+
+global func FxPeriodicIslandRespawnTimer(object target, int effectNum, int effectTime) {
+	var isle = EffectVar(0, target, effectNum), rect = isle[0];
+	if(!FindObject2(Find_OCF(OCF_Alive), Find_InRect(rect[0], rect[1], rect[2], rect[3]))) {
+		RestoreIsland(isle);
+	}
+}
