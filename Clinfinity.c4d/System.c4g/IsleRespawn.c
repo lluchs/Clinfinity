@@ -6,7 +6,7 @@
 	
 	The island is saved using an array with the following structure:
 	 - First element: Array saving the rectangle passed to <SaveIsland>
-	 - Second element: Array of arrays of the format [material, number].
+	 - Second element: Array of arrays of the format [material, texture, number].
 	   They express a horizontal string of material pixels of one type.
 	   "Line breaks" have to be figured out using the first element. */
 
@@ -25,20 +25,22 @@
 	The island data. */
 global func SaveIsland(int x, int y, int wdt, int hgt) {
 	var isle = [[x, y, wdt, hgt], []];
-	var i = 1, mat = GetMaterial(x, y), n = 0, next;
+	var i = 1, mat = GetMaterial(x, y), tex = GetTexture(x, y), n = 0, nextMat, nextTex;
 	for(var iy = y; iy < y + hgt; iy++) {
 		for(var ix = x; ix < x + wdt; ix++) {
-			next = GetMaterial(ix, iy);
-			if(next == mat)
+			nextMat = GetMaterial(ix, iy);
+			nextTex = GetTexture(ix, iy);
+			if(nextMat == mat && nextTex == tex)
 				n++;
 			else {
-				PushBack([mat, n], isle[1]);
-				mat = next;
+				PushBack([mat, tex, n], isle[1]);
+				mat = nextMat;
+				tex = nextTex;
 				n = 1;
 			}
 		}
 	}
-	PushBack([mat, n], isle[1]);
+	PushBack([mat, tex, n], isle[1]);
 	return isle;
 }
 
@@ -62,7 +64,7 @@ global func RestoreIsland(array isle, int ox, int oy) {
 	var ix = x, iy = y;
 	var length, remaining, n, yInc;
 	for(var ms in isle[1]) {
-		length = ms[1];
+		length = ms[2];
 		while(length > 0) {
 			// remaining pixels in this line
 			remaining = wdt - ix + x;
@@ -73,7 +75,7 @@ global func RestoreIsland(array isle, int ox, int oy) {
 				yInc = true;
 			}
 			if(ms[0] != -1) {
-				DrawMaterialHLine(Format("%s-Smooth", MaterialName(ms[0])), ix, iy, n, true);
+				DrawMaterialHLine(Format("%s-%s", MaterialName(ms[0]), ms[1]), ix, iy, n, true);
 				CreateParticle("PSpark", ix, iy, 20, 5, 50, GetMaterialColorRGB(ms[0]));
 			}
 			ix += n;
