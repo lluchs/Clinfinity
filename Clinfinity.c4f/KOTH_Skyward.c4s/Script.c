@@ -46,8 +46,8 @@ func Initialize() {
 	isle2 -> SetAction("2");
 
 	// Island Respawn
-	PeriodicIslandRespawn(500, 100, 400, 220, 120); // left 'home' island
-	PeriodicIslandRespawn(503, 1625, 440, 190, 120); // right 'home' island
+	PeriodicIslandRespawn(3500, 100, 400, 220, 120); // left 'home' island
+	PeriodicIslandRespawn(3503, 1625, 440, 190, 120); // right 'home' island
 	
 	ScriptGo(1);
 }
