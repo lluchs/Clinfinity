@@ -11,6 +11,7 @@ Value=10
 Mass=10
 Components=OBSV=1;
 Picture=0,0,500,500
+ColorByOwner=1
 SolidMask=500,0,500,500,0,0
 TopFace=1000,0,500,500,0,0
 Vertices=1
