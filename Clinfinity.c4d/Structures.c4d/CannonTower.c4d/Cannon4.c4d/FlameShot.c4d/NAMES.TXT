@@ -1,3 +1,0 @@
-DE:Feuerball
-US:Fire ball
-FR:Boule de feu

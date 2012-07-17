@@ -1,2 +1,0 @@
-TxtConnectcannon=Kanone anschrauben
-TxtNoTower=Kein geeigneter Turm gefunden.

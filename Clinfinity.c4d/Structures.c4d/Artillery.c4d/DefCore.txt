@@ -1,5 +1,5 @@
 [DefCore]
-id=CTW0
+id=ATRY
 Version=4,9,8
 Name=CannonTower
 Category=C4D_Structure|C4D_SelectBuilding|C4D_SelectKnowledge
