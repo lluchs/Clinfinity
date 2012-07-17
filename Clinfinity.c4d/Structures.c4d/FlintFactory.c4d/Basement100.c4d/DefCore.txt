@@ -1,0 +1,17 @@
+[DefCore]
+id=B100
+Version=4,9,8
+Name=Basement
+Category=C4D_Structure
+Width=100
+Height=8
+Offset=-50,-4
+Vertices=2
+VertexX=-49,49
+VertexY=-5,-5
+VertexFriction=100,100
+Value=1
+Mass=10
+Components=ROCK=3
+SolidMask=0,0,100,8,0,0
+Construction=1
