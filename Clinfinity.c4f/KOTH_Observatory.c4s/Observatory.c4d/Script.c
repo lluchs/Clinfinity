@@ -16,15 +16,15 @@ public func Initialize() {
 	flag->SetAction("FlyBase", this);
 }
 
-// insert Point-Opening functionality here
-protected func OpenPoint(){
-  SetAction("OpenCupola");
-  }
-  
-protected func LogMsg(){
-  Log("Punkt ist voll offen.");
-  Sound("cupola_open");
-  }
+public func EnablePoint() {
+	if(inherited(...))
+		SetAction("OpenCupola");
+}
+
+protected func LogMsg() {
+	Log("Punkt ist voll offen.");
+	Sound("cupola_open");
+}
 
 private func Captured() {
 	flag->SetOwner(GetOwner());
