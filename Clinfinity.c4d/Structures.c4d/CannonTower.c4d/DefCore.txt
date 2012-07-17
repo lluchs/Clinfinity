@@ -13,7 +13,7 @@ VertexY=-19,21,21
 VertexFriction=50,100,100
 Value=100
 Mass=2000
-Components=WOOD=4;METL=5;ROCK=3
+Components=WOOD=6;METL=2;ROCK=1;
 Picture=100,0,64,64
 Exclusive=1
 BlastIncinerate=100
