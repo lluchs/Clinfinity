@@ -1,0 +1,4 @@
+TxtNoammo=No ammo
+TxtShoots=Shoot %s
+TxtShootsAll=Shoot all
+TxtNotenoughgunpowder1r=Not enough steam!

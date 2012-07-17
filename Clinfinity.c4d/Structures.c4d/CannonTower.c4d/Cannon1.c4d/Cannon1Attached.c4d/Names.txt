@@ -1,0 +1,2 @@
+DE:Angeschraubtes Kampfgeschütz
+US:Attached combat cannon

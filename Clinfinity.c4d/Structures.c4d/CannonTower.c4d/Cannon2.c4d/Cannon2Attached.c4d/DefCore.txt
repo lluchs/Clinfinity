@@ -1,0 +1,12 @@
+[DefCore]
+id=CTW4
+Version=4,9,8
+Name=AttachedArtilleryCannon
+Category=C4D_Vehicle
+Width=52
+Height=52
+Offset=-26,-26
+Vertices=1
+Picture=0,0,52,52
+Rotate=1
+NoStabilize=1
