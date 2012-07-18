@@ -4,7 +4,7 @@
 
 func Initialize() {
   //Ressource Buildings
-  CreateConstruction(RFLN,810,550,-1,100,1,0); //Flintfactory
+  CreateConstruction(RFLN,810,540,-1,100,1,0); //Flintfactory
 
   //Crumbling Islands
   var CIsleL = CreateObject(ISLE,760,810);
