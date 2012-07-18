@@ -2,13 +2,15 @@
 
 #strict 2
 
-func Initialize() {
+func Initialize(obj) {
 	Local(0) = RandomX(95, 98);
 	Local(1) = 92;
 }
 
+
 protected func Crumble(){
-  SetAction("Crumble");
+  if(!Random(20))
+    SetAction("Crumble");
   }
 
 protected func RemoveObj(obj){
