@@ -7,6 +7,8 @@ Height=150
 Offset=-100,-75
 Value=10
 Mass=10
-Components=_NEW=1;
+Components=ROCK=1;
 Picture=6,0,64,64
+TimerCall=Crumble
+Timer=100
  
