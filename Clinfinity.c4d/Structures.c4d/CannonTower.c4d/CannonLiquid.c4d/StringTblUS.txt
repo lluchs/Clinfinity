@@ -1,0 +1,2 @@
+TxtConnectcannon=Connect cannon
+TxtNoTower=No proper tower found.

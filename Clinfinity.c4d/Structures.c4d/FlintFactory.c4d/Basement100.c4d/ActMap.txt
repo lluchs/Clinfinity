@@ -1,0 +1,7 @@
+[Action]
+Name=Consolidate
+Length=1
+Delay=20
+NextAction=None
+FacetBase=1
+EndCall=Consolidated

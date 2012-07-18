@@ -1,0 +1,13 @@
+[DefCore]
+id=ADM2
+Version=4,9,8
+Name=Flameshot
+Category=C4D_Object
+Width=5
+Height=3
+Offset=-2,-1
+Vertices=1
+VertexFriction=1
+Mass=1
+Components=ADM2=1
+Picture=0,0,5,3

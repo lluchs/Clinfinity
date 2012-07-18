@@ -2,13 +2,15 @@
 
 #strict 2
 
+#include STBO
 #include L_DC
 #include L_SS
-#include STBO
 
 static const FNCE_SteamUsage = 25;
 
 public func MaxDamage() { return 35; }
+
+public func DamageGraphics() { return 1; }
 
 protected func ControlUp(object caller) {
 	var plr = caller->GetOwner();

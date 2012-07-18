@@ -1,0 +1,2 @@
+DE:Kampfgeschütz
+US:Combat cannon

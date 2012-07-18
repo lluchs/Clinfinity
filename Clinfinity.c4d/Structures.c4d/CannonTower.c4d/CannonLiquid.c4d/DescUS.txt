@@ -1,0 +1,1 @@
+The liquid cannon shoots lava, acid, oil, or water across long distances into the enemy base or other hard to reach areas. It will use any liquid stored in barrels in the cannon tower. You can also supply liquids by pumping them into the cannon tower with a drain pipe connection.

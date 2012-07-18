@@ -5,7 +5,7 @@ Facet=40,0,40,60
 Delay=1
 Length=20
 NextAction=Start
-Sound=Elevator
+Sound=Furnace
 EndCall=Progress
 
 [Action]

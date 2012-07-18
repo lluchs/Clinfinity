@@ -44,6 +44,10 @@ func Initialize() {
 	var isle2=CreateObject(SKYL, 1400, 545, -1);
 	isle2 -> SetClrModulation(RGBa(150, 180, 255, 155));
 	isle2 -> SetAction("2");
+
+	// Island Respawn
+	PeriodicIslandRespawn(3500, 100, 400, 220, 120); // left 'home' island
+	PeriodicIslandRespawn(3503, 1625, 440, 190, 120); // right 'home' island
 	
 	ScriptGo(1);
 }

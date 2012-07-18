@@ -1,0 +1,29 @@
+-------------------- Offene Todos:
+Cooldown
+
+
+--------------------- Werte:
+
+Geschuetzturm:
+Baukosten: Standard, WOOD=4;METL=5;ROCK=3 - bitte anpassen
+Dampfkosten: Hab erstmal nichts festgelegt. Die 2000 Masse des Geschuetzturm kosten natuerlich trotzdem was. 
+Schaden: 50
+
+
+Dampfkosten Geschuetzturm pro Schuss:
+
+Kampfgeschuetz: 5*Masse
+Artilleriegeschuetz: 10*Masse
+Flammenwerfer: 40
+Fluessigkeitsgeschuetz: 15
+
+---------------------- Features
+
+[x]Flugbahn vorzeichnen erwünscht
+[x]Anfassbar und gewohnt bedienbar. Kein Eingang, nicht von Feinden bedienbar.
+[x]Cannonen per Doppelgraben/Contextmenue dranpappbar.
+[x]Alles was nicht Kanonen und Fahrzeug ist wird entladen und ausgespuckt. (derzeit nutzlos, da der Entrance fehlt - man soll aber spaeter vllt. irgendwie die Lore dranpacken koennen.)
+[x]Schießt Flints die man reinsteckt mit Dampf statt Schießpulver!
+[x]Unterstuetzt Kampf und Artilleriegeschuetz
+[x]<Luchs> wobei die Masse ja einen Einfluss auf die Dampfkosten beim Schießen haben könnte <- eingebaut
+[x]Unterstuetzt Fluessigkeitsgeschuetz(!), und FlameThrower

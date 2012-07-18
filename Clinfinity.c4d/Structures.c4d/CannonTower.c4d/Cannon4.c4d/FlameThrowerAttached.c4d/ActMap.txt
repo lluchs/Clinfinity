@@ -1,0 +1,14 @@
+[Action]
+Name=Attaching
+Procedure=ATTACH
+Delay=15
+FacetBase=1
+NextAction=Attaching
+
+[Action]
+Name=Rotating
+Procedure=ATTACH
+Delay=15
+FacetBase=1
+NextAction=Rotating
+Sound=CannonRotation
