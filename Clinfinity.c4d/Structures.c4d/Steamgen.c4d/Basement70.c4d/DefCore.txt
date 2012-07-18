@@ -1,0 +1,17 @@
+[DefCore]
+id=B_70
+Version=4,9,8
+Name=Basement
+Category=C4D_Structure
+Width=70
+Height=8
+Offset=-35,-4
+Vertices=2
+VertexX=-34,34
+VertexY=-5,-5
+VertexFriction=100,100
+Value=1
+Mass=10
+Components=ROCK=2;
+SolidMask=0,0,70,8,0,0
+Construction=1
