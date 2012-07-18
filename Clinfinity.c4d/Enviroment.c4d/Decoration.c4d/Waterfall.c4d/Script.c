@@ -4,6 +4,7 @@
 
 protected func Initialize(){
   DigFree(0,0,2);
+  }
 
 protected func CastPXS2()
 {
