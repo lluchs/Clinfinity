@@ -3,8 +3,11 @@
 #strict 2
 
 protected func Initialize() {
-    //ozone
+  //ozone
 	SetGamma(RGB(0,0,8), RGB(115,125,125), RGB(255,255,255));
+  
+  //trailsign
+  CreateObject(SIGN,150,300);
   
 	// rotate drafts
 	for(var draft in FindObjects(Find_ID(DRFT))) {
