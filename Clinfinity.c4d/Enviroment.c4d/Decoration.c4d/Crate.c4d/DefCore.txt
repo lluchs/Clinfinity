@@ -1,0 +1,19 @@
+[DefCore]
+id=CRAT
+Name=New Object
+Version=4,9,5
+Category=18960
+MaxUserSelect=10
+Width=16
+Height=12
+Offset=-8,-6
+Value=5
+Mass=20
+Components=WOOD=1;
+Picture=0,12,64,64
+SolidMask=0,0,15,12,0,0
+Vertices=4
+VertexX=-7,-7,7,7
+VertexY=-5,5,-5,5
+VertexFriction=80,80,80,80
+ 
