@@ -1,0 +1,19 @@
+[DefCore]
+id=SIGN
+Name=New Object
+Version=4,9,5
+Category=C4D:Structure
+MaxUserSelect=1
+Width=16
+Height=23
+Offset=-8,-12
+Value=5
+Mass=10
+Components=WOOD=1;
+Picture=0,0,16,23
+Grab=2
+GrabPutGet=C4D_GrabPut
+Vertices=3
+VertexX=1,2,3
+VertexY=1,2,3
+VertexFriction=80,80,80
