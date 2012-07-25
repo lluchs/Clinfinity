@@ -2,7 +2,7 @@
 id=SIGN
 Name=New Object
 Version=4,9,5
-Category=C4D:Structure
+Category=C4D_Structure
 MaxUserSelect=1
 Width=16
 Height=23
