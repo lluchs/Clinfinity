@@ -1,4 +1,4 @@
-/*-- Neues Szenario --*/
+/*-- Crumbling Islands --*/
 
 #strict
 
@@ -13,14 +13,52 @@ func Initialize() {
   
   CreateObject(WTFL,814,698); //Waterfall
   
-  SetSkyParallax(1,20,0,1,0);
+  SetSkyParallax(1,20,0,1,0); //Sky move with Wind
   
   PlaceVines();
 }
 
 func InitializePlayer(int plr) {
 	CreateMatSys(plr);
+	// fill with material
+	var msys = GetMatSys(plr);
+	msys->DoFill(4, WOOD);
+	msys->DoFill(10, METL);
+	msys->DoFill(7, ROCK);
+
+	var team = GetPlayerTeam(plr);
+	var pos = GetStartPosition(team);
+	if(GetLength(GetPlayersByTeam(team)) == 1) {
+		CreateStartMaterial(pos[0], pos[1], plr);
+	}
+
+	var tank = FindObject2(Find_ID(STMT), Find_Allied(plr));
+	tank->DoFill(300);
+	var i = 0, clonk;
+	while(clonk = GetCrew(plr, i++))
+		clonk->Enter(tank);
+
 }
+
+func CreateStartMaterial(int x, int y, int plr, int team) {
+	var pltf1=PLTF->CreatePlatform(x, y, plr);
+	var pltf2=PLTF->CreatePlatform(x+20, y, plr);
+	PLTF->Connect(pltf1, pltf2);
+	CreateConstruction(STMT, x + 10, y - 5, plr, 100);
+	if(team == 1){
+	  CreateConstruction(CTW0, x + 50, y - 5, plr, 100);
+	 } else {
+	  CreateConstruction(CTW0, x - 50, y - 5, plr, 100);
+	  }
+}
+
+func GetStartPosition(int team) {
+	if(team == 1)
+		return [300, 730];
+	if(team == 2)
+		return [1800, 730];
+}
+
 
 protected func PlaceVines(){
 var obj0 = CreateObject(VINE,755,557,-1);
