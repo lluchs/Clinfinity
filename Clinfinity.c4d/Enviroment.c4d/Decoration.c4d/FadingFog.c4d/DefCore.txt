@@ -1,0 +1,13 @@
+[DefCore]
+id=FOG_
+Name=Fog
+Version=4,9,5
+Category=C4D_Foreground
+Width=800
+Height=300
+Offset=-400,-150
+Value=1
+Mass=1
+Components=FOG_=1;
+Picture=0,0,200,150
+ 
