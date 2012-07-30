@@ -16,6 +16,11 @@ func Initialize() {
   SetSkyParallax(1,20,0,1,0); //Sky move with Wind
   
   PlaceVines();
+  
+  //Fog
+  CreateObject(FOG_, 400, 1050, -1);
+  CreateObject(FOG_, 1200, 1050, -1);
+  CreateObject(FOG_, 2000, 1050, -1);
 }
 
 func InitializePlayer(int plr) {
