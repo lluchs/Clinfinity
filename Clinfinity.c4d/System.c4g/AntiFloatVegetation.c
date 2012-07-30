@@ -1,8 +1,9 @@
-/* Stop grass from growing in the air. */
+/* Stop some kind of vegetation from growing in the air. */
 
 #strict 2
 
-#appendto GRAS
+#appendto GRAS //Grass
+#appendto PLNT //Plants
 
 protected func Initialize() {
 	AddEffect("CheckAir", this, 1, 30, this);
