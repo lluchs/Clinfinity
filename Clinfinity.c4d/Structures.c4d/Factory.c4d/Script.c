@@ -7,6 +7,8 @@
 
 static const FTRY_ProductionActions = 3;
 
+public func DamageGraphics() { return 3; }
+
 public func MaxDamage() { return 60; }
 
 // Array of items that will be produced next, in format [id, amount].
