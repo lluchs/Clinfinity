@@ -57,20 +57,34 @@ local generate;
 // bubbling?
 local bubbling;
 
+private func HeavilyDamaged() {
+	return currentDamageGraphic == DamageGraphics();
+}
+
 protected func Steam() {
+	var shouldBubble = false;
 	if(GetFill() > MaxFill() * 2 / 3) {
 		CreateParticle("Smoke", 30, -18, 0, 0, 50, RGBa(255, 255, 255, 0));
-		if(!bubbling) {
-			Sound("steam_exhaust", 0, 0, 0, 0, 1);
-			bubbling = true;
-		}
-	} else if(bubbling) {
+		shouldBubble = true;
+	}
+	if(HeavilyDamaged()) {
+		CreateParticle("Smoke", RandomX(-15, 15), RandomX(-20, 5), 0, 0, 50, RGBa(255, 255, 255, 0));
+		shouldBubble = true;
+	}
+	if(shouldBubble && !bubbling) {
+		Sound("steam_exhaust", 0, 0, 0, 0, 1);
+		bubbling = true;
+	}
+	else if(!shouldBubble && bubbling) {
 		Sound("steam_exhaust", 0, 0, 0, 0, -1);
 		bubbling = false;
 	}
 	// generation
 	if(!generate--) {
 		var change = DoFill(125 + RandomX(-10, 10));
+		// Produce less steam when heavily damaged.
+		if(HeavilyDamaged())
+			change -= 25;
 		MatSysMessage(change, STEM);
 		generate = RandomX(350, 450);
 	}

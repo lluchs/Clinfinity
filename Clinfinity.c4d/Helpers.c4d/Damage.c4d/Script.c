@@ -84,15 +84,20 @@ public func Damage(int iChange) {
 // overwrite this!
 public func DamageGraphics() { return 0; }
 
+local currentDamageGraphic;
+
 private func UpdateDamageGraphic() {
 	var max = MaxDamage();
 	var dmg = Min(GetDamage(), max);
 	var step = max / (DamageGraphics() + 1), n = 0;
 	while((n + 1) * step < dmg) n++;
-	if(n)
-		SetGraphics(Format("Damaged%d", n));
-	else
-		SetGraphics();
+	if(n != currentDamageGraphic) {
+		if(n)
+			SetGraphics(Format("Damaged%d", n));
+		else
+			SetGraphics();
+		currentDamageGraphic = n;
+	}
 }
 
 private func DestroyBlast(object pTarget) {
