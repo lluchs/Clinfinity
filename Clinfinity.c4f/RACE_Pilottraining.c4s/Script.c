@@ -16,8 +16,19 @@ protected func Initialize() {
   
   // rotate drafts
   for(var draft in FindObjects(Find_ID(DRFT))) {
-	draft->SetR(Random(360));
+	  draft->SetR(Random(360));
 	}
+  
+  //Windmill
+  var obj=CreateObject(WMIL, 100, 200, -1);
+  
+  while(!obj -> Stuck()) {
+    obj -> SetPosition(GetX(), GetY() + 1);
+    if(obj -> GetY() > LandscapeHeight()) {
+      obj -> RemoveObject();
+      return;
+    }
+  }
 }
 
 // -- Callbacks des Rennen-Spielziels --
