@@ -3,32 +3,32 @@
 #strict 2
 
 protected func Initialize() {
-  //ozone
+	// ozone
 	SetGamma(RGB(0,0,8), RGB(115,125,125), RGB(255,255,255));
-  
-  //trailsign
-  CreateObject(SIGN,150,300);
-  
-  //Rails
-  CreateObject(RAIL, 30,300);
-  CreateObject(RAIL, 90,300);
-  CreateObject(RAIL, 120, 300);
-  
-  // rotate drafts
-  for(var draft in FindObjects(Find_ID(DRFT))) {
-	  draft->SetR(Random(360));
+
+	// trailsign
+	CreateObject(SIGN,150,300);
+
+	// Rails
+	CreateObject(RAIL, 30,300);
+	CreateObject(RAIL, 90,300);
+	CreateObject(RAIL, 120, 300);
+
+	// rotate drafts
+	for(var draft in FindObjects(Find_ID(DRFT))) {
+		draft->SetR(Random(360));
 	}
-  
-  //Windmill
-  var obj=CreateObject(WMIL, 100, 200, -1);
-  
-  while(!obj -> Stuck()) {
-    obj -> SetPosition(GetX(), GetY() + 1);
-    if(obj -> GetY() > LandscapeHeight()) {
-      obj -> RemoveObject();
-      return;
-    }
-  }
+
+	// Windmill
+	var obj=CreateObject(WMIL, 100, 200, -1);
+
+	while(!obj -> Stuck()) {
+		obj -> SetPosition(GetX(), GetY() + 1);
+		if(obj -> GetY() > LandscapeHeight()) {
+			obj -> RemoveObject();
+			return;
+		}
+	}
 }
 
 // -- Callbacks des Rennen-Spielziels --
