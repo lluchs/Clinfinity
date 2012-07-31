@@ -5,7 +5,7 @@ ScenInfoArea=20,60,260,550
 FullscreenBG=1
 
 	[Scenario]
-	File=RACE_Death.c4s
+	File=RACE_Pilottraining.c4s
 	OverlayImage=Highlight.png
 	Area=404,160,254,30
 	Title=TITLE

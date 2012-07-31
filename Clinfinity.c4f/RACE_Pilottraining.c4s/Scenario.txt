@@ -1,6 +1,6 @@
 [Head]
 Icon=35
-Title=DeathRace
+Title=Pilot Training
 Version=4,9,5
 Difficulty=40
 Access=1
