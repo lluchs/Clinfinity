@@ -4,6 +4,7 @@
 #strict 2
 
 static const PT0D_Distance = 200;
+static const PT0D_Duration = 255;
 
 func Initialize() {
     SetVisibility(VIS_None, this);
@@ -54,7 +55,7 @@ func FxPointingStart(object pTarget, int iIndex, int iTemp, int iPlr, object pOb
 }
 
 func FxPointingTimer(object pTarget, int iIndex, int iTime) {
-    if(iTime > 510) {
+    if(iTime > PT0D_Duration) {
         RemoveObject(pTarget);
         return -1;
     }
@@ -78,8 +79,7 @@ func FxPointingTimer(object pTarget, int iIndex, int iTime) {
     var r, g, b, a;
     SplitRGBaValue(GetClrModulation(pTarget), r, g, b, a);
 
-    if(iTime % 2 == 0)
-        SetClrModulation(RGBa(r, g, b, Min(255, a + 1)), pTarget);
+	SetClrModulation(RGBa(r, g, b, Min(255, a + 1)), pTarget);
     Message("<c %x>%s</c>", pTarget, RGBa(r, g, b, Max(0, 255 - a)), szMsg);
 
     return true;
