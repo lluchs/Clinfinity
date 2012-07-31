@@ -27,11 +27,13 @@ protected func Initialize() {
 
 private func MoveToGround(object obj) {
 	var basement = obj->LocalN("basement");
-	var bx = basement->GetX() - obj->GetX();
-	var by = basement->GetY() - obj->GetY();
-	// temporarily move basement
-	if(basement)
+	var bx, by;
+	if(basement) {
+		bx = basement->GetX() - obj->GetX();
+		by = basement->GetY() - obj->GetY();
+		// temporarily move basement
 		basement->SetPosition(0, 0);
+	}
 
 	while(!obj->Stuck()) {
 		obj->SetPosition(obj->GetX(), obj->GetY() + 1);
