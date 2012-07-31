@@ -1,4 +1,5 @@
-/*-- Pointer --*/
+/*  Script: Pointer
+	Provides a pointer highlighting an object for a player. */
 
 #strict 2
 
@@ -9,6 +10,17 @@ func Initialize() {
     return true;
 }
 
+/*  Constructor: CreatePointer
+	Creates a pointer.
+
+	Parameters:
+	iPlr      - The player who will see the pointer.
+	pTarget   - The object the pointer will point at.
+	iColor    - Pointer's color modulation.
+	szMessage - A message shown above the pointer.
+
+	Returns:
+	The created pointer. */
 global func CreatePointer(int iPlr, object pTarget, int iColor, string szMessage) {
     if(!pTarget || !szMessage) return false;
     if(!iColor) iColor = GetPlrColorDw(iPlr);
