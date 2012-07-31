@@ -20,12 +20,16 @@ protected func Initialize() {
 	}
 
 	// Windmill
-	var obj=CreateObject(WMIL, 100, 200, -1);
+	var windmill = CreateObject(WMIL, 100, 200, -1);
+	MoveToGround(windmill);
 
-	while(!obj -> Stuck()) {
-		obj -> SetPosition(GetX(), GetY() + 1);
-		if(obj -> GetY() > LandscapeHeight()) {
-			obj -> RemoveObject();
+}
+
+private func MoveToGround(object obj) {
+	while(!obj->Stuck()) {
+		obj->SetPosition(obj->GetX(), obj->GetY() + 1);
+		if(obj->GetY() > LandscapeHeight()) {
+			obj->RemoveObject();
 			return;
 		}
 	}
