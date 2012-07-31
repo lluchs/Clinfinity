@@ -26,8 +26,9 @@ func Initialize() {
 	Returns:
 	The created pointer. */
 global func CreatePointer(int iPlr, object pTarget, int iColor, string szMessage) {
-    if(!pTarget || !szMessage) return false;
+    if(!pTarget) return false;
     if(!iColor) iColor = GetPlrColorDw(iPlr);
+	if(!szMessage) szMessage = "";
 
     var pPointer = CreateObject(PT0D, 0, 0, iPlr);
     AddEffect("Pointing", pPointer, 100, 1, pPointer, 0, iPlr, pTarget, szMessage);
