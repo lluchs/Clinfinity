@@ -21,6 +21,9 @@ func Initialize() {
   CreateObject(FOG_, 400, 1050, -1);
   CreateObject(FOG_, 1200, 1050, -1);
   CreateObject(FOG_, 2000, 1050, -1);
+  
+  //Pipe to Steamgenerator
+ CreateObject(PIPE, 1349, 1008);
 }
 
 func InitializePlayer(int plr) {
