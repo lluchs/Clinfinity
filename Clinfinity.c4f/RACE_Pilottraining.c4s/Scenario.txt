@@ -40,25 +40,25 @@ Vegetation=TRE3=3;TRE2=3;TRE1=3;BUSH=1
 VegetationLevel=35,0,0,100
 InEarth=LOAM=1
 InEarthLevel=15,0,0,100
-SkyFade=0,0,100,255,255,255
 Sky=Sky_Friendly
+SkyFade=0,0,100,255,255,255
 BottomOpen=1
 MapWidth=250,0,64,250
 MapHeight=40,0,40,250
 MapZoom=15,0,5,15
 
 [Animals]
-Animal=BIRD=4
+Animal=BIRD=5
 
 [Weather]
 Climate=0,0,0,100
 YearSpeed=21,9,0,100
-Rain=1,1,0,100
+Rain=16,0,0,100
 Wind=1,100,-100,100
-Lightning=5,5,0,100
+Lightning=10,0,0,100
 
 [Disasters]
-Meteorite=2,5,0,100
+Meteorite=6,0,0,100
 
 [Environment]
-Objects=EGRS=1
+Objects=EGRS=1;BRD2=5
