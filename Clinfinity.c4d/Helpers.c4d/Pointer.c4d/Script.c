@@ -6,8 +6,11 @@
 static const PT0D_Distance = 200;
 static const PT0D_Duration = 255;
 
+local alphaEase;
+
 func Initialize() {
     SetVisibility(VIS_None, this);
+	alphaEase = CreateEaseFunction("circle-out", PT0D_Duration);
     return true;
 }
 
@@ -27,7 +30,7 @@ global func CreatePointer(int iPlr, object pTarget, int iColor, string szMessage
     if(!iColor) iColor = GetPlrColorDw(iPlr);
 
     var pPointer = CreateObject(PT0D, 0, 0, iPlr);
-    AddEffect("Pointing", pPointer, 100, 1, 0, PT0D, iPlr, pTarget, szMessage);
+    AddEffect("Pointing", pPointer, 100, 1, pPointer, 0, iPlr, pTarget, szMessage);
     SetClrModulation(iColor, pPointer);
     return pPointer;
 }
@@ -79,8 +82,9 @@ func FxPointingTimer(object pTarget, int iIndex, int iTime) {
     var r, g, b, a;
     SplitRGBaValue(GetClrModulation(pTarget), r, g, b, a);
 
-	SetClrModulation(RGBa(r, g, b, Min(255, a + 1)), pTarget);
-    Message("<c %x>%s</c>", pTarget, RGBa(r, g, b, Max(0, 255 - a)), szMsg);
+	a = EvalEase(alphaEase, Min(255, iTime));
+	SetClrModulation(RGBa(r, g, b, a), pTarget);
+    Message("<c %x>%s</c>", pTarget, RGBa(r, g, b, 255 - a), szMsg);
 
     return true;
 }
