@@ -1,12 +1,7 @@
 [DefCore]
 id=CRGE
 Name=Charge
-Version=4,9,5
-Category=bla
-Width=34
-Height=16
-Offset=-17,-6
-Value=1
-Mass=1
-Components=CRGE=1;
-Picture=136,0,34,16
+Category=C4D_Vehicle|C4D_Foreground|C4D_IgnoreFoW
+Width=20
+Height=13
+Offset=-10,-6

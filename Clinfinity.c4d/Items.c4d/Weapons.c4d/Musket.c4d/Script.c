@@ -23,7 +23,7 @@ static const MUSK_KnockbackCharge = 50;
 static const MUSK_ChargeRefreshRate = 5;
 
 // charge progress in percent
-local charge;
+local charge, chargeIndicator;
 
 protected func Initialize() {
 	DoFill(MaxFill());
@@ -42,11 +42,15 @@ protected func Entrance(object container) {
 private func StartCharging() {
 	StopCharging();
 	AddEffect("Charging", this, 1, MUSK_ChargeRefreshRate, this);
+	chargeIndicator = Contained()->CreateObject(CRGE, 0, -20, Contained()->GetOwner());
+	chargeIndicator->AttachTo(Contained());
 }
 
 private func StopCharging() {
 	RemoveEffect("Charging", this);
 	charge = 0;
+	if(chargeIndicator)
+		chargeIndicator->RemoveObject();
 }
 
 private func CalcDamage() {
@@ -60,11 +64,18 @@ private func ChargeKnockback() {
 
 protected func FxChargingTimer(object target, int effectNum, int effectTime) {
 	charge += 100 * MUSK_ChargeRefreshRate / MUSK_ChargeDuration;
-	Message("%d%%", this, charge);
 	if(charge >= 100) {
 		charge = 100;
+		UpdateChargeIndicator();
 		return FX_Execute_Kill;
 	}
+	UpdateChargeIndicator();
+}
+
+private func UpdateChargeIndicator() {
+	chargeIndicator->SetCharge(charge);
+	if(ChargeKnockback())
+		chargeIndicator->On();
 }
 
 /* Steuerung */
