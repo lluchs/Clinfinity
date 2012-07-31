@@ -2,7 +2,7 @@
 id=FOG_
 Name=Fog
 Version=4,9,5
-Category=C4D_Object|C4D_Foreground
+Category=C4D_StaticBack|C4D_Foreground
 Width=800
 Height=300
 Offset=-400,-150
