@@ -5,3 +5,4 @@ Luchs
 Additional objects:
 B_E - Factory
 ala - Cannon Tower
+Pitri - Pointer
