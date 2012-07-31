@@ -31,6 +31,20 @@ global func CreatePointer(int iPlr, object pTarget, int iColor, string szMessage
     return pPointer;
 }
 
+/*  Function: PointOut
+	Creates a pointer for every player pointing to the calling object.
+	
+	Parameters:
+	color   - Pointer's color modulation.
+	message - A message shown above the pointer. */
+global func PointOut(int color, string message) {
+	for(var count = GetPlayerCount(), i = 0; i < count; i++) {
+		var p = GetPlayerByIndex(i);
+		CreatePointer(p, this, color, message);
+	}
+	return count;
+}
+
 func FxPointingStart(object pTarget, int iIndex, int iTemp, int iPlr, object pObj, string szMsg) {
     SetVisibility(VIS_Owner, pTarget);
     EffectVar(0, pTarget, iIndex) = iPlr;
