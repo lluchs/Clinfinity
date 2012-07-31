@@ -26,6 +26,13 @@ protected func Initialize() {
 }
 
 private func MoveToGround(object obj) {
+	var basement = obj->LocalN("basement");
+	var bx = basement->GetX() - obj->GetX();
+	var by = basement->GetY() - obj->GetY();
+	// temporarily move basement
+	if(basement)
+		basement->SetPosition(0, 0);
+
 	while(!obj->Stuck()) {
 		obj->SetPosition(obj->GetX(), obj->GetY() + 1);
 		if(obj->GetY() > LandscapeHeight()) {
@@ -33,6 +40,10 @@ private func MoveToGround(object obj) {
 			return;
 		}
 	}
+
+	// move basement back
+	if(basement)
+		basement->SetPosition(obj->GetX() + bx, obj->GetY() + by);
 }
 
 // -- Callbacks des Rennen-Spielziels --
