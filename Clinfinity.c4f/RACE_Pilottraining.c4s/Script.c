@@ -9,9 +9,14 @@ protected func Initialize() {
   //trailsign
   CreateObject(SIGN,150,300);
   
-	// rotate drafts
-	for(var draft in FindObjects(Find_ID(DRFT))) {
-		draft->SetR(Random(360));
+  //Rails
+  CreateObject(RAIL, 30,300);
+  CreateObject(RAIL, 90,300);
+  CreateObject(RAIL, 120, 300);
+  
+  // rotate drafts
+  for(var draft in FindObjects(Find_ID(DRFT))) {
+	draft->SetR(Random(360));
 	}
 }
 
