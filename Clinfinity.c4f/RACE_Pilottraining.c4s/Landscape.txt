@@ -25,10 +25,10 @@ map SkyParcour {
       };
 
     // gold
-    InEarth & overlay { mat=Gold; tex=Rough; };
+    InEarth & overlay { mat=Gold; tex=Gold; };
 
     // coal
-    InEarth & overlay { mat=Coal; tex=Swirl; };
+    InEarth & overlay { mat=Coal; tex=Coal; };
 
     };
 
@@ -37,13 +37,13 @@ map SkyParcour {
 
   // start
   overlay { wdt=5; hgt=50; };
-  overlay { y=50; wdt=5; hgt=20; mat=Granite; tex=Rough;
+  overlay { y=50; wdt=5; hgt=20; mat=Granite; tex=Granite;
     overlay { algo=bozo; a=1; turbulence=1000; zoomX=-50; zoomY=-50; mat=Granite; tex=Rock; };
     };
 
   // goal
   overlay { x=96; wdt=5; hgt=50; };
-  overlay { x=96; y=50; wdt=5; hgt=20; mat=Gold; tex=Rough;
+  overlay { x=96; y=50; wdt=5; hgt=20; mat=Gold; tex=Granite;
     overlay { algo=bozo; a=1; turbulence=1000; zoomX=-50; zoomY=-50; mat=Sulphur; tex=Swirl; };
     };
   };
