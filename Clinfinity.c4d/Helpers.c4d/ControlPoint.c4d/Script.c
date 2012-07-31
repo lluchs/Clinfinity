@@ -200,6 +200,7 @@ private func CaptureStarting() {
 private func Captured() {
 	var team = GetPlayerTeam(GetOwner());
 	Log("<c %x>$Capture$</c>", GetTeamColor(team), GetTeamName(team), GetName());
+	PointOut(GetColorDw());
 	Sound("koth_captured");
 	Sound("koth_sign", true);
 	Sound("koth_capturing", 0, 0, 0, 0, -1);
@@ -217,6 +218,7 @@ private func CaptureEnding() {
 private func OvertimeStarting() {
 	var team = GetPlayerTeam(GetOwner());
 	Log("<c %x>$Overtime$</c>", GetTeamColor(team));
+	PointOut(GetColorDw());
 	Sound("koth_overtime");
 }
 
