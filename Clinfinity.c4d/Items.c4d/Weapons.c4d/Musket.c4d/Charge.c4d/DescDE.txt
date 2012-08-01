@@ -1,0 +1,1 @@
+Zeigt an, wann die Muskete voll geladen ist.
