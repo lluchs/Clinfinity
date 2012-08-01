@@ -1,0 +1,14 @@
+[Action]
+Name=Spin
+Length=100
+Delay=4
+Facet=0,0,200,130,0,0
+NextAction=SpinR
+
+[Action]
+Name=SpinR
+Length=100
+Delay=4
+Reverse=1
+Facet=0,0,200,130,0,0
+NextAction=Spin
