@@ -14,7 +14,7 @@ static const MUSK_MaxDamage = 20;
 static const MUSK_DamageDeviation = 3;
 
 // charging duration in frames
-static const MUSK_ChargeDuration = 200;
+static const MUSK_ChargeDuration = 150;
 
 // minimum charge for knockback
 static const MUSK_KnockbackCharge = 50;
