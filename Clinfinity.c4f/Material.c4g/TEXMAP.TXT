@@ -50,4 +50,5 @@ OverloadTextures
 81=FlySand-Smooth3
 82=Metalearth-Metalearth
 83=Earth-Earth2
+98=Wall-Concrete1
 

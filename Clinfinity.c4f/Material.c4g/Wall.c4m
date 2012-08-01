@@ -1,0 +1,10 @@
+[Material]
+Name=Wall
+Color=108,108,108,108,108,108,108,108,108
+Shape=0
+Density=50
+Friction=100
+MaxAirSpeed=100
+MaxSlide=250
+OverlayType=2
+Placement=40
