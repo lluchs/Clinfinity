@@ -13,3 +13,8 @@ FullscreenBG=1
 	File=RACE_Death.c4s
 	OverlayImage=hl_pilottraining.png
 	Area=357,536,259,80
+	
+	[Scenario]
+	File=Tutorial_Agility.c4s
+	OverlayImage=hl_tutorial1.png
+	Area=349,126,227,77
