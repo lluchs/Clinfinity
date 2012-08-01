@@ -20,9 +20,12 @@ protected func Initialize() {
 	}
 
 	// Windmill
-	var windmill = CreateObject(WMIL, 100, 200, -1);
+	var windmill = CreateObject(WMIL, 850, 50, -1);
+	var windmill2 = CreateObject(WMIL, 2000, 10, -1);
+	var pump = CreateObject(PUMP, 1260, 10, -1);
 	MoveToGround(windmill);
-
+	MoveToGround(windmill2);
+	MoveToGround(pump);
 }
 
 private func MoveToGround(object obj) {
