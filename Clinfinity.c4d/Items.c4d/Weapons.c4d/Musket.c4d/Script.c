@@ -8,6 +8,27 @@
 public func MaxFill() { return 6; }
 private func FillPicture() { return 0; }
 
+// minimum and maximum damage
+static const MUSK_MinDamage = 5;
+static const MUSK_MaxDamage = 20;
+static const MUSK_DamageDeviation = 3;
+
+// charging duration in frames
+static const MUSK_ChargeDuration = 150;
+
+// minimum charge for knockback
+static const MUSK_KnockbackCharge = 50;
+
+// timer interval for charging effect
+static const MUSK_ChargeRefreshRate = 5;
+
+// charge progress in percent
+local charge, chargeIndicator;
+
+protected func Initialize() {
+	DoFill(MaxFill());
+}
+
 // collect clip
 protected func Entrance(object container) {
 	var musket = FindObject2(Find_Container(container), Find_ID(GetID()), Find_Exclude(this));
@@ -15,6 +36,46 @@ protected func Entrance(object container) {
 		musket->DoFill(GetFill());
 		RemoveObject();
 	}
+}
+
+/* Charging */
+private func StartCharging() {
+	StopCharging();
+	AddEffect("Charging", this, 1, MUSK_ChargeRefreshRate, this);
+	chargeIndicator = Contained()->CreateObject(CRGE, 0, -20, Contained()->GetOwner());
+	chargeIndicator->AttachTo(Contained());
+}
+
+private func StopCharging() {
+	RemoveEffect("Charging", this);
+	charge = 0;
+	if(chargeIndicator)
+		chargeIndicator->RemoveObject();
+}
+
+private func CalcDamage() {
+	var deviation = RandomX(-MUSK_DamageDeviation, MUSK_DamageDeviation);
+	return ChangeRange(charge, 0, 100, MUSK_MinDamage, MUSK_MaxDamage) + deviation;
+}
+
+private func ChargeKnockback() {
+	return charge >= MUSK_KnockbackCharge;
+}
+
+protected func FxChargingTimer(object target, int effectNum, int effectTime) {
+	charge += 100 * MUSK_ChargeRefreshRate / MUSK_ChargeDuration;
+	if(charge >= 100) {
+		charge = 100;
+		UpdateChargeIndicator();
+		return FX_Execute_Kill;
+	}
+	UpdateChargeIndicator();
+}
+
+private func UpdateChargeIndicator() {
+	chargeIndicator->SetCharge(charge);
+	if(ChargeKnockback())
+		chargeIndicator->On();
 }
 
 /* Steuerung */
@@ -28,19 +89,24 @@ public func CanLoad() {
 
 public func StartLoading() {
 	Sound("MusketReload");
+	StopCharging();
 }
 
 public func Load() {
 	if(MatSysDoTeamFill(-1, Contained()->GetOwner(), METL)) {
 		DoFill(6);
 	}
+	StartCharging();
 }
 
 public func StartAiming() {
 	Sound("MusketDeploy");
+	StartCharging();
 }
 
-public func Abort() {}
+public func Abort() {
+	StopCharging();
+}
 
 public func Fire(object pClonk, int iAngle) {
 	// cooldown
@@ -80,7 +146,7 @@ public func Fire(object pClonk, int iAngle) {
 
     // Abfeuern
     Exit(ammo, AbsX(iX + GetX(pClonk)), AbsY(iY + GetY(pClonk)), iR, iXDir, iYDir, iRDir);
-    ammo->Launch(-1, 10 + Random(10));
+    ammo->Launch(-1, CalcDamage(), ChargeKnockback());
 
     // Mündungsfeuer
     // hax, weil die Animation nicht genauen Winkeln entspricht und der Partikel seltsam verdreht wird
@@ -100,6 +166,9 @@ public func Fire(object pClonk, int iAngle) {
     CreateParticle("Casing", AbsX(iX / 2 + GetX(pClonk)), AbsY(iY / 2 + GetY(pClonk)), -iDir * RandomX(1, 5), -RandomX(3, 7), 15, RGBa(250, 140, 80, 0));
     // Der Clonk muss eine Kugel einladen
     AddEffect("ReloadRifle", this, 101, 30);
+
+	// Restart charging.
+	StartCharging();
     return 1;
 }
 
