@@ -31,8 +31,8 @@ global func CreatePointer(int iPlr, object pTarget, int iColor, string szMessage
 	if(!szMessage) szMessage = "";
 
     var pPointer = CreateObject(PT0D, 0, 0, iPlr);
+    pPointer->SetClrModulation(iColor);
     AddEffect("Pointing", pPointer, 100, 1, pPointer, 0, iPlr, pTarget, szMessage);
-    SetClrModulation(iColor, pPointer);
     return pPointer;
 }
 
@@ -52,6 +52,7 @@ global func PointOut(int color, string message) {
 
 func FxPointingStart(object pTarget, int iIndex, int iTemp, int iPlr, object pObj, string szMsg) {
     SetVisibility(VIS_Owner, pTarget);
+	CreateParticle("PSpark", 0, 0, 0, 0, 500, GetClrModulation(), this, true);
     EffectVar(0, pTarget, iIndex) = iPlr;
     EffectVar(1, pTarget, iIndex) = pObj;
     EffectVar(2, pTarget, iIndex) = szMsg;
