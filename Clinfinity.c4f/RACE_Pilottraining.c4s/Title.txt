@@ -1,0 +1,2 @@
+DE:Infinity - <c de7e30>Pilotentraining</c>
+US:Infinity - <c de7e30>Pilot Training</c>

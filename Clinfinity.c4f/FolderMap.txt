@@ -5,11 +5,6 @@ ScenInfoArea=50,50,250,600
 FullscreenBG=1
 
 	[Scenario]
-	File=Tutorial_Agility.c4s
-	OverlayImage=hl_tutorial1.png
-	Area=349,127,227,77
-	
-	[Scenario]
 	File=KOTH_Skyward.c4s
 	OverlayImage=hl_skyward.png
 	Area=612,127,301,77

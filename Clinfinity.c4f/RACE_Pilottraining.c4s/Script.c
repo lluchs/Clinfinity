@@ -3,16 +3,52 @@
 #strict 2
 
 protected func Initialize() {
-  //ozone
+	// ozone
 	SetGamma(RGB(0,0,8), RGB(115,125,125), RGB(255,255,255));
-  
-  //trailsign
-  CreateObject(SIGN,150,300);
-  
+
+	// trailsign
+	CreateObject(SIGN,150,300);
+
+	// Rails
+	CreateObject(RAIL, 30,300);
+	CreateObject(RAIL, 90,300);
+	CreateObject(RAIL, 120, 300);
+
 	// rotate drafts
 	for(var draft in FindObjects(Find_ID(DRFT))) {
 		draft->SetR(Random(360));
 	}
+
+	// Windmill
+	var windmill = CreateObject(WMIL, 850, 50, -1);
+	var windmill2 = CreateObject(WMIL, 2000, 10, -1);
+	var pump = CreateObject(PUMP, 1260, 10, -1);
+	MoveToGround(windmill);
+	MoveToGround(windmill2);
+	MoveToGround(pump);
+}
+
+private func MoveToGround(object obj) {
+	var basement = obj->LocalN("basement");
+	var bx, by;
+	if(basement) {
+		bx = basement->GetX() - obj->GetX();
+		by = basement->GetY() - obj->GetY();
+		// temporarily move basement
+		basement->SetPosition(0, 0);
+	}
+
+	while(!obj->Stuck()) {
+		obj->SetPosition(obj->GetX(), obj->GetY() + 1);
+		if(obj->GetY() > LandscapeHeight()) {
+			obj->RemoveObject();
+			return;
+		}
+	}
+
+	// move basement back
+	if(basement)
+		basement->SetPosition(obj->GetX() + bx, obj->GetY() + by);
 }
 
 // -- Callbacks des Rennen-Spielziels --
