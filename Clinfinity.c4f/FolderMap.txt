@@ -10,7 +10,7 @@ FullscreenBG=1
 	Area=612,127,301,77
 	
 	[Scenario]
-	File=RACE_Death.c4s
+	File=RACE_Pilottraining.c4s
 	OverlayImage=hl_pilottraining.png
 	Area=357,536,259,80
 	
