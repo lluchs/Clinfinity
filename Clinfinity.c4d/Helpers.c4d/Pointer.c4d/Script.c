@@ -18,22 +18,22 @@ func Initialize() {
 	Creates a pointer.
 
 	Parameters:
-	iPlr      - The player who will see the pointer.
-	pTarget   - The object the pointer will point at.
-	iColor    - Pointer's color modulation.
-	szMessage - A message shown above the pointer.
+	plr      - The player who will see the pointer.
+	target   - The object the pointer will point at.
+	color    - Pointer's color modulation.
+	message  - A message shown above the pointer.
 
 	Returns:
 	The created pointer. */
-global func CreatePointer(int iPlr, object pTarget, int iColor, string szMessage) {
-    if(!pTarget) return false;
-    if(!iColor) iColor = GetPlrColorDw(iPlr);
-	if(!szMessage) szMessage = "";
+global func CreatePointer(int plr, object target, int color, string message) {
+    if(!target) return false;
+    if(!color) color = GetPlrColorDw(plr);
+	if(!message) message = "";
 
-    var pPointer = CreateObject(PT0D, 0, 0, iPlr);
-    pPointer->SetClrModulation(iColor);
-    AddEffect("Pointing", pPointer, 100, 1, pPointer, 0, iPlr, pTarget, szMessage);
-    return pPointer;
+    var pointer = CreateObject(PT0D, 0, 0, plr);
+    pointer->SetClrModulation(color);
+    AddEffect("Pointing", pointer, 100, 1, pointer, 0, plr, target, message);
+    return pointer;
 }
 
 /*  Function: PointOut
@@ -50,43 +50,43 @@ global func PointOut(int color, string message) {
 	return count;
 }
 
-func FxPointingStart(object pTarget, int iIndex, int iTemp, int iPlr, object pObj, string szMsg) {
-    SetVisibility(VIS_Owner, pTarget);
+func FxPointingStart(object target, int index, int temp, int plr, object obj, string msg) {
+    SetVisibility(VIS_Owner, target);
 	CreateParticle("PSpark", 0, 0, 0, 0, 500, GetClrModulation(), this, true);
-    EffectVar(0, pTarget, iIndex) = iPlr;
-    EffectVar(1, pTarget, iIndex) = pObj;
-    EffectVar(2, pTarget, iIndex) = szMsg;
+    EffectVar(0, target, index) = plr;
+    EffectVar(1, target, index) = obj;
+    EffectVar(2, target, index) = msg;
     return true;
 }
 
-func FxPointingTimer(object pTarget, int iIndex, int iTime) {
-    if(iTime > PT0D_Duration) {
-        RemoveObject(pTarget);
+func FxPointingTimer(object target, int index, int time) {
+    if(time > PT0D_Duration) {
+        RemoveObject(target);
         return -1;
     }
 
-    var pClonk = GetCursor(EffectVar(0, pTarget, iIndex));
-    var pObj = EffectVar(1, pTarget, iIndex);
-    var szMsg = EffectVar(2, pTarget, iIndex);
+    var clonk = GetCursor(EffectVar(0, target, index));
+    var obj = EffectVar(1, target, index);
+    var msg = EffectVar(2, target, index);
 
     // Zeiger hat kein Ziel mehr? Löschen.
-    if(!pObj) {
-        RemoveObject(pTarget);
+    if(!obj) {
+        RemoveObject(target);
         return -1;
     }
 
-    var iAng = Angle(GetX(pClonk), GetY(pClonk), GetX(pObj), GetY(pObj)) - 90;
-    var iDst = Min(PT0D_Distance, Distance(GetX(pClonk), GetY(pClonk), GetX(pObj), GetY(pObj)) / 2);
+    var ang = Angle(GetX(clonk), GetY(clonk), GetX(obj), GetY(obj)) - 90;
+    var dst = Min(PT0D_Distance, Distance(GetX(clonk), GetY(clonk), GetX(obj), GetY(obj)) / 2);
 
-    SetR(iAng + 90, pTarget);
-    SetPosition(GetX(pClonk) + Cos(iAng, iDst), GetY(pClonk) + Sin(iAng, iDst), pTarget);
+    SetR(ang + 90, target);
+    SetPosition(GetX(clonk) + Cos(ang, dst), GetY(clonk) + Sin(ang, dst), target);
 
     var r, g, b, a;
-    SplitRGBaValue(GetClrModulation(pTarget), r, g, b, a);
+    SplitRGBaValue(GetClrModulation(target), r, g, b, a);
 
-	a = EvalEase(alphaEase, Min(255, iTime));
-	SetClrModulation(RGBa(r, g, b, a), pTarget);
-    Message("<c %x>%s</c>", pTarget, RGBa(r, g, b, 255 - a), szMsg);
+	a = EvalEase(alphaEase, Min(255, time));
+	SetClrModulation(RGBa(r, g, b, a), target);
+    Message("<c %x>%s</c>", target, RGBa(r, g, b, 255 - a), msg);
 
     return true;
 }
