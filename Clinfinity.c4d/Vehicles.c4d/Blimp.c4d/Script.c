@@ -1,7 +1,7 @@
 /*-- Blimp --*/
 
 #strict 2
-//local t;
+local t;
 
 protected func Initialize(){
   SetAction("Spin");
