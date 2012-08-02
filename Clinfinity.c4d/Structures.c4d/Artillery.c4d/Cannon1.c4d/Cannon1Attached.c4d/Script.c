@@ -15,7 +15,7 @@ protected func CannonPower(object obj) { return(12); }
 protected func CannonSound(object obj) { return("Blast3"); }
 protected func CannonSmoke(object obj) { return(1); }
 protected func CannonShootMenuID() { return(GetID()); }
-protected func CannonShootMenuName(object pPotentialProjectile) { return Format("$TxtShoots$",GetName(pPotentialProjectile)); }
+protected func CannonShootMenuName(object potentialProjectile) { return Format("$TxtShoots$",GetName(potentialProjectile)); }
 
 
 protected func Destruction() {
@@ -40,31 +40,31 @@ protected func AttachTargetLost() {
 
 /* Kommandos aus dem Turm */
 
-public func ComLeft(object pClonk) {
+public func ComLeft(object clonk) {
 	SetAction("Rotating", GetActionTarget());
 	SetRDir(-RotationSpeed() );
-	Trajectory(pClonk);
+	Trajectory(clonk);
 	return(1);
 }
 
-public func ComRight(object pClonk) {
+public func ComRight(object clonk) {
 	SetAction("Rotating", GetActionTarget());
 	SetRDir(RotationSpeed() );
-	Trajectory(pClonk);
+	Trajectory(clonk);
 	return(1);
 }
 
-public func ComStop(object pClonk) {
+public func ComStop(object clonk) {
 	SetAction("Attaching", GetActionTarget());
 	SetRDir(0);
-	Trajectory(pClonk);
+	Trajectory(clonk);
 	return(1);
 }
 
 //Wird vom Grabber nicht uebertragen, nur vom Container, Achtung, Aufruf stattdessen im Cannontower
-public func ComStopDouble(object pClonk) {
+public func ComStopDouble(object clonk) {
 	//Log("StopDouble");
-	Trajectory(pClonk, 1);
+	Trajectory(clonk, 1);
 	CloseMenus();
 
 	var r = (GetR() + 270) % 360;
@@ -89,39 +89,39 @@ public func ComLeave() {
 	}
 }
 
-public func ComFire(object pClonk) {
+public func ComFire(object clonk) {
 	SetAction("Attaching", GetActionTarget());
 	SetRDir(0);
-	Trajectory(pClonk, 1);
-	DoMenu(pClonk, 0);
+	Trajectory(clonk, 1);
+	DoMenu(clonk, 0);
 }
 
-private func DoMenu(object pClonk, int iSelection) {
-	CreateMenu(GetID(GetActionTarget()), pClonk, this(), 0, "$TxtNoammo$", 0, 0, 0, CannonShootMenuID());
+private func DoMenu(object clonk, int selection) {
+	CreateMenu(GetID(GetActionTarget()), clonk, this(), 0, "$TxtNoammo$", 0, 0, 0, CannonShootMenuID());
 
 	var i, obj;
 	while(obj = Contents(i++, GetActionTarget()) )
 		if(GetID(obj) != GUNP)
 			if(CannonAmmo(obj) )
-				AddMenuItem(CannonShootMenuName(obj), Format("Shoot(%i, Object(%d), Object(%d))", obj->GetID(), ObjectNumber(obj), ObjectNumber(pClonk)), 0, pClonk, 0, 0, 0, 4, obj);
-	SelectMenuItem(iSelection, pClonk);
-	Trajectory(pClonk);
+				AddMenuItem(CannonShootMenuName(obj), Format("Shoot(%i, Object(%d), Object(%d))", obj->GetID(), ObjectNumber(obj), ObjectNumber(clonk)), 0, clonk, 0, 0, 0, 4, obj);
+	SelectMenuItem(selection, clonk);
+	Trajectory(clonk);
 	return(1);
 }
 
-func OnMenuSelection(int iItemIndex, object pMenuObject) {
-	Trajectory(pMenuObject);
+func OnMenuSelection(int itemIndex, object menuObject) {
+	Trajectory(menuObject);
 	return(1);
 }
 
-func Trajectory(object pClonk, bool fClose) {
+func Trajectory(object clonk, bool fClose) {
 	//Log("!");
-	var iSelection = GetMenuSelection(pClonk);
-	if(iSelection == -1) iSelection = 0;
-	var pProjectile = Contents(iSelection, GetActionTarget());
-	//Log("MenuSelection: %d; Contents: %s", GetMenuSelection(pClonk),GetName(pProjectile));
+	var selection = GetMenuSelection(clonk);
+	if(selection == -1) selection = 0;
+	var projectile = Contents(selection, GetActionTarget());
+	//Log("MenuSelection: %d; Contents: %s", GetMenuSelection(clonk),GetName(projectile));
 
-	if(!fClose) AddTrajectory(this(), Sin(GetR(), 13) + GetX(this()), -Cos(GetR(), 13) + GetY(this()), Sin(GetR(), CannonPower(pProjectile)) * 10, -Cos(GetR(), CannonPower(pProjectile)) * 10);
+	if(!fClose) AddTrajectory(this(), Sin(GetR(), 13) + GetX(this()), -Cos(GetR(), 13) + GetY(this()), Sin(GetR(), CannonPower(projectile)) * 10, -Cos(GetR(), CannonPower(projectile)) * 10);
 	else {
 		//Log("Remove");
 		RemoveTrajectory(this());
@@ -129,23 +129,23 @@ func Trajectory(object pClonk, bool fClose) {
 	return(1);
 }
 
-private func Shoot(id defFoo, object pProjectile, object pShooter) {
-	if (!pProjectile) return(0);
-	if (pProjectile->Contained() != GetActionTarget()) return(0);
+private func Shoot(id defFoo, object projectile, object shooter) {
+	if (!projectile) return(0);
+	if (projectile->Contained() != GetActionTarget()) return(0);
 
 
 	//enough Steam?
 	var plr = GetOwner();
 	var msys = GetMatSys(plr);
-	var powder = CannonPowderNeeded(pProjectile);
+	var powder = CannonPowderNeeded(projectile);
 
-	if(MatSysGetTeamFill(plr, STEM) < CTW2_BasicSteamUsage * GetMass(pProjectile)) {
+	if(MatSysGetTeamFill(plr, STEM) < CTW2_BasicSteamUsage * GetMass(projectile)) {
 		Sound("Error");
 		Message("$TxtNotenoughgunpowder1r$", GetActionTarget(), powder);
 	} else {
-		MatSysDoTeamFill(-CTW2_BasicSteamUsage * GetMass(pProjectile), plr, STEM);
+		MatSysDoTeamFill(-CTW2_BasicSteamUsage * GetMass(projectile), plr, STEM);
 
-		if(CannonSmoke(pProjectile) ) {
+		if(CannonSmoke(projectile) ) {
 			Smoke(Sin(GetR(), 13), -Cos(GetR(), 13), 20);
 			Smoke(Sin(GetR(), 18), -Cos(GetR(), 23), 17);
 			Smoke(Sin(GetR(), 22), -Cos(GetR(), 32), 14);
@@ -153,13 +153,13 @@ private func Shoot(id defFoo, object pProjectile, object pShooter) {
 		}
 
 		// Controller setzen (Killverfolgung)
-		pProjectile->SetController(pShooter->GetOwner());
+		projectile->SetController(shooter->GetOwner());
 		Shoot();
 
-		//AddTrajectory(this(),Sin(GetR(), 13), -Cos(GetR(), 13),Sin(GetR(), CannonPower(pProjectile)), -Cos(GetR(), CannonPower(pProjectile)));
-		Exit(pProjectile, Sin(GetR(), 13), -Cos(GetR(), 13), GetR(), Sin(GetR(), CannonPower(pProjectile)), -Cos(GetR(), CannonPower(pProjectile)), 20);
-		if(GetOCF(pProjectile) & OCF_CrewMember() ) ObjectSetAction(pProjectile, "Tumble");
-		Sound(CannonSound(pProjectile) );
-		SetPlrView(pShooter->GetOwner(), pProjectile);
+		//AddTrajectory(this(),Sin(GetR(), 13), -Cos(GetR(), 13),Sin(GetR(), CannonPower(projectile)), -Cos(GetR(), CannonPower(projectile)));
+		Exit(projectile, Sin(GetR(), 13), -Cos(GetR(), 13), GetR(), Sin(GetR(), CannonPower(projectile)), -Cos(GetR(), CannonPower(projectile)), 20);
+		if(GetOCF(projectile) & OCF_CrewMember() ) ObjectSetAction(projectile, "Tumble");
+		Sound(CannonSound(projectile) );
+		SetPlrView(shooter->GetOwner(), projectile);
 	}
 }
