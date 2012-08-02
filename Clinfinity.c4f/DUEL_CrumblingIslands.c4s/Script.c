@@ -48,16 +48,20 @@ func InitializePlayer(int plr) {
 
 }
 
-func CreateStartMaterial(int x, int y, int plr, int team) {
+func CreateStartMaterial(int x, int y, int plr) {
     var pltf1 = PLTF->CreatePlatform(x, y, plr);
     var pltf2 = PLTF->CreatePlatform(x + 20, y, plr);
     PLTF->Connect(pltf1, pltf2);
-    CreateConstruction(STMT, x + 10, y - 5, plr, 100);
-    if(team == 1) {
-        CreateConstruction(CTW0, x + 50, y - 5, plr, 100);
-    } else {
-        CreateConstruction(CTW0, x - 50, y - 5, plr, 100);
-    }
+	var team = GetPlayerTeam(plr), ox, tankX = x;
+	if(team == 1) {
+		tankX += 10;
+		ox = 1;
+	} else {
+		tankX += 95;
+		ox = -1;
+	}
+    CreateConstruction(STMT, tankX, y - 5, plr, 100);
+	CreateConstruction(CTW0, tankX + ox * 90, y - 5, plr, 100);
 }
 
 func GetStartPosition(int team) {
