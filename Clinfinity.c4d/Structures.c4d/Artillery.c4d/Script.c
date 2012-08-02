@@ -234,19 +234,3 @@ protected func Destruction()
   return(_inherited() );
 }
 
-/* Abfackeln */
-
-protected func Incineration()
-{
-
-  if(cannon) ReleaseCannon();
-  ChangeDef(CTW1);
-  return(_inherited() );
-}
-
-protected func IncinerationEx()
-{
-  if(cannon) ReleaseCannon();
-  ChangeDef(CTW1);
-  return(_inherited() );
-}
