@@ -10,6 +10,13 @@ func Initialize() {
     //Crumbling Islands
     var CIsleL = CreateObject(ISLE, 760, 810);
     CIsleL -> SetClrModulation(RGBa(200, 215, 255, 50));
+    
+    var CIsleM = CreateObject(ISLE,1100,1000);
+    CIsleL -> SetClrModulation(RGBa(200, 215, 255, 80));
+    
+    var CIsleR = CreateObject(ISLE,1335,800);
+    CIsleR -> SetClrModulation(RGBa(200, 215, 255, 30));
+    
 
     CreateObject(WTFL, 814, 698); //Waterfall
 
