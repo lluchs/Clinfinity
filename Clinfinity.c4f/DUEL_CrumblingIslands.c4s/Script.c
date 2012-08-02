@@ -68,7 +68,8 @@ func CreateStartMaterial(int x, int y, int plr) {
 		ox = -1;
 	}
     CreateConstruction(STMT, tankX, y - 5, plr, 100);
-	CreateConstruction(CTW0, tankX + ox * 90, y - 5, plr, 100);
+	var artillery = CreateConstruction(CTW0, tankX + ox * 90, y - 5, plr, 100);
+	artillery->ConnectCannon(CreateObject(CTW3, 0, 0, plr));
 }
 
 func GetStartPosition(int team) {
