@@ -14,8 +14,9 @@ Sir_Jones, Pitri, ManuN, Sven2, B_E, Zapper
 ==================================================================
 
 Additional objects:
-B_E - Factory, Pending Effect
-ala - Cannon Tower
+B_E   - Factory, Pending Effect
+ala   - Cannon Tower
+Pitri - Pointer
 
 ==================================================================
 

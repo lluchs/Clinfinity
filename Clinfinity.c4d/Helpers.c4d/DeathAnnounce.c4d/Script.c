@@ -21,6 +21,9 @@ public func Announce(object clonk) {
 	alphaEase = CreateEaseFunction("quad-in-out", DANN_Duration);
 	messageColor = Desaturate(clonk->GetColorDw());
 	AddEffect("Fade", this, 1, 1, this);
+
+	// Point to the death
+	PointOut(messageColor, Format("† %s", GetPlayerName(clonk->GetOwner())));
 }
 
 /*  Function: DeathAnnounce
