@@ -84,7 +84,7 @@ func FxPointingTimer(object target, int index, int time) {
 	var r, g, b, a;
 	SplitRGBaValue(GetClrModulation(target), r, g, b, a);
 
-	a = EvalEase(alphaEase, Min(255, time));
+	a = EvalEase(alphaEase, Min(254, time));
 	SetClrModulation(RGBa(r, g, b, a), target);
 	Message("<c %x>%s</c>", target, RGBa(r, g, b, 255 - a), msg);
 
