@@ -4,56 +4,54 @@
 
 static const g_CrosshairID = TRTY;
 
-protected func Initialize()
-{
-  SetVisibility(VIS_Owner);
+protected func Initialize() {
+	SetVisibility(VIS_Owner);
 }
 
-global func RemoveTrajectory(object pObj)
-{
-  // Finden und vernichten
-  var pTrajectory = FindObject2(Find_ID(TRTY), Find_ActionTarget(pObj));
-  if(pTrajectory) RemoveObject(pTrajectory);
+global func RemoveTrajectory(object obj) {
+	// Finden und vernichten
+	var trajectory = FindObject2(Find_ID(TRTY), Find_ActionTarget(obj));
+	if(trajectory) RemoveObject(trajectory);
 }
 
-global func AddTrajectory(object pObj, int iX, int iY, int iXDir, int iYDir, int iColor)
-{
-  if(!iColor) iColor = RGB(0, 255);
-  //Log("Object: %s, x: %d, y: %d, xdir: %d, ydir: %d",GetName(pObj),iX,iY,iXDir,iYDir);
-  // Alte Vorschau löschen
-  RemoveTrajectory(pObj);
-  // Neues Hilfsobjekt erzeugen
-  var pTrajectory = CreateObject(TRTY, GetX(pObj)-GetX(), GetY(pObj)-GetY(), GetOwner(pObj));
-  //Log("Trajectory: %d %d",GetX(pTrajectory),GetY(pTrajectory));
-  pTrajectory->SetAction("Attach", pObj);
-  // Startwerte setzen
-  var i = -1, iXOld, iYOld;
-  var iFaktor = 100;
-  iX *= iFaktor; iY *= iFaktor;
-  iYDir *= 5; iXDir *= 5;
-  iY -= 4*iFaktor;
-  iXOld = iX; iYOld = iY;
-  // Flugbahn simulieren
-  while(++i < 500)
-  {
-    // Geschwindigkeit und Gravitation aufrechnen
-    iX += iXDir;
-    iY += iYDir + GetGravity()*i/20;
-    // Wenn wir weit genug weg sind für einen neuen Punkt diesen einfügen
-    if(Distance((iXOld-iX)/iFaktor, (iYOld-iY)/iFaktor)>=10)
-    {
-      CreateParticle("Aimer", iX/iFaktor-GetX(pTrajectory), iY/iFaktor-GetY(pTrajectory),
-		      iXDir/500, iYDir/500, 10, iColor, pTrajectory);
-      iXOld = iX; iYOld = iY;
-    }
-    // Oder ist es hier schon aus?
-    if(GBackSolid(iX/iFaktor-GetX(), iY/iFaktor-GetY())) break;
-  }
-  // So, fertig
-  return pTrajectory;
+global func AddTrajectory(object obj, int x, int y, int xDir, int yDir, int color) {
+	if(!color) color = RGB(0, 255);
+	//Log("Object: %s, x: %d, y: %d, xdir: %d, ydir: %d",GetName(obj),x,y,xDir,yDir);
+	// Alte Vorschau löschen
+	RemoveTrajectory(obj);
+	// Neues Hilfsobjekt erzeugen
+	var trajectory = CreateObject(TRTY, GetX(obj) - GetX(), GetY(obj) - GetY(), GetOwner(obj));
+	//Log("Trajectory: %d %d",GetX(trajectory),GetY(trajectory));
+	trajectory->SetAction("Attach", obj);
+	// Startwerte setzen
+	var i = -1, xOld, yOld;
+	var faktor = 100;
+	x *= faktor;
+	y *= faktor;
+	yDir *= 5;
+	xDir *= 5;
+	y -= 4 * faktor;
+	xOld = x;
+	yOld = y;
+	// Flugbahn simulieren
+	while(++i < 500) {
+		// Geschwindigkeit und Gravitation aufrechnen
+		x += xDir;
+		y += yDir + GetGravity() * i / 20;
+		// Wenn wir weit genug weg sind für einen neuen Punkt diesen einfügen
+		if(Distance((xOld - x) / faktor, (yOld - y) / faktor) >= 10) {
+			CreateParticle("Aimer", x / faktor - GetX(trajectory), y / faktor - GetY(trajectory),
+					xDir / 500, yDir / 500, 10, color, trajectory);
+			xOld = x;
+			yOld = y;
+		}
+		// Oder ist es hier schon aus?
+		if(GBackSolid(x / faktor - GetX(), y / faktor - GetY())) break;
+	}
+	// So, fertig
+	return trajectory;
 }
 
-public func AttachTargetLost()
-{
-  RemoveObject();
+public func AttachTargetLost() {
+	RemoveObject();
 }
