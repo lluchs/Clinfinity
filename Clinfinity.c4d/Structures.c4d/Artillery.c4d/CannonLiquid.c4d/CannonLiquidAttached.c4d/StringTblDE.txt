@@ -1,4 +1,0 @@
-TxtNoammo=Keine Munition
-TxtShoots=%s schieﬂen
-TxtShootsAll=Alles schieﬂen
-TxtNotenoughgunpowder1r=Nicht genug Dampf!

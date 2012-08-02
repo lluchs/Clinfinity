@@ -1,3 +1,0 @@
-TxtNoammo=Keine Munition
-TxtShootsn=%s schieﬂen (%d)
-TxtNotenoughgunpowder=Nicht genug Schieﬂpulver!
