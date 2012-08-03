@@ -207,7 +207,7 @@ private func CaptureStarting() {
 private func Captured() {
 	var team = GetPlayerTeam(GetOwner());
 	Log("<c %x>$Capture$</c>", GetTeamColor(team), GetTeamName(team), GetName());
-	PointOut(GetColorDw());
+	PointOut(GetPlrColorDw(GetOwner()));
 	Sound("koth_captured");
 	Sound("koth_sign", true);
 	Sound("koth_capturing", 0, 0, 0, 0, -1);
