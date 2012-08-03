@@ -3,3 +3,5 @@ TxtRotatecannontotherig=Kanone nach rechts drehen
 TxtStopcannonrotation=Kanone anhalten
 TxtDisconnectcannon=Kanone abschrauben
 TxtFire=Feuern
+TxtMorePower=Mehr Schusskraft
+TxtLessPower=Weniger Schusskraft

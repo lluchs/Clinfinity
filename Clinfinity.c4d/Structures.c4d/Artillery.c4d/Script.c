@@ -85,7 +85,7 @@ protected func ControlThrow(object obj) {
 }
 
 protected func ControlUp(object obj) {
-	[$TxtLessPower$ | Image = CT01: 4]
+	[$TxtMorePower$ | Image = CT01: 4]
 	if(!cannon) return 0;
 	return cannon->ComPowerUp(obj);
 }

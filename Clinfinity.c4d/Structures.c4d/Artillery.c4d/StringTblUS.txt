@@ -3,3 +3,5 @@ TxtRotatecannontotherig=Rotate cannon to the right
 TxtStopcannonrotation=Stop cannon rotation
 TxtDisconnectcannon=Disconnect cannon
 TxtFire=Fire
+TxtMorePower=More fire power
+TxtLessPower=Less fire power
