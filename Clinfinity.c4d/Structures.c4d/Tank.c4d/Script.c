@@ -81,7 +81,7 @@ protected func Steam() {
 	}
 	// generation
 	if(!generate--) {
-		var change = DoFill(125 + RandomX(-10, 10));
+		var change = DoFill(250 + RandomX(-10, 10));
 		// Produce less steam when heavily damaged.
 		if(HeavilyDamaged())
 			change -= 25;
