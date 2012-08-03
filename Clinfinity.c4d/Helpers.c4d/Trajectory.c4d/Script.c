@@ -35,7 +35,7 @@ global func AddTrajectory(object obj, int x, int y, int xDir, int yDir, int colo
 	// Neues Hilfsobjekt erzeugen
 	var trajectory = CreateObject(TRTY, GetX(obj) - GetX(), GetY(obj) - GetY(), GetOwner(obj));
 	//Log("Trajectory: %d %d",GetX(trajectory),GetY(trajectory));
-	trajectory->SetAction("Attach", obj);
+	trajectory->AttachTo(obj);
 	// Startwerte setzen
 	var i = -1, xOld, yOld;
 	var faktor = 100;
