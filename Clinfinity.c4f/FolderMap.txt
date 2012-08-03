@@ -20,6 +20,19 @@ FullscreenBG=1
 	Area=357,536,259,80
 	
 	[Scenario]
+	File=DUEL_CrumblingIslands.c4s
+	OverlayImage=Highlight.png
+	Area=668,200,254,30
+	Title=TITLE
+	TitleFontSize=20
+	TitleColorInactive=
+	TitleColorActive=16747520
+	TitleOffX=120
+	TitleOffY=4
+	TitleAlign=1
+	TitleUseBookFont=0
+	
+	[Scenario]
 	File=Tutorial_Agility.c4s
 	OverlayImage=hl_tutorial1.png
 	Area=349,126,227,77

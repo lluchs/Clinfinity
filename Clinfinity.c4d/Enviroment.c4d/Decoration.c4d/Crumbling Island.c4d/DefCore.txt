@@ -1,0 +1,14 @@
+[DefCore]
+id=ISLE
+Version=4,9,5
+Category=C4D_StaticBack|C4D_Parallax|C4D_Background
+Width=200
+Height=150
+Offset=-100,-75
+Value=10
+Mass=10
+Components=ROCK=1;
+Picture=5800,0,200,150
+TimerCall=Crumble
+Timer=100
+ 

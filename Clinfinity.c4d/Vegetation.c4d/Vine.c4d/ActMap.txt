@@ -1,0 +1,9 @@
+[Action]
+Name=Vine
+Directions=1
+Length=10
+Delay=0
+Facet=0,0,18,64
+FacetBase=0
+NextAction=Vine
+StartCall=

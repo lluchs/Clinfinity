@@ -1,2 +1,0 @@
-DE:Artilleriegeschütz
-US:Artillery cannon
