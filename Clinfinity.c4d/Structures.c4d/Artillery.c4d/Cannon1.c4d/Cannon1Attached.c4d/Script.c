@@ -10,16 +10,21 @@ static const CTW2_BasicSteamUsage = 5; //SteamUsage*ObjectMass
 protected func RotationSpeed() { return 5; }
 protected func CannonMobileID() { return CTW3; }
 protected func CannonAmmo(object obj) { return obj && obj->GetOCF() & OCF_Collectible; }
-protected func CannonPower(object obj) { return 12; }
+protected func CannonPowerArray(object obj) { return [6, 12, 18]; }
+protected func CannonPower(object obj) { return CannonPowerArray(obj)[power]; }
 protected func CannonSound(object obj) { return "Blast3"; }
 protected func CannonSmoke(object obj) { return 1; }
 
 // Legacy stuff
 protected func CannonShootMenuID() {}
 
+local power;
+
+protected func Initialize() {
+	power = GetLength(CannonPowerArray());
+}
 
 /* Turm weg? */
-
 protected func AttachTargetLost() {
 	RemoveObject();
 }
@@ -58,8 +63,27 @@ public func ComStopDouble(object clonk) {
 	return 1;
 }
 
-public func ComPowerUp(object clonk) {}
-public func ComPowerDown(object clonk) {}
+public func ComPowerUp(object clonk) {
+	power++;
+	if(power < GetLength(CannonPowerArray()))
+		Sound("Click");
+	else {
+		power--;
+		Sound("CommandFailure1");
+	}
+	Trajectory(clonk);
+}
+
+public func ComPowerDown(object clonk) {
+	power--;
+	if(power >= 0)
+		Sound("Click");
+	else {
+		power++;
+		Sound("CommandFailure1");
+	}
+	Trajectory(clonk);
+}
 
 public func ComFire(object clonk) {
 	SetAction("Attaching", GetActionTarget());
