@@ -115,12 +115,6 @@ func Script120() {
 	FindObject(SCRG)->Fulfill();
 }
 
-func SavePosition() {
-	// Position for Relaunch
-	var clonk = GetCrew();
-	iPlrX = clonk->GetX();
-	iPlrY = clonk->GetY();
-}
 
 func RelaunchPlayer(iPlr) {
 	// Comment

@@ -101,12 +101,12 @@ public func OnClonkDeath(object oldClonk) {
 		var clnk = CreateObject(AVTR, 0, 0, plr);
 		clnk -> GrabObjectInfo(oldClonk);
 		SelectCrew(plr, clnk, 1);
-		Log(RndRelaunchMsg(), GetPlayerName(plr));
+		//Log(RndRelaunchMsg(), GetPlayerName(plr));
 		return JoinPlayer(plr);
 	}
 }
 
-private func RndRelaunchMsg() {
+/*private func RndRelaunchMsg() {
 	var n = Random(11);
 	if (!n  ) return "$MsgDeath1$";
 	if (!--n) return "$MsgDeath2$";
@@ -120,5 +120,6 @@ private func RndRelaunchMsg() {
 	if (!--n) return "$MsgDeath10$";
 	return "$MsgDeath11$";
 }                           
+*/
 
 public func IsDraftPermanent() { return true; }
