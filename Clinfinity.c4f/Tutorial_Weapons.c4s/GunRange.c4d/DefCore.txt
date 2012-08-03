@@ -1,0 +1,18 @@
+[DefCore]
+id=GUNR
+Name=Gun Range
+Version=4,9,5
+Category=C4D_Structure
+MaxUserSelect=0
+Width=94
+Height=93
+Offset=-47,-46
+Value=1
+Mass=1
+Components=WOOD=4;
+Picture=0,0,94,93
+Vertices=4
+VertexX=-35,-42,35,46
+VertexY=-40,27,-17,42
+VertexFriction=50,50,50,50
+ 

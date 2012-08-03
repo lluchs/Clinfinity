@@ -1,0 +1,2 @@
+DE:Infinity - <c de7e30>1. Bewegung</c>
+US:Infinity - <c de7e30>1. Agility</c>
