@@ -1,0 +1,6 @@
+MsgUnlocked=Chest opened.
+DescOpen=Open chest
+MsgLocked=The chest|is locked.
+DescTake=Take out
+DescClose=Close chest
+

@@ -11,6 +11,7 @@ Value=1
 Mass=1
 Components=WOOD=4;
 Picture=0,0,94,93
+SolidMask=94,0,94,93
 Vertices=4
 VertexX=-35,-42,35,46
 VertexY=-40,27,-17,42

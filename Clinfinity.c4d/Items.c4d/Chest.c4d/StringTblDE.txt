@@ -1,0 +1,5 @@
+MsgUnlocked=Truhe geöffnet.
+DescOpen=Truhe öffnen
+MsgLocked=Die Truhe ist|abgeschlossen
+DescTake=Herausnehmen
+DescClose=Truhe schließen
