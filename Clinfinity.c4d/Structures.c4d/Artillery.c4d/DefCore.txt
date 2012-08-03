@@ -17,7 +17,6 @@ Components=WOOD=6;METL=2;ROCK=1;
 Picture=100,0,64,64
 Exclusive=1
 BlastIncinerate=100
-LineConnect=C4D_PowerInput|C4D_PowerOutput|C4D_LiquidInput|C4D_PowerConsumer
 Construction=1
 Grab=2
 
