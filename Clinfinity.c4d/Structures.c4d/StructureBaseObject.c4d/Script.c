@@ -27,7 +27,7 @@ protected func Initialize() {
 
 protected func Destruction() {
 	var result = _inherited();
-	if(GetProcedure() == "ATTACH") {
+	if(GetProcedure() == "ATTACH" && GetActionTarget()) {
 		GetActionTarget()->~AttachEvent(this, GetActionTarget(), true, this);
 	}
 	return result;
