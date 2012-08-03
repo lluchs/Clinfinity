@@ -33,7 +33,7 @@ protected func Progress() {
 }
 
 protected func ControlLeft(object obj) {
-	[$TxtRotatecannontothelef$ | Image = CT01: 0]
+	[$TxtRotatecannontothelef$|Image=CT01:0]
 	if(!cannon) return 0;
 	var plr = obj->GetOwner();
 	// wrong team?
@@ -54,7 +54,7 @@ protected func ControlLeftReleased(object obj) {
 }
 
 protected func ControlRight(object obj) {
-	[$TxtRotatecannontotherig$ | Image = CT01: 2]
+	[$TxtRotatecannontotherig$|Image=CT01:2]
 	if(!cannon) return 0;
 	Sound("Click");
 	return(cannon->ComRight(obj) );
@@ -67,7 +67,7 @@ protected func ControlRightReleased(object obj) {
 }
 
 protected func ControlDown(object obj) {
-	[$TxtStopcannonrotation$ | Method = Classic]
+	[$TxtStopcannonrotation$|Method=Classic]
 	if(!cannon) return 0;
 
 	if(!GetPlrCoreJumpAndRunControl(obj->GetController())) {
@@ -78,19 +78,19 @@ protected func ControlDown(object obj) {
 }
 
 protected func ControlThrow(object obj) {
-	[$TxtFire$ | Image = CT01: 1]
+	[$TxtFire$|Image=CT01:1]
 	if (!cannon) return 0;
 	return cannon->ComFire(obj);
 }
 
 protected func ControlUp(object obj) {
-	[$TxtMorePower$ | Image = CT01: 4]
+	[$TxtMorePower$|Image=CT01:4]
 	if(!cannon) return 0;
 	return cannon->ComPowerUp(obj);
 }
 
 protected func ControlDig(object obj) {
-	[$TxtLessPower$ | Image = CT01: 3]
+	[$TxtLessPower$|Image=CT01:5]
 	if(!cannon) return 0;
 	return cannon->ComPowerDown(obj);
 }
