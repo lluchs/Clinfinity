@@ -33,15 +33,23 @@ protected func AttachTargetLost() {
 
 public func ComLeft(object clonk) {
 	SetAction("Rotating", GetActionTarget());
-	SetRDir(-RotationSpeed() );
-	Trajectory(clonk);
+	if(GetRDir() == -RotationSpeed())
+		ComStop(clonk);
+	else {
+		SetRDir(-RotationSpeed());
+		Trajectory(clonk);
+	}
 	return 1;
 }
 
 public func ComRight(object clonk) {
 	SetAction("Rotating", GetActionTarget());
-	SetRDir(RotationSpeed() );
-	Trajectory(clonk);
+	if(GetRDir() == RotationSpeed())
+		ComStop(clonk);
+	else {
+		SetRDir(RotationSpeed());
+		Trajectory(clonk);
+	}
 	return 1;
 }
 
