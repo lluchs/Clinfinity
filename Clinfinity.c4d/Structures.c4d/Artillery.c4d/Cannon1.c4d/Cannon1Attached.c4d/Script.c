@@ -90,10 +90,9 @@ public func ComFire(object clonk) {
 	SetRDir(0);
 	Trajectory(clonk, 1);
 	var ammo = clonk->Contents();
-	if(CannonAmmo(ammo)) {
-		ammo->Enter(GetActionTarget());
+	if(CannonAmmo(ammo))
 		Shoot(ammo, clonk);
-	} else
+	else
 		clonk->Sound("CommandFailure1");
 	Trajectory(clonk);
 	return 1;
@@ -113,8 +112,6 @@ func Trajectory(object clonk, bool fClose) {
 
 private func Shoot(object projectile, object shooter) {
 	if (!projectile) return 0;
-	if (projectile->Contained() != GetActionTarget()) return 0;
-
 
 	//enough Steam?
 	var plr = GetOwner();
