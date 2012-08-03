@@ -5,7 +5,7 @@
 static const g_CrosshairID = TRTY;
 
 protected func Initialize() {
-	SetVisibility(VIS_Owner);
+	SetVisibility(VIS_Owner | VIS_Allies);
 }
 
 global func RemoveTrajectory(object obj) {
@@ -14,6 +14,19 @@ global func RemoveTrajectory(object obj) {
 	if(trajectory) RemoveObject(trajectory);
 }
 
+/*  Function: AddTrajectory
+	Adds a trajectory preview to the given object.
+
+	Parameters:
+	obj   - The object to attach the preview to.
+	x     - Start coordinates
+	y     - Relative to obj
+	xDir  - Launch speed
+	yDir  - Launch speed
+	color - Color of the shown dots
+
+	Returns:
+	A trajectory object. */
 global func AddTrajectory(object obj, int x, int y, int xDir, int yDir, int color) {
 	if(!color) color = RGB(0, 255);
 	//Log("Object: %s, x: %d, y: %d, xdir: %d, ydir: %d",GetName(obj),x,y,xDir,yDir);
