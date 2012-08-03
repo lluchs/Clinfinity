@@ -15,7 +15,7 @@ static const STMT_RespawnAmount = 100;
 
 public func MaxFill() { return 1500; }
 
-public func MaxDamage() { return 50; }
+public func MaxDamage() { return 60; }
 
 public func DamageGraphics() { return 2; }
 
