@@ -20,7 +20,6 @@ BlastIncinerate=100
 LineConnect=C4D_PowerInput|C4D_PowerOutput|C4D_LiquidInput|C4D_PowerConsumer
 Construction=1
 Grab=2
-GrabPutGet=C4D_GrabGet|C4D_GrabPut
 
 [Physical]
 Energy=100000
