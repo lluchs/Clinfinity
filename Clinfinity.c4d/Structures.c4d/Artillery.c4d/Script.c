@@ -66,7 +66,7 @@ protected func ControlRightReleased(object obj) {
 	return(cannon->ComStop(obj));
 }
 
-protected func ControlDig(object obj) {
+protected func ControlDown(object obj) {
 	[$TxtStopcannonrotation$ | Method = Classic]
 	if(!cannon) return 0;
 
@@ -89,7 +89,7 @@ protected func ControlUp(object obj) {
 	return cannon->ComPowerUp(obj);
 }
 
-protected func ControlDown(object obj) {
+protected func ControlDig(object obj) {
 	[$TxtLessPower$ | Image = CT01: 3]
 	if(!cannon) return 0;
 	return cannon->ComPowerDown(obj);
