@@ -13,5 +13,6 @@ Vertices=1
 VertexY=14
 Mass=1
 Rotate=1
+Chop=1
 StretchGrowth=1
 IncompleteActivity=1
