@@ -6,8 +6,11 @@ func Initialize() {
     //Ressource Buildings
     CreateConstruction(RFLN, 810, 540, -1, 100, 1, 0); //Flintfactory
     CreateConstruction(RSMG, 1315, 545, -1, 100, 1, 0); //Steamgenerator
+    
+    //Pipe to Steamgenerator
+    CreateObject(PIPE, 1349, 1008);
 
-    //Crumbling Islands
+    //Crumbling Islands (deco)
     var CIsleL = CreateObject(ISLE, 760, 810);
     CIsleL -> SetClrModulation(RGBa(200, 215, 255, 50));
     
@@ -22,15 +25,34 @@ func Initialize() {
 
     SetSkyParallax(1, 20, 0, 1, 0); //Sky move with Wind
 
-    PlaceVines();
-
     //Fog
     CreateObject(FOG_, 400, 1050, -1);
     CreateObject(FOG_, 1200, 1050, -1);
     CreateObject(FOG_, 2000, 1050, -1);
-
-    //Pipe to Steamgenerator
-    CreateObject(PIPE, 1349, 1008);
+    
+    //static drafts
+    var DraftWaterfall = CreateObject(DRFT, 760, 780);
+	  DraftWaterfall -> SetPermanent();
+	  DraftWaterfall -> SetR(-10);
+	  
+	  var MIsleL = CreateObject(DRFT, 992, 749);
+	  MIsleL -> SetPermanent();
+	  MIsleL -> SetR(-20);
+	  
+	  var MIsleR = CreateObject(DRFT, 1045, 780);
+	  MIsleR -> SetPermanent();
+	  MIsleR -> SetR(20);
+	  
+	  var IsleR = CreateObject(DRFT, 1310, 764);
+	  IsleR -> SetPermanent();
+	  IsleR -> SetR(-12);
+	  
+	  //thousands of vines!
+	  PlaceVines();
+	  
+	  // Island Respawn
+  	PeriodicIslandRespawn(3500, 100, 400, 220, 120); // left 'home' island
+  	PeriodicIslandRespawn(3503, 1625, 440, 190, 120); // right 'home' island
 }
 
 func InitializePlayer(int plr) {
