@@ -51,8 +51,8 @@ func Initialize() {
 	  PlaceVines();
 	  
 	  // Island Respawn
-  	PeriodicIslandRespawn(140, 750, 330, 250, 120); // left 'home' island
-  	PeriodicIslandRespawn(1650, 730, 310, 270, 120); // right 'home' island
+  	PeriodicIslandRespawn(2000, 140, 750, 330, 100); // left 'home' island
+  	PeriodicIslandRespawn(2000, 1620, 730, 310, 100); // right 'home' island
 }
 
 func InitializePlayer(int plr) {
