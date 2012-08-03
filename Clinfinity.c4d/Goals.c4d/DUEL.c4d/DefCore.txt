@@ -14,6 +14,3 @@ Picture=0,0,64,64
 Vertices=1
 VertexY=1
 VertexFriction=20
-Timer=10
-TimerCall=Timer
- 
