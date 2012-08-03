@@ -9,5 +9,6 @@ func Initialize() {
 	// Decoration
   CreateObject(WTFL, 350, 290); //Waterfall
 
+  CreateObject(GUNR,230,289);
 	ScriptGo(true);
 }
