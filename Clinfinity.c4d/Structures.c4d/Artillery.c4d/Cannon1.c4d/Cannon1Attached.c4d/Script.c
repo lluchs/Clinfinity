@@ -10,7 +10,7 @@ static const CTW2_BasicSteamUsage = 5; //SteamUsage*ObjectMass
 protected func RotationSpeed() { return 5; }
 protected func CannonMobileID() { return CTW3; }
 protected func CannonAmmo(object obj) { return obj && obj->GetOCF() & OCF_Collectible; }
-protected func CannonPowerArray(object obj) { return [6, 12, 18]; }
+protected func CannonPowerArray(object obj) { return [6, 8, 12, 14, 18]; }
 protected func CannonPower(object obj) { return CannonPowerArray(obj)[power]; }
 protected func CannonSound(object obj) { return "Blast3"; }
 protected func CannonSmoke(object obj) { return 1; }
