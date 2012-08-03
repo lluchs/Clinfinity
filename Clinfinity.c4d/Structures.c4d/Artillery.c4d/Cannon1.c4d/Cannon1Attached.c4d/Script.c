@@ -9,32 +9,19 @@ static const CTW2_BasicSteamUsage = 5; //SteamUsage*ObjectMass
 
 protected func RotationSpeed() { return 5; }
 protected func CannonMobileID() { return CTW3; }
-protected func CannonAmmo(object obj) { return GetOCF(obj & OCF_Collectible ); }
+protected func CannonAmmo(object obj) { return obj && obj->GetOCF() & OCF_Collectible; }
 protected func CannonPower(object obj) { return 12; }
 protected func CannonSound(object obj) { return "Blast3"; }
 protected func CannonSmoke(object obj) { return 1; }
-protected func CannonShootMenuID() { return GetID(); }
-protected func CannonShootMenuName(object potentialProjectile) { return Format("$TxtShoots$",GetName(potentialProjectile)); }
 
+// Legacy stuff
+protected func CannonShootMenuID() {}
 
-protected func Destruction() {
-	CloseMenus();
-}
-
-private func CloseMenus() {
-	var tower = GetActionTarget();
-
-	for(var obj in FindObjects(Find_Container(tower))) {
-		if(!obj->~IsClonk()) continue;
-		if(obj->GetMenu() != CannonShootMenuID()) continue;
-		obj->CloseMenu();
-	}
-}
 
 /* Turm weg? */
 
 protected func AttachTargetLost() {
-	ComStopDouble();
+	RemoveObject();
 }
 
 /* Kommandos aus dem Turm */
@@ -64,7 +51,6 @@ public func ComStop(object clonk) {
 public func ComStopDouble(object clonk) {
 	//Log("StopDouble");
 	Trajectory(clonk, 1);
-	CloseMenus();
 
 	var r = (GetR() + 270) % 360;
 	SetR(r);
@@ -72,63 +58,36 @@ public func ComStopDouble(object clonk) {
 	return 1;
 }
 
-public func ComEnter() {
-	ComLeave();
-}
-
-public func ComLeave() {
-	var tower = GetActionTarget();
-	for(var obj in FindObjects(Find_Container(tower))) {
-		if(!obj->~IsClonk()) continue;
-		if(obj->GetMenu() != CannonShootMenuID()) continue;
-
-		var sel = GetMenuSelection(obj);
-		obj->CloseMenu();
-		DoMenu(obj, sel);
-	}
-}
+public func ComPowerUp(object clonk) {}
+public func ComPowerDown(object clonk) {}
 
 public func ComFire(object clonk) {
 	SetAction("Attaching", GetActionTarget());
 	SetRDir(0);
 	Trajectory(clonk, 1);
-	DoMenu(clonk, 0);
-}
-
-private func DoMenu(object clonk, int selection) {
-	CreateMenu(GetID(GetActionTarget()), clonk, this(), 0, "$TxtNoammo$", 0, 0, 0, CannonShootMenuID());
-
-	var i, obj;
-	while(obj = Contents(i++, GetActionTarget()) )
-		if(GetID(obj) != GUNP)
-			if(CannonAmmo(obj) )
-				AddMenuItem(CannonShootMenuName(obj), Format("Shoot(%i, Object(%d), Object(%d))", obj->GetID(), ObjectNumber(obj), ObjectNumber(clonk)), 0, clonk, 0, 0, 0, 4, obj);
-	SelectMenuItem(selection, clonk);
+	var ammo = clonk->Contents();
+	if(CannonAmmo(ammo)) {
+		ammo->Enter(GetActionTarget());
+		Shoot(ammo, clonk);
+	} else
+		clonk->Sound("CommandFailure1");
 	Trajectory(clonk);
 	return 1;
 }
 
-func OnMenuSelection(int itemIndex, object menuObject) {
-	Trajectory(menuObject);
-	return 1;
-}
-
 func Trajectory(object clonk, bool fClose) {
-	//Log("!");
-	var selection = GetMenuSelection(clonk);
-	if(selection == -1) selection = 0;
-	var projectile = Contents(selection, GetActionTarget());
+	var projectile = clonk->Contents();
 	//Log("MenuSelection: %d; Contents: %s", GetMenuSelection(clonk),GetName(projectile));
 
-	if(!fClose) AddTrajectory(this(), Sin(GetR(), 13) + GetX(this()), -Cos(GetR(), 13) + GetY(this()), Sin(GetR(), CannonPower(projectile)) * 10, -Cos(GetR(), CannonPower(projectile)) * 10);
+	if(!fClose) AddTrajectory(this, Sin(GetR(), 13) + GetX(this), -Cos(GetR(), 13) + GetY(this), Sin(GetR(), CannonPower(projectile)) * 10, -Cos(GetR(), CannonPower(projectile)) * 10);
 	else {
 		//Log("Remove");
-		RemoveTrajectory(this());
+		RemoveTrajectory(this);
 	}
 	return 1;
 }
 
-private func Shoot(id defFoo, object projectile, object shooter) {
+private func Shoot(object projectile, object shooter) {
 	if (!projectile) return 0;
 	if (projectile->Contained() != GetActionTarget()) return 0;
 
@@ -153,7 +112,6 @@ private func Shoot(id defFoo, object projectile, object shooter) {
 
 		// Controller setzen (Killverfolgung)
 		projectile->SetController(shooter->GetOwner());
-		Shoot();
 
 		//AddTrajectory(this(),Sin(GetR(), 13), -Cos(GetR(), 13),Sin(GetR(), CannonPower(projectile)), -Cos(GetR(), CannonPower(projectile)));
 		Exit(projectile, Sin(GetR(), 13), -Cos(GetR(), 13), GetR(), Sin(GetR(), CannonPower(projectile)), -Cos(GetR(), CannonPower(projectile)), 20);

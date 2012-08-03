@@ -1,6 +1,6 @@
 /*--- Geschützturm ---*/
 
-#strict
+#strict 2
 
 local cannon;
 
@@ -45,13 +45,13 @@ protected func ControlLeft(object obj) {
 	SetOwner(plr);
 
 	Sound("Click");
-	return(cannon->ComLeft(obj) );
+	return cannon->ComLeft(obj) ;
 }
 
 protected func ControlLeftReleased(object obj) {
 	if(!cannon) return 0;
 	Sound("CannonStop");
-	return(cannon->ComStop(obj));
+	return cannon->ComStop(obj);
 }
 
 protected func ControlRight(object obj) {
@@ -67,7 +67,7 @@ protected func ControlRightReleased(object obj) {
 	return(cannon->ComStop(obj));
 }
 
-protected func ControlUp(object obj) {
+protected func ControlDig(object obj) {
 	[$TxtStopcannonrotation$ | Method = Classic]
 	if(!cannon) return 0;
 
@@ -78,17 +78,22 @@ protected func ControlUp(object obj) {
 	}
 }
 
-protected func ControlDig(object obj) {
+protected func ControlThrow(object obj) {
 	[$TxtFire$ | Image = CT01: 1]
 	if (!cannon) return 0;
-	return (cannon->ComFire(obj));
+	return cannon->ComFire(obj);
+}
+
+protected func ControlUp(object obj) {
+	[$TxtLessPower$ | Image = CT01: 4]
+	if(!cannon) return 0;
+	return cannon->ComPowerUp(obj);
 }
 
 protected func ControlDown(object obj) {
-	[Method = Classic]
-	/* Kanone anhalten und den Clonk noch rauslassen */
-	ControlUp(obj);
-	return 0;
+	[$TxtLessPower$ | Image = CT01: 3]
+	if(!cannon) return 0;
+	return cannon->ComPowerDown(obj);
 }
 
 /* Cannon connection functionality */
@@ -104,12 +109,6 @@ public func ConnectCannon(object newCannon) {
 	// neue Kategorie für die Kanone um sie in den Hintergrund zu kriegen
 	SetCategory(2, cannon);
 	SetObjectOrder(cannon);
-
-	// Die neue Kanone über enthaltene Objekte informieren
-	var i = ContentsCount() - 1, obj;
-	while(obj = Contents(--i) )
-		if(!obj->~IsCannon() )
-			cannon->~ComEnter(obj);
 
 	Sound("Connect");
 }
