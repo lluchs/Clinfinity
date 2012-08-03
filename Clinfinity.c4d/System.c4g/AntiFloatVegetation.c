@@ -4,6 +4,7 @@
 
 #appendto GRAS //Grass
 #appendto PLNT //Plants
+#appendto SRUB //Shrubs
 
 protected func Initialize() {
 	AddEffect("CheckAir", this, 1, 30, this);
