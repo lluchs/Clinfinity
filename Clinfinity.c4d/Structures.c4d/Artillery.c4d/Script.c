@@ -16,9 +16,8 @@ public func MaxDamage() {
 
 //Hilft der Kanone, loescht die Zielhilfe
 func Grabbed(object by, bool grab) {
-	if(!grab)
-		if(HasCannon())
-			HasCannon()->Trajectory(by, 1);
+	if(HasCannon())
+		HasCannon()->Trajectory(by, !grab);
 	_inherited(by, grab);
 }
 
