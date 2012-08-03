@@ -25,6 +25,9 @@ func Initialize() {
 	var DraftR2=CreateObject(DRFT, 1122, 600);
 	DraftR2 -> SetPermanent();
 	DraftR2 -> SetR(20);
+	
+	//crates on frigate
+	CreateObject(CRAT,800,300);
 
 	// steampunky flair
 	SetGamma(RGB(15, 15, 20), RGB(118, 118, 118), RGB(210, 215, 255));
