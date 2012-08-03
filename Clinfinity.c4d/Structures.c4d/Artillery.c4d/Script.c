@@ -4,11 +4,8 @@
 
 local cannon;
 
-#include CXEC
-
 #include STBO
 #include L_DC
-#include L_SS
 
 public func MaxDamage() {
 	return 50;
