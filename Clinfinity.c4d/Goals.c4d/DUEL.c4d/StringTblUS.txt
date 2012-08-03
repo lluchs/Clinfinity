@@ -1,0 +1,1 @@
+AmountTank=Still %d Tanks left.
