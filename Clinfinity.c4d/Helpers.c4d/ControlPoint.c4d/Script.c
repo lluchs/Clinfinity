@@ -30,8 +30,15 @@ public func CaptureTime() { return 200; }
 	Should be overwritten.
 
 	Returns:
-	FindObject2-criteria which define the capture zone. */
-public func CaptureZone() { return Find_Distance(300); }
+	FindObject2-criteria which define the capture zone.
+	Defaults to the object's shape. */
+public func CaptureZone() {
+	var x = GetDefOffset(GetID(), 0),
+	    y = GetDefOffset(GetID(), 1),
+		wdt = GetDefWidth(GetID()),
+		hgt = GetDefHeight(GetID());
+	return Find_InRect(x, y, wdt, hgt);
+}
 
 // the timer interval
 static const CP_Interval = 5;
