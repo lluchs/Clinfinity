@@ -34,6 +34,7 @@ private func Captured() {
 		obj->RemoveObject();
 	UpdateDisplay();
 	StartProduction();
+	return inherited(...);
 }
 
 protected func DoSmoke(){
