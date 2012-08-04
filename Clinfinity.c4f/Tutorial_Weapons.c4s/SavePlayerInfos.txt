@@ -1,0 +1,16 @@
+[PlayerInfoList]
+LastPlayerID=1
+
+  [Client]
+  ID=1
+  Flags=Initial
+
+    [Player]
+    Name="Aliens"
+    Flags=Joined
+    ID=1
+    Type=Script
+    Team=1
+    Color=65535
+    GameNumber=1
+    GameJoinFrame=0

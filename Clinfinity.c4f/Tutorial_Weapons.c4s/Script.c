@@ -3,7 +3,7 @@
 #strict 2
 
 // Positions for Relaunch
-static iPlrX, iPlrY, iCounter;
+static iPlrX, iPlrY, iCounter, tank;
 
 func Initialize() {
 	// Decoration
@@ -19,6 +19,11 @@ func Initialize() {
   Enter(Bird, AIClonk);
   
   CreateObject(MUSK,50,50,0);
+  
+  PLTF->CreatePlatform(1000,400,0);
+	CreateConstruction(STMT, 1000, 150, 0, 100);
+  
+  
 	ScriptGo(true);
 }
 
@@ -30,11 +35,19 @@ func InitializePlayer(int plr) {
 
 	SavePosition();
 	iCounter = 0;
+	
+	  CreateMatSys(plr);
+    // fill with material
+    var msys = GetMatSys(plr);
+    msys->DoFill(10, METL);
 }
+
 
 
 func Script5() {
 	TutorialMessage(Format("$Willkommen zurück %d!$", GetPlayerName()));
+	var tank = FindObject(STMT);
+	tank->DoFill(500);
 }
 
 func Script10() {
