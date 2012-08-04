@@ -20,9 +20,6 @@ func Initialize() {
   
   CreateObject(MUSK,50,50,0);
   
-  PLTF->CreatePlatform(1000,400,0);
-	CreateConstruction(STMT, 1000, 150, 0, 100);
-  
   
 	ScriptGo(true);
 }
@@ -40,14 +37,11 @@ func InitializePlayer(int plr) {
     // fill with material
     var msys = GetMatSys(plr);
     msys->DoFill(10, METL);
+    MatSysDoFill(1000,0,STEM);
 }
 
-
-
 func Script5() {
-	TutorialMessage(Format("$Willkommen zurück %d!$", GetPlayerName()));
-	var tank = FindObject(STMT);
-	tank->DoFill(500);
+	TutorialMessage("Willkommen zurück!");
 }
 
 func Script10() {
