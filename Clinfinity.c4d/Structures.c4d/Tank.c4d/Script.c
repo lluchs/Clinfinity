@@ -127,7 +127,7 @@ private func UpdateDisplay() {
 
 public func GetChanges(int frames) {
 	var min = FrameCounter() - frames, result = [];
-	for(var i = GetLength(changes) - 1; i && changes[i][0] >= frames; i--)
+	for(var i = GetLength(changes) - 1; i && changes[i][0] >= min; i--)
 		PushBack(changes[i][1], result);
 	return result;
 }
