@@ -20,6 +20,15 @@ func Initialize() {
   
   CreateObject(MUSK,50,50,0);
   
+  CreateObject(WEED, 610, 367);
+  
+  CreateObject(WMLL, 770, 289);
+  
+  /*while(FindObject2(	GRAS, 424, 288, 388, 83)){
+  RemoveObject(GRAS);
+  }*/
+  
+
   
 	ScriptGo(true);
 }
