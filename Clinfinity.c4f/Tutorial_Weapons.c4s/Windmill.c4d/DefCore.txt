@@ -10,7 +10,7 @@ Offset=-40,-60
 Value=1
 Mass=1
 Components=WOOD=4;
-Picture=0,0,100,150
+Picture=0,0,80,120
 Vertices=4
 VertexX=-10,-28,28,28
 VertexY=-24,57,-35,57

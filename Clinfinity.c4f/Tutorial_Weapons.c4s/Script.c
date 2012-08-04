@@ -6,12 +6,20 @@
 static iPlrX, iPlrY, iCounter, tank;
 
 func Initialize() {
-	// Decoration
+  //Trees
+  for(var i; i<21; ++i){
+  PlaceVegetation(TRE1, 24, 0, 410, 140, -1); 
+  PlaceVegetation(TRE2, 24, 0, 410, 140, -1);
+  PlaceVegetation(TRE3, 24, 0, 410, 140, -1);
+  }
+
+	//Decoration
   CreateObject(WTFL, 350, 290); //Waterfall
+  CreateObject(WMLL, 770, 269); //Windmill
+  CreateObject(MINE, 250, 523); //Mine decoration
 
   CreateObject(GUNR,230,289); //Gun Range
   CreateObject(_CST, 252,227); //Chest
-  
   
   var Bird=CreateObject(BIRD, 50, 50, 1); //BÖRD!
   var AIClonk=CreateObject(CLNK,50,50);
@@ -20,14 +28,9 @@ func Initialize() {
   
   CreateObject(MUSK,50,50,0);
   
-  CreateObject(WEED, 610, 367);
-  
-  CreateObject(WMLL, 770, 289);
-  
-  /*while(FindObject2(	GRAS, 424, 288, 388, 83)){
-  RemoveObject(GRAS);
-  }*/
-  
+  //remove all objects for wheat field
+  for(var obj in FindObjects(Find_InRect(424, 288, 388, 83))) obj->RemoveObject();
+
 
   
 	ScriptGo(true);
@@ -47,6 +50,10 @@ func InitializePlayer(int plr) {
     var msys = GetMatSys(plr);
     msys->DoFill(10, METL);
     MatSysDoFill(1000,0,STEM);
+}
+
+func Script1() {
+  CreateObject(WEED, 610, 367); //Workaround for remove all obj in this area
 }
 
 func Script5() {
