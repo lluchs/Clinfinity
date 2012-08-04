@@ -12,6 +12,8 @@ static steamTrendWarnEffects;
 static const STMT_Phases = 10;
 // amount needed to respawn one clonk
 static const STMT_RespawnAmount = 100;
+// number of frames the trend warning analyzes
+static const STMT_SteamTrendWarningFrames = 800;
 
 public func MaxFill() { return 1500; }
 
@@ -132,7 +134,7 @@ public func GetChanges(int frames) {
 	return result;
 }
 
-public func GlobalSteamChanges(int frames, bool average) {
+public func GlobalSteamChanges(int frames) {
 	var result = 0, num = 0;
 	for(var tank in FindObjects(Find_ID(GetID()), Find_Allied(GetOwner()))) {
 		for(var change in tank->GetChanges(frames)) {
@@ -140,10 +142,7 @@ public func GlobalSteamChanges(int frames, bool average) {
 			num++;
 		}
 	}
-	if(average)
-		return result / num;
-	else
-		return result;
+	return result;
 }
 
 public func ShowChanges() {
@@ -196,7 +195,8 @@ global func FxSteamTrendWarningTimer(object target, int effectNum, int effectTim
 	var team = EffectVar(0, target, effectNum), players = GetPlayersByTeam(team);
 	var tank = FindObject2(Find_ID(STMT), Find_Allied(players[0]));
 	var warning = EffectVar(1, target, effectNum), next;
-	if(tank && tank->GlobalSteamChanges(750, true) < 0)
+	// Is the steam likely to run out next STMT_SteamTrendWarningFrames?
+	if(tank && MatSysGetTeamFill(players[0], STEM) + tank->GlobalSteamChanges(STMT_SteamTrendWarningFrames) < 0)
 		next = true;
 	else
 		next = false;
