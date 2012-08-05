@@ -12,7 +12,8 @@ protected func GetAlternativeType() {
 func ControlDigDouble(object pObj) {
 	[$TxtConnectcannon$ | Image = CTW3]
 	var pTower = FindObject2(Find_ID(CTW0), Find_Not(Find_Hostile(GetOwner(pObj))), Find_Distance(30));
-	if(pTower) Enter(pTower);
+	if(pTower)
+		pTower->ConnectCannon(this);
 	else {
 		Sound("Error");
 		PlayerMessage(GetOwner(pObj), "$TxtNoTower$", this());
