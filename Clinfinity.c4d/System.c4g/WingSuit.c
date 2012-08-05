@@ -15,7 +15,7 @@ protected func Initialize() {
 protected func ControlDownSingle() {
 	var result = _inherited();
 	if( result == 0 ) {
-		if(GetAction() == "Jump") {
+		if(GetAction() == "Jump" || GetAction() == "Dive") {
 			if(IsGliding()) {
 				RemoveEffect("WingSuit", this);
 			} else if(GetPhase() > 3) {
@@ -38,6 +38,8 @@ public func IsGliding() {
 protected func FxWingSuitStart(object target, int effectNumber, int temporary) {
 	if(temporary == 0) {
 		Sound("SailDown", false, target, 50);
+		if(target->GetAction() != "Jump")
+			target->SetAction("Jump");
 	}
 }
 
