@@ -3,6 +3,8 @@
 
 #strict 2
 
+#include L_DC
+
 // Interval in frames which times steam transactions
 static const PLTF_SteamPayTimer = 250;
 // Timer interval as defined in the DefCore
@@ -52,6 +54,7 @@ private func CreateAdditionalObjectsFor(object platform) {
 
 protected func Construction() {
 	ScheduleCall(this, "CheckAfterConstruction", 1);
+	inherited(...);
 }
 
 protected func Destruction() {
@@ -287,4 +290,16 @@ public func CalculateWeight() {
 		mass += GetMass(weight);
 	}
 	return mass;
+}
+
+/*-- Damage Control --*/
+
+public func MaxDamage() { return 60; }
+
+public func Damage(int change) {
+	// only get damaged while there aren't any buildings on top of the platform
+	if(change > 0 && FindObject2(Find_OnPlatform(), Find_Not(Find_ID(COLV)), Find_Procedure("ATTACH")))
+		DoDamage(-change);
+	else
+		return inherited(change, ...);
 }

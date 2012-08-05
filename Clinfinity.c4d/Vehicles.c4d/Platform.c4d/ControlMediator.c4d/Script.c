@@ -15,6 +15,13 @@ protected func Initialize() {
 	movementEventListeners = [];
 }
 
+protected func Destruction() {
+	if(masterMediator)
+		Disconnect(masterMediator, this);
+	if(slaveMediator)
+		Disconnect(this, slaveMediator);
+}
+
 /*	Function: ControlEvent
 	Called by the source when it wants to broadcast a control event.
 	This can be, for example, a lever that has been switched into its "up" position.
