@@ -43,7 +43,7 @@ public func ProductionMenu(object caller) {
 	CreateMenu(CXCN, caller, this, 0, "$TxtNoPlrKnowledge$");
 
 	var plr = caller->GetOwner(), i = 0, knowledge;
-	while(knowledge = GetPlrKnowledge(plr, 0, i++, C4D_Object)) {
+	while(knowledge = GetPlrKnowledge(plr, 0, i++, C4D_Object | C4D_Vehicle)) {
 		AddMaterialMenuItem("$TxtProduction$: %s", "RequestProduction", knowledge, caller, 0, caller);
 	}
 }
