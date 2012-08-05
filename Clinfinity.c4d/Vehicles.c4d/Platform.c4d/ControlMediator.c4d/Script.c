@@ -175,6 +175,9 @@ public func Connect(object leftMediator, object rightMediator) {
 	rightPlatform->AttachTo(leftPlatform, 1, 2);
 	rightPlatform->RemoveCopiedChildrenVertices();
 
+	// Stop the platforms
+	leftMediator->ControlEvent(COMD_Stop);
+
 	return true;
 }
 
