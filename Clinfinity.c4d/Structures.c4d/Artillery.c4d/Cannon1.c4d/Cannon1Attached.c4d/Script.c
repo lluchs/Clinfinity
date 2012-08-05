@@ -6,7 +6,7 @@
 
 protected func RotationSpeed() { return 5; }
 protected func CannonMobileID() { return CTW3; }
-protected func CannonAmmo(object obj) { return obj && obj->GetOCF() & OCF_Collectible; }
+protected func CannonAmmo(object obj) { return obj && obj->GetOCF() & OCF_Collectible && obj->~CannonAmmo(); }
 protected func CannonPowerArray(object obj) { return [6, 8, 12, 14, 18]; }
 protected func CannonPower(object obj) { return CannonPowerArray(obj)[power]; }
 protected func CannonSteamUsage(object obj) { return [2, 3, 5, 7, 10][power]; } // SteamUsage*ObjectMass
