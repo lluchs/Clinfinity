@@ -303,7 +303,7 @@ public func CalculateWeight() {
 
 /*-- Damage Control --*/
 
-public func MaxDamage() { return 60; }
+public func MaxDamage() { return 40; }
 
 public func Damage(int change) {
 	// only get damaged while there aren't any buildings on top of the platform
