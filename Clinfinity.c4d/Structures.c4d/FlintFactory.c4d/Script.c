@@ -14,6 +14,8 @@ public func CaptureZone() {
 
 public func CaptureTime() { return 200; }
 
+public func NoDemolition() { return true; }
+
 protected func Initialize() {
 	UpdateDisplay();
 	// position the display correctly

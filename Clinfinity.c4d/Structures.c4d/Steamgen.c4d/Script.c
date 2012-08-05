@@ -8,6 +8,8 @@
 static const RSMG_ProductionTime = 200;
 static const RSMG_ProductionRate = 50;
 
+public func NoDemolition() { return true; }
+
 public func CaptureTime() { return 100; }
 
 private func Captured() {

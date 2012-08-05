@@ -16,7 +16,8 @@ protected func FindBuildingToDemolish() {
 		var platform = this->~GetPlatform();
 		return !FindObject2(platform->Find_BuildingsOnPlatform()) && platform;
 	}
-	return FindObject2(Find_AtObject(), Find_Category(C4D_Structure), Find_Allied(GetOwner()));
+	return FindObject2(Find_AtObject(), Find_Category(C4D_Structure), Find_Allied(GetOwner()),
+	                   Find_Not(Find_Owner(NO_OWNER)), Find_Not(Find_Func("NoDemolition")));
 }
 
 protected func StartDemolition() {
