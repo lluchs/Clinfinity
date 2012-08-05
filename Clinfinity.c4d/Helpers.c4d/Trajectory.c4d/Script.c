@@ -5,7 +5,6 @@
 static const g_CrosshairID = TRTY;
 
 protected func Initialize() {
-	SetVisibility(VIS_Owner | VIS_Allies);
 }
 
 global func RemoveTrajectory(object obj) {
