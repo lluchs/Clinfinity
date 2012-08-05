@@ -62,6 +62,9 @@ func InitializePlayer(int plr) {
     msys->DoFill(4, WOOD);
     msys->DoFill(10, METL);
     msys->DoFill(7, ROCK);
+    
+    //Flints
+    CreateContents(FLNT, GetHiRank(plr), 2);
 
     var team = GetPlayerTeam(plr);
     var pos = GetStartPosition(team);
