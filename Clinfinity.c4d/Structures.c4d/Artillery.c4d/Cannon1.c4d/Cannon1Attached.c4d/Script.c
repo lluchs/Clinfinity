@@ -98,6 +98,8 @@ public func ComFire(object clonk) {
 	var ammo = clonk->Contents();
 	if(CannonAmmo(ammo))
 		Shoot(ammo, clonk);
+	else if(MatSysDoTeamFill(-1, clonk->GetOwner(), ROCK))
+		Shoot(clonk->CreateContents(ROCK), clonk);
 	else
 		clonk->Sound("CommandFailure1");
 	Trajectory(clonk);
@@ -127,6 +129,11 @@ private func Shoot(object projectile, object shooter) {
 	if(MatSysGetTeamFill(plr, STEM) < steam) {
 		Sound("Error");
 		Message("$TxtNotenoughgunpowder1r$", GetActionTarget(), steam);
+		// Remove rocks
+		if(projectile->GetID() == ROCK) {
+			MatSysDoFill(1, shooter->GetOwner(), ROCK);
+			projectile->RemoveObject();
+		}
 	} else {
 		MatSysDoTeamFill(-steam, plr, STEM);
 
