@@ -1,1 +1,3 @@
-Trägt oder trägt nicht.
+Mittels Hebel nach oben und unten steuerbar. Lässt sich um eine Plattformlänge nach Links oder Rechts verschieben.
+
+Für eine neue Plattform den Hebel anfassen und Doppelgraben drücken. Verbundene Plattformen verbrauchen weniger Dampf, können aber auch zum verschieben getrennt werden.
