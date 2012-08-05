@@ -3,14 +3,19 @@
 #strict 2
 
 #appendto CLNK
+#appendto COLV
 
 protected func ContextDemolition(object clonk) {
 	[$CtxDemolitionDesc$|Image=CRYC|Condition=FindBuildingToDemolish]
-	CreateMenu(CXCN, this, this);
-	AddMenuItem("$CtxDemolitionDesc$!", "StartDemolition", MS4C, this, 0, 0, "OK", 2, 3);
+	CreateMenu(CXCN, clonk, this);
+	AddMenuItem("$CtxDemolitionDesc$!", "StartDemolition", MS4C, clonk, 0, 0, "OK", 2, 3);
 }
 
 protected func FindBuildingToDemolish() {
+	if(GetID() == COLV) {
+		var platform = this->~GetPlatform();
+		return !FindObject2(platform->Find_BuildingsOnPlatform()) && platform;
+	}
 	return FindObject2(Find_AtObject(), Find_Category(C4D_Structure), Find_Allied(GetOwner()));
 }
 

@@ -274,7 +274,16 @@ private func StopFall() {
 public func Find_OnPlatform() {
 	return Find_And(Find_OnLine(-GetDefWidth()/2, -GetDefHeight()/2-2, GetDefWidth()/2, -GetDefHeight()/2-2),
 	                Find_Not(Find_Or(Find_Func("IsPlatform"), Find_Category(C4D_StaticBack))));
-	                          
+}
+
+/*  Function: Find_BuildingsOnPlatform
+	FindObject2/FindObjects search criteria: Find all buildings standing on this platform
+
+	Does not find the control lever (COLV).
+
+	See note on <Find_OnPlatform> */
+public func Find_BuildingsOnPlatform() {
+	return Find_And(Find_OnPlatform(), Find_Not(Find_ID(COLV)), Find_Procedure("ATTACH"));
 }
 
 /*  Function: CalculateWeight
@@ -298,7 +307,7 @@ public func MaxDamage() { return 60; }
 
 public func Damage(int change) {
 	// only get damaged while there aren't any buildings on top of the platform
-	if(change > 0 && FindObject2(Find_OnPlatform(), Find_Not(Find_ID(COLV)), Find_Procedure("ATTACH")))
+	if(change > 0 && FindObject2(Find_BuildingsOnPlatform()))
 		DoDamage(-change);
 	else
 		return inherited(change, ...);
