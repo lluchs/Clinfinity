@@ -36,6 +36,12 @@ protected func Initialize() {
 	AddEffect("HorizontalBoundsCheck", this, 1, 0, this);
 }
 
+/*  Function: GetPlatform
+	Returns the platform controlled by this lever. */
+public func GetPlatform() {
+	return controlMediator->GetControlledPlatform();
+}
+
 protected func MouseSelection(int player) {
 	Sound("Ding");
 }

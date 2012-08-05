@@ -2,6 +2,7 @@
 #strict 2
 
 #appendto CLNK
+#appendto COLV
 
 protected func ContextRepair(object clonk) {
 	[$CtxRepair$|Image=CXCN|Condition=AtBuildingToRepair]
@@ -33,6 +34,10 @@ protected func ContextRepair(object clonk) {
 }
 
 protected func AtBuildingToRepair() {
-	return GetPhysical("CanConstruct") && FindObject2(Find_AtObject(), Find_Category(C4D_Structure), Find_Allied(GetOwner()), Find_Func("GetDamage"), Find_Func("MaxDamage"));
+	if(GetID() == COLV) {
+		var platform = this->~GetPlatform();
+		return platform->GetDamage() && platform;
+	}
+	return FindObject2(Find_AtObject(), Find_Category(C4D_Structure), Find_Allied(GetOwner()), Find_Func("GetDamage"), Find_Func("MaxDamage"));
 }
 
