@@ -12,7 +12,7 @@ public func CaptureZone() {
 	return Find_InRect(-50, -40, 100, 80);
 }
 
-public func CaptureTime() { return 100; }
+public func CaptureTime() { return 200; }
 
 protected func Initialize() {
 	UpdateDisplay();
