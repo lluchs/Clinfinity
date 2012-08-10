@@ -1,44 +1,25 @@
 [FolderMap]
 MinResX=800
 MinResY=600
-ScenInfoArea=20,60,260,550
+ScenInfoArea=50,50,250,600
 FullscreenBG=1
 
 	[Scenario]
-	File=RACE_Death.c4s
-	OverlayImage=Highlight.png
-	Area=404,160,254,30
-	Title=TITLE
-	TitleFontSize=20
-	TitleColorInactive=
-	TitleColorActive=39935
-	TitleOffX=120
-	TitleOffY=4
-	TitleAlign=1
-	TitleUseBookFont=0
-
-	[Scenario]
 	File=KOTH_Skyward.c4s
-	OverlayImage=Highlight.png
-	Area=668,160,254,30
-	Title=TITLE
-	TitleFontSize=20
-	TitleColorInactive=
-	TitleColorActive=16747520
-	TitleOffX=120
-	TitleOffY=4
-	TitleAlign=1
-	TitleUseBookFont=0
+	OverlayImage=hl_skyward.png
+	Area=612,127,301,77
+	
+	[Scenario]
+	File=DUEL_CrumblingIslands.c4s
+	OverlayImage=hl_crumbling.png
+	Area=950,122,199,88
+	
+	[Scenario]
+	File=RACE_Pilottraining.c4s
+	OverlayImage=hl_pilottraining.png
+	Area=357,536,259,80
 	
 	[Scenario]
 	File=Tutorial_Agility.c4s
-	OverlayImage=Highlight.png
-	Area=935,160,254,30
-	Title=TITLE
-	TitleFontSize=20
-	TitleColorInactive=
-	TitleColorActive=5289040
-	TitleOffX=120
-	TitleOffY=4
-	TitleAlign=1
-	TitleUseBookFont=0
+	OverlayImage=hl_tutorial1.png
+	Area=349,126,227,77

@@ -11,6 +11,11 @@
 
 #strict 2
 
+protected func Construction() {
+	if(GetCon() < 100)
+		SetCon(100);
+}
+
 protected func Initialize() {
 	var result = _inherited();
 	var platform = FindObject2(Find_ID(PLTF), Find_AtPoint(0, GetObjHeight() / 2 + 1));
@@ -22,7 +27,7 @@ protected func Initialize() {
 
 protected func Destruction() {
 	var result = _inherited();
-	if(GetProcedure() == "ATTACH") {
+	if(GetProcedure() == "ATTACH" && GetActionTarget()) {
 		GetActionTarget()->~AttachEvent(this, GetActionTarget(), true, this);
 	}
 	return result;
@@ -30,7 +35,7 @@ protected func Destruction() {
 
 protected func RejectConstruction(int x, int y, object clonk) {
 	// only allow building on platform
-	if(!FindObject2(Find_ID(PLTF), clonk->Find_AtPoint(x, y + 1))) {
+	if(!FindObject2(Find_ID(PLTF), Find_Allied(clonk->GetOwner()), clonk->Find_AtPoint(x, y + 1))) {
 		Sound("Error");
 		Message("$OnlyOnPlatform$", clonk);
 		return true;

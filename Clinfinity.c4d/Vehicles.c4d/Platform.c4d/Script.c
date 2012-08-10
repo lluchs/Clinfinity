@@ -3,6 +3,8 @@
 
 #strict 2
 
+#include L_DC
+
 // Interval in frames which times steam transactions
 static const PLTF_SteamPayTimer = 250;
 // Timer interval as defined in the DefCore
@@ -52,6 +54,7 @@ private func CreateAdditionalObjectsFor(object platform) {
 
 protected func Construction() {
 	ScheduleCall(this, "CheckAfterConstruction", 1);
+	inherited(...);
 }
 
 protected func Destruction() {
@@ -271,7 +274,16 @@ private func StopFall() {
 public func Find_OnPlatform() {
 	return Find_And(Find_OnLine(-GetDefWidth()/2, -GetDefHeight()/2-2, GetDefWidth()/2, -GetDefHeight()/2-2),
 	                Find_Not(Find_Or(Find_Func("IsPlatform"), Find_Category(C4D_StaticBack))));
-	                          
+}
+
+/*  Function: Find_BuildingsOnPlatform
+	FindObject2/FindObjects search criteria: Find all buildings standing on this platform
+
+	Does not find the control lever (COLV).
+
+	See note on <Find_OnPlatform> */
+public func Find_BuildingsOnPlatform() {
+	return Find_And(Find_OnPlatform(), Find_Not(Find_ID(COLV)), Find_Procedure("ATTACH"));
 }
 
 /*  Function: CalculateWeight
@@ -287,4 +299,16 @@ public func CalculateWeight() {
 		mass += GetMass(weight);
 	}
 	return mass;
+}
+
+/*-- Damage Control --*/
+
+public func MaxDamage() { return 40; }
+
+public func Damage(int change) {
+	// only get damaged while there aren't any buildings on top of the platform
+	if(change > 0 && FindObject2(Find_BuildingsOnPlatform()))
+		DoDamage(-change);
+	else
+		return inherited(change, ...);
 }

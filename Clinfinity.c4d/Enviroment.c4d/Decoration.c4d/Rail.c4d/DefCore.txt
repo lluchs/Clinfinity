@@ -1,0 +1,16 @@
+[DefCore]
+id=RAIL
+Version=4,9,8
+Name=Rail
+Category=C4D_StaticBack
+Width=30
+Height=10
+Offset=-15,-5
+Vertices=4
+VertexX=-14,14,-14,14
+VertexY=-5,-5,4,4
+VertexFriction=50,50,50,50
+Value=10
+Mass=10
+Components=WOOD=2
+Rotate=1

@@ -1,0 +1,7 @@
+[DefCore]
+id=CRGE
+Name=Charge
+Category=C4D_Vehicle|C4D_Foreground|C4D_IgnoreFoW
+Width=20
+Height=13
+Offset=-10,-6

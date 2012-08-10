@@ -4,7 +4,7 @@
 
 #include ARRW
 
-local xdir, ydir, dam;
+local xdir, ydir, dam, knockback;
 
 /* Eigenschaften */
 // Wird zur korrekten Inventarverwaltung gebraucht
@@ -19,13 +19,14 @@ public func IsArrow() {
 }
 
 /* Wird abgefeuert */
-public func Launch(iDir, iDam) {
+public func Launch(int iDir, int iDam, bool knock) {
     ChangeDef(CSHO);
     SetCategory(C4D_Vehicle());
     if(iDir == DIR_Left()) xdir = -100;
     if(iDir == DIR_Right()) xdir = +100;
 	ydir = GetYDir();
     dam = iDam;   // Schaden
+	knockback = knock;
     SetAction("Travel");
 }
 
@@ -90,12 +91,12 @@ protected func Hit() {
 private func HitLiving(living) {
     Sound("Punch*");
     // Schaden machen
-    if(Random(5))
-        DoEnergy(-dam, living);
-    else
-        // Manchmal Punch benutzen
+    if(knockback)
+        // Damage with knockback.
         Punch(living, dam);
-    return(RemoveObject());
+    else
+        DoEnergy(-dam, living);
+    return RemoveObject();
 }
 
 public func Entrance(pClonk) {

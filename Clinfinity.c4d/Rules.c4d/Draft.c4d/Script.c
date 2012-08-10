@@ -48,8 +48,7 @@ protected func Initialize() {
 	gliderAcceleration = 5;
 	// allow for setting it permanent
 	ScheduleCall(this, "SetRandomPosition", 1);
-	AddEffect("Draft", this, 1, 10, this);
-	AddEffect("DraftParticle", this, 1, 1, this);
+	Enable();
 }
 
 /*	Function: SetSize
@@ -70,6 +69,28 @@ public func SetSize(int width, int height) {
 	Makes this draft permanent. */
 public func SetPermanent() {
 	permanentDraft = true;
+}
+
+/*  Function: Enable
+	Enables this draft. */
+public func Enable() {
+	if(!GetEffect("Draft", this)) {
+		AddEffect("Draft", this, 1, 10, this);
+		AddEffect("DraftParticle", this, 1, 1, this);
+		return true;
+	}
+}
+
+/*  Function: Disable
+	Disables this draft.
+
+	A disabled draft will continue to exist and will keep its position. Repositioning will still occur.
+
+	A disabled draft can be re-enabled with <Enable>. */
+public func Disable() {
+	RemoveEffect("Draft", this);
+	RemoveEffect("DraftParticle", this);
+	return true;
 }
 
 protected func FxDraftParticleTimer(object target, int effectNum, int effectTime) {

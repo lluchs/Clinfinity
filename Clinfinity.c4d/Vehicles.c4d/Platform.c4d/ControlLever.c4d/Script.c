@@ -36,6 +36,12 @@ protected func Initialize() {
 	AddEffect("HorizontalBoundsCheck", this, 1, 0, this);
 }
 
+/*  Function: GetPlatform
+	Returns the platform controlled by this lever. */
+public func GetPlatform() {
+	return controlMediator->GetControlledPlatform();
+}
+
 protected func MouseSelection(int player) {
 	Sound("Ding");
 }
@@ -217,7 +223,12 @@ private func AddPlatformMenuItem(object clonk, int mn, int sn) {
 protected func AddPlatform(object master, object slave) {
 	var platform = (master || slave)->GetControlledPlatform(), width = GetDefWidth(PLTF);
 	var dir = !!master * 2 - 1;
-	if(!PathFree(platform->GetX() + dir * (width / 2 + 1), platform->GetY(), platform->GetX() + dir * width * 3 / 2, platform->GetY())) {
+	// inner x: left/right edge of the existing platform
+	var ix = platform->GetX() + dir * (width / 2 + 1);
+	// outer x: edge of the new platform
+	var ox = platform->GetX() + dir * width * 3 / 2;
+	var y = platform->GetY();
+	if(ox < 0 || ox > LandscapeWidth() || !PathFree(ix, y, ox, y)) {
 		Sound("Error");
 		Message("$PathNotFree$", this);
 		return;
@@ -228,7 +239,7 @@ protected func AddPlatform(object master, object slave) {
 	}
 
 	Sound("Connect");
-	var new = platform->CreatePlatform(-width, GetDefHeight(PLTF) / 2, GetOwner())->GetControlMediator();
+	var new = platform->CreatePlatform(-87, GetDefHeight(PLTF) / 2, GetOwner())->GetControlMediator();
 	if(master)
 		slave = new;
 	else

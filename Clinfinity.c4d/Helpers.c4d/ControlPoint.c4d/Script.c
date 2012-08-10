@@ -12,6 +12,13 @@
 
 #strict 2
 
+/*  Function: SetupTime
+    Should be overwritten.
+
+	Returns:
+	The time in frames a before the control point is available for capture. */
+public func SetupTime() { return 1; }
+
 /*  Function: CaptureTime
     Should be overwritten.
 
@@ -23,8 +30,15 @@ public func CaptureTime() { return 200; }
 	Should be overwritten.
 
 	Returns:
-	FindObject2-criteria which define the capture zone. */
-public func CaptureZone() { return Find_Distance(300); }
+	FindObject2-criteria which define the capture zone.
+	Defaults to the object's shape. */
+public func CaptureZone() {
+	var x = GetDefOffset(GetID(), 0),
+	    y = GetDefOffset(GetID(), 1),
+		wdt = GetDefWidth(GetID()),
+		hgt = GetDefHeight(GetID());
+	return Find_InRect(x, y, wdt, hgt);
+}
 
 // the timer interval
 static const CP_Interval = 5;
@@ -39,11 +53,31 @@ local wait;
 local overtime;
 
 protected func Completion() {
-	AddEffect("ControlPoint", this, 1, CP_Interval, this);
+	ScheduleCall(this, "EnablePoint", SetupTime());
 	capturingPlayer = NO_OWNER;
 	captureTime = 0;
 	overtime = false;
 	return _inherited(...);
+}
+
+/*  Function: EnablePoint
+	Enables the control point, making it available for capture.
+
+	This function will automatically be called after the point is created and <SetupTime>() frames have passed. */
+public func EnablePoint() {
+	if(!GetEffect("ControlPoint", this)) {
+		AddEffect("ControlPoint", this, 1, CP_Interval, this);
+		return true;
+	}
+}
+
+/*  Function: DisablePoint
+	Disables the control point, freezing all current capture operations.
+
+	A disabled point can be re-enabled using <EnablePoint>. */
+public func DisablePoint() {
+	RemoveEffect("ControlPoint", this);
+	return true;
 }
 
 protected func FxControlPointTimer(object target, int effectNum, int effectTime) {
@@ -173,6 +207,7 @@ private func CaptureStarting() {
 private func Captured() {
 	var team = GetPlayerTeam(GetOwner());
 	Log("<c %x>$Capture$</c>", GetTeamColor(team), GetTeamName(team), GetName());
+	PointOut(GetPlrColorDw(GetOwner()));
 	Sound("koth_captured");
 	Sound("koth_sign", true);
 	Sound("koth_capturing", 0, 0, 0, 0, -1);
@@ -190,6 +225,7 @@ private func CaptureEnding() {
 private func OvertimeStarting() {
 	var team = GetPlayerTeam(GetOwner());
 	Log("<c %x>$Overtime$</c>", GetTeamColor(team));
+	PointOut(GetColorDw());
 	Sound("koth_overtime");
 }
 

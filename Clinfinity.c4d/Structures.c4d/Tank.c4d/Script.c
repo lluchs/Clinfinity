@@ -2,8 +2,9 @@
 
 #strict 2
 
-#include L_SS
 #include STBO
+#include L_DC
+#include L_SS
 
 static steamTrendWarnEffects;
 
@@ -11,8 +12,14 @@ static steamTrendWarnEffects;
 static const STMT_Phases = 10;
 // amount needed to respawn one clonk
 static const STMT_RespawnAmount = 100;
+// number of frames the trend warning analyzes
+static const STMT_SteamTrendWarningFrames = 800;
 
 public func MaxFill() { return 1500; }
+
+public func MaxDamage() { return 60; }
+
+public func DamageGraphics() { return 2; }
 
 // all previous changes in fill level
 local changes;
@@ -29,6 +36,8 @@ protected func Initialize() {
 		steamTrendWarnEffects[team] = AddEffect("SteamTrendWarning", 0, 1, 100);
 		EffectVar(0, 0, steamTrendWarnEffects[team]) = team;
 	}
+	SetAlarmLamp(false);
+	SetObjDrawTransform(1000, 0, 3500, 0, 1000, -5000, this, 1);
 
 	// create dummy effect if this is the first Akku
 	// this ensures that when the last Akku gets destroyed, the display is reset to 0
@@ -38,25 +47,46 @@ protected func Initialize() {
 	_inherited();
 }
 
+protected func DestroyBlast() {
+	// remove waiting Clonks
+	for(var obj in FindObjects(Find_Container(this)))
+		obj->RemoveObject();
+	return _inherited(...);
+}
+
 // manages delay for steam generation
 local generate;
 // bubbling?
 local bubbling;
 
+private func HeavilyDamaged() {
+	return currentDamageGraphic == DamageGraphics();
+}
+
 protected func Steam() {
+	var shouldBubble = false;
 	if(GetFill() > MaxFill() * 2 / 3) {
 		CreateParticle("Smoke", 30, -18, 0, 0, 50, RGBa(255, 255, 255, 0));
-		if(!bubbling) {
-			Sound("steam_exhaust", 0, 0, 0, 0, 1);
-			bubbling = true;
-		}
-	} else if(bubbling) {
+		shouldBubble = true;
+	}
+	if(HeavilyDamaged()) {
+		CreateParticle("Smoke", RandomX(-15, 15), RandomX(-20, 5), 0, 0, 50, RGBa(255, 255, 255, 0));
+		shouldBubble = true;
+	}
+	if(shouldBubble && !bubbling) {
+		Sound("steam_exhaust", 0, 0, 0, 0, 1);
+		bubbling = true;
+	}
+	else if(!shouldBubble && bubbling) {
 		Sound("steam_exhaust", 0, 0, 0, 0, -1);
 		bubbling = false;
 	}
 	// generation
 	if(!generate--) {
-		var change = DoFill(125 + RandomX(-10, 10));
+		var change = DoFill(180 + RandomX(-10, 10));
+		// Produce less steam when heavily damaged.
+		if(HeavilyDamaged())
+			change -= 25;
 		MatSysMessage(change, STEM);
 		generate = RandomX(350, 450);
 	}
@@ -99,12 +129,12 @@ private func UpdateDisplay() {
 
 public func GetChanges(int frames) {
 	var min = FrameCounter() - frames, result = [];
-	for(var i = GetLength(changes) - 1; i && changes[i][0] >= frames; i--)
+	for(var i = GetLength(changes) - 1; i && changes[i][0] >= min; i--)
 		PushBack(changes[i][1], result);
 	return result;
 }
 
-public func GlobalSteamChanges(int frames, bool average) {
+public func GlobalSteamChanges(int frames) {
 	var result = 0, num = 0;
 	for(var tank in FindObjects(Find_ID(GetID()), Find_Allied(GetOwner()))) {
 		for(var change in tank->GetChanges(frames)) {
@@ -112,10 +142,7 @@ public func GlobalSteamChanges(int frames, bool average) {
 			num++;
 		}
 	}
-	if(average)
-		return result / num;
-	else
-		return result;
+	return result;
 }
 
 public func ShowChanges() {
@@ -153,17 +180,32 @@ public func FxMatSysSTEMChange(object target, int effectNum, int plr, int change
 }
 
 /* Steam trend warning */
+
+public func SetAlarmLamp(bool on) {
+	var action;
+	if(on)
+		action = "On";
+	else
+		action = "Off";
+	SetGraphics(0, this, ALRM, 1, GFXOV_MODE_Action, action);
+	return true;
+}
+
 global func FxSteamTrendWarningTimer(object target, int effectNum, int effectTime) {
 	var team = EffectVar(0, target, effectNum), players = GetPlayersByTeam(team);
 	var tank = FindObject2(Find_ID(STMT), Find_Allied(players[0]));
 	var warning = EffectVar(1, target, effectNum), next;
-	if(tank && tank->GlobalSteamChanges(750, true) < 0)
+	// Is the steam likely to run out next STMT_SteamTrendWarningFrames?
+	if(tank && MatSysGetTeamFill(players[0], STEM) + tank->GlobalSteamChanges(STMT_SteamTrendWarningFrames) < 0)
 		next = true;
 	else
 		next = false;
-	if(!warning && next || warning && !next)
+	if(!warning && next || warning && !next) {
 		for(var plr in players)
 			Sound("Warning_blowup", true, 0, 75, plr + 1, next*2 - 1);
+		for(var t in FindObjects(Find_ID(STMT), Find_Allied(players[0])))
+			t->SetAlarmLamp(next);
+	}
 	EffectVar(1, target, effectNum) = next;
 }
 

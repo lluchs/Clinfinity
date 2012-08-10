@@ -25,6 +25,9 @@ func Initialize() {
 	var DraftR2=CreateObject(DRFT, 1122, 600);
 	DraftR2 -> SetPermanent();
 	DraftR2 -> SetR(20);
+	
+	//crates on frigate
+	CreateObject(CRAT,800,300);
 
 	// steampunky flair
 	SetGamma(RGB(15, 15, 20), RGB(118, 118, 118), RGB(210, 215, 255));
@@ -44,6 +47,10 @@ func Initialize() {
 	var isle2=CreateObject(SKYL, 1400, 545, -1);
 	isle2 -> SetClrModulation(RGBa(150, 180, 255, 155));
 	isle2 -> SetAction("2");
+
+	// Island Respawn
+	PeriodicIslandRespawn(3500, 100, 400, 220, 120); // left 'home' island
+	PeriodicIslandRespawn(3503, 1625, 440, 190, 120); // right 'home' island
 	
 	ScriptGo(1);
 }

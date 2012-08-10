@@ -1,12 +1,14 @@
 [Action]
 Name=Tank
-Facet=0,0,60,80
+FacetBase=1
+Facet=0,80,39,28,9,46
 Length=10
 NextAction=Hold
 
 [Action]
 Name=Attach
+FacetBase=1
 Procedure=ATTACH
-Facet=0,0,60,80
+Facet=0,80,39,28,9,46
 Length=10
 NextAction=Hold
