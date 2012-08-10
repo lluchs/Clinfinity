@@ -1,4 +1,5 @@
-/*-- Winchester --*/
+/*	Script: Musket
+	A long-range projectile weapon. */
 
 #strict 2
 
