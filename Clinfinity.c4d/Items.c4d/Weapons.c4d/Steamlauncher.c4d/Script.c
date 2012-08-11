@@ -99,6 +99,7 @@ public func Fire(object clonk, int angle) {
     grenade->SetOwner(clonk->GetOwner());
 
     Exit(grenade, xSpeed, ySpeed, 0, xSpeed, ySpeed, 0);
+    grenade->Launch();
     //ammo->Launch(-1, CalcDamage(), ChargeKnockback());
 
     // Muzzle flash
