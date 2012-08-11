@@ -59,6 +59,7 @@ public func StartAiming() {
 	Sound("MusketDeploy");
 }
 
+public func GetTargets() { return []; }
 
 public func Abort() {/* :'( */}
 
@@ -68,8 +69,8 @@ public func CanLoad() {
 	return !IsFull() && MatSysGetTeamFill(Contained()->GetOwner(), SGLR_AmmoMaterial) >= 1;
 }
 
-public func Fire(object clonk, int iAngle) {
-	// Coold own
+public func Fire(object clonk, int angle) {
+	// Cool down
 	if(GetEffect("ReloadRifle", this))
 		return;
 	
@@ -87,27 +88,22 @@ public func Fire(object clonk, int iAngle) {
 	MatSysDoTeamFill(-SGLR_ShootSteamUsage, owner, STEM);
 	DoFill(-1);
 	
-    var pObj, pObj2, iX, iY, iR, iXDir, iYDir, iRDir, iDir, iPhase;
+	var grenade = CreateContents(METL);
 
-	var ammo = CreateContents(CSHO);
+    var direction = clonk->GetDir() * 2 - 1;
+    var phase = clonk->GetPhase();
+    var xSpeed = Sin(angle, SGLR_GrenadeExitSpeed) * direction;
+    var ySpeed = -Cos(angle, SGLR_GrenadeExitSpeed);
 
-    // Austrittsparameter
-    iDir = GetDir(clonk) * 2 - 1;
-    iPhase = GetPhase(clonk);
-    //iX = +Sin(iPhase * 19, 14) * iDir;
-    //iY = -Cos(iPhase * 19, 14) - 2;
-    iR = iAngle * iDir + 90;
-    iXDir = (Sin(iAngle, 22) + 1) * iDir;
-    iYDir = -Cos(iAngle, 22);
-    iRDir = 0;
 
-    SetOwner(GetOwner(clonk), ammo);
+    grenade->SetOwner(clonk->GetOwner());
 
-    Exit(ammo, AbsX(iX + GetX(clonk)), AbsY(iY + GetY(clonk)), iR, iXDir, iYDir, iRDir);
-    ammo->Launch(-1, CalcDamage(), ChargeKnockback());
+    Exit(grenade, xSpeed, ySpeed, 0, xSpeed, ySpeed, 0);
+    //ammo->Launch(-1, CalcDamage(), ChargeKnockback());
 
     // Muzzle flash
     // hax, weil die Animation nicht genauen Winkeln entspricht und der Partikel seltsam verdreht wird
+    /*
     if(iDir == DIR_Left) {
         if(Inside(iPhase, 0, 1)) iX = +Sin(iPhase * 15, 15) * iDir + 5;
         else    iX = +Sin(iPhase * 15, 15) * iDir;
@@ -115,11 +111,12 @@ public func Fire(object clonk, int iAngle) {
     if(Inside(iPhase, 0, 7)) iY = -Cos(iPhase * 15, 14) - 6;
     else  iY = -Cos(iPhase * 15, 14) - 3;
     CreateParticle("MuzzleFlash", AbsX(iX + GetX(clonk)), AbsY(iY + GetY(clonk)), iXDir, iYDir, 35, RGBa(255, 255, 255, 0), clonk);
+    */
 
     Sound("SteamlauncherShoot*", 0, clonk);
-    Smoke(iX, iY, 2);
-    Smoke(iX, iY + Random(2), 3);
-    CreateParticle("Casing", AbsX(iX / 2 + GetX(clonk)), AbsY(iY / 2 + GetY(clonk)), -iDir * RandomX(1, 5), -RandomX(3, 7), 15, RGBa(250, 140, 80, 0));
+    //Smoke(iX, iY, 2);
+    //Smoke(iX, iY + Random(2), 3);
+    //CreateParticle("Casing", AbsX(iX / 2 + GetX(clonk)), AbsY(iY / 2 + GetY(clonk)), -iDir * RandomX(1, 5), -RandomX(3, 7), 15, RGBa(250, 140, 80, 0));
     AddEffect("ReloadRifle", this, 101, 30);
 
     return 1;
