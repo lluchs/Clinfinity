@@ -1,0 +1,17 @@
+[DefCore]
+id=BOMB
+Name=Bomb
+Version=4,9,5
+Category=18960
+MaxUserSelect=0
+Width=9
+Height=9
+Offset=-3,-3
+Value=10
+Mass=10
+Components=METL=1;
+Picture=9,0,64,64
+Vertices=1
+VertexY=1
+VertexFriction=20
+ 
