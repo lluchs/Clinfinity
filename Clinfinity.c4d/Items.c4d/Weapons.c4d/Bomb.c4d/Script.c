@@ -53,7 +53,7 @@ private func Bounce(int xSpeed, int ySpeed) {
 			isBounced = true;
 			ScheduleCall(this, "DoBounce", 1, 0, xSpeed, ySpeed);
 		} else {
-			// BOOM!
+			Explode(15);
 		}
 	}
 }
@@ -61,4 +61,8 @@ private func Bounce(int xSpeed, int ySpeed) {
 public func DoBounce(int xSpeed, int ySpeed) {
 	SetXDir(xSpeed);
 	SetYDir(ySpeed);
+}
+
+protected func QueryStrikeBlow(object target) {
+	Explode(15);
 }
