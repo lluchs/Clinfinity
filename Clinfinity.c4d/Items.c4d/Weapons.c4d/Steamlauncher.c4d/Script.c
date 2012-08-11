@@ -7,7 +7,7 @@
 
 static const SGLR_AmmoMaterial = METL;
 static const SGLR_ShootSteamUsage = 10;
-static const SGLR_GrenadeExitSpeed = 30;
+static const SGLR_GrenadeExitSpeed = 10;
 
 static const SGLR_MinDamage = 5;
 static const SGLR_MaxDamage = 20;
@@ -88,7 +88,7 @@ public func Fire(object clonk, int angle) {
 	MatSysDoTeamFill(-SGLR_ShootSteamUsage, owner, STEM);
 	DoFill(-1);
 	
-	var grenade = CreateContents(METL);
+	var grenade = CreateContents(BOMB);
 
     var direction = clonk->GetDir() * 2 - 1;
     var phase = clonk->GetPhase();
