@@ -1,3 +1,3 @@
 Produziert kontinuierlich Dampf und speichert diesen. Hier steigen relaunchte Clonks neu ein und verwundete Clonks können sich mit [Graben] heilen.
 
-Wenn die rote Lampe aufleuchtet, dann ist die Dampftendenz negativ. Vorsicht:Wenn kein Dampf mehr da ist, stürzt deine Siedlung ab!
+Wenn die rote Lampe aufleuchtet, dann ist die Dampftendenz negativ. Vorsicht: Wenn kein Dampf mehr da ist, stürzt deine Siedlung ab!
