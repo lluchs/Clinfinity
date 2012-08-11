@@ -1,1 +1,3 @@
-May or may not carry.
+Use the attached lever to control the platform. A platform can float upwards and downwards freely, and one platform length to the left or right if not connected to another one.
+
+To create a new platform, grab the lever and press [double dig]. New platforms are connected by default. Platforms use less steam to float while connected, but can be disconnected in order to be moved independently from each other.
