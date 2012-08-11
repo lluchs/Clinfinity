@@ -1,3 +1,5 @@
-The relic to capture.
+This ship must be captured and held.
 
-Stand on deck to start capturing the frigate. Defend it against enemies, as they will block the capturing process. If you can hold the frigate until your team's count down time has ended, you are the winners.
+Capturing starts automatically as soon as crew members stand on deck. The more team members, the faster the capturing process. Enemy crew, on the other hand, will block the process.
+ 
+In theory, the frigate can be captured an infinite amount of times. With every successful capture, a count down is started. If a team can hold the frigate until this count down is over, it has won the match.

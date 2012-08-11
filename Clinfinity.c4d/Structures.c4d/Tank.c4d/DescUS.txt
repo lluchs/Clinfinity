@@ -1,0 +1,3 @@
+Continuously produces and stores steam. Clonks are relaunched here and can heal themselves by pressing [dig].
+
+The warning light glowing red indicates that your overall amount of steam is decreasing. Careful: If you run out of steam, your base will crash!
