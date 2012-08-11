@@ -95,7 +95,7 @@ public func StartLoading() {
 
 public func Load() {
 	if(MatSysDoTeamFill(-1, Contained()->GetOwner(), METL)) {
-		DoFill(6);
+		DoFill(MaxFill());
 	}
 	StartCharging();
 }
