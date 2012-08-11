@@ -5,6 +5,10 @@
 
 #include L_SS
 
+static const SGLR_AmmoMaterial = METL;
+static const SGLR_ShootSteamUsage = 10;
+static const SGLR_GrenadeExitSpeed = 30;
+
 static const SGLR_MinDamage = 5;
 static const SGLR_MaxDamage = 20;
 static const SGLR_DamageDeviation = 3;
@@ -42,7 +46,7 @@ protected func Entrance(object into) {
 /*	Function: Load
 	Called by a crew member after its loading animation has finished. */
 public func Load() {
-	if(MatSysDoTeamFill(-1, Contained()->GetOwner(), METL)) {
+	if(MatSysDoTeamFill(-1, Contained()->GetOwner(), SGLR_AmmoMaterial)) {
 		DoFill(MaxFill());
 	}
 }
@@ -61,10 +65,10 @@ public func Abort() {/* :'( */}
 /*	Section: Controls */
 
 public func CanLoad() {
-	return !IsFull() && MatSysGetTeamFill(Contained()->GetOwner(), METL) >= 1;
+	return !IsFull() && MatSysGetTeamFill(Contained()->GetOwner(), SGLR_AmmoMaterial) >= 1;
 }
 
-public func Fire(object pClonk, int iAngle) {
+public func Fire(object clonk, int iAngle) {
 	// Coold own
 	if(GetEffect("ReloadRifle", this))
 		return;
@@ -73,14 +77,14 @@ public func Fire(object pClonk, int iAngle) {
 	if(!GetFill()) {
 		Sound("MusketEmpty");
 		// Try to reload
-		pClonk->LoadRifle();
+		clonk->LoadRifle();
 		return;
 	}
 	// Enough steam?
-	var owner = pClonk->GetOwner();
-	if(MatSysGetTeamFill(owner, STEM) < 5)
+	var owner = clonk->GetOwner();
+	if(MatSysGetTeamFill(owner, STEM) < SGLR_ShootSteamUsage)
 		return;
-	MatSysDoTeamFill(-5, owner, STEM);
+	MatSysDoTeamFill(-SGLR_ShootSteamUsage, owner, STEM);
 	DoFill(-1);
 	
     var pObj, pObj2, iX, iY, iR, iXDir, iYDir, iRDir, iDir, iPhase;
@@ -88,8 +92,8 @@ public func Fire(object pClonk, int iAngle) {
 	var ammo = CreateContents(CSHO);
 
     // Austrittsparameter
-    iDir = GetDir(pClonk) * 2 - 1;
-    iPhase = GetPhase(pClonk);
+    iDir = GetDir(clonk) * 2 - 1;
+    iPhase = GetPhase(clonk);
     //iX = +Sin(iPhase * 19, 14) * iDir;
     //iY = -Cos(iPhase * 19, 14) - 2;
     iR = iAngle * iDir + 90;
@@ -97,9 +101,9 @@ public func Fire(object pClonk, int iAngle) {
     iYDir = -Cos(iAngle, 22);
     iRDir = 0;
 
-    SetOwner(GetOwner(pClonk), ammo);
+    SetOwner(GetOwner(clonk), ammo);
 
-    Exit(ammo, AbsX(iX + GetX(pClonk)), AbsY(iY + GetY(pClonk)), iR, iXDir, iYDir, iRDir);
+    Exit(ammo, AbsX(iX + GetX(clonk)), AbsY(iY + GetY(clonk)), iR, iXDir, iYDir, iRDir);
     ammo->Launch(-1, CalcDamage(), ChargeKnockback());
 
     // Muzzle flash
@@ -110,12 +114,12 @@ public func Fire(object pClonk, int iAngle) {
     } else  iX = +Sin(iPhase * 14, 15) * iDir;
     if(Inside(iPhase, 0, 7)) iY = -Cos(iPhase * 15, 14) - 6;
     else  iY = -Cos(iPhase * 15, 14) - 3;
-    CreateParticle("MuzzleFlash", AbsX(iX + GetX(pClonk)), AbsY(iY + GetY(pClonk)), iXDir, iYDir, 35, RGBa(255, 255, 255, 0), pClonk);
+    CreateParticle("MuzzleFlash", AbsX(iX + GetX(clonk)), AbsY(iY + GetY(clonk)), iXDir, iYDir, 35, RGBa(255, 255, 255, 0), clonk);
 
-    Sound("SteamlauncherShoot*", 0, pClonk);
+    Sound("SteamlauncherShoot*", 0, clonk);
     Smoke(iX, iY, 2);
     Smoke(iX, iY + Random(2), 3);
-    CreateParticle("Casing", AbsX(iX / 2 + GetX(pClonk)), AbsY(iY / 2 + GetY(pClonk)), -iDir * RandomX(1, 5), -RandomX(3, 7), 15, RGBa(250, 140, 80, 0));
+    CreateParticle("Casing", AbsX(iX / 2 + GetX(clonk)), AbsY(iY / 2 + GetY(clonk)), -iDir * RandomX(1, 5), -RandomX(3, 7), 15, RGBa(250, 140, 80, 0));
     AddEffect("ReloadRifle", this, 101, 30);
 
     return 1;
