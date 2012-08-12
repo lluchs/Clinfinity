@@ -6,7 +6,7 @@
 #include L_SS
 
 static const SGLR_AmmoMaterial = METL;
-static const SGLR_ShootSteamUsage = 10;
+static const SGLR_ShootSteamUsage = 20;
 static const SGLR_GrenadeExitSpeed = 10;
 
 static const SGLR_MinDamage = 5;
