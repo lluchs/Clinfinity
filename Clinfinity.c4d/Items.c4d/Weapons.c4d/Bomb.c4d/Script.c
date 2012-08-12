@@ -3,6 +3,12 @@
 
 #strict 2
 
+static const BOMB_BounceDenominator = 3;
+static const BOMB_DetonationRadius = 40;
+static const BOMB_DamageToStructures = 10;
+static const BOMB_CrewFlingSpeedY = 5;
+static const BOMB_CrewFlingSpeedX = 3;
+
 local isBounced;
 
 public func Launch() {
@@ -12,6 +18,25 @@ public func Launch() {
 
 protected func LeakSteam() {
 	Smoke(0, -3, 5);
+}
+
+private func Detonate() {
+	// Fling crew members
+	var crew = FindObjects(Find_Category(C4D_Living), Find_OCF(OCF_CrewMember), Find_Distance(BOMB_DetonationRadius));
+	for(var member in crew) {
+		var xDistance = member->GetX() - GetX();
+		var xFlingSpeed = BOMB_CrewFlingSpeedX * xDistance / BOMB_DetonationRadius;
+		Fling(member, xFlingSpeed, -BOMB_CrewFlingSpeedY);
+	}
+
+	// Damage structures
+	var structures = FindObjects(Find_Category(C4D_Structure), Find_Distance(BOMB_DetonationRadius));
+	for(var structure in structures) {
+		structure->DoDamage(BOMB_DamageToStructures);
+	}
+
+	Sound("SteamGrenadeDetonate*");
+	RemoveObject();
 }
 
 /*	Section: Events */
@@ -31,29 +56,34 @@ protected func Departure(object from) {
 	}
 }
 
+protected func Hit() {
+	Sound("MetalHit*");
+}
+
 protected func ContactTop() {
 	Bounce(GetXDir(), -GetYDir());
 }
 
 protected func ContactRight() {
-	Bounce(-GetXDir() / 3, GetYDir());
+	Bounce(-GetXDir() / BOMB_BounceDenominator, GetYDir());
 }
 
 protected func ContactBottom() {
-	Bounce(GetXDir(), -GetYDir() / 3);
+	Bounce(GetXDir(), -GetYDir() / BOMB_BounceDenominator);
 }
 
 protected func ContactLeft() {
-	Bounce(-GetXDir() / 3, GetYDir());
+	Bounce(-GetXDir() / BOMB_BounceDenominator, GetYDir());
 }
 
 private func Bounce(int xSpeed, int ySpeed) {
 	if(GetAction() == "Active") {
 		if(!isBounced) {
 			isBounced = true;
+			// Wait one frame until setting the new speed. Otherwise the current speed is kept unchanged.
 			ScheduleCall(this, "DoBounce", 1, 0, xSpeed, ySpeed);
 		} else {
-			Explode(15);
+			Detonate();
 		}
 	}
 }
@@ -64,5 +94,5 @@ public func DoBounce(int xSpeed, int ySpeed) {
 }
 
 protected func QueryStrikeBlow(object target) {
-	Explode(15);
+	Detonate();
 }
