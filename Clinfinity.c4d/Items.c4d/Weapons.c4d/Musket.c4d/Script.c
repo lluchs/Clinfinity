@@ -113,7 +113,7 @@ public func Abort() {
 	StopCharging();
 }
 
-public func Fire(object pClonk, int iAngle) {
+public func Fire(object clonk, int angle) {
 	// cooldown
 	if(GetEffect("ReloadRifle", this))
 		return;
@@ -122,53 +122,53 @@ public func Fire(object pClonk, int iAngle) {
 	if(!GetFill()) {
 		Sound("MusketEmpty");
 		// try to reload
-		pClonk->LoadRifle();
+		clonk->LoadRifle();
 		return;
 	}
 	// enough steam?
-	var owner = pClonk->GetOwner();
+	var owner = clonk->GetOwner();
 	if(MatSysGetTeamFill(owner, STEM) < 5)
 		return;
 	MatSysDoTeamFill(-5, owner, STEM);
 	DoFill(-1);
 	
-    var pObj, pObj2, iX, iY, iR, iXDir, iYDir, iRDir, iDir, iPhase;
+    var obj, obj2, x, y, r, xDir, yDir, rDir, dir, phase;
 
 	var ammo = CreateContents(CSHO);
 
     // Austrittsparameter
-    iDir = GetDir(pClonk) * 2 - 1;
-    iPhase = GetPhase(pClonk);
-    //iX = +Sin(iPhase * 19, 14) * iDir;
-    //iY = -Cos(iPhase * 19, 14) - 2;
-    iR = iAngle * iDir + 90;
-    iXDir = (Sin(iAngle, 22) + 1) * iDir;
-    iYDir = -Cos(iAngle, 22);
-    iRDir = 0;
+    dir = GetDir(clonk) * 2 - 1;
+    phase = GetPhase(clonk);
+    //x = +Sin(phase * 19, 14) * dir;
+    //y = -Cos(phase * 19, 14) - 2;
+    r = angle * dir + 90;
+    xDir = (Sin(angle, 22) + 1) * dir;
+    yDir = -Cos(angle, 22);
+    rDir = 0;
 
     // Besitzer des Projektils setzen
-    SetOwner( GetOwner(pClonk), ammo );
+    SetOwner( GetOwner(clonk), ammo );
 
     // Abfeuern
-    Exit(ammo, AbsX(iX + GetX(pClonk)), AbsY(iY + GetY(pClonk)), iR, iXDir, iYDir, iRDir);
+    Exit(ammo, AbsX(x + GetX(clonk)), AbsY(y + GetY(clonk)), r, xDir, yDir, rDir);
     ammo->Launch(-1, CalcDamage(), ChargeKnockback());
 
     // Mündungsfeuer
     // hax, weil die Animation nicht genauen Winkeln entspricht und der Partikel seltsam verdreht wird
-    if(iDir == DIR_Left) {
-        if(Inside(iPhase, 0, 1)) iX = +Sin(iPhase * 15, 15) * iDir + 5;
-        else    iX = +Sin(iPhase * 15, 15) * iDir;
-    } else  iX = +Sin(iPhase * 14, 15) * iDir;
-    if(Inside(iPhase, 0, 7)) iY = -Cos(iPhase * 15, 14) - 6;
-    else  iY = -Cos(iPhase * 15, 14) - 3;
-    CreateParticle("MuzzleFlash", AbsX(iX + GetX(pClonk)), AbsY(iY + GetY(pClonk)), iXDir, iYDir, 35, RGBa(255, 255, 255, 0), pClonk);
+    if(dir == DIR_Left) {
+        if(Inside(phase, 0, 1)) x = +Sin(phase * 15, 15) * dir + 5;
+        else    x = +Sin(phase * 15, 15) * dir;
+    } else  x = +Sin(phase * 14, 15) * dir;
+    if(Inside(phase, 0, 7)) y = -Cos(phase * 15, 14) - 6;
+    else  y = -Cos(phase * 15, 14) - 3;
+    CreateParticle("MuzzleFlash", AbsX(x + GetX(clonk)), AbsY(y + GetY(clonk)), xDir, yDir, 35, RGBa(255, 255, 255, 0), clonk);
     // Sound
-    Sound("MusketShoot*", 0, pClonk);
+    Sound("MusketShoot*", 0, clonk);
     // Rauch
-    Smoke(iX, iY, 2);
-    Smoke(iX, iY + Random(2), 3);
+    Smoke(x, y, 2);
+    Smoke(x, y + Random(2), 3);
     // Patronenhülse fliegt raus
-    CreateParticle("Casing", AbsX(iX / 2 + GetX(pClonk)), AbsY(iY / 2 + GetY(pClonk)), -iDir * RandomX(1, 5), -RandomX(3, 7), 15, RGBa(250, 140, 80, 0));
+    CreateParticle("Casing", AbsX(x / 2 + GetX(clonk)), AbsY(y / 2 + GetY(clonk)), -dir * RandomX(1, 5), -RandomX(3, 7), 15, RGBa(250, 140, 80, 0));
     // Der Clonk muss eine Kugel einladen
     AddEffect("ReloadRifle", this, 101, 30);
 
