@@ -13,3 +13,6 @@ StretchGrowth=1
 IncompleteActivity=1
 Oversize=1
 NoStabilize=1
+
+[Physical]
+Float=100

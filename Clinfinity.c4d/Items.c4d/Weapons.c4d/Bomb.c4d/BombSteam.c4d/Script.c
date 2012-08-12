@@ -6,9 +6,8 @@
 static const BSTE_ExpansionNumerator = 1023;
 static const BSTE_ExpansionDenominator = 512;
 static const BSTE_ExpansionFrames = 10;
-static const BSTE_FumeFrames = 20;
 
-local maxXDistance, maxYDistance;
+local maxXDistance, maxYDistance, transparency, targetYSpeed;
 
 public func LaunchSteam(int x, int y, int maxRadius) {
 	var steam = CreateObject(BSTE, x, y + 32, NO_OWNER);
@@ -22,7 +21,8 @@ protected func Initialize() {
 	SetCon(RandomX(10, 50));
 	SetR(Random(360));
 	SetRDir(RandomX(-10, 10));
-	SetClrModulation(RGBa(255, 255, 255, 128));
+	transparency = RandomX(100, 200);
+	SetClrModulation(RGBa(255, 255, 255, transparency));
 }
 
 protected func Expand() {
@@ -37,13 +37,18 @@ protected func Expand() {
 
 protected func StartFume() {
 	SetAction("Fuming");
-	// Up!
+	targetYSpeed = RandomX(-10, -50);
+	SetYDir(-10);
 }
 
 protected func Fume() {
-	SetPosition(GetX(), GetY()-2);
-	// TODO: Become more and more transparent
-	if(GetActTime() >= BSTE_FumeFrames) {
+	if(GetYDir() > targetYSpeed) {
+		SetYDir(GetYDir() - 1);
+	}
+	transparency += 2;
+	if(transparency > 255) {
 		RemoveObject();
+	} else {
+		SetClrModulation(RGBa(255, 255, 255, transparency));
 	}
 }
