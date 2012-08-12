@@ -14,3 +14,4 @@ Clonk Infinity uses sounds from the [Freesound project](http://www.freesound.org
 	- pang.wav by [jenc](http://www.freesound.org/people/jenc/)
 	- 5.wav and 38.wav by [adcbicycle](http://www.freesound.org/people/adcbicycle/)
 - Yo-yo whoosh.wav is swosh-22.flac by [qubodup](http://www.freesound.org/people/qubodup/)
+- SteamGrenadeDetonate*.wav are based on 20061111AirCompressorRelease.wav by [daveincamas](http://www.freesound.org/people/daveincamas/)
