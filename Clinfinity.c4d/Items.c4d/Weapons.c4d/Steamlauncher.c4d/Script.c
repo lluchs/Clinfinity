@@ -22,7 +22,7 @@ private func FillPicture() { return 0; }
 
 /*	Function: Initialize
 	Called when the steam launcher is created.
-	It is created with a full magazine. */
+	It is initialised with a full magazine. */
 protected func Initialize() {
 	DoFill(MaxFill());
 }
