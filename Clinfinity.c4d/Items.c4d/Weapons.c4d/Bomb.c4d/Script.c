@@ -36,8 +36,9 @@ private func Detonate() {
 	}
 
 	Sound("SteamGrenadeDetonate*");
-	for(var i = 0; i < 30; i++) {
-		BSTE->LaunchSteam(GetX(), GetY(), RandomX(BOMB_DetonationRadius / 2, BOMB_DetonationRadius));
+	var steamAmount = RandomX(30, 50);
+	for(var i = 0; i < steamAmount; i++) {
+		BSTE->LaunchSteam(GetX(), GetY(), RandomX(BOMB_DetonationRadius / 2, BOMB_DetonationRadius * 6 / 5));
 	}
 	RemoveObject();
 }
@@ -61,6 +62,7 @@ protected func Departure(object from) {
 
 protected func Hit() {
 	Sound("MetalHit*");
+	CastParticles("PxSpark", RandomX(3, 5), 16, 0, 0, 15, 30, RGB(25, 25, 25), RGB(100, 100, 100));
 }
 
 protected func ContactTop() {
