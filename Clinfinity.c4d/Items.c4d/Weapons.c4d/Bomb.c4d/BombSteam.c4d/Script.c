@@ -10,7 +10,7 @@ static const BSTE_ExpansionFrames = 10;
 local maxXDistance, maxYDistance, transparency, targetYSpeed;
 
 public func LaunchSteam(int x, int y, int maxRadius) {
-	var steam = CreateObject(BSTE, x, y + 32, NO_OWNER);
+	var steam = CreateObject(BSTE, x, y + 16, NO_OWNER);
 	var direction = Random(360);
 	steam->LocalN("maxXDistance") = Sin(direction, maxRadius);
 	steam->LocalN("maxYDistance") = -Cos(direction, maxRadius);
