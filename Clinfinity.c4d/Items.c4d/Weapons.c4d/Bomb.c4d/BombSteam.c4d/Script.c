@@ -37,7 +37,7 @@ protected func Expand() {
 
 protected func StartFume() {
 	SetAction("Fuming");
-	targetYSpeed = RandomX(-10, -50);
+	targetYSpeed = RandomX(-10, -22);
 	SetYDir(-10);
 }
 
