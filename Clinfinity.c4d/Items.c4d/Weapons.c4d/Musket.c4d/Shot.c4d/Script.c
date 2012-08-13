@@ -36,7 +36,7 @@ local iOldX, iOldY;
 private func Travel() {
 	var actTime = GetActTime();
 	// trace flight
-	if(iOldX && actTime > 2) {
+	if(iOldX && actTime > 1) {
 		var color = RGB(255, 255, 255);
 		DrawParticleLine("PSpark", 0, 0, AbsX(iOldX), AbsY(iOldY), 3, 20, color, color);
 	}
