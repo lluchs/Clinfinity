@@ -3,6 +3,8 @@
 #strict 2
 #include CLNK
 
+static const AVTR_WeaponOverlay = 2;
+
 /* Itemlimit */
 public func MaxContentsCount() { return 3; }
 
@@ -45,11 +47,19 @@ public func ContextConkit(object caller) {
 	}
 }
 
-/* Weapons */
+/*  Section: Weapons
+	Provides functionality for aiming and shooting weapons (previously only rifles).
 
-// generic functions
+	Compatible weapons must define the following functions:
 
-// Rifle
+	 - IsWeapon
+	 - HandX/HandY: Overlay position in 1/1000px
+	 - GetTargets: Possible targets for auto aim
+	 - CanLoad: Whether the weapon must be loaded
+	 - StartLoading: Called when a reload is starting
+	 - Load: Called after the loading animation finished
+	 - Abort: Called when aiming is aborted
+	 - Fire(clonk, angle): Called when the user wants to fire */
 
 // aim radius in degrees
 static const AVTR_MinAimAngle = 0;
@@ -73,7 +83,7 @@ public func CanUseRifle() { return true; }
 	rifle - the rifle which will receive the _Load()_, _Fire()_ and _Abort()_ events */
 public func StartAiming(object rifle) {
 	var action = GetAction();
-	if(rifle->IsRifle()) {
+	if(rifle->IsWeapon()) {
 		var aimAction;
 		if(action == "Walk")
 			aimAction = "AimRifle";
@@ -84,6 +94,7 @@ public func StartAiming(object rifle) {
 			aimAngle = AVTR_InitialAimAngle;
 			SetAction(aimAction);
 			CreateCrosshair();
+			DrawWeaponOverlay();
 			UpdateAimPhase();
 			rifle->~StartAiming(this);
 			return true;
@@ -110,9 +121,79 @@ private func UpdateAimPhase() {
     else if(aimAngle < 128) SetPhase(8);
     else                    SetPhase(9);
 
+	AdjustWeaponOverlay();
+
 	// update crosshair placement
 	var dir = GetDir() || -1;
 	crosshair->SetVertexXY(0, -Sin(aimAngle, 40)*dir, Cos(aimAngle, 40));
+}
+
+// Draws the weapon overlay on top of the aiming aviator.
+// Adjustments are automatically done when the aim angle changes.
+private func DrawWeaponOverlay() {
+	SetGraphics(0, this, activeRifle->GetID(), AVTR_WeaponOverlay, GFXOV_MODE_Object, 0, 0, activeRifle);
+	//SetGraphics(0, this, activeRifle->GetID(), AVTR_WeaponOverlay, GFXOV_MODE_Base);
+}
+
+// Calculates weapon position and angle.
+private func WeaponAt(&x, &y, &r) {
+	if(IsReloading())
+		r = 45;
+	else
+		r = aimAngle - 90;
+	x = -Sin(aimAngle, 10);
+	y = Cos(aimAngle, 10);
+}
+
+// Adjusts the weapon overlay on top of the aviator depending on the current aiming angle.
+// Stolen from Hazard (Items.c4d/Weapons.c4d/Weapon.c4d/Script.c)
+private func AdjustWeaponOverlay() {
+	// Variablen für die Transformation
+
+	var width, height;  // Breiten- und Höhenverzerrung der Waffe
+	var xskew, yskew;   // Zerrung der Waffe, wird zur Rotation gebraucht
+	var size;           // Größe der Waffe in der Hand: 1000 = 100%
+	// Variablen für die Position
+	var xaim, yaim;     // Offset, dass sich durch zielen ergibt
+	var dir;            // Richtung in die das Objekt schaut
+
+	var xoff, yoff, r;
+	WeaponAt(xoff, yoff, r);
+
+	// Variablen mit Werten versehen
+	width = height = xskew = yskew = 1;
+	size = 1000;
+	dir  = GetDir()*2-1;
+	if(r > 180 || r < -180)
+		dir *= -1;
+	r *= dir;
+
+	var xfact = size * activeRifle->~HandX();
+	var yfact = size * activeRifle->~HandY();
+
+	xoff += Cos(r,xfact)/1000 + dir*Sin(r,yfact)/1000;
+	yoff -= Cos(r,yfact)/1000 - dir*Sin(r,xfact)/1000;
+
+	if(dir == 1) {
+		height = -1;
+		xskew = -1;
+		yskew = -1;
+	}
+
+	r = -90*dir-r-90;
+	height *= width *= Cos(r, size);
+	xskew *= Sin(r, size);
+	yskew *= -xskew;
+	xoff *= dir;
+
+	SetObjDrawTransform(1000,xskew,xoff,yskew,1000,yoff, 0, AVTR_WeaponOverlay); //position
+	activeRifle->SetObjDrawTransform(width,xskew,0,yskew,height); //Größe und Rotation
+
+}
+
+// Removes the weapon overlay created by DrawWeaponOverlay().
+private func RemoveWeaponOverlay() {
+	SetGraphics(0, this, 0, AVTR_WeaponOverlay);
 }
 
 /*  Function: IsAiming
@@ -185,6 +266,7 @@ public func LoadRifle() {
 	if(loadingAction && activeRifle->CanLoad()) {
 		activeRifle->~StartLoading();
 		SetAction(loadingAction);
+		AdjustWeaponOverlay();
 	} else {
 		Sound("CommandFailure1");
 	}
@@ -202,6 +284,8 @@ public func AbortAiming() {
 	if(IsAiming())
 		SetAction("Walk");
 	
+	RemoveWeaponOverlay();
+
 	if(crosshair) {
 		crosshair->RemoveObject();
 		activeRifle->Abort();
@@ -230,7 +314,7 @@ protected func ControlThrow() {
 		return 1;
 	}
 	var obj = Contents();
-	if(obj && obj->~IsRifle()) {
+	if(obj && obj->~IsWeapon()) {
 		StartAiming(obj);
 		return 1;
 	}

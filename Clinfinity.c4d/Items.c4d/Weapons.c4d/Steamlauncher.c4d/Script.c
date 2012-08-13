@@ -13,6 +13,10 @@ static const SGLR_MinDamage = 5;
 static const SGLR_MaxDamage = 20;
 static const SGLR_DamageDeviation = 3;
 
+// overlay position
+public func HandX() { return 7000; }
+public func HandY() { return 2000; }
+
 /*	Function: MaxFill
 	Returns the clip size of the steam launcher. */
 public func MaxFill() { return 1; }
@@ -125,5 +129,4 @@ public func Fire(object clonk, int angle) {
 
 
 public func IsWeapon()	{ return 1; }
-public func IsRifle()	{ return 1; }
 public func Selection()	{ Sound("RevolverDraw"); }
