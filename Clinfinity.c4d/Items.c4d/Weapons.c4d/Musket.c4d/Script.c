@@ -5,6 +5,10 @@
 
 #include L_SS
 
+// overlay position
+public func HandX() { return 9000; }
+public func HandY() { return 2000; }
+
 // clip size
 public func MaxFill() { return 6; }
 private func FillPicture() { return 0; }
