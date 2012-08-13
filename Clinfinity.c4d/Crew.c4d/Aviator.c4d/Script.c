@@ -138,6 +138,7 @@ private func WeaponAt(&x, &y, &r) {
 }
 
 // Adjusts the weapon overlay on top of the aviator depending on the current aiming angle.
+// Stolen from Hazard (Items.c4d/Weapons.c4d/Weapon.c4d/Script.c)
 private func AdjustWeaponOverlay() {
 	// Variablen für die Transformation
 
