@@ -47,11 +47,19 @@ public func ContextConkit(object caller) {
 	}
 }
 
-/* Weapons */
+/*  Section: Weapons
+	Provides functionality for aiming and shooting weapons (previously only rifles).
 
-// generic functions
+	Compatible weapons must define the following functions:
 
-// Rifle
+	 - IsWeapon
+	 - HandX/HandY: Overlay position in 1/1000px
+	 - GetTargets: Possible targets for auto aim
+	 - CanLoad: Whether the weapon must be loaded
+	 - StartLoading: Called when a reload is starting
+	 - Load: Called after the loading animation finished
+	 - Abort: Called when aiming is aborted
+	 - Fire(clonk, angle): Called when the user wants to fire */
 
 // aim radius in degrees
 static const AVTR_MinAimAngle = 0;
@@ -75,7 +83,7 @@ public func CanUseRifle() { return true; }
 	rifle - the rifle which will receive the _Load()_, _Fire()_ and _Abort()_ events */
 public func StartAiming(object rifle) {
 	var action = GetAction();
-	if(rifle->IsRifle()) {
+	if(rifle->IsWeapon()) {
 		var aimAction;
 		if(action == "Walk")
 			aimAction = "AimRifle";
@@ -306,7 +314,7 @@ protected func ControlThrow() {
 		return 1;
 	}
 	var obj = Contents();
-	if(obj && obj->~IsRifle()) {
+	if(obj && obj->~IsWeapon()) {
 		StartAiming(obj);
 		return 1;
 	}

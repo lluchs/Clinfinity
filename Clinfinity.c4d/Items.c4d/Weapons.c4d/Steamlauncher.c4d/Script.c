@@ -129,5 +129,4 @@ public func Fire(object clonk, int angle) {
 
 
 public func IsWeapon()	{ return 1; }
-public func IsRifle()	{ return 1; }
 public func Selection()	{ Sound("RevolverDraw"); }
