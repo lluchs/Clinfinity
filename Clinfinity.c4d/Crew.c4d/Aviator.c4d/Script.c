@@ -129,7 +129,10 @@ private func DrawWeaponOverlay() {
 
 // Calculates weapon position and angle.
 private func WeaponAt(&x, &y, &r) {
-	r = aimAngle - 90;
+	if(IsReloading())
+		r = 45;
+	else
+		r = aimAngle - 90;
 	x = -Sin(aimAngle, 10);
 	y = Cos(aimAngle, 10);
 }
@@ -254,6 +257,7 @@ public func LoadRifle() {
 	if(loadingAction && activeRifle->CanLoad()) {
 		activeRifle->~StartLoading();
 		SetAction(loadingAction);
+		AdjustWeaponOverlay();
 	} else {
 		Sound("CommandFailure1");
 	}
