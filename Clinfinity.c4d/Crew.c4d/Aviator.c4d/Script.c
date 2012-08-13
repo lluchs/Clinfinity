@@ -125,7 +125,7 @@ private func UpdateAimPhase() {
 
 	// update crosshair placement
 	var dir = GetDir() || -1;
-	crosshair->SetVertexXY(0, -Sin(aimAngle, 40)*dir, Cos(aimAngle, 40));
+	crosshair->SetVertexXY(0, -Sin(aimAngle, 40)*dir, Cos(aimAngle, 40) + activeRifle->~HandY() / 1000);
 }
 
 // Draws the weapon overlay on top of the aiming aviator.
