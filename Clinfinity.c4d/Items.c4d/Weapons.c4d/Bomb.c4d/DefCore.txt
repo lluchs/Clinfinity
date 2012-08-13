@@ -8,7 +8,7 @@ Width=9
 Height=9
 Offset=-4,-4
 Value=10
-Mass=10
+Mass=5
 Components=METL=1;
 Picture=9,0,64,64
 Vertices=4
