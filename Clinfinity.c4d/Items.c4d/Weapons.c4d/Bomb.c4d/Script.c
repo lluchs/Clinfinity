@@ -8,6 +8,8 @@ static const BOMB_DetonationRadius = 40;
 static const BOMB_DamageToStructures = 10;
 static const BOMB_CrewFlingSpeedY = 5;
 static const BOMB_CrewFlingSpeedX = 3;
+static const BOMB_OtherFlingSpeedY = 5;
+static const BOMB_OtherFlingSpeedX = 5;
 
 local isBounced;
 
@@ -21,12 +23,18 @@ protected func LeakSteam() {
 }
 
 private func Detonate() {
-	// Fling crew members
-	var crew = FindObjects(Find_Category(C4D_Living), Find_OCF(OCF_CrewMember), Find_Distance(BOMB_DetonationRadius));
+	// Fling crew members, objects and vehicles. Crew members aren't flung as far horizontally to keep it fair.
+	var crew = FindObjects(Find_Category(C4D_Living), Find_OCF(OCF_CrewMember), Find_Distance(BOMB_DetonationRadius), Find_NoContainer());
 	for(var member in crew) {
 		var xDistance = member->GetX() - GetX();
 		var xFlingSpeed = BOMB_CrewFlingSpeedX * xDistance / BOMB_DetonationRadius;
 		Fling(member, xFlingSpeed, -BOMB_CrewFlingSpeedY);
+	}
+	var stuffs = FindObjects(Find_Or(Find_Category(C4D_Object), Find_Category(C4D_Vehicle)), Find_Distance(BOMB_DetonationRadius), Find_NoContainer(), Find_Not(Find_Procedure("FLOAT")));
+	for(var stuff in stuffs) {
+		var xDistance = stuff->GetX() - GetX();
+		var xFlingSpeed = BOMB_OtherFlingSpeedX * xDistance / BOMB_DetonationRadius;
+		Fling(stuff, xFlingSpeed, -BOMB_OtherFlingSpeedY);
 	}
 
 	// Damage structures
