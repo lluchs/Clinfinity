@@ -18,6 +18,7 @@ public func LaunchSteam(int x, int y, int maxRadius) {
 
 protected func Initialize() {
 	SetAction("Expanding");
+	SetDir(Random(15));
 	SetCon(RandomX(10, 50));
 	SetR(Random(360));
 	SetRDir(RandomX(-10, 10));
