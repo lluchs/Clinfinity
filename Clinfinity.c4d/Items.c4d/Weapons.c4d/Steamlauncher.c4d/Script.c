@@ -50,7 +50,9 @@ protected func Entrance(object into) {
 /*	Function: Load
 	Called by a crew member after its loading animation has finished. */
 public func Load() {
-	if(MatSysDoTeamFill(-1, Contained()->GetOwner(), SGLR_AmmoMaterial)) {
+	if(CanLoad()) {
+		MatSysDoTeamFill(-1, Contained()->GetOwner(), SGLR_AmmoMaterial);
+		MatSysDoTeamFill(-SGLR_ShootSteamUsage, Contained()->GetOwner(), STEM);
 		DoFill(MaxFill());
 	}
 }
@@ -70,7 +72,7 @@ public func Abort() {/* :'( */}
 /*	Section: Controls */
 
 public func CanLoad() {
-	return !IsFull() && MatSysGetTeamFill(Contained()->GetOwner(), SGLR_AmmoMaterial) >= 1;
+	return !IsFull() && MatSysGetTeamFill(Contained()->GetOwner(), SGLR_AmmoMaterial) >= 1 && MatSysGetTeamFill(Contained()->GetOwner(), STEM) >= SGLR_ShootSteamUsage;
 }
 
 public func Fire(object clonk, int angle) {
@@ -85,11 +87,6 @@ public func Fire(object clonk, int angle) {
 		clonk->LoadRifle();
 		return;
 	}
-	// Enough steam?
-	var owner = clonk->GetOwner();
-	if(MatSysGetTeamFill(owner, STEM) < SGLR_ShootSteamUsage)
-		return;
-	MatSysDoTeamFill(-SGLR_ShootSteamUsage, owner, STEM);
 	DoFill(-1);
 	
 	var grenade = CreateContents(BOMB);
