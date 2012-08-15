@@ -95,7 +95,9 @@ private func Bounce(int xSpeed, int ySpeed) {
 			isBounced = true;
 			// Wait one frame until setting the new speed. Otherwise the current speed is kept unchanged.
 			ScheduleCall(this, "DoBounce", 1, 0, xSpeed, ySpeed);
-		} else {
+			// Don't detonate right now when two vertices have contact at the same time.
+			AddEffect("DelaySecondContact", this, 101, 5);
+		} else if(!GetEffect("DelaySecondContact", this)) {
 			Detonate();
 		}
 	}
