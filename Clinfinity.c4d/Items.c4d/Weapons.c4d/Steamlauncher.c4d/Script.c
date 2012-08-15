@@ -7,6 +7,7 @@
 
 static const SGLR_AmmoMaterial = METL;
 static const SGLR_ShootSteamUsage = 20;
+static const SGLR_GrenadeExitDistance = 12;
 static const SGLR_GrenadeExitSpeed = 10;
 
 static const SGLR_MinDamage = 5;
@@ -65,7 +66,7 @@ public func StartAiming() {
 	Sound("MusketDeploy");
 }
 
-public func GetTargets() { return []; }
+public func GetTargets() { /* No auto-aiming */ return []; }
 
 public func Abort() {/* :'( */}
 
@@ -93,13 +94,15 @@ public func Fire(object clonk, int angle) {
 
     var direction = clonk->GetDir() * 2 - 1;
     var phase = clonk->GetPhase();
-    var xSpeed = Sin(angle, SGLR_GrenadeExitSpeed) * direction;
+    var x = Sin(angle, SGLR_GrenadeExitDistance * direction);
+    var y = -Cos(angle, SGLR_GrenadeExitDistance) + HandY() / 1000;
+    var xSpeed = Sin(angle, SGLR_GrenadeExitSpeed * direction);
     var ySpeed = -Cos(angle, SGLR_GrenadeExitSpeed);
 
 
     grenade->SetOwner(clonk->GetOwner());
 
-    Exit(grenade, xSpeed, ySpeed, 0, xSpeed, ySpeed, 0);
+    Exit(grenade, x, y, 0, xSpeed, ySpeed, 0);
     grenade->Launch();
     //ammo->Launch(-1, CalcDamage(), ChargeKnockback());
 
