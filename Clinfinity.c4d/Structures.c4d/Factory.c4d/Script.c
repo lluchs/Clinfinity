@@ -123,7 +123,7 @@ protected func CompleteProduction() {
 		matSys->DoFill(1, requestedId);
 	}
 	else {
-		var producedItem = CreateObject(requestedId, 49, 74, GetOwner());
+		CreateContents(requestedId);
 		OpenDoor();
 	}
 	// Continue production if requested.
@@ -157,6 +157,7 @@ private func CompletedProduction() {
 
 private func OpenDoor() {
 	SetOverlayAction("Door", 1, true);
+	Schedule("Exit(Contents(), 49, 74)", 20);
 	ScheduleCall(this, "CloseDoor", 60);
 }
 
