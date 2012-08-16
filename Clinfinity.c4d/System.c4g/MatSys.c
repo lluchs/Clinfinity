@@ -113,7 +113,11 @@ global func MatSysDoTeamFill(int change, int plr, id Key) {
 /*  Function: MatSysSubtractComponents
 	Tries to subtract the components of the specified object.
 
-	The function doesn't do anything when the needed materials aren't in storage.
+	*Important:* This function ignores materials not managed by the material system,
+	so the return values only relate to those actually in the system.
+	This removes the ambiguity whether _false_ means that something is managed but just not in storage currently, or not managed at all.
+
+	Any other materials should be handled by the calling code appropriately.
 
 	Parameters:
 	definition - The definition whose components should be subtracted.
