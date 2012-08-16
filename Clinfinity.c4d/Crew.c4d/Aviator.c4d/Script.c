@@ -1,4 +1,5 @@
-/*-- Pilot --*/
+/*	Script: Aviator
+*/
 
 #strict 2
 #include CLNK
