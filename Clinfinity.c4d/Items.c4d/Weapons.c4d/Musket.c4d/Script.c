@@ -131,64 +131,64 @@ public func Fire(object clonk, int angle) {
 		return;
 	MatSysDoTeamFill(-5, owner, STEM);
 	DoFill(-1);
-	
-    var obj, obj2, x, y, r, xDir, yDir, rDir, dir, phase;
+
+	var obj, obj2, x, y, r, xDir, yDir, rDir, dir, phase;
 
 	var ammo = CreateContents(CSHO);
 
 	// Launch parameter calculation
-    dir = clonk->GetDir() * 2 - 1;
-    phase = clonk->GetPhase();
-    r = angle * dir + 90;
-    xDir = (Sin(angle, 22) + 1) * dir;
-    yDir = -Cos(angle, 22);
-    rDir = 0;
+	dir = clonk->GetDir() * 2 - 1;
+	phase = clonk->GetPhase();
+	r = angle * dir + 90;
+	xDir = (Sin(angle, 22) + 1) * dir;
+	yDir = -Cos(angle, 22);
+	rDir = 0;
 
 	// See AVTR::WeaponAt
 	var dst = 10 + GetDefWidth() - HandX() / 1000;
 	x = (Sin(angle, dst)) * dir;
 	y = -Cos(angle, dst) - HandY() / 1000;
 
-    // Owner is important for awarding kills
-    SetOwner(clonk->GetOwner(), ammo);
+	// Owner is important for awarding kills
+	SetOwner(clonk->GetOwner(), ammo);
 
-    Exit(ammo, AbsX(x + clonk->GetX()), AbsY(y + clonk->GetY()), r, xDir, yDir, rDir);
-    ammo->Launch(-1, CalcDamage(), ChargeKnockback());
+	Exit(ammo, AbsX(x + clonk->GetX()), AbsY(y + clonk->GetY()), r, xDir, yDir, rDir);
+	ammo->Launch(-1, CalcDamage(), ChargeKnockback());
 
-    // Muzzle flash particle: same position as ammo launch
-    CreateParticle("MuzzleFlash", AbsX(x + clonk->GetX()), AbsY(y + clonk->GetY()), xDir, yDir, 35, RGBa(255, 255, 255, 0), clonk);
+	// Muzzle flash particle: same position as ammo launch
+	CreateParticle("MuzzleFlash", AbsX(x + clonk->GetX()), AbsY(y + clonk->GetY()), xDir, yDir, 35, RGBa(255, 255, 255, 0), clonk);
 
-    Sound("MusketShoot*", 0, clonk);
+	Sound("MusketShoot*", 0, clonk);
 
-    Smoke(x, y, 2);
-    Smoke(x, y + Random(2), 3);
+	Smoke(x, y, 2);
+	Smoke(x, y + Random(2), 3);
 
-    CreateParticle("Casing", AbsX(x / 2 + GetX(clonk)), AbsY(y / 2 + GetY(clonk)), -dir * RandomX(1, 5), -RandomX(3, 7), 15, RGBa(250, 140, 80, 0));
+	CreateParticle("Casing", AbsX(x / 2 + GetX(clonk)), AbsY(y / 2 + GetY(clonk)), -dir * RandomX(1, 5), -RandomX(3, 7), 15, RGBa(250, 140, 80, 0));
 
 	// Cooldown before the next shot can be fired
-    AddEffect("ReloadRifle", this, 101, 30);
+	AddEffect("ReloadRifle", this, 101, 30);
 
 	// Restart charging.
 	StartCharging();
-    return 1;
+	return 1;
 }
 
 /* Objekt ist eine Waffe */
 public func IsWeapon () {
-    return 1;
+	return 1;
 }
 
 /* Objekt ist keine Handfeuerwaffe */
 public func IsGun () {
-    return 0;
+	return 0;
 }
 
 /* Objekt ist ein Gewehr */
 public func IsRifle () {
-    return 1;
+	return 1;
 }
 
 /* Objekt wurde ausgewählt */
 public func Selection () {
-    Sound("RevolverDraw");
+	Sound("RevolverDraw");
 }
