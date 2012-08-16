@@ -1,12 +1,14 @@
 /*	Script: Steam grenade launcher
 	A long-range explosive weapon.
-	Shoots ballistically moving steam grenades. */
+	Shoots ballistically moving steam grenades.
+
+	See <Weapons> for a general reference about weapons. */
 
 #strict 2
 
 #include L_SS
 
-/*	Constants: Material consumption when filling magazine.
+/*	Constants: Material consumption when filling magazine
 	SGLR_AmmoMaterial		- Material to use.
 	SGLR_AmmoSteamUsage	- Amount of steam to use. */
 static const SGLR_AmmoMaterial = METL;
@@ -22,8 +24,6 @@ static const SGLR_GrenadeExitSpeed = 10;
 public func HandX() { return 7000; }
 public func HandY() { return 2000; }
 
-/*	Function: MaxFill
-	Returns the magazine size of the steam grenade launcher. */
 public func MaxFill() { return 1; }
 private func FillPicture() { return 0; }
 
@@ -53,7 +53,7 @@ protected func Entrance(object into) {
 }
 
 /*	Function: Load
-	Called by a crew member after its loading animation has finished.
+	Called by a crew member after its loading animation has finished. See <Weapons> for reference.
 	If all the required materials and enough steam are available in the material system,
 	the launcher's magazine gets filled completely. */
 public func Load() {
@@ -73,7 +73,7 @@ public func StartAiming() {
 }
 
 /*	Function: GetTargets
-	Called by a crew member to get a list of possible targets for auto-aiming.
+	Called by a crew member to get a list of possible targets for auto-aiming. See <Weapons> for reference.
 	Since auto-aiming is disabled for the steam grenade launcher, this always returns no targets.
 
 	Returns:
@@ -81,8 +81,6 @@ public func StartAiming() {
 public func GetTargets() { return []; }
 
 public func Abort() { /* Nothing to do */ }
-
-/*	Section: Controls */
 
 public func CanLoad() {
 	return !IsFull() && MatSysGetTeamFill(Contained()->GetOwner(), SGLR_AmmoMaterial) >= 1 && MatSysGetTeamFill(Contained()->GetOwner(), STEM) >= SGLR_AmmoSteamUsage;
