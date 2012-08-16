@@ -1,9 +1,30 @@
 /*	Script: Steam grenade
-*/
+	A grenade that bounces once and detonates on second impact.
+
+	Bouncing:
+	The steam grenade only bounces off from ceilings with full speed.
+	For walls, the vertical speed is kept but the horizontal speed is reversed and reduced.
+	Similarly for floors, the vertical speed is reversed and reduced while the horizontal speed is kept.
+	The reduced speed is calculated using the following formula:
+	:new speed = -1 * original speed / BOMB_BounceDenominator
+	To ensure bouncing once, the grenade delays the detection of the second impact.
+	This prevents immediate detonations when two vertices touch the landscate at the same time. */
 
 #strict 2
 
+/*	Constants: Bouncing
+	BOMB_BounceDenominator	- Determines how much the grenade bounces off a surface.
+	BOMB_SecondContactDelay	- Determines after how many frames contacs are again evaluated. */
 static const BOMB_BounceDenominator = 3;
+static const BOMB_SecondContactDelay = 5;
+
+/*	Constants: Detonation
+	BOMB_DetonationRadius	- Determines the radius of the detonation effects.
+	BOMB_DamageToStructures	- Damage done to structures.
+	BOMB_CrewFlingSpeedY	- Vertical speed when the detonation flings crew members.
+	BOMB_CrewFlingSpeedX	- Maximum horizontal speed when the detonation flings crew members.
+	BOMB_OtherFlingSpeedY	- Vertical speed when the detonation flings objects and vehicles.
+	BOMB_OtherFlingSpeedX	- Maximum horizontal speed when the detonation flings objects and vehicles. */
 static const BOMB_DetonationRadius = 40;
 static const BOMB_DamageToStructures = 10;
 static const BOMB_CrewFlingSpeedY = 5;
@@ -58,12 +79,12 @@ protected func Initialize() {
 }
 
 /*	Function: Departure
-	If a crew member throws the grenade while standing, it activates.
+	If a crew member throws the grenade or drops it in various situations, it activates.
 
 	Parameters:
 	from	- The object the grenade departed from. */
 protected func Departure(object from) {
-	if((from->GetOCF() & OCF_CrewMember) != 0 && from->GetAction() == "Throw") {
+	if((from->GetOCF() & OCF_CrewMember) != 0 && (from->GetAction() == "Throw" || from->GetProcedure() == "FLIGHT" || from->GetProcedure() == "SCALE" || from->GetProcedure() == "HANGLE")) {
 		Launch();
 	}
 }
@@ -96,7 +117,7 @@ private func Bounce(int xSpeed, int ySpeed) {
 			// Wait one frame until setting the new speed. Otherwise the current speed is kept unchanged.
 			ScheduleCall(this, "DoBounce", 1, 0, xSpeed, ySpeed);
 			// Don't detonate right now when two vertices have contact at the same time.
-			AddEffect("DelaySecondContact", this, 101, 5);
+			AddEffect("DelaySecondContact", this, 101, BOMB_SecondContactDelay);
 		} else if(!GetEffect("DelaySecondContact", this)) {
 			Detonate();
 		}
