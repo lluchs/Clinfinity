@@ -25,6 +25,12 @@ static const BSTE_ExpansionNumerator = 1023;
 static const BSTE_ExpansionDenominator = 512;
 static const BSTE_ExpansionFrames = 10;
 
+/*	Constants: Fuming phase
+	BSTE_minTargetYSpeed	- Minimum value for target vertical speed.
+	BSTE_maxTargetYSpeed	- Maximum value for target vertical speed. */
+static const BSTE_minTargetYSpeed = -10;
+static const BSTE_maxTargetYSpeed = -22;
+
 local maxXDistance, maxYDistance, transparency, targetYSpeed;
 
 /*	Function: LaunchSteam
@@ -60,7 +66,7 @@ protected func Expand() {
 
 protected func StartFume() {
 	SetAction("Fuming");
-	targetYSpeed = RandomX(-10, -22);
+	targetYSpeed = RandomX(BSTE_minTargetYSpeed, BSTE_maxTargetYSpeed);
 	SetYDir(-10);
 }
 
