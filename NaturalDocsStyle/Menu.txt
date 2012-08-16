@@ -46,7 +46,7 @@ Format: 1.52
 # --------------------------------------------------------------------------
 
 
-File: Crew.c4d\Aviator.c4d\Script.c  (Clinfinity.c4d\Crew.c4d\Aviator.c4d\Script.c)
+File: Aviator  (Clinfinity.c4d\Crew.c4d\Aviator.c4d\Script.c)
 
 Group: System.c4g  {
 
@@ -58,6 +58,8 @@ Group: System.c4g  {
    File: Ease.c  (Clinfinity.c4d\System.c4g\Ease.c)
    File: Find_Procedure.c  (Clinfinity.c4d\System.c4g\Find_Procedure.c)
    File: GetPlayersByTeam  (Clinfinity.c4d\System.c4g\GetPlayersByTeam.c)
+   File: Isle Respawn  (Clinfinity.c4d\System.c4g\IsleRespawn.c)
+   File: Material.c  (Clinfinity.c4d\System.c4g\Material.c)
    File: MatSys.c  (Clinfinity.c4d\System.c4g\MatSys.c)
    File: Message.c  (Clinfinity.c4d\System.c4g\Message.c)
    File: QueryCatchBlow.c  (Clinfinity.c4d\System.c4g\QueryCatchBlow.c)
@@ -73,9 +75,7 @@ Group: Vehicles.c4d  {
    File: Prop  (Clinfinity.c4d\Vehicles.c4d\Platform.c4d\Prop.c4d\Script.c)
    }  # Group: Vehicles.c4d
 
-File: DeathAnnounce  (Clinfinity.c4d\Helpers.c4d\DeathAnnounce.c4d\Script.c)
 File: Drafts  (Clinfinity.c4d\Rules.c4d\Draft.c4d\Script.c)
-File: Hats  (Clinfinity.c4d\Items.c4d\Hats.c4d\Script.c)
 
 Group: Helpers.c4d  {
 
@@ -86,7 +86,23 @@ Group: Helpers.c4d  {
 
 File: King of the Hill  (Clinfinity.c4d\Goals.c4d\KOTH.c4d\Script.c)
 File: Structure base object  (Clinfinity.c4d\Structures.c4d\StructureBaseObject.c4d\Script.c)
-File: Yo-yo  (Clinfinity.c4d\Items.c4d\Weapons.c4d\Yo-Yo.c4d\Script.c)
+
+Group: Items.c4d  {
+
+   File: BombSteam  (Clinfinity.c4d\Items.c4d\Weapons.c4d\Bomb.c4d\BombSteam.c4d\Script.c)
+   File: Hats  (Clinfinity.c4d\Items.c4d\Hats.c4d\Script.c)
+   File: Musket  (Clinfinity.c4d\Items.c4d\Weapons.c4d\Musket.c4d\Script.c)
+   File: Steam grenade  (Clinfinity.c4d\Items.c4d\Weapons.c4d\Bomb.c4d\Script.c)
+   File: Steam grenade launcher  (Clinfinity.c4d\Items.c4d\Weapons.c4d\Steamlauncher.c4d\Script.c)
+   File: Yo-yo  (Clinfinity.c4d\Items.c4d\Weapons.c4d\Yo-Yo.c4d\Script.c)
+   }  # Group: Items.c4d
+
+Group: Helpers.c4d  {
+
+   File: AddTrajectory  (Clinfinity.c4d\Helpers.c4d\Trajectory.c4d\Script.c)
+   File: DeathAnnounce  (Clinfinity.c4d\Helpers.c4d\DeathAnnounce.c4d\Script.c)
+   File: Pointer  (Clinfinity.c4d\Helpers.c4d\Pointer.c4d\Script.c)
+   }  # Group: Helpers.c4d
 
 Group: Index  {
 
