@@ -68,7 +68,7 @@ public func StartAiming() {
 
 public func GetTargets() { /* No auto-aiming */ return []; }
 
-public func Abort() {/* :'( */}
+public func Abort() { /* Nothing to do */ }
 
 /*	Section: Controls */
 
@@ -89,44 +89,25 @@ public func Fire(object clonk, int angle) {
 		return;
 	}
 	DoFill(-1);
-	
+
+	var direction = clonk->GetDir() * 2 - 1;
+	var phase = clonk->GetPhase();
+	var x = Sin(angle, SGLR_GrenadeExitDistance * direction);
+	var y = -Cos(angle, SGLR_GrenadeExitDistance) + HandY() / 1000;
+	var xSpeed = Sin(angle, SGLR_GrenadeExitSpeed * direction);
+	var ySpeed = -Cos(angle, SGLR_GrenadeExitSpeed);
+
 	var grenade = CreateContents(BOMB);
+	grenade->SetOwner(clonk->GetOwner());
+	Exit(grenade, x, y, 0, xSpeed, ySpeed, 0);
+	grenade->Launch();
 
-    var direction = clonk->GetDir() * 2 - 1;
-    var phase = clonk->GetPhase();
-    var x = Sin(angle, SGLR_GrenadeExitDistance * direction);
-    var y = -Cos(angle, SGLR_GrenadeExitDistance) + HandY() / 1000;
-    var xSpeed = Sin(angle, SGLR_GrenadeExitSpeed * direction);
-    var ySpeed = -Cos(angle, SGLR_GrenadeExitSpeed);
+	Sound("SteamlauncherShoot*", 0, clonk);
 
+	AddEffect("ReloadRifle", this, 101, 30);
 
-    grenade->SetOwner(clonk->GetOwner());
-
-    Exit(grenade, x, y, 0, xSpeed, ySpeed, 0);
-    grenade->Launch();
-    //ammo->Launch(-1, CalcDamage(), ChargeKnockback());
-
-    // Muzzle flash
-    // hax, weil die Animation nicht genauen Winkeln entspricht und der Partikel seltsam verdreht wird
-    /*
-    if(iDir == DIR_Left) {
-        if(Inside(iPhase, 0, 1)) iX = +Sin(iPhase * 15, 15) * iDir + 5;
-        else    iX = +Sin(iPhase * 15, 15) * iDir;
-    } else  iX = +Sin(iPhase * 14, 15) * iDir;
-    if(Inside(iPhase, 0, 7)) iY = -Cos(iPhase * 15, 14) - 6;
-    else  iY = -Cos(iPhase * 15, 14) - 3;
-    CreateParticle("MuzzleFlash", AbsX(iX + GetX(clonk)), AbsY(iY + GetY(clonk)), iXDir, iYDir, 35, RGBa(255, 255, 255, 0), clonk);
-    */
-
-    Sound("SteamlauncherShoot*", 0, clonk);
-    //Smoke(iX, iY, 2);
-    //Smoke(iX, iY + Random(2), 3);
-    //CreateParticle("Casing", AbsX(iX / 2 + GetX(clonk)), AbsY(iY / 2 + GetY(clonk)), -iDir * RandomX(1, 5), -RandomX(3, 7), 15, RGBa(250, 140, 80, 0));
-    AddEffect("ReloadRifle", this, 101, 30);
-
-    return 1;
+	return 1;
 }
-
 
 public func IsWeapon()	{ return 1; }
 public func Selection()	{ Sound("RevolverDraw"); }
