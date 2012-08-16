@@ -89,7 +89,7 @@ File: Structure base object  (Clinfinity.c4d\Structures.c4d\StructureBaseObject.
 
 Group: Items.c4d  {
 
-   File: BombSteam  (Clinfinity.c4d\Items.c4d\Weapons.c4d\Bomb.c4d\BombSteam.c4d\Script.c)
+   File: Grenade steam  (Clinfinity.c4d\Items.c4d\Weapons.c4d\Bomb.c4d\BombSteam.c4d\Script.c)
    File: Hats  (Clinfinity.c4d\Items.c4d\Hats.c4d\Script.c)
    File: Musket  (Clinfinity.c4d\Items.c4d\Weapons.c4d\Musket.c4d\Script.c)
    File: Steam grenade  (Clinfinity.c4d\Items.c4d\Weapons.c4d\Bomb.c4d\Script.c)
