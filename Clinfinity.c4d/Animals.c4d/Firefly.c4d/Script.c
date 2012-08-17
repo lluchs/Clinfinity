@@ -8,9 +8,10 @@ static const IRRL_MaxDistance = 40;
 
 local attractedTo;
 
-public func SpawnSwarm(int x, int y, int size) {
+public func SpawnSwarm(int x, int y, int size, object attractedTo) {
 	for(var i = 0; i < size; i++) {
-		CreateObject(IRRL, RandomX(x - IRRL_MaxSpawnDistance, x + IRRL_MaxSpawnDistance), RandomX(y - IRRL_MaxSpawnDistance, y + IRRL_MaxSpawnDistance), NO_OWNER);
+		var firefly = CreateObject(IRRL, RandomX(x - IRRL_MaxSpawnDistance, x + IRRL_MaxSpawnDistance), RandomX(y - IRRL_MaxSpawnDistance, y + IRRL_MaxSpawnDistance), NO_OWNER);
+		firefly->LocalN("attractedTo") = attractedTo;
 		// TODO: Let fireflies fade in
 	}
 }
@@ -20,14 +21,21 @@ private func Flying() {
 
 	if(Random(4)) return;
 
-	xdir = Random(13) - 6;
-	ydir = Random(9) - 4;
+	if(attractedTo != 0 && ObjectDistance(attractedTo) > IRRL_MaxDistance) {
+		xdir = BoundBy(attractedTo->GetX() - GetX(), -1, 1);
+		ydir = BoundBy(attractedTo->GetY() - GetY(), -1, 1);
+		xdir = RandomX(xdir, 6 * xdir);
+		ydir = RandomX(ydir, 6 * ydir);
+	} else {
+		xdir = Random(13) - 6;
+		ydir = Random(9) - 4;
+	}
+
 	if(GBackLiquid(xdir, ydir)) {
 		SetSpeed(0, 0);
 	} else {
-		SetSpeed(xdir,ydir);
+		SetSpeed(xdir, ydir);
 	}
-	// TODO: If attractedTo is set, stay nearby
 }
 
 protected func Check() {
