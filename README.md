@@ -18,3 +18,4 @@ Clonk Infinity uses sounds from the [Freesound project](http://www.freesound.org
 We also use objects from other authors:
 
 - The firefly was created by David Dormagen
+- Light and light cone were created by the Hazard team
