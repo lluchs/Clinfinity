@@ -20,7 +20,7 @@ public func SpawnSwarm(int x, int y, int size, object attractedTo) {
 private func Flying() {
 	var xdir, ydir;
 
-	var awayFrom = FindObject2(Find_Distance(IRRL_ShynessDistance), Find_Category(C4D_Object), Find_OCF(OCF_HitSpeed1));
+	var awayFrom = FindObject2(Find_Distance(IRRL_ShynessDistance), Find_Category(C4D_Object), Find_OCF(OCF_HitSpeed1), Find_NoContainer());
 	if(awayFrom != 0) {
 		xdir = BoundBy(GetX() - awayFrom->GetX(), -1, 1);
 		ydir = BoundBy(GetY() - awayFrom->GetY(), -1, 1);
