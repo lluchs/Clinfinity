@@ -1,29 +1,33 @@
-/*-- Licht --*/
+/*	Script: Light
+	Provides functions concerning lights.
+	Taken from the Hazard pack. */
 
 #strict
-
-local iColor, bAmbience, iF;
 
 global func IsDark() { return true; }
 
 global func CalcLight(&alphamod, &sizemod) {
-  sizemod = 100 + GetDarkness() * 3 / 2; // bis zu 250% so groﬂ
-  alphamod = (100 - GetDarkness()) / 50; // 0-20 alpha werden aufaddiert
-  
-  // keine Dunkelheit: beinahe unsichtbar
-  // Genauso bei Dunkelheit = 0
-  if(!IsDark() || !GetDarkness()) alphamod = 30;
+	sizemod = 100 + GetDarkness() * 3 / 2; // Stretch up ta 250%
+	alphamod = (100 - GetDarkness()) / 5; // Add 0-20 to alpha
+
+	// No darkness or darkness value = 0: Almost invisible.
+	if(!IsDark() || !GetDarkness()) alphamod = 30;
 }
 
-/* Returns darkness in percent (0-100) */
+/*	Function: GetDarkness
+	Returns darkness in percent (0-100).
+	The default value is 0 (no darkness).
+	Scenario scripts, goals and rules may specify other values for darkness by implementing _GetDarkness()_.
+
+	Returns:
+	Darkness value in percent. */
 global func GetDarkness() {
-  var darkness = GameCallEx("GetDarkness");
-  if(darkness == 0) {
-    darkness = 10;
-  }
-  darkness = BoundBy(darkness, 0, 100);
-  return darkness;
+	return BoundBy(GameCallEx("GetDarkness"), 0, 100);
 }
+
+/* Below: Original Hazard script */
+
+local iColor, bAmbience, iF;
 
 //Licht initialisieren, Parameter setzen, etc.
 protected func Init(int iSize, int iColor, object pTarget, string cGraphics) {
