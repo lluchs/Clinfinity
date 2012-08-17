@@ -43,7 +43,7 @@ local maxXDistance, maxYDistance, transparency, targetYSpeed;
 	y			- Vertical coordinate.
 	maxRadius	- Distance between start and end point for the expansion phase.
 	direction	- Direction to move in the expansion phase. */
-public func LaunchSteam(int x, int y, int maxRadius, direction) {
+public func LaunchSteam(int x, int y, int maxRadius, int direction) {
 	var steam = CreateObject(BSTE, x, y + 16, NO_OWNER);
 	steam->LocalN("maxXDistance") = Sin(direction, maxRadius);
 	steam->LocalN("maxYDistance") = -Cos(direction, maxRadius);
