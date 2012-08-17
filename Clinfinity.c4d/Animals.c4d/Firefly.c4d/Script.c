@@ -3,6 +3,17 @@
 
 #strict 2
 
+static const IRRL_MaxSpawnDistance = 5;
+static const IRRL_MaxDistance = 40;
+
+local attractedTo;
+
+public func SpawnSwarm(int x, int y, int size) {
+	for(var i = 0; i < size; i++) {
+		CreateObject(IRRL, RandomX(x - IRRL_MaxSpawnDistance, x + IRRL_MaxSpawnDistance), RandomX(y - IRRL_MaxSpawnDistance, y + IRRL_MaxSpawnDistance), NO_OWNER);
+		// TODO: Let fireflies fade in
+	}
+}
 
 private func Flying() {
 	var xdir, ydir;
@@ -16,6 +27,7 @@ private func Flying() {
 	} else {
 		SetSpeed(xdir,ydir);
 	}
+	// TODO: If attractedTo is set, stay nearby
 }
 
 protected func Check() {
