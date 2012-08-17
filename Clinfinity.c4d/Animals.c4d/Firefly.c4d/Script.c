@@ -41,7 +41,7 @@ protected func Check() {
 protected func Initialize() {
 	SetAction("Fly");
 	SetPhase(Random(6));
-	AddLight(60, RGB(255, 255, 200), this);
+	AddLight(40, RGB(220, 255, 200), this);
 }
 
 public func CatchBlow()	{ RemoveObject(); }
