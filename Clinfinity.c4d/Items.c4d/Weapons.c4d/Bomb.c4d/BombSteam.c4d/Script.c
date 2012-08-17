@@ -26,20 +26,25 @@ static const BSTE_ExpansionDenominator = 512;
 static const BSTE_ExpansionFrames = 10;
 
 /*	Constants: Fuming phase
-	BSTE_minTargetYSpeed	- Minimum value for target vertical speed.
-	BSTE_maxTargetYSpeed	- Maximum value for target vertical speed. */
-static const BSTE_minTargetYSpeed = -10;
-static const BSTE_maxTargetYSpeed = -22;
+	BSTE_MinTargetYSpeed	- Minimum value for target vertical speed.
+	BSTE_MaxTargetYSpeed	- Maximum value for target vertical speed. */
+static const BSTE_MinTargetYSpeed = -10;
+static const BSTE_MaxTargetYSpeed = -22;
 
 local maxXDistance, maxYDistance, transparency, targetYSpeed;
 
 /*	Function: LaunchSteam
 	Factory method for launching single steam clouds.
 	The coordinates are relative to the calling object in local calls, otherwise global.
-	*Note:* For best results, launch steam using this method. This is not mandatory, though. */
-public func LaunchSteam(int x, int y, int maxRadius) {
+	*Note:* For best results, launch steam using this method. This is not mandatory, though.
+
+	Parameters:
+	x			- Horizontal coordinate.
+	y			- Vertical coordinate.
+	maxRadius	- Distance between start and end point for the expansion phase.
+	direction	- Direction to move in the expansion phase. */
+public func LaunchSteam(int x, int y, int maxRadius, direction) {
 	var steam = CreateObject(BSTE, x, y + 16, NO_OWNER);
-	var direction = Random(360);
 	steam->LocalN("maxXDistance") = Sin(direction, maxRadius);
 	steam->LocalN("maxYDistance") = -Cos(direction, maxRadius);
 }
@@ -66,7 +71,7 @@ protected func Expand() {
 
 protected func StartFume() {
 	SetAction("Fuming");
-	targetYSpeed = RandomX(BSTE_minTargetYSpeed, BSTE_maxTargetYSpeed);
+	targetYSpeed = RandomX(BSTE_MinTargetYSpeed, BSTE_MaxTargetYSpeed);
 	SetYDir(-10);
 }
 

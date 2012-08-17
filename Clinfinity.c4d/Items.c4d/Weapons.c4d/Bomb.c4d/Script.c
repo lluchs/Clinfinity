@@ -67,7 +67,7 @@ private func Detonate() {
 	Sound("SteamGrenadeDetonate*");
 	var steamAmount = RandomX(30, 50);
 	for(var i = 0; i < steamAmount; i++) {
-		BSTE->LaunchSteam(GetX(), GetY(), RandomX(BOMB_DetonationRadius / 2, BOMB_DetonationRadius * 6 / 5));
+		BSTE->LaunchSteam(GetX(), GetY(), RandomX(BOMB_DetonationRadius / 2, BOMB_DetonationRadius * 6 / 5), Random(360));
 	}
 	RemoveObject();
 }

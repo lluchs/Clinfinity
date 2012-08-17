@@ -16,9 +16,15 @@ static const SGLR_AmmoSteamUsage = 20;
 
 /*	Constants: Grenade launching
 	SGLR_GrenadeExitDistance	- Distance of the muzzle, relative to the offset.
-	SGLR_GrenadeExitSpeed		- The grenade's initial speed after being launched. */
+	SGLR_GrenadeExitSpeed		- The grenade's initial speed after being launched.
+	SGLR_SteamExitDistance		- Distance where steam exits the muzzle.
+	SGLR_SteamExitMinSpeed		- Minimum speed of steam blast effect.
+	SGLR_SteamExitMaxSpeed		- Maximum speed of steam blast effect. */
 static const SGLR_GrenadeExitDistance = 12;
 static const SGLR_GrenadeExitSpeed = 10;
+static const SGLR_SteamExitDistance = 20;
+static const SGLR_SteamExitMinSpeed = 15;
+static const SGLR_SteamExitMaxSpeed = 40;
 
 // overlay position
 public func HandX() { return 7000; }
@@ -113,7 +119,12 @@ public func Fire(object clonk, int angle) {
 	grenade->Launch();
 
 	Sound("SteamlauncherShoot*", 0, clonk);
-
+	var steamAmount = RandomX(5, 10);
+	var steamX = Sin(angle, SGLR_SteamExitDistance * direction);
+	var steamY = -Cos(angle, SGLR_SteamExitDistance);
+	for(var i = 0; i < steamAmount; i++) {
+		BSTE->LaunchSteam(steamX + GetX(), steamY + GetY(), RandomX(SGLR_SteamExitMinSpeed, SGLR_SteamExitMaxSpeed), angle * direction);
+	}
 	AddEffect("ReloadRifle", this, 101, 30);
 
 	return 1;
