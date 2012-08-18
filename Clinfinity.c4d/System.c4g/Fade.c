@@ -1,4 +1,4 @@
-/*	Script: Fade
+/*	Script: Fade.c
 	Provides convenience functions for fading objects in and out. */
 
 #strict 2
