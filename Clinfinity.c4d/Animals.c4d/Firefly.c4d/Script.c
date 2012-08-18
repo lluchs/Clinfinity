@@ -54,7 +54,6 @@ protected func Check() {
 	// Buried or in water: Instant death
 	if(GBackSemiSolid()) {
 		Death();
-		return;
 	}
 }
 
