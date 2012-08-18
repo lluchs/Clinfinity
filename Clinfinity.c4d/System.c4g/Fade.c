@@ -35,7 +35,7 @@ global func FadeOut() {
 	Returns:
 	_true_ if fading successfully started, _false_ otherwise. */
 global func FadeFromTo(int startTransparency, int targetTransparency) {
-	return 0 != AddEffect("Fade", this, 101, 1, this, 0, startTransparency, targetTransparency)
+	return 0 != AddEffect("Fade", this, 101, 1, this, 0, startTransparency, targetTransparency);
 }
 
 global func FxFadeStart(object target, int effectNumber, int temporary, int startTransparency, int targetTransparency) {
