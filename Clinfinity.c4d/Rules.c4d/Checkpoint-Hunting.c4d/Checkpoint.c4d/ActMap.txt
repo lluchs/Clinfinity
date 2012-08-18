@@ -1,0 +1,9 @@
+[Action]
+Name=Signpost
+Procedure=NONE
+Directions=2
+FlipDir=1
+Length=1
+Delay=1000
+Facet=0,0,16,16
+NextAction=Signpost

@@ -1,0 +1,1 @@
+Ein Objekt, das benutzt wird, damit man das Checkpoint-Objekt auch anfassen kann.

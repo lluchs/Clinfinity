@@ -1,0 +1,3 @@
+Suicide=Suicide
+SuicideMenuDesc1=Checkpoint
+SuicideMenuDesc2=With this you'll respawn near the checkpoint nr. %d!

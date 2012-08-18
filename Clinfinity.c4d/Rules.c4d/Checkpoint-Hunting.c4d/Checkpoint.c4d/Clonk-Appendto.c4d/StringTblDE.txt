@@ -1,0 +1,3 @@
+Suicide=Selbstmord
+SuicideMenuDesc1=Checkpoint
+SuicideMenuDesc2=Hiermit wirst du beim Checkpoint Nr. %d respawnen!

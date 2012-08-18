@@ -1,0 +1,9 @@
+[DefCore]
+id=CHEC
+Name=Checkpoint
+Version=4,9,5
+Category=C4D_StaticBack
+Width=16
+Height=16
+Offset=-8,-8
+Picture=0,0,16,16

@@ -1,0 +1,11 @@
+[DefCore]
+id=RCHE
+Name=Checkpoint hunting
+Version=4,9,5
+Category=C4D_StaticBack|C4D_Goal
+MaxUserSelect=1
+Width=1
+Height=1
+Offset=0,0
+Value=100
+Picture=6,0,64,64

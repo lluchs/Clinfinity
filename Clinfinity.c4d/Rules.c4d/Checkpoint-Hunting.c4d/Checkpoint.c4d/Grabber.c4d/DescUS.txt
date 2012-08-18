@@ -1,0 +1,1 @@
+An object which is use for making the checkpoint grabbable.

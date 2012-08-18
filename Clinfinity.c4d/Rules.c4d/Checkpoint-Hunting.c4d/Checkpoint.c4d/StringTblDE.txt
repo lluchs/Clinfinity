@@ -1,0 +1,1 @@
+PassCheckpoint=Glückwunsch, du hast einen Checkpoint erreicht!

@@ -1,0 +1,10 @@
+[DefCore]
+id=GRAB
+Name=Grabber
+Version=4,9,5
+Category=C4D_Structure
+Width=16
+Height=16
+Offset=-8,-8
+Picture=6,0,64,64
+Grab=2

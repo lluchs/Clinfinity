@@ -1,0 +1,71 @@
+Passiere diesen Checkpoint um ihn zu "aktivieren".
+Du hast das Level entweder geschafft
+   - wenn du alle Checkpoints eingesammelt hast.
+   - oder ganz normal ein anderes Spielrundenziel erfüllt hast.
+
+
+
+
+Allgemeine Einstellungs-Möglichkeiten:
+
+   - Regel "Checkpoint-Hunting":			Man muss alle Checkpoints passiert haben.
+   - Globale Variable "fCHEC_Respawn":			Man respawnt beim zuletzt passierten Checkpoint.
+   - Globale Variable "fCHEC_RespawnMenu":		Man respawnt bei einem Checkpoint, den man über ein Menü auswählen kann.
+   - Globale Variable "fCHEC_RespawnInventory":		Die Objekte, die man beim Tod in der Hand hatte, gehen nicht verloren.
+   - Globale Variable "fCHEC_RespawnRemoveInv":		Die Objekte, die man beim Tod in der Hand hatte, werden gelöscht.
+   - Globale Variable "fCHEC_AutomaticLag":		Global Einstellung: Es wird automatisch der Lag durch eine vorderfinierte Formel reduziert (empfohlen)
+
+
+
+Einstellungs-Möglichkeiten im Checkpoint selbst:
+   - Lokale Variable "iCHEC_ShowCheckpoint":				Darstellungsweise des Checkpoints: - 0 = Nichts
+													   - 1 = Partikel-Kreis
+													   - 2 = Partikel-Rechteck
+													   - 3 = Partikel-Spirale
+													   - 10 = Wegweiser
+   - Lokale Variable "iCHEC_Grab":					Ob das Objekt angefasst werden muss, damit der Checkpoint als passiert gilt
+										- 0 = Keine Einstellung (ist auch nicht anfassen...)
+										- 1 = Nicht anfassen
+										- 2 = Anfassen
+   - Lokale Variable "sCHEC_ShowMessage":				Nachricht, die ausgegeben wird, sobald man einen Checkpoint passiert. '""' Steht für keine Nachricht!
+   - Lokale Variable "iCHEC_ShowCheckpoint1_Radius":			Einstellung für den Partikel-Kreis: Radius des Kreises
+   - Lokale Variable "iCHEC_ShowCheckpoint1_CircleCreatingTime":	Einstellung für den Partikel-Kreis: Zeit, die gebraucht werden soll, um den Partikel-Kreis einmal zu erstellen in frames per second
+   - Lokale Variable "iCHEC_ShowCheckpoint1_Color":			Einstellung für den Partikel-Kreis: Farbe der Partikel, wenn -1 angegeben ist, so ist die Farbe der Partikel abhängig vom Winkel (= HSL(iAngle , 0 , 0))
+   - Lokale Variable "iCHEC_ShowCheckpoint1_AntiLag":			Einstellung für den Partikel-Kreis: Wie viele Partikel beim Erstellen ausgelassen werden sollen
+   - Lokale Variable "iCHEC_ShowCheckpoint2_Width":			Einstellung für das Partikel-Rechteck: Breite des Rechtecks
+   - Lokale Variable "iCHEC_ShowCheckpoint2_Height":			Einstellung für das Partikel-Rechteck: Höhe des Rechtecks
+   - Lokale Variable "iCHEC_ShowCheckpoint2_Size":			Einstellung für das Partikel-Rechteck: Größe der Partikeln
+   - Lokale Variable "iCHEC_ShowCheckpoint2_CreatingTime":		Einstellung für das Partikel-Rechteck: Intervall mit dem die Partikel erstellt werden in frames per second
+   - Lokale Variable "iCHEC_ShowCheckpoint2_Color":			Einstellung für das Partikel-Rechteck: Farbe der Partikel, wenn -1 angegeben ist, so ist die Farbe der Partikel zufällig (= RGB(Random(256) , Random(256) , Random(256)))
+   - Lokale Variable "iCHEC_ShowCheckpoint2_AntiLag":			Einstellung für das Partikel-Rechteck: Wie viele Frames beim Erstellen ausgelassen werden sollen
+   - Lokale Variable "iCHEC_ShowCheckpoint3_MaxRadius":			Einstellung für die Partikel-Spirale: Maximaler Radius
+   - Lokale Variable "iCHEC_ShowCheckpoint3_MinRadius":			Einstellung für die Partikel-Spirale: Minimaler Radius
+   - Lokale Variable "iCHEC_ShowCheckpoint3_CircleCreatingTime":	Einstellung für die Partikel-Spirale: Zeit, die gebraucht werden soll, um die Partikel-Spirale einmal zu erstellen in frames per second, das heißt, dass 360° Partikel gemacht wurden
+   - Lokale Variable "iCHEC_ShowCheckpoint3_MoveInTime":		Einstellung für die Partikel-Spirale: Zeit, um einmal nach innen/außen zu "spiralieren"
+   - Lokale Variable "iCHEC_ShowCheckpoint3_Color":			Einstellung für die Partikel-Spirale: Farbe der Partikel, wenn -1 angegeben ist, so ist die Farbe der Partikel abhängig vom Winkel (= HSL(iAngle , 0 , 0))
+   - Lokale Variable "iCHEC_ShowCheckpoint3_AntiLag":			Einstellung für die Partikel-Spirale: Wie viele Frames beim Erstellen ausgelassen werden sollen
+   - Lokale Variable "iCHEC_ShowCheckpoint4_MaxRadius":			Einstellung für den Partikel-Kreis 2: Maximaler Radius
+   - Lokale Variable "iCHEC_ShowCheckpoint4_MinRadius":			Einstellung für den Partikel-Kreis 2: Minimaler Radius
+   - Lokale Variable "iCHEC_ShowCheckpoint4_MoveInTime":		Einstellung für den Partikel-Kreis 2: Zeit, um einmal nach innen/außen zu "spiralieren"
+   - Lokale Variable "iCHEC_ShowCheckpoint4_Color":			Einstellung für den Partikel-Kreis 2: Farbe der Partikel, wenn -1 angegeben ist, so ist die Farbe der Partikel abhängig vom Winkel (= HSL(i , 0 , 0)), das heißt, er wird die Farbpalette ca. 5/4x durchgegangen...
+   - Lokale Variable "iCHEC_ShowCheckpoint4_AntiLag":			Einstellung für den Partikel-Kreis 2: Wieviele Partikel der Kreis haben soll, 50-360 (kann nicht immer genau eingehalten werden)
+
+
+Hilfsfunktionen:
+
+SetShow(int iShow)					-> Setzt die Darstellungsweise des Checkpoints...
+SetShowOptions(int iOption , int iValue , fGlobal)	-> Setzt die angegebene Variable ("iOption") auf den angegebenen Wert ("iValue");
+						   	   "iOption" gibt den Index der Variable an, sie sind geordnet, wie sie im Script stehen
+						   	   Die Zählung beginnt bei 0;
+						   	   Es werden immer jene Variablen genommen, die die aktuelle Darstellungsweise betreffen
+							   fGlobal gibt an, ob die globalen Variablen gesetzt werden sollen (gleiche Ordnung wie bei den lokalen)
+
+
+
+Die Namen der Variablen wurden möglichst selbsterklärend gewählt. Es gibt von jeder lokalen Variable, die man im Checkpoint findet noch ein globales und ein global konstantes Gegenstück. Sobald die globale Variable gesetzt wurde, so wird auch gleich die lokale "Zwillings-Variable" in allen Checkpoints gesetzt. So kann alles besser einstellen. Ist eine Variable = 0 so wird auf den global konstanten Speicher zugegriffen, in welchem praktisch die vordefinierten Dinge gespeichert sind.
+Die Namen der Variablen heißen eigentlich alle gleich, wie jene im Checkpoint, nur, dass die nach dem "iCHEC_" noch ein "Global" (bei den globalen Variablen) oder ein "Const" (bei den global konstanten Variablen) im Namen haben. Man kann alle Variablen auch noch im Script des Checkpoints nachlesen.
+
+Anmerkung: Der Suchbereich hängt auch von der Darstellungsweise ab.
+		- Partikelkreis: Partikel-Kreis = Suchradius
+		- Partikel-Rechteck: Rechteck = Suchradius
+		- Partikel-Spirale: Kreis mit dem maximaler Radius der Spirale = Suchradius

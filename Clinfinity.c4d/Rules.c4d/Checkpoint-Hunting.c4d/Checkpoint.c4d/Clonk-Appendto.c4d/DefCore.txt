@@ -1,0 +1,9 @@
+[DefCore]
+id=CAP1
+Name=Clonk appendto
+Version=4,9,5
+Category=C4D_StaticBack
+Width=1
+Height=1
+Offset=0,0
+Picture=6,0,64,64

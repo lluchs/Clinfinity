@@ -1,0 +1,1 @@
+Ein temporäres Objekt, das nur dazu da ist, dass der neue Clonk keinen Schaden nimmt!
