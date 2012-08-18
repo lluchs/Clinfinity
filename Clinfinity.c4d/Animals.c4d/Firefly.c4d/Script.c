@@ -62,7 +62,12 @@ protected func Check() {
 protected func Initialize() {
 	SetAction("Fly");
 	SetPhase(Random(6));
-	AddLight(40, RGB(220, 255, 200), this);
+	var light = AddLight(40, RGB(220, 255, 200), this);
+
+	FadeIn();
+	var alphamod, sizemod;
+	CalcLight(alphamod, sizemod);
+	light->FadeFromTo(255, Min(60 + alphamod, 255));
 }
 
 public func CatchBlow()	{ RemoveObject(); }
