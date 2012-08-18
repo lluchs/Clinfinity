@@ -60,13 +60,13 @@ protected func Check() {
 protected func Initialize() {
 	SetAction("Fly");
 	SetPhase(Random(6));
-	var light = AddLight(40, RGB(220, 255, 200), this);
+	var lightColour = RGB(220, 255, 200);
+	var light = AddLight(40, lightColour, this);
 
 	FadeIn();
 	var alphamod, sizemod;
 	CalcLight(alphamod, sizemod);
-	light->FadeFromTo(255, Min(60 + alphamod, 255));
-	// TODO: Set correct RGB values while fading
+	light->FadeFromTo(255, Min(60 + alphamod, 255), lightColour);
 }
 
 public func CatchBlow()	{ RemoveObject(); }
