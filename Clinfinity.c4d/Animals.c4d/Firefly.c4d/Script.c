@@ -3,7 +3,7 @@
 
 #strict 2
 
-static const IRRL_MaxSpawnDistance = 5;
+static const IRRL_MaxSpawnDistance = 15;
 static const IRRL_MaxDistance = 40;
 static const IRRL_ShynessDistance = 40;
 
@@ -13,7 +13,6 @@ public func SpawnSwarm(int x, int y, int size, object attractedTo) {
 	for(var i = 0; i < size; i++) {
 		var firefly = CreateObject(IRRL, RandomX(x - IRRL_MaxSpawnDistance, x + IRRL_MaxSpawnDistance), RandomX(y - IRRL_MaxSpawnDistance, y + IRRL_MaxSpawnDistance), NO_OWNER);
 		firefly->LocalN("attractedTo") = attractedTo;
-		// TODO: Let fireflies fade in
 	}
 }
 
