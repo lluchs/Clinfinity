@@ -66,6 +66,7 @@ protected func Initialize() {
 	var alphamod, sizemod;
 	CalcLight(alphamod, sizemod);
 	light->FadeFromTo(255, Min(60 + alphamod, 255));
+	// TODO: Set correct RGB values while fading
 }
 
 public func CatchBlow()	{ RemoveObject(); }
