@@ -5,7 +5,7 @@
 
 static const TIME_TwilightLength = 3000; // = 100 Minutes
 static const TIME_SecondsPerFrame = 4;
-static const TIME_MaxSkyTransparency = 240;
+static const TIME_MaxSkyTransparency = 250;
 
 // You can set these
 local daybreakHour, daybreakMinute, nightfallHour, nightfallMinute;
@@ -14,11 +14,14 @@ local daybreakHour, daybreakMinute, nightfallHour, nightfallMinute;
 local daybreak, day, nightfall, night;
 local currentSeconds;
 local originalSkyAdjust;
+local blueHourBackground;
+local redSkyBackground;
 
 local fullHourListeners; // TODO: Implement adding and removing listeners.
 
 
-public func SetTime() {
+public func SetTime(int hours, int minutes) {
+	// TODO
 	//CalculateSkyColour();
 	SetSkyColour();
 }
@@ -73,6 +76,8 @@ protected func Initialized() {
 	for(var timeObject in otherTimeObjects) {
 		timeObject->RemoveObject();
 	}*/
+	blueHourBackground = RGB(0, 0, 50);
+	redSkyBackground = RGB(50, 0, 0);
 
 	originalSkyAdjust = GetSkyAdjust();
 
@@ -86,7 +91,7 @@ protected func Initialized() {
 /*	hours = 12;
 	minutes = 0;
 	seconds = 0;*/
-	currentSeconds = 4 * 3600 + 30 * 60;
+	currentSeconds = 4 * 3600 + 55 * 60;
 	ResumeClock();
 }
 
@@ -114,15 +119,46 @@ private func SetSkyColour() {
 	} else if(IsNight()) {
 		SetSkyAdjust(RGBa(255, 255, 255, TIME_MaxSkyTransparency), RGB(0, 0, 0));
 	} else if(IsDaybreak()) {
-		var progress = TIME_TwilightLength - (currentSeconds - daybreak);
-		var background = RGB(0, 0, 50);
-		if(progress < TIME_TwilightLength / 2) {
-			background = RGB(100, 50, 0);
-		}
-		var transparency = TIME_MaxSkyTransparency * progress / TIME_TwilightLength;
+		var background;
+		var progress = currentSeconds - daybreak;
+		// if(progress < TIME_TwilightLength / 3) {
+		// 	background = RGB(0, 0, 50 * 3 * progress / TIME_TwilightLength);
+		// } else if(Inside(progress, TIME_TwilightLength / 3, TIME_TwilightLength * 2 / 3) {
+
+		// }
+
+		// var progress = TIME_TwilightLength - (currentSeconds - daybreak);
+		// var background = RGB(0, 0, 50);
+		// if(progress < TIME_TwilightLength / 2) {
+		// 	background = RGB(100, 50, 0);
+		// }
+		background = RGB(CalculateDaybreakRed(progress), 0, CalculateDaybreakBlue(progress));
+		//var transparency = TIME_MaxSkyTransparency * progress / TIME_TwilightLength;
 		//Log("transparency is %d", transparency);
-		SetSkyAdjust(RGBa(255, 255, 255, transparency), background);
+		//Log("transparency is %d", transparency);
+		SetSkyAdjust(RGBa(255, 255, 255, CalculateDaybreakTransparency(progress)), background);
 	}
+}
+
+private func CalculateDaybreakBlue(int progress) {
+	var maxBlue = 50;
+	progress -= TIME_TwilightLength / 3;
+	var result = Max(0, maxBlue - (maxBlue * 3 * Abs(progress) / TIME_TwilightLength));
+	//Log("progress/result = %d/%d", progress, result);
+	return result;
+}
+
+private func CalculateDaybreakRed(int progress) {
+	var maxRed = 255;
+	progress -= TIME_TwilightLength * 2 / 3;
+	var result = Max(0, maxRed - (maxRed * 3 * Abs(progress) / TIME_TwilightLength));
+	Log("progress/result = %d/%d", progress, result);
+	return result;	
+}
+
+private func CalculateDaybreakTransparency(int progress) {
+	progress = TIME_TwilightLength -  progress;
+	return TIME_MaxSkyTransparency * progress / TIME_TwilightLength;
 }
 
 public func IsDay() {
