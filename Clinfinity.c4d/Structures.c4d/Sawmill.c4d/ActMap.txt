@@ -1,4 +1,11 @@
 [Action]
+Name=Attach
+Procedure=ATTACH
+FacetBase=1
+Length=1
+NextAction=Hold
+
+[Action]
 Name=GrabWood
 Procedure=ATTACH
 Facet=0,0,90,100

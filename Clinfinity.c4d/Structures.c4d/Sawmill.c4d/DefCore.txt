@@ -19,7 +19,6 @@ Exclusive=1
 Construction=1
 ContainBlast=1
 AutoContextMenu=1
-TimerCall=GrabG
 
 [Physical]
 Energy=100000

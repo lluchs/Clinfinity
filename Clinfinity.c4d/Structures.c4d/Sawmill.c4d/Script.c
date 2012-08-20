@@ -9,9 +9,10 @@
 public func MaxDamage() { return 40; }
 
 protected func Initialize() {
-  SetAction("GrabWood");
+	inherited(...);
+	SetAction("GrabWood");
 }
-  
+
 protected func Finish() {
-  MatSysDoFill(1, 0, WOOD);
+	MatSysDoTeamFill(1, GetOwner(), WOOD);
 }
