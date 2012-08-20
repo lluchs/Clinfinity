@@ -1,0 +1,8 @@
+[Action]
+Name=GrabWood
+Procedure=ATTACH
+Facet=0,0,90,100
+Delay=3
+Length=34
+NextAction=GrabWood
+EndCall=Finish
