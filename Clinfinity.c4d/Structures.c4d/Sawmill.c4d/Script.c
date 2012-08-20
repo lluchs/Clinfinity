@@ -6,13 +6,18 @@
 #include L_DC
 #include L_SS
 
-public func MaxDamage() { return 40; }
+public func MaxDamage() { return 20; }
 
 protected func Initialize() {
 	inherited(...);
 	SetAction("GrabWood");
 }
 
-protected func Finish() {
+protected func ControlUp() {
+  Message("Platzhalter für Baum-Radius Anzeige");
+}
+
+protected func Finish(obj) {
 	MatSysDoTeamFill(1, GetOwner(), WOOD);
+	ScheduleCall(obj, "Initialize", 300);
 }

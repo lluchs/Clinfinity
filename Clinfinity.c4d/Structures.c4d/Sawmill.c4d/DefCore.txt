@@ -19,6 +19,7 @@ Exclusive=1
 Construction=1
 ContainBlast=1
 AutoContextMenu=1
+Grab=2
 
 [Physical]
 Energy=100000
