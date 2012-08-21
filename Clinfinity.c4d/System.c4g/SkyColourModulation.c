@@ -1,6 +1,7 @@
 /*	Script: SkyColourModulation.c
 	Provides individual colour modulation layers for the sky background.
 	The modulations are combined additively.
+	If the transparency of the foreground colour of any layer is not 0, the combined background colours will be used as background colour behind the sky.
 
 	With this mechanism, you can apply several different modulations without worrying about their combination yourself.
 	For example, a magic spell can simply set the colours of the appropriate layer, without having to consider other effects on the sky, such as night and day, lightning, etc.
@@ -26,11 +27,19 @@
 
 #strict 2
 
+/* Internal variables */
 static const SkyColourLayerCount = 10;
 
 static SkyColourForegrounds;
 static SkyColourBackgrounds;
 
+/*	Function: SetSkyColourModulation
+	Sets the colour modulation of the specified layer.
+
+	Parameters:
+	foregroundColour	- Primary colour modulation.
+	backgroundColour	- Background colour.
+	layerIndex			- Index of the layer to be set. */
 global func SetSkyColourModulation(int foregroundColour, int backgroundColour, int layerIndex) {
 	if(!Inside(layerIndex, 0, SkyColourLayerCount - 1))
 		return;
@@ -61,6 +70,12 @@ global func SetSkyColourModulation(int foregroundColour, int backgroundColour, i
 	SetSkyAdjust(RGBa(red, green, blue, alpha), RGB(backRed, backGreen, backBlue));
 }
 
+/*	Function: GetSkyColourModulation
+	Returns the current colour modulation of the specified layer.
+
+	Parameters:
+	getBackground	- If _true_, the function returns the background colour, otherwise the foreground colour.
+	layerIndex		- Index of the layer. */
 global func GetSkyColourModulation(bool getBackground, int layerIndex) {
 	if(!Inside(layerIndex, 0, SkyColourLayerCount - 1))
 		return;
@@ -72,6 +87,9 @@ global func GetSkyColourModulation(bool getBackground, int layerIndex) {
 	}
 }
 
+/*	Function: ResetSkyColourModulation
+	Resets all layers to default values, so the sky is completely without modulation.
+	*/
 global func ResetSkyColourModulation() {
 	CheckSkyColourArrayInitialization();
 	for(var i = 1; i < SkyColourLayerCount; i++) {
@@ -81,6 +99,7 @@ global func ResetSkyColourModulation() {
 	SetSkyColourModulation(RGBa(255, 255, 255, 0), RGB(0, 0, 0), 0);
 }
 
+/* Internal helper */
 global func CheckSkyColourArrayInitialization() {
 	if(SkyColourForegrounds == 0) {
 		SkyColourForegrounds = CreateArray(SkyColourLayerCount);
