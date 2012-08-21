@@ -1,6 +1,28 @@
 /*	Script: SkyColourModulation.c
 	Provides individual colour modulation layers for the sky background.
-	The modulations are combined additively. */
+	The modulations are combined additively.
+
+	With this mechanism, you can apply several different modulations without worrying about their combination yourself.
+	For example, a magic spell can simply set the colours of the appropriate layer, without having to consider other effects on the sky, such as night and day, lightning, etc.
+
+	For this, ten layers are available.
+	Generally, lower layer indices mean longer colour changess, while higher indices mean shorter effects.
+	Their exact purpose is summarised by the following table.
+	You should generally abide by these conventions, it is not mandatory, though.
+	(start table)
+	Layer	| Purpose
+	--------+----------------------
+	0		| Scenario global value
+	1		| Climate
+	2		| Season
+	3		| Free
+	4		| Day/night cycle
+	5		| Twilight effects
+	6		| Free
+	7		| Lightning
+	8		| Magic effects
+	9		| Free
+	(end) */
 
 #strict 2
 
