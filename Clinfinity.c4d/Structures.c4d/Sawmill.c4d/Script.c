@@ -50,8 +50,8 @@ protected func Chop() {
 	// Find the biggest tree
 	var tree = FindObject2(Find_Distance(SAWM_RADIUS), Find_Func("IsTree"), Sort_Reverse(Sort_Func("GetCon")));
 	if(tree) {
-		tree->Shrink();
-		SetAction("GrabWood");
+		if(tree->Shrink())
+			SetAction("GrabWood");
 	} else {
 		StartChopping();
 	}
