@@ -31,3 +31,9 @@ public func Shrink() {
 		}
 	}
 }
+
+protected func Destruction() {
+	// Replace the tree with a tiny one.
+	PlaceVegetation(GetID(), 0, 0, LandscapeWidth(), LandscapeHeight(), 1);
+	_inherited(...);
+}
