@@ -53,9 +53,9 @@ global func SetSkyColourModulation(int colour, bool subtractive, int layerIndex)
 	for(var layer = 0; layer < SkyColourLayerCount; ++layer) {
 		var layerColour = GetSkyColourModulation(layer);
 		if(IsSkyColourModulationSubtractive(layer)) {
-			red		-= GetRGBValue(layerColour, 1);
-			green	-= GetRGBValue(layerColour, 2);
-			blue	-= GetRGBValue(layerColour, 3);
+			red		-= 255 - GetRGBValue(layerColour, 1);
+			green	-= 255 - GetRGBValue(layerColour, 2);
+			blue	-= 255 - GetRGBValue(layerColour, 3);
 		} else {
 			red		+= GetRGBValue(layerColour, 1);
 			green	+= GetRGBValue(layerColour, 2);
