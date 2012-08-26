@@ -1,5 +1,6 @@
 /*	Script: Time
-	Controls the passage of time and the day-night cycle. */
+	Controls the passage of time and the day/night cycle.
+	See <Day/night cycle> for details about the phases of the day/night cycle. */
 
 #strict 2
 
@@ -13,12 +14,13 @@ static const TIME_SecondsPerFrame = 4;
 
 /*	Constants: Sky brightness and colours
 	TIME_DarkSkyBlue	- Value for brightness/blue during the blue hour.
-	TIME_BrightSkyBlue	- Value for brightness/blue at the beginning and end of the daytime. */
+	TIME_BrightSkyBlue	- Value for brightness/blue at the beginning and end of daytime. */
 static const TIME_DarkSkyBlue = 20;
 static const TIME_BrightSkyBlue = 225;
 
-/*	Variables: Characteristic points in time
-	These can be set in Initialize(). Changing the values afterwards has no effect.
+/*	Variables: Characteristical points in time
+	These can be set in _Initialize()_. Changing the values afterwards has no effect.
+
 	*Important*: If you set custom values, you must make sure that nightfall and daybreak don't overlap.
 
 	daybreakHour	- Hour of daybreak.
@@ -203,7 +205,17 @@ public func IsNightfall() {
 }
 
 
-/* Re-routed global functions */
+/*	Section: Day/night cycle
+	The cycle consists of the four following phases
+	- Day: The sky is brightest during this phase.
+	- Nightfall: The sky darkens.
+	- Night: Very dark or black sky.
+	- Daybreak: The sky brightens again.
+
+	In each phase, specifics things can occur.
+	For example, nocturnal animals may wake up during nightfall and go to sleep when daybreak begins.
+	It should be noted that the functions in this section only return *true* during the respective phase.
+	For example, IsDay() does not return *true* during daybreak, even though the sky may already be bright. */
 
 /*	Function: IsDay
 
