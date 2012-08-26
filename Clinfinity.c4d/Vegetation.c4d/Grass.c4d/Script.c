@@ -62,7 +62,7 @@ public func OnShockwaveHit(iLevel,iX,iY)
 
 public func OnNight(object source) {
   if(!Random(10)) {
-    IRRL->SpawnSwarm(GetX(), GetY(), 10, this);
+    IRRL->SpawnSwarm(GetX(), GetY(), RandomX(5, 10), this);
   }
 }
 
