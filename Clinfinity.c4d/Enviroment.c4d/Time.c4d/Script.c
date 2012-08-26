@@ -4,7 +4,7 @@
 #strict 2
 
 static const TIME_TotalDayLength = 86400;
-static const TIME_TwilightLength = 3000; // = 100 Minutes
+static const TIME_TwilightLength = 3000; // = 200 Minutes (which is about double the time as it is in reality, but looks better)
 static const TIME_SecondsPerFrame = 4;
 static const TIME_MaxSkyTransparency = 250;
 
@@ -21,59 +21,7 @@ local currentSeconds;
 
 local fullHourListeners; // TODO: Implement adding and removing listeners.
 
-
-public func SetTime(int hours, int minutes) {
-	// TODO
-	//CalculateSkyColour();
-	SetSkyColour();
-}
-
-// Advances the clock by secondsPerFrame
-protected func AdvanceClock() {
-	currentSeconds += TIME_SecondsPerFrame;
-	currentSeconds %= 86400;//(24 * 60 * 60) / TIME_SecondsPerFrame;
-	if((currentSeconds % 3600) == 0) {
-		Log("Current hour: %d (%d seconds)", currentSeconds / 3600, currentSeconds);
-		// TODO: Notify listeners here.
-	}
-/*	seconds += TIME_SecondsPerFrame;
-	if(seconds >= 60) {
-		seconds %= 60;
-		minutes++;
-		if(minutes >= 60) {
-			minutes = 0;
-			hours++;
-			if(hours >= 24) {
-				hours = 0;
-			}
-			Log("Current hour: %d", hours);
-			// TODO: Notify listeners here.
-		}
-	}
-*/
-	//CalculateSkyColour();
-	SetSkyColour();
-	ResumeClock();
-}
-
-/*	Function: PauseClock
-	Stops the advancement of time. */
-public func PauseClock() {
-	ClearScheduleCall(0, "AdvanceClock");
-}
-
-/*	Function: ResumeClock
-	Starts or resumes the advancement of time. */
-public func ResumeClock() {
-	ClearScheduleCall(0, "AdvanceClock");
-	ScheduleCall(0, "AdvanceClock", 1);
-}
-
 protected func Initialize() {
-	ScheduleCall(0, "Initialized", 1);
-}
-
-protected func Initialized() {
 	daybreakHour = 5;
 	daybreakMinute = 0;
 	nightfallHour = 21;
@@ -82,11 +30,10 @@ protected func Initialized() {
 	CalculateDaytimes();
 	CalculateDurations();
 
-	var hours = 12;
+	var hours = 17;
 	var minutes = 0;
 	var seconds = 0;
 	currentSeconds = hours * 3600 + minutes * 60 + seconds;
-	//currentSeconds = 11000;
 	ResumeClock();
 }
 
@@ -101,23 +48,18 @@ private func CalculateDurations() {
 	dayLength = nightfall - day;
 	nightLength = TIME_TotalDayLength - night + daybreak;
 }
-/*
-private func CalculateSkyColour() {
-	if(Inside(hours, 6, 11) || Inside(hours, 18, 21)) {
-		brightness = 127;
-	} else if(Inside(hours, 12, 17)) {
-		brightness = 255;
-	} else {
-		brightness = 0;
+
+// Advances the clock by TIME_SecondsPerFrame
+protected func AdvanceClock() {
+	currentSeconds += TIME_SecondsPerFrame;
+	currentSeconds %= 86400;
+	if((currentSeconds % 3600) == 0) {
+		Log("Current hour: %d (%d seconds)", currentSeconds / 3600, currentSeconds);
+		// TODO: Notify listeners here.
 	}
+	SetSkyColour();
+	ResumeClock();
 }
-*/
-
-
-
-
-
-
 
 private func SetSkyColour() {
 	if(IsDay()) {
@@ -168,10 +110,10 @@ private func CalculateDaybreakRed(int progress) {
 
 private func CalculateDayBrightness(int progress) {
 	if(progress < dayLength / 4) {
-		var brightness = 4 * (255 - TIME_BrightSkyBlue) * progress / TIME_TotalDayLength + TIME_BrightSkyBlue;
+		var brightness = 4 * (255 - TIME_BrightSkyBlue) * progress / dayLength + TIME_BrightSkyBlue;
 		return RGB(brightness, brightness, brightness);
 	} else if(progress > dayLength * 3 / 4) {
-		var brightness = 4 * (TIME_BrightSkyBlue - 255) * progress / TIME_TotalDayLength + 4 * 255 - 3 * TIME_BrightSkyBlue;
+		var brightness = 4 * (TIME_BrightSkyBlue - 255) * progress / dayLength + 4 * 255 - 3 * TIME_BrightSkyBlue;
 		return RGB(brightness, brightness, brightness);
 	} else {
 		return RGB(255, 255, 255);
@@ -184,6 +126,27 @@ private func CalculateNightfallBrightness(int progress) {
 	return RGB(brightness, brightness, blue);
 }
 
+
+/* Passage of time */
+
+public func SetTime(int hours, int minutes) {
+	// TODO
+	//CalculateSkyColour();
+	SetSkyColour();
+}
+
+/*	Function: PauseClock
+	Stops the advancement of time. */
+public func PauseClock() {
+	ClearScheduleCall(0, "AdvanceClock");
+}
+
+/*	Function: ResumeClock
+	Starts or resumes the advancement of time. */
+public func ResumeClock() {
+	ClearScheduleCall(0, "AdvanceClock");
+	ScheduleCall(0, "AdvanceClock", 1);
+}
 
 public func IsDay() {
 	return Inside(currentSeconds, day, nightfall - 1);
@@ -212,64 +175,24 @@ public func SecondsSince(int time) {
 }
 
 
-/* Status */
+/* Re-routed global functions */
 
-global func IsDay()
-{
-  var pTime; 
-  if (!(pTime = FindObject(TIME))) return(1);
-  if (Local(2, pTime)) return(1);
-  return(0);
+global func IsDay() {
+	var time = FindObject2(Find_ID(TIME));
+	return time == 0 || time->IsDay();
 }
   
-global func IsNight()
-{
-  return(!IsDay());
-}
-    
-/* Himmelsfarbe */
-
-local SkyAdjustOrig;
-
-private func RestoreSkyColors(iPercent)
-{
-  // Alte Speicherung? Übertragen
-  if (Local (4)) GetOldSkyColors();
-  if (Local (6)) 
-  {
-    var i;
-    // ehemaliges OldGfx: Normales SetSkyColor
-    while(i < 20) RestoreSkyColor(i++, 100);
-  }
-  // NewGfx: Einfach SetSkyAdjust
-  // Minimale Gammakontrolle (Rampe 3)
-  var lt = iPercent / 2 + 78;
-  SetGamma(0, RGB(lt, lt, 128), 16777215, 3);
-  SetSkyAdjust(RGBa(
-    iPercent * GetRGBValue(SkyAdjustOrig,1) / 100,
-    iPercent * GetRGBValue(SkyAdjustOrig,2) / 100,
-    iPercent * GetRGBValue(SkyAdjustOrig,3) / 100,
-    iPercent * GetRGBValue(SkyAdjustOrig,0) / 100  ), GetSkyAdjust(1));
-  return(1);
-}
-  
-private func RestoreSkyColor(int iColor, int iPercent)
-{
-  SetSkyColor(iColor,
-              ((Local(iColor+6)>>16 & 255) * iPercent)/100,
-              ((Local(iColor+6)>> 8 & 255) * iPercent)/100,
-              ((Local(iColor+6)     & 255) * iPercent)/100);
-  Local(iColor + 6) = 0;
-  return;
+global func IsNight() {
+	var time = FindObject2(Find_ID(TIME));
+	return time != 0 && time->IsNight();
 }
 
-private func GetOldSkyColors()
-{
-  var i;
-  i=-1; while (++i<11) Local(i+ 6)=Local(i,Local(4));
-  i=-1; while (++i<11) Local(i+16)=Local(i,Local(5));
-  // Alte Hilfsobjekte entfernen
-  RemoveObject(Local(4));
-  RemoveObject(Local(5));
-  return(1);
+global func IsDaybreak() {
+	var time = FindObject2(Find_ID(TIME));
+	return time != 0 && time->IsDaybreak();
+}
+
+global func IsNightfall() {
+	var time = FindObject2(Find_ID(TIME));
+	return time != 0 && time->IsNightfall();
 }
