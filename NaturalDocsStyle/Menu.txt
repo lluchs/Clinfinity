@@ -56,6 +56,7 @@ Group: System.c4g  {
    File: ContainerControl.c  (Clinfinity.c4d\System.c4g\ContainerControl.c)
    File: DrawResource.c  (Clinfinity.c4d\System.c4g\DrawResource.c)
    File: Ease.c  (Clinfinity.c4d\System.c4g\Ease.c)
+   File: Events.c  (Clinfinity.c4d\System.c4g\Events.c)
    File: Fade.c  (Clinfinity.c4d\System.c4g\Fade.c)
    File: Find_Procedure.c  (Clinfinity.c4d\System.c4g\Find_Procedure.c)
    File: GetPlayersByTeam  (Clinfinity.c4d\System.c4g\GetPlayersByTeam.c)
