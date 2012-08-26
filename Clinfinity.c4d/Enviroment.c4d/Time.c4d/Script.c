@@ -13,7 +13,7 @@ local daybreakHour, daybreakMinute, nightfallHour, nightfallMinute;
 
 // These get calculated automatically
 local daybreak, day, nightfall, night;
-local nightDuration;
+local nightLength;
 local currentSeconds;
 
 local fullHourListeners; // TODO: Implement adding and removing listeners.
@@ -82,8 +82,8 @@ protected func Initialized() {
 /*	hours = 12;
 	minutes = 0;
 	seconds = 0;*/
-	//currentSeconds = 4 * 3600 + 55 * 60
-	currentSeconds = 11000;
+	currentSeconds = 4 * 3600 + 55 * 60;
+	//currentSeconds = 11000;
 	ResumeClock();
 }
 
@@ -95,7 +95,7 @@ private func CalculateDaytimes() {
 }
 
 private func CalculateDurations() {
-	nightDuration = TIME_TotalDayLength - night + daybreak;
+	nightLength = TIME_TotalDayLength - night + daybreak;
 }
 /*
 private func CalculateSkyColour() {
@@ -108,36 +108,57 @@ private func CalculateSkyColour() {
 	}
 }
 */
+
+
+
+
+
+
+
 private func SetSkyColour() {
 	if(IsDay()) {
 		SetSkyColourModulation(RGBa(255, 255, 255), true, 4);
 	} else if(IsNight()) {
-		SetSkyColourModulation(CalculateNightColour(SecondsSince(night), nightDuration), true, 4);
+		SetSkyColourModulation(CalculateNightBlue(SecondsSince(night), nightLength), true, 4);
 	} else if(IsDaybreak()) {
-		var progress = currentSeconds - daybreak;
+		var progress = SecondsSince(daybreak);
+		SetSkyColourModulation(CalculateDaybreakBlue(progress), true, 4);
 		SetSkyColourModulation(CalculateDaybreakRed(progress), false, 5);
 	}
 }
 
-private func CalculateNightColour(int progress, int nightDuration) {
+private func CalculateNightBlue(int progress, int nightLength) {
 	var maxBlue = 20;
-	if(progress < nightDuration / 4) {
-		var brightness = 4 * maxBlue * (nightDuration / 4 - progress) / nightDuration;
+	if(progress < nightLength / 4) {
+		var brightness = 4 * maxBlue * (nightLength / 4 - progress) / nightLength;
 		return RGB(brightness, brightness, brightness);
-	} else if(progress > nightDuration * 3 / 4) {
-		var blue = maxBlue * 4 * progress / nightDuration - 3 * maxBlue;
+	} else if(progress > nightLength * 3 / 4) {
+		var blue = maxBlue * 4 * progress / nightLength - 3 * maxBlue;
 		return RGB(0, 0, blue);
 	}
 	return RGB(0, 0, 0);
 }
 
 private func CalculateDaybreakBlue(int progress) {
+	if(progress < TIME_TwilightLength / 2) {
+		var maxBrightness = 20;
+		var brightness = 2 * maxBrightness * progress / TIME_TwilightLength;
+		return RGB(brightness, brightness, 20);
+	} else {
+		var minBrightness = 20;
+		var maxBrightness = 225;
+		var brightness = 410 * progress / TIME_TwilightLength + (2 * minBrightness - maxBrightness);
+		return RGB(brightness, brightness, brightness);
+	}
+}
+
+/*private func CalculateDaybreakBlue(int progress) {
 	var maxBlue = 50;
 	progress -= TIME_TwilightLength / 3;
 	var result = Max(0, maxBlue - (maxBlue * 3 * Abs(progress) / TIME_TwilightLength));
 	//Log("progress/result = %d/%d", progress, result);
 	return result;
-}
+}*/
 
 private func CalculateDaybreakRed(int progress) {
 	var maxRed = 200;
