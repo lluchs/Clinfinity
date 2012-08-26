@@ -34,7 +34,6 @@ local daybreak, day, nightfall, night;
 local dayLength, nightLength;
 local currentSeconds;
 
-local fullHourListeners; // TODO: Implement adding and removing listeners.
 
 protected func Initialize() {
 	daybreakHour = 5;
@@ -69,8 +68,7 @@ protected func AdvanceClock() {
 	currentSeconds += TIME_SecondsPerFrame;
 	currentSeconds %= 86400;
 	if((currentSeconds % 3600) == 0) {
-		Log("Current hour: %d (%d seconds)", currentSeconds / 3600, currentSeconds);
-		// TODO: Notify listeners here.
+		Emit("OnClockStrike", currentSeconds / 3600);
 	}
 	SetSkyColour();
 	ResumeClock();
@@ -78,14 +76,26 @@ protected func AdvanceClock() {
 
 private func SetSkyColour() {
 	if(IsDay()) {
+		if(SecondsSince(day) < TIME_SecondsPerFrame) {
+			Emit("OnDay");
+		}
 		SetSkyColourModulation(CalculateDayBrightness(SecondsSince(day)), true, 4);
 	} else if(IsNight()) {
+		if(SecondsSince(night) < TIME_SecondsPerFrame) {
+			Emit("OnNight");
+		}
 		SetSkyColourModulation(CalculateNightBlue(SecondsSince(night)), true, 4);
 	} else if(IsDaybreak()) {
 		var progress = SecondsSince(daybreak);
+		if(progress < TIME_SecondsPerFrame) {
+			Emit("OnDaybreak");
+		}
 		SetSkyColourModulation(CalculateDaybreakBlue(progress), true, 4);
 		SetSkyColourModulation(CalculateDaybreakRed(progress), false, 5);
 	} else if(IsNightfall()) {
+		if(SecondsSince(nightfall) < TIME_SecondsPerFrame) {
+			Emit("OnNightfall");
+		}
 		SetSkyColourModulation(CalculateNightfallBrightness(SecondsSince(nightfall)), true, 4);
 	}
 }
@@ -153,6 +163,17 @@ private func CalculateNightfallBrightness(int progress) {
 public func SetTime(int hours, int minutes) {
 	currentSeconds = hours * 3600 + minutes * 60;
 	SetSkyColour();
+}
+
+/*	Function: GetTime
+	Returns the current time in the format hhmm.
+
+	Returns:
+	The current time. */
+public func GetTime() {
+	var hours = currentSeconds / 3600 * 100;
+	var minutes = currentSeconds / 60 % 60;
+	return hours + minutes;
 }
 
 /*	Function: PauseClock
@@ -251,4 +272,11 @@ global func IsDaybreak() {
 global func IsNightfall() {
 	var time = FindObject2(Find_ID(TIME));
 	return time != 0 && time->IsNightfall();
+}
+
+/*	Re-routed global functions */
+
+global func GetTime() {
+	var time = FindObject2(Find_ID(TIME));
+	return time != 0 && time->GetTime();
 }

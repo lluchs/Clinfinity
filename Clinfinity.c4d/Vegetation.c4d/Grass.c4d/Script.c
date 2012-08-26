@@ -25,6 +25,14 @@ protected func Initialize()
     SetPosition(GetX(), GetY() + 1);
   // Gras bleibt hinter Bäumen
   MoveBehindTrees();
+  ScheduleCall(0, "ListenToTime", 1);
+}
+
+protected func ListenToTime() {
+  var time = FindObject2(Find_ID(TIME));
+  if(time != 0) {
+    time->AddEventListener(this, "OnNight");
+  }
 }
 
 private func GetSolidOffset(int x, int y)
@@ -50,6 +58,12 @@ public func OnShockwaveHit(iLevel,iX,iY)
  for(var cnt=0;cnt<15+Random(10);cnt++)
   CreateParticle("GrassBlade",RandomX(-con/2,con/2),-1,RandomX(-iLevel/3 ,iLevel/3),RandomX(-2*iLevel/3,-iLevel/3),30+Random(30),RGB(255,255,255),0,0);
  return(RemoveObject());
+}
+
+public func OnNight(object source) {
+  if(!Random(10)) {
+    IRRL->SpawnSwarm(GetX(), GetY(), 10, this);
+  }
 }
 
 // Kann immer von Schockwellen getroffen werden
