@@ -67,6 +67,15 @@ protected func Initialize() {
 	var alphamod, sizemod;
 	CalcLight(alphamod, sizemod);
 	light->FadeIn(SetRGBaValue(lightColour, Min(60 + alphamod, 255), 0));
+
+	var time = FindObject2(Find_ID(TIME));
+	if(time != 0) {
+		time->AddEventListener(this, "OnDaybreak");
+	}
+}
+
+public func OnDaybreak() {
+	ScheduleCall(this, "Death", RandomX(1, 150));
 }
 
 public func CatchBlow()	{ RemoveObject(); }
