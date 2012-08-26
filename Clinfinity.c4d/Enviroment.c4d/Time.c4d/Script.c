@@ -82,10 +82,10 @@ protected func Initialized() {
 	CalculateDaytimes();
 	CalculateDurations();
 
-/*	hours = 12;
-	minutes = 0;
-	seconds = 0;*/
-	currentSeconds = 4 * 3600 + 55 * 60;
+	var hours = 12;
+	var minutes = 0;
+	var seconds = 0;
+	currentSeconds = hours * 3600 + minutes * 60 + seconds;
 	//currentSeconds = 11000;
 	ResumeClock();
 }
@@ -128,13 +128,15 @@ private func SetSkyColour() {
 		var progress = SecondsSince(daybreak);
 		SetSkyColourModulation(CalculateDaybreakBlue(progress), true, 4);
 		SetSkyColourModulation(CalculateDaybreakRed(progress), false, 5);
+	} else if(IsNightfall()) {
+		SetSkyColourModulation(CalculateNightfallBrightness(SecondsSince(nightfall)), true, 4);
 	}
 }
 
 private func CalculateNightBlue(int progress) {
 	if(progress < nightLength / 4) {
-		var brightness = 4 * TIME_DarkSkyBlue * (nightLength / 4 - progress) / nightLength;
-		return RGB(brightness, brightness, brightness);
+		var blue = 4 * TIME_DarkSkyBlue * (nightLength / 4 - progress) / nightLength;
+		return RGB(0, 0, blue);
 	} else if(progress > nightLength * 3 / 4) {
 		var blue = TIME_DarkSkyBlue * 4 * progress / nightLength - 3 * TIME_DarkSkyBlue;
 		return RGB(0, 0, blue);
@@ -154,14 +156,6 @@ private func CalculateDaybreakBlue(int progress) {
 		return RGB(brightness, brightness, brightness);
 	}
 }
-
-/*private func CalculateDaybreakBlue(int progress) {
-	var maxBlue = 50;
-	progress -= TIME_TwilightLength / 3;
-	var result = Max(0, maxBlue - (maxBlue * 3 * Abs(progress) / TIME_TwilightLength));
-	//Log("progress/result = %d/%d", progress, result);
-	return result;
-}*/
 
 private func CalculateDaybreakRed(int progress) {
 	var maxRed = 200;
@@ -184,10 +178,12 @@ private func CalculateDayBrightness(int progress) {
 	}
 }
 
-private func CalculateDaybreakTransparency(int progress) {
-	progress = TIME_TwilightLength -  progress;
-	return TIME_MaxSkyTransparency * progress / TIME_TwilightLength;
+private func CalculateNightfallBrightness(int progress) {
+	var brightness = -TIME_BrightSkyBlue * progress / TIME_TwilightLength + TIME_BrightSkyBlue;
+	var blue = (TIME_DarkSkyBlue - TIME_BrightSkyBlue) * progress / TIME_TwilightLength + TIME_BrightSkyBlue;
+	return RGB(brightness, brightness, blue);
 }
+
 
 public func IsDay() {
 	return Inside(currentSeconds, day, nightfall - 1);
