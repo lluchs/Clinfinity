@@ -2,7 +2,7 @@
 	Controls the passage of time and the day/night cycle.
 	See <Day/night cycle> for details about the phases of the day/night cycle.
 
-	Several events are sent by the Time object. These are:
+	Several events are sent by the Time object.
 	- OnClockStrike, sent every full hour. The current hour is passed as parameter to the event handler function.
 	- OnDay, sent after daybreak is over and the day begins.
 	- OnNight, sent after nightfall, when the night begins.
