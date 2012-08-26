@@ -3,18 +3,31 @@
 
 #strict 2
 
+/*	Constants: Passage of time
+	TIME_TotalDayLength		- Total day length in seconds.
+	TIME_TwilightLength		- Length of twilight (daybreak and nightfall) in seconds.
+	TIME_SecondsPerFrame	- Number of seconds represented by one frame in game. */
 static const TIME_TotalDayLength = 86400;
 static const TIME_TwilightLength = 3000; // = 200 Minutes (which is about double the time as it is in reality, but looks better)
 static const TIME_SecondsPerFrame = 4;
-static const TIME_MaxSkyTransparency = 250;
 
+/*	Constants: Sky brightness and colours
+	TIME_DarkSkyBlue	- Value for brightness/blue during the blue hour.
+	TIME_BrightSkyBlue	- Value for brightness/blue at the beginning and end of the daytime. */
 static const TIME_DarkSkyBlue = 20;
 static const TIME_BrightSkyBlue = 225;
 
-// You can set these
+/*	Variables: Characteristic points in time
+	These can be set in Initialize(). Changing the values afterwards has no effect.
+	*Important*: If you set custom values, you must make sure that nightfall and daybreak don't overlap.
+
+	daybreakHour	- Hour of daybreak.
+	daybreakMinute	- Precise minute of daybreak.
+	nightfallHour	- Hour of nightfall.
+	nightfallMinute	- Precise minute of nightfall. */
 local daybreakHour, daybreakMinute, nightfallHour, nightfallMinute;
 
-// These get calculated automatically
+// These get calculated automatically. Internal use only, don't touch!
 local daybreak, day, nightfall, night;
 local dayLength, nightLength;
 local currentSeconds;
@@ -129,23 +142,48 @@ private func CalculateNightfallBrightness(int progress) {
 
 /* Passage of time */
 
+/*	Function: SetTime
+	Sets the clock to the specified time.
+
+	Parameters:
+	hours	- Hours of time to set.
+	minutes	- Minutes of time to set. */
 public func SetTime(int hours, int minutes) {
-	// TODO
-	//CalculateSkyColour();
+	currentSeconds = hours * 3600 + minutes * 60;
 	SetSkyColour();
 }
 
 /*	Function: PauseClock
-	Stops the advancement of time. */
+	Stops the advancement of the clock. */
 public func PauseClock() {
 	ClearScheduleCall(0, "AdvanceClock");
 }
 
 /*	Function: ResumeClock
-	Starts or resumes the advancement of time. */
+	Starts or resumes the advancement of the clock. */
 public func ResumeClock() {
 	ClearScheduleCall(0, "AdvanceClock");
 	ScheduleCall(0, "AdvanceClock", 1);
+}
+
+/*	Function: SecondsSince
+	Returns how many seconds have passed since the specified point in time.
+	The maximum returned value is 86399 (23 hours 59 minutes 59 seconds).
+	If more time than that passes, the return value restarts at zero.
+
+	Parameters:
+	time	- Point in time, measured in seconds.
+
+	Returns:
+	Seconds since _time_, measured in seconds. */
+public func SecondsSince(int time) {
+	var result;
+	if(currentSeconds >= time) {
+		result = currentSeconds - time;
+	} else {
+		result = 24 * 60 * 60 - time + currentSeconds;
+	}
+	return result;
 }
 
 public func IsDay() {
@@ -164,34 +202,40 @@ public func IsNightfall() {
 	return Inside(currentSeconds, nightfall, night - 1);
 }
 
-public func SecondsSince(int time) {
-	var result;
-	if(currentSeconds >= time) {
-		result = currentSeconds - time;
-	} else {
-		result = 24 * 60 * 60 - time + currentSeconds;
-	}
-	return result;
-}
-
 
 /* Re-routed global functions */
 
+/*	Function: IsDay
+
+	Returns:
+	*true* if it is daytime currently, *false* otherwise. */
 global func IsDay() {
 	var time = FindObject2(Find_ID(TIME));
 	return time == 0 || time->IsDay();
 }
-  
+
+/*	Function: IsNight
+
+	Returns:
+	*true* if it is nighttime currently, *false* otherwise. */
 global func IsNight() {
 	var time = FindObject2(Find_ID(TIME));
 	return time != 0 && time->IsNight();
 }
 
+/*	Function: IsDaybreak
+
+	Returns:
+	*true* if it is daybreak currently, *false* otherwise. */
 global func IsDaybreak() {
 	var time = FindObject2(Find_ID(TIME));
 	return time != 0 && time->IsDaybreak();
 }
 
+/*	Function: IsNightfall
+
+	Returns:
+	*true* if it is nightfall currently, *false* otherwise. */
 global func IsNightfall() {
 	var time = FindObject2(Find_ID(TIME));
 	return time != 0 && time->IsNightfall();
