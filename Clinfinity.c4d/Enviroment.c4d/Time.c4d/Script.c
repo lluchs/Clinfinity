@@ -98,12 +98,13 @@ private func SetSkyColour() {
 			Emit("OnDaybreak");
 		}
 		SetSkyColourModulation(CalculateDaybreakBlue(progress), true, 4);
-		SetSkyColourModulation(CalculateDaybreakRed(progress), false, 5);
+		//SetSkyColourModulation(CalculateDaybreakRed(progress), false, 5);
 	} else if(IsNightfall()) {
 		if(SecondsSince(nightfall) < TIME_SecondsPerFrame) {
 			Emit("OnNightfall");
 		}
 		SetSkyColourModulation(CalculateNightfallBrightness(SecondsSince(nightfall)), true, 4);
+		SetSkyColourModulation(CalculateNightfallRed(SecondsSince(nightfall)), false, 5);
 	}
 }
 
@@ -131,14 +132,14 @@ private func CalculateDaybreakBlue(int progress) {
 	}
 }
 
-private func CalculateDaybreakRed(int progress) {
+/*private func CalculateDaybreakRed(int progress) {
 	var maxRed = 200;
 	progress -= TIME_TwilightLength / 2;
 	var red = maxRed - (maxRed * 2 * Abs(progress) / TIME_TwilightLength);
 	var green = red * 3 / 8;
 	var blue = red * 1 / 4;
 	return RGB(red, green, blue);
-}
+}*/
 
 private func CalculateDayBrightness(int progress) {
 	if(progress < dayLength / 4) {
@@ -156,6 +157,15 @@ private func CalculateNightfallBrightness(int progress) {
 	var brightness = -TIME_BrightSkyBlue * progress / TIME_TwilightLength + TIME_BrightSkyBlue;
 	var blue = (TIME_DarkSkyBlue - TIME_BrightSkyBlue) * progress / TIME_TwilightLength + TIME_BrightSkyBlue;
 	return RGB(brightness, brightness, blue);
+}
+
+private func CalculateNightfallRed(int progress) {
+	var maxRed = 200;
+	progress -= TIME_TwilightLength / 2;
+	var red = maxRed - (maxRed * 2 * Abs(progress) / TIME_TwilightLength);
+	var green = red * 3 / 8;
+	var blue = red * 1 / 4;
+	return RGB(red, green, blue);
 }
 
 
