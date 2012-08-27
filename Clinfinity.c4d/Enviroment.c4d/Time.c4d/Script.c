@@ -51,7 +51,7 @@ protected func Initialize() {
 	CalculateDaytimes();
 	CalculateDurations();
 
-	var hours = 17;
+	var hours = 12;
 	var minutes = 0;
 	var seconds = 0;
 	currentSeconds = hours * 3600 + minutes * 60 + seconds;
