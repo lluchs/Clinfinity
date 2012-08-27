@@ -23,22 +23,14 @@ private func Initialized() {
 
 	var maxStarsCount = ObjectCount2(Find_ID(GetID())) * 100;
 	for(var i = 0; i < maxStarsCount; ++i) {
-		CreateStar();
-		//ScheduleCall(0, "CreateStar", RandomX(TIME_TwilightLength * 3 / 4 / TIME_SecondsPerFrame, TIME_TwilightLength / TIME_SecondsPerFrame));
+		CreateObject(STAR, Random(LandscapeWidth()), Random(LandscapeHeight()), NO_OWNER);
 	}
 }
 
 public func OnNightfall() {
-	// for(var i = 0; i < maxStarsCount; ++i) {
-	// 	ScheduleCall(0, "CreateStar", RandomX(TIME_TwilightLength * 3 / 4 / TIME_SecondsPerFrame, TIME_TwilightLength / TIME_SecondsPerFrame));
-	// }
 	for(var star in FindObjects(Find_ID(STAR))) {
-		ScheduleCall(0, "FadeStarIn", RandomX(TIME_TwilightLength * 3 / 4 / TIME_SecondsPerFrame, TIME_TwilightLength / TIME_SecondsPerFrame), 0, star);
+		ScheduleCall(0, "FadeStarIn", RandomX(TIME_TwilightLength / 2 / TIME_SecondsPerFrame, TIME_TwilightLength * 3 / 4 / TIME_SecondsPerFrame), 0, star);
 	}
-}
-
-public func CreateStar() {
-	CreateObject(STAR, Random(LandscapeWidth()), Random(LandscapeHeight()), NO_OWNER);
 }
 
 public func FadeStarIn(object star) {
@@ -48,11 +40,6 @@ public func FadeStarIn(object star) {
 public func OnDaybreak() {
 	var stars = FindObjects(Find_ID(STAR));
 	for(var star in stars) {
-		ScheduleCall(0, "RemoveStar", 1 /*RandomX(1, TIME_TwilightLength / 10 / TIME_SecondsPerFrame)*/, 0, star);
+		star->FadeOut();
 	}
-}
-
-public func RemoveStar(object star) {
-	//star->RemoveObject();
-	star->FadeOut();
 }
