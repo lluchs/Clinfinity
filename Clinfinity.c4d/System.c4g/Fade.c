@@ -31,7 +31,11 @@ static const Fade_ChangeAlpha = 11;
 	_true_ if fading successfully started, _false_ otherwise. */
 global func FadeIn(int targetColourModulation) {
 	if(targetColourModulation == 0) {
-		targetColourModulation = SetRGBaValue(GetClrModulation(), 0, 0);
+		if(GetClrModulation() == 0) {
+			targetColourModulation = RGB(255, 255, 255);
+		} else {
+			targetColourModulation = SetRGBaValue(GetClrModulation(), 0, 0);
+		}
 	}
 	return FadeFromTo(SetRGBaValue(targetColourModulation, 255, 0), targetColourModulation);
 }
