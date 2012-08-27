@@ -41,7 +41,7 @@ global func FadeIn(int targetColourModulation) {
 	If the modulation is not specified, the object's current modulation will be used as starting point.
 
 	Parameters:
-	initialColourModulation	- [optional] Colour modulation to fade from. White by default.
+	initialColourModulation	- [optional] Colour modulation to fade from. Current modulation by default.
 
 	Returns:
 	_true_ if fading successfully started, _false_ otherwise. */
