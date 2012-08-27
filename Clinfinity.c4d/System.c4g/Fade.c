@@ -22,16 +22,16 @@ static const Fade_ChangeAlpha = 11;
 
 /*	Function: FadeIn
 	Fades an object from completely transparent to a specified modulation.
-	If the modulation is not specified, the object will be faded to complete visibility.
+	If the modulation is not specified, the object will be faded to complete visibility, retaining its current colour modulation.
 
 	Parameters:
-	targetColourModulation	- [optional] Colour modulation to fade to. White by default.
+	targetColourModulation	- [optional] Colour modulation to fade to. Current modulation by default.
 
 	Returns:
 	_true_ if fading successfully started, _false_ otherwise. */
 global func FadeIn(int targetColourModulation) {
 	if(targetColourModulation == 0) {
-		targetColourModulation = RGBa(255, 255, 255, 0);
+		targetColourModulation = SetRGBaValue(GetClrModulation(), 0, 0);
 	}
 	return FadeFromTo(SetRGBaValue(targetColourModulation, 255, 0), targetColourModulation);
 }
