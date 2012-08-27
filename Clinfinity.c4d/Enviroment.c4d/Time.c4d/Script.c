@@ -22,8 +22,8 @@ static const TIME_SecondsPerFrame = 4;
 /*	Constants: Sky brightness and colours
 	TIME_DarkSkyBlue	- Value for brightness/blue during the blue hour.
 	TIME_BrightSkyBlue	- Value for brightness/blue at the beginning and end of daytime. */
-static const TIME_DarkSkyBlue = 20;
-static const TIME_BrightSkyBlue = 225;
+static const TIME_DarkSkyBlue = 30;
+static const TIME_BrightSkyBlue = 215;
 
 /*	Variables: Characteristical points in time
 	These can be set in _Initialize()_. Changing the values afterwards has no effect.
@@ -126,8 +126,8 @@ private func CalculateDaybreakBlue(int progress) {
 		return RGB(brightness, brightness, TIME_DarkSkyBlue);
 	} else {
 		var minBrightness = TIME_DarkSkyBlue;
-		var maxBrightness = 225;
-		var brightness = 410 * progress / TIME_TwilightLength + (2 * minBrightness - maxBrightness);
+		var maxBrightness = TIME_BrightSkyBlue;
+		var brightness = 2 * (maxBrightness - minBrightness) * progress / TIME_TwilightLength + (2 * minBrightness - maxBrightness);
 		return RGB(brightness, brightness, brightness);
 	}
 }
