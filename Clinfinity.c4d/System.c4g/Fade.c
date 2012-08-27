@@ -1,5 +1,7 @@
 /*	Script: Fade.c
-	Provides convenience functions for fading objects in and out. */
+	Provides convenience functions for fading objects in and out.
+	After fading is finished, the function _OnFadeFinish_ is called in the target object,
+	with the final modulation as first parameter. */
 
 #strict 2
 
@@ -36,7 +38,7 @@ global func FadeIn(int targetColourModulation) {
 
 /*	Function: FadeOut
 	Fades an object from a specified modulation to completely transparent.
-	If the modulation is not specified, the object will initially be completely visible.
+	If the modulation is not specified, the object's current modulation will be used as starting point.
 
 	Parameters:
 	initialColourModulation	- [optional] Colour modulation to fade from. White by default.
@@ -45,7 +47,7 @@ global func FadeIn(int targetColourModulation) {
 	_true_ if fading successfully started, _false_ otherwise. */
 global func FadeOut(int initialColourModulation) {
 	if(initialColourModulation == 0) {
-		initialColourModulation = RGBa(255, 255, 255, 0);
+		initialColourModulation = GetClrModulation();
 	}
 	return FadeFromTo(initialColourModulation, SetRGBaValue(initialColourModulation, 255, 0));
 }
@@ -121,7 +123,7 @@ global func FxFadeTimer(object target, int effectNumber, int effectTime) {
 		matches++;
 	}
 	if(matches == 4) {
-		target->~OnFadeFinish();
+		target->~OnFadeFinish(RGBa(targetRed, targetGreen, targetBlue, targetAlpha));
 		return FX_Execute_Kill;
 	}
 

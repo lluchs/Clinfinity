@@ -8,6 +8,7 @@ static const IRRL_MaxDistance = 40;
 static const IRRL_ShynessDistance = 40;
 
 local attractedTo;
+local light;
 
 public func SpawnSwarm(int x, int y, int size, object attractedTo) {
 	for(var i = 0; i < size; i++) {
@@ -61,7 +62,7 @@ protected func Initialize() {
 	SetAction("Fly");
 	SetPhase(Random(6));
 	var lightColour = RGBa(220, 255, 200, 0);
-	var light = AddLight(40, lightColour, this);
+	light = AddLight(40, lightColour, this);
 
 	FadeIn();
 	var alphamod, sizemod;
@@ -75,7 +76,18 @@ protected func Initialize() {
 }
 
 public func OnDaybreak() {
-	ScheduleCall(this, "Death", RandomX(1, 150));
+	ScheduleCall(this, "StartFadeOut", RandomX(1, 150));
+}
+
+public func OnFadeFinish(int targetColour) {
+	if(GetRGBaValue(targetColour, 0) == 255) {
+		Death();
+	}
+}
+
+private func StartFadeOut() {
+	FadeOut();
+	light->FadeOut();
 }
 
 public func CatchBlow()	{ RemoveObject(); }
