@@ -16,7 +16,7 @@
 	TIME_TwilightLength		- Length of twilight (daybreak and nightfall) in seconds.
 	TIME_SecondsPerFrame	- Number of seconds represented by one frame in game. */
 static const TIME_TotalDayLength = 86400;
-static const TIME_TwilightLength = 3000; // = 200 Minutes (which is about double the time as it is in reality, but looks better)
+static const TIME_TwilightLength = 3000; // = 200 Minutes (which is about twice to thrice the time it takes in reality, but looks better)
 static const TIME_SecondsPerFrame = 4;
 
 /*	Constants: Sky brightness and colours
