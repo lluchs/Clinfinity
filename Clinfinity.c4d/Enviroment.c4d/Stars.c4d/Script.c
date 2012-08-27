@@ -21,7 +21,7 @@ private func Initialized() {
 		other->RemoveObject();
 	}
 
-	var maxStarsCount = ObjectCount2(Find_ID(GetID())) * 100;
+	var maxStarsCount = (LandscapeWidth() * LandscapeHeight() * ObjectCount2(Find_ID(GetID()))) / 20000;
 	for(var i = 0; i < maxStarsCount; ++i) {
 		CreateObject(STAR, Random(LandscapeWidth()), Random(LandscapeHeight()), NO_OWNER);
 	}
