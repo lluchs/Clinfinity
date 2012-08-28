@@ -62,7 +62,7 @@ private func CalculateDaytimes() {
 	daybreak = daybreakHour * 3600 + daybreakMinute * 60;
 	day = daybreak + TIME_TwilightLength;
 	nightfall = nightfallHour * 3600 + nightfallMinute * 60;
-	night = nightfall + TIME_TwilightLength;
+	night = (nightfall + TIME_TwilightLength) % TIME_TotalDayLength;
 }
 
 private func CalculateDurations() {
