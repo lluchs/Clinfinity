@@ -16,14 +16,14 @@ private func Initialized() {
 	time->AddEventListener(this, "OnNightfall");
 	time->AddEventListener(this, "OnDaybreak");
 
-	var others = FindObjects(Find_ID(GetID()), Find_Exclude(this));
-	for(var other in others) {
-		other->RemoveObject();
-	}
-
 	var maxStarsCount = (LandscapeWidth() * LandscapeHeight() * ObjectCount2(Find_ID(GetID()))) / 20000;
 	for(var i = 0; i < maxStarsCount; ++i) {
 		CreateObject(STAR, Random(LandscapeWidth()), Random(LandscapeHeight()), NO_OWNER);
+	}
+
+	var others = FindObjects(Find_ID(GetID()), Find_Exclude(this));
+	for(var other in others) {
+		other->RemoveObject();
 	}
 }
 
