@@ -78,7 +78,7 @@ protected func AdvanceClock() {
 		Emit("OnClockStrike", currentSeconds);
 	}
 	SetSkyColour();
-	ResumeClock();
+	ScheduleCall(this, "AdvanceClock", 1);
 }
 
 private func SetSkyColour() {
@@ -342,6 +342,16 @@ global func SetTime(int time) {
 global func GetTime() {
 	var time = FindObject2(Find_ID(TIME));
 	return time != 0 && time->GetTime();
+}
+
+global func PauseClock() {
+	var time = FindObject2(Find_ID(TIME));
+	return time != 0 && time->PauseClock();	
+}
+
+global func ResumeClock() {
+	var time = FindObject2(Find_ID(TIME));
+	return time != 0 && time->ResumeClock();
 }
 
 global func GetNightfallTime() {
