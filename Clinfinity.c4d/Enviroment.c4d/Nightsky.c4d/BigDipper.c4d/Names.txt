@@ -1,0 +1,2 @@
+DE:Ein neues Objekt
+US:A new object
