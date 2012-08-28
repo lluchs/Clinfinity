@@ -3,7 +3,7 @@
 	See <Day/night cycle> for details about the phases of the day/night cycle.
 
 	Several events are sent by the Time object.
-	- OnClockStrike, sent every full hour. The current hour is passed as parameter to the event handler function.
+	- OnClockStrike, sent every full hour. The current time is passed as parameter to the event handler function.
 	- OnDay, sent after daybreak is over and the day begins.
 	- OnNight, sent after nightfall, when the night begins.
 	- OnDaybreak, sent when daybreak begins.
@@ -75,7 +75,7 @@ protected func AdvanceClock() {
 	currentSeconds += TIME_SecondsPerFrame;
 	currentSeconds %= 86400;
 	if((currentSeconds % 3600) == 0) {
-		Emit("OnClockStrike", currentSeconds / 3600);
+		Emit("OnClockStrike", currentSeconds);
 	}
 	SetSkyColour();
 	ResumeClock();
@@ -184,32 +184,49 @@ private func CalculateNightfallRed(int progress) {
 
 /* Passage of time */
 
+/*	Function: Time
+	Composes a time value from the given parameters _hours_, _minutes_ and _seconds_,
+	with the latter being optional.
+
+	Parameters:
+	hours	- Hours part.
+	minutes	- Minutes part.
+	seconds	- [optional] Seconds part. */
+global func Time(int hours, int minutes, int seconds) {
+	hours	= BoundBy(hours, 0, 23);
+	minutes	= BoundBy(minutes, 0, 59);
+	seconds	= BoundBy(seconds, 0, 59);
+	return hours * 3600 + minutes * 60 + seconds;
+}
+
 /*	Function: SetTime
 	Sets the clock to the specified time.
 
 	Parameters:
-	hours	- Hours of time to set.
-	minutes	- Minutes of time to set. */
-public func SetTime(int hours, int minutes) {
-	currentSeconds = hours * 3600 + minutes * 60;
+	time	- Time measured in seconds. */
+public func SetTime(int time) {
+	time %= TIME_TotalDayLength;
+	if(time < 0) {
+		time += TIME_TotalDayLength;
+	}
+	time = time / TIME_SecondsPerFrame * TIME_SecondsPerFrame; // Don't set 'odd' seconds.
+	currentSeconds = time;
 	SetSkyColour();
 }
 
 /*	Function: GetTime
-	Returns the current time in the format hhmm.
+	Returns the current time measured in seconds.
 
 	Returns:
 	The current time. */
 public func GetTime() {
-	var hours = currentSeconds / 3600 * 100;
-	var minutes = currentSeconds / 60 % 60;
-	return hours + minutes;
+	return currentSeconds;
 }
 
 /*	Function: PauseClock
 	Stops the advancement of the clock. */
 public func PauseClock() {
-	ClearScheduleCall(0, "AdvanceClock"); // TODO: Doesn't work!
+	ClearScheduleCall(0, "AdvanceClock"); // TODO: Doesn't work! Must use "this" instead of 0 (man this sucks, the docu is lying)
 }
 
 /*	Function: ResumeClock
@@ -237,6 +254,16 @@ public func SecondsSince(int time) {
 		result = 24 * 60 * 60 - time + currentSeconds;
 	}
 	return result;
+}
+
+public func SecondsToTime(int seconds) {
+	var hours = seconds / 3600 * 100;
+	var minutes = seconds / 60 % 60;
+	return hours + minutes;
+}
+
+public func GetNightfallTime() {
+	return nightfall;
 }
 
 public func IsDay() {
@@ -306,7 +333,17 @@ global func IsNightfall() {
 
 /*	Re-routed global functions */
 
+global func SetTime(int time) {
+	var time = FindObject2(Find_ID(TIME));
+	return time != 0 && time->SetTime(time);
+}
+
 global func GetTime() {
 	var time = FindObject2(Find_ID(TIME));
 	return time != 0 && time->GetTime();
+}
+
+global func GetNightfallTime() {
+	var time = FindObject2(Find_ID(TIME));
+	return time != 0 && time->GetNightfallTime();
 }
