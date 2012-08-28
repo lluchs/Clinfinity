@@ -1,8 +1,8 @@
 [Action]
 Name=Stomp
-Procedure=NONE
+Procedure=ATTACH
 Facet=0,0,85,135
-Delay=1
+Delay=2
 Length=50
 NextAction=Stomp
 
