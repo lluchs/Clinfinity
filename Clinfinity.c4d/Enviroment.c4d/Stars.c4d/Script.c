@@ -29,7 +29,7 @@ private func Initialized() {
 
 public func OnNightfall() {
 	for(var star in FindObjects(Find_ID(STAR))) {
-		ScheduleCall(0, "FadeStarIn", RandomX(TIME_TwilightLength * 3 / 4 / TIME_SecondsPerFrame, TIME_TwilightLength / TIME_SecondsPerFrame), 0, star);
+		ScheduleCall(0, "FadeStarIn", RandomX(TIME_TwilightLength * 9 / 10 / TIME_SecondsPerFrame, TIME_TwilightLength / TIME_SecondsPerFrame), 0, star);
 	}
 }
 
