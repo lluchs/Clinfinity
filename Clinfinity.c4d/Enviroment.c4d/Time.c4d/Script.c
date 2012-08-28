@@ -226,14 +226,15 @@ public func GetTime() {
 /*	Function: PauseClock
 	Stops the advancement of the clock. */
 public func PauseClock() {
-	ClearScheduleCall(0, "AdvanceClock"); // TODO: Doesn't work! Must use "this" instead of 0 (man this sucks, the docu is lying)
+	ClearScheduleCall(this, "AdvanceClock");
 }
 
 /*	Function: ResumeClock
 	Starts or resumes the advancement of the clock. */
 public func ResumeClock() {
-	ClearScheduleCall(0, "AdvanceClock");
-	ScheduleCall(0, "AdvanceClock", 1);
+	if(GetEffectCount("IntScheduleCall", this) == 0) {
+		ScheduleCall(this, "AdvanceClock", 1);
+	}
 }
 
 /*	Function: SecondsSince
