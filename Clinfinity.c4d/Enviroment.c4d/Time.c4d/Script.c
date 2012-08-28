@@ -122,7 +122,7 @@ private func CalculateNightBlue(int progress) {
 }
 
 private func CalculateDaybreakBlue(int progress) {
-	if(progress < TIME_TwilightLength / 2) {
+	/*if(progress < TIME_TwilightLength / 2) {
 		var maxBrightness = TIME_DarkSkyBlue;
 		var brightness = 2 * maxBrightness * progress / TIME_TwilightLength;
 		return RGB(brightness, brightness, TIME_DarkSkyBlue);
@@ -131,7 +131,10 @@ private func CalculateDaybreakBlue(int progress) {
 		var maxBrightness = TIME_BrightSkyBlue;
 		var brightness = 2 * (maxBrightness - minBrightness) * progress / TIME_TwilightLength + (2 * minBrightness - maxBrightness);
 		return RGB(brightness, brightness, brightness);
-	}
+	}*/
+	var brightness = TIME_BrightSkyBlue * progress / TIME_TwilightLength;
+	var blue = (TIME_BrightSkyBlue - TIME_DarkSkyBlue) * progress / TIME_TwilightLength + TIME_DarkSkyBlue;
+	return RGB(brightness, brightness, blue);
 }
 
 /*private func CalculateDaybreakRed(int progress) {
@@ -156,9 +159,17 @@ private func CalculateDayBrightness(int progress) {
 }
 
 private func CalculateNightfallBrightness(int progress) {
-	var brightness = -TIME_BrightSkyBlue * progress / TIME_TwilightLength + TIME_BrightSkyBlue;
+	/*var brightness = -TIME_BrightSkyBlue * progress / TIME_TwilightLength + TIME_BrightSkyBlue;
 	var blue = (TIME_DarkSkyBlue - TIME_BrightSkyBlue) * progress / TIME_TwilightLength + TIME_BrightSkyBlue;
-	return RGB(brightness, brightness, blue);
+	return RGB(brightness, brightness, blue);*/
+	if(progress < TIME_TwilightLength / 2) {
+		var brightness = 2 * (TIME_DarkSkyBlue - TIME_BrightSkyBlue) * progress / TIME_TwilightLength + TIME_BrightSkyBlue;
+		return RGB(brightness, brightness, brightness);
+	} else {
+		progress -= TIME_TwilightLength / 2;
+		var brightness = 2 * -TIME_DarkSkyBlue * progress / TIME_TwilightLength + TIME_DarkSkyBlue;
+		return RGB(brightness, brightness, TIME_DarkSkyBlue);
+	}
 }
 
 private func CalculateNightfallRed(int progress) {
@@ -198,7 +209,7 @@ public func GetTime() {
 /*	Function: PauseClock
 	Stops the advancement of the clock. */
 public func PauseClock() {
-	ClearScheduleCall(0, "AdvanceClock");
+	ClearScheduleCall(0, "AdvanceClock"); // TODO: Doesn't work!
 }
 
 /*	Function: ResumeClock
