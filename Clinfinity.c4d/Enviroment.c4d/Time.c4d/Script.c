@@ -22,7 +22,7 @@ static const TIME_SecondsPerFrame = 4;
 /*	Constants: Sky brightness and colours
 	TIME_DarkSkyBlue	- Value for brightness/blue during the blue hour.
 	TIME_BrightSkyBlue	- Value for brightness/blue at the beginning and end of daytime. */
-static const TIME_DarkSkyBlue = 30;
+static const TIME_DarkSkyBlue = 100;
 static const TIME_BrightSkyBlue = 255;
 
 /*	Variables: Characteristical points in time
