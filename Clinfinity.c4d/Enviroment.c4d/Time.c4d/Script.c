@@ -16,7 +16,7 @@
 	TIME_TwilightLength		- Length of twilight (daybreak and nightfall) in seconds.
 	TIME_SecondsPerFrame	- Number of seconds represented by one frame in game. */
 static const TIME_TotalDayLength = 86400;
-static const TIME_TwilightLength = 3000; // = 200 Minutes (which is about twice to thrice the time it takes in reality, but looks better)
+static const TIME_TwilightLength = 6000; // = 100 Minutes (which is about the time it takes in reality)
 static const TIME_SecondsPerFrame = 4;
 
 /*	Constants: Sky brightness and colours
@@ -334,8 +334,8 @@ global func IsNightfall() {
 /*	Re-routed global functions */
 
 global func SetTime(int time) {
-	var time = FindObject2(Find_ID(TIME));
-	return time != 0 && time->SetTime(time);
+	var timeObject = FindObject2(Find_ID(TIME));
+	return timeObject != 0 && timeObject->SetTime(time);
 }
 
 global func GetTime() {
