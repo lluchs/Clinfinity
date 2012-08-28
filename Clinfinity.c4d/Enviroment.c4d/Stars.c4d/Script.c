@@ -40,7 +40,7 @@ public func FadeStarIn(object star) {
 public func OnDaybreak() {
 	var stars = FindObjects(Find_ID(STAR));
 	for(var star in stars) {
-		ScheduleCall(0, "FadeStarOut", RandomX(1, TIME_TwilightLength / 4 / TIME_SecondsPerFrame), 0, star);
+		ScheduleCall(0, "FadeStarOut", /*RandomX(1, TIME_TwilightLength / 4 / TIME_SecondsPerFrame)*/1, 0, star);
 	}
 }
 
