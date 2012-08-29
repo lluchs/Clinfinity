@@ -78,6 +78,12 @@ private func CalculateDurations() {
 protected func AdvanceClock() {
 	currentSeconds += TIME_SecondsPerFrame;
 	currentSeconds %= 86400;
+	var alarmListeners = HashGet(alarms, currentSeconds, false);
+	if(alarmListeners != 0) {
+		for(var listener in alarmListeners) {
+			listener->~OnAlarm(this, currentSeconds);
+		}
+	}
 	if((currentSeconds % 3600) == 0) {
 		Emit("OnClockStrike", currentSeconds);
 	}
@@ -311,8 +317,14 @@ public func IsNight() {
 }
 
 
-/*	Section: Alarms */
+/*	Section: Alarms
+	Alarms notify listeners at a settable time.
+	Listerens receive a call to a function called _OnAlarm()_.
+	The first parameter of _OnAlarm()_ is the calling object,
+	the second parameter is the current time. */
 
+/*	Function: AddAlarmListener
+*/
 public func AddAlarmListener(object listener, int time) {
 	time = NormaliseTime(time);
 	var listeners = HashGet(alarms, time, false);
@@ -324,6 +336,8 @@ public func AddAlarmListener(object listener, int time) {
 	HashPut(alarms, time, listeners);
 }
 
+/*	Function: RemoveAlarmListener
+*/
 public func RemoveAlarmListener(object listener, int time) {
 	time = NormaliseTime(time);
 	var listeners = HashGet(alarms, time, false);
