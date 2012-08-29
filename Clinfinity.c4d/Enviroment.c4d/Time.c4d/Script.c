@@ -41,8 +41,12 @@ local daybreak, day, nightfall, night;
 local dayLength, nightLength;
 local currentSeconds;
 
+local alarms;
+
 
 protected func Initialize() {
+	alarms = CreateHash();
+
 	daybreakHour = 5;
 	daybreakMinute = 0;
 	nightfallHour = 21;
@@ -184,6 +188,15 @@ private func CalculateNightfallRed(int progress) {
 
 /* Passage of time */
 
+private func NormaliseTime(int time) {
+	time %= TIME_TotalDayLength;
+	if(time < 0) {
+		time += TIME_TotalDayLength;
+	}
+	time = time / TIME_SecondsPerFrame * TIME_SecondsPerFrame; // Don't allow 'odd' seconds.
+	return time;
+}
+
 /*	Function: Time
 	Composes a time value from the given parameters _hours_, _minutes_ and _seconds_,
 	with the latter being optional.
@@ -205,12 +218,7 @@ global func Time(int hours, int minutes, int seconds) {
 	Parameters:
 	time	- Time measured in seconds. */
 public func SetTime(int time) {
-	time %= TIME_TotalDayLength;
-	if(time < 0) {
-		time += TIME_TotalDayLength;
-	}
-	time = time / TIME_SecondsPerFrame * TIME_SecondsPerFrame; // Don't set 'odd' seconds.
-	currentSeconds = time;
+	currentSeconds = NormaliseTime(time);
 	SetSkyColour();
 }
 
@@ -248,6 +256,7 @@ public func ResumeClock() {
 	Returns:
 	Seconds since _time_, measured in seconds. */
 public func SecondsSince(int time) {
+	time = NormaliseTime(time);
 	var result;
 	if(currentSeconds >= time) {
 		result = currentSeconds - time;
@@ -298,6 +307,29 @@ public func IsNight() {
 	} else {
 		// Night starts before midnight
 		return currentSeconds >= night || currentSeconds < daybreak;
+	}
+}
+
+
+/*	Section: Alarms */
+
+public func AddAlarmListener(object listener, int time) {
+	time = NormaliseTime(time);
+	var listeners = HashGet(alarms, time, false);
+	if(listeners == 0) {
+		listeners = [listener];
+	} else if(!InArray(listener, listeners)) {
+		PushBack(listener, listeners);
+	}
+	HashPut(alarms, time, listeners);
+}
+
+public func RemoveAlarmListener(object listener, int time) {
+	time = NormaliseTime(time);
+	var listeners = HashGet(alarms, time, false);
+	if(listeners != 0 && InArray(listener, listeners)) {
+		RemoveElement(listener, listeners);
+		HashPut(alarms, time, listeners);
 	}
 }
 
