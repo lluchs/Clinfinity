@@ -34,9 +34,8 @@ public func ContextConkit(object caller) {
 	// get player
 	var plr = caller->GetOwner();
 
-	if(MatSysGetTeamFill(plr, WOOD) >= 1 && MatSysGetTeamFill(plr, METL) >= 1) {
-		MatSysDoTeamFill(-1, plr, WOOD);
-		MatSysDoTeamFill(-1, plr, METL);
+	if(MatSysGetTeamFill(plr, WOOD) >= 4) {
+		MatSysDoTeamFill(-4, plr, WOOD);
 		caller->CreateContents(CNKT);
 		Sound("Connect");
 	} else {
