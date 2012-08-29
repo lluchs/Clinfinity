@@ -13,7 +13,7 @@ VertexY=-50,-50
 VertexFriction=100,100
 Value=350
 Mass=2100
-Components=METL=2;ROCK=2;
+Components=METL=2;ROCK=10;
 Picture=0,0,90,100
 Exclusive=1
 Construction=1
