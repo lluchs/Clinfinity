@@ -1,4 +1,4 @@
-/*-- Neues Objekt --*/
+/*-- Quarry --*/
 
 #strict 2
 

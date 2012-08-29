@@ -1,8 +1,9 @@
 [Action]
 Name=Stomp
-Procedure=ATTACH
+Procedure=NONE
 Facet=0,0,85,135
 Delay=2
 Length=50
 NextAction=Stomp
+Sound=Quarry
 
