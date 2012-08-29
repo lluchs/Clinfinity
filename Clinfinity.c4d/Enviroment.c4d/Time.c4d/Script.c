@@ -257,30 +257,48 @@ public func SecondsSince(int time) {
 	return result;
 }
 
-public func SecondsToTime(int seconds) {
+/*public func SecondsToTime(int seconds) {
 	var hours = seconds / 3600 * 100;
 	var minutes = seconds / 60 % 60;
 	return hours + minutes;
+}*/
+
+public func GetDaybreakTime() {
+	return daybreak;
+}
+
+public func GetDayTime() {
+	return day;
 }
 
 public func GetNightfallTime() {
 	return nightfall;
 }
 
-public func IsDay() {
-	return Inside(currentSeconds, day, nightfall - 1);
-}
-
-public func IsNight() {
-	return currentSeconds >= night || currentSeconds < daybreak;
+public func GetNightTime() {
+	return night;
 }
 
 public func IsDaybreak() {
 	return Inside(currentSeconds, daybreak, day - 1);
 }
 
+public func IsDay() {
+	return Inside(currentSeconds, day, nightfall - 1);
+}
+
 public func IsNightfall() {
 	return Inside(currentSeconds, nightfall, night - 1);
+}
+
+public func IsNight() {
+	if(night < daybreak) {
+		// Night starts after midnight
+		return currentSeconds >= night && currentSeconds < daybreak;
+	} else {
+		// Night starts before midnight
+		return currentSeconds >= night || currentSeconds < daybreak;
+	}
 }
 
 
@@ -296,24 +314,6 @@ public func IsNightfall() {
 	It should be noted that the functions in this section only return *true* during the respective phase.
 	For example, IsDay() does not return *true* during daybreak, even though the sky may already be bright. */
 
-/*	Function: IsDay
-
-	Returns:
-	*true* if it is daytime currently, *false* otherwise. */
-global func IsDay() {
-	var time = FindObject2(Find_ID(TIME));
-	return time == 0 || time->IsDay();
-}
-
-/*	Function: IsNight
-
-	Returns:
-	*true* if it is nighttime currently, *false* otherwise. */
-global func IsNight() {
-	var time = FindObject2(Find_ID(TIME));
-	return time != 0 && time->IsNight();
-}
-
 /*	Function: IsDaybreak
 
 	Returns:
@@ -323,6 +323,15 @@ global func IsDaybreak() {
 	return time != 0 && time->IsDaybreak();
 }
 
+/*	Function: IsDay
+
+	Returns:
+	*true* if it is daytime currently, *false* otherwise. */
+global func IsDay() {
+	var time = FindObject2(Find_ID(TIME));
+	return time == 0 || time->IsDay();
+}
+
 /*	Function: IsNightfall
 
 	Returns:
@@ -330,6 +339,15 @@ global func IsDaybreak() {
 global func IsNightfall() {
 	var time = FindObject2(Find_ID(TIME));
 	return time != 0 && time->IsNightfall();
+}
+
+/*	Function: IsNight
+
+	Returns:
+	*true* if it is nighttime currently, *false* otherwise. */
+global func IsNight() {
+	var time = FindObject2(Find_ID(TIME));
+	return time != 0 && time->IsNight();
 }
 
 /*	Re-routed global functions */
@@ -354,7 +372,22 @@ global func ResumeClock() {
 	return time != 0 && time->ResumeClock();
 }
 
+global func GetDaybreakTime() {
+	var time = FindObject2(Find_ID(TIME));
+	return time != 0 && time->GetDaybreakTime();
+}
+
+global func GetDayTime() {
+	var time = FindObject2(Find_ID(TIME));
+	return time != 0 && time->GetDayTime();
+}
+
 global func GetNightfallTime() {
 	var time = FindObject2(Find_ID(TIME));
 	return time != 0 && time->GetNightfallTime();
+}
+
+global func GetNightTime() {
+	var time = FindObject2(Find_ID(TIME));
+	return time != 0 && time->GetNightTime();
 }
