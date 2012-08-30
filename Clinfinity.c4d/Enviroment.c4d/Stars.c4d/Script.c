@@ -14,7 +14,7 @@ private func Initialized() {
 		return;
 	}
 	time->AddEventListener(this, "OnNightfall");
-	time->AddEventListener(this, "OnDaybreak");
+	time->AddAlarmListener(this, time->GetDaybreakTime() - 255 * TIME_SecondsPerFrame);
 
 	var maxStarsCount = (LandscapeWidth() * LandscapeHeight() * ObjectCount2(Find_ID(GetID()))) / 20000;
 	for(var i = 0; i < maxStarsCount; ++i) {
@@ -33,15 +33,14 @@ public func OnNightfall() {
 	}
 }
 
-public func FadeStarIn(object star) {
-	star->FadeIn();
+public func OnAlarm(object clock, int time) {
+	for(var star in FindObjects(Find_ID(STAR))) {
+		ScheduleCall(0, "FadeStarOut", RandomX(1, TIME_TwilightLength / 10 / TIME_SecondsPerFrame), 0, star);
+	}
 }
 
-public func OnDaybreak() {
-	var stars = FindObjects(Find_ID(STAR));
-	for(var star in stars) {
-		ScheduleCall(0, "FadeStarOut", /*RandomX(1, TIME_TwilightLength / 4 / TIME_SecondsPerFrame)*/1, 0, star);
-	}
+public func FadeStarIn(object star) {
+	star->FadeIn();
 }
 
 public func FadeStarOut(object star) {
