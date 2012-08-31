@@ -7,7 +7,9 @@
 	- OnDay, sent after daybreak is over and the day begins.
 	- OnNight, sent after nightfall, when the night begins.
 	- OnDaybreak, sent when daybreak begins.
-	- OnNightfall, sent when nightfall begins. */
+	- OnNightfall, sent when nightfall begins.
+
+	Additionally, settable <Alarms> are supported. */
 
 #strict 2
 
@@ -221,6 +223,10 @@ global func Time(int hours, int minutes, int seconds) {
 /*	Function: SetTime
 	Sets the clock to the specified time.
 
+	You should use the function _Time()_ for convenience.
+	A typical call that sets the time to 19:30 (7:30 PM) looks like this:
+	> SetTime(Time(19, 30))
+
 	Parameters:
 	time	- Time measured in seconds. */
 public func SetTime(int time) {
@@ -318,13 +324,21 @@ public func IsNight() {
 
 
 /*	Section: Alarms
-	Alarms notify listeners at a settable time.
-	Listerens receive a call to a function called _OnAlarm()_.
-	The first parameter of _OnAlarm()_ is the calling object,
-	the second parameter is the current time. */
+	With alarms, listeners can receive a call (the "alarm") at a specified point in time.
+	The listeners should implement a function called _OnAlarm()_,
+	which receives the calling object and the current time, measured in seconds, as parameters. */
 
 /*	Function: AddAlarmListener
-*/
+	Adds a listener, which will receive the alarm at the specified time.
+
+	Notes:
+	- The same listener can receive several _OnAlarm()_ calls at different points in time.
+	However, it is not possible to add the same listener more than once for the same time.
+	- The specified time is rounded to the next lower multiple of TIME_SecondsPerFrame.
+
+	Parameters:
+	listener	- Listener that will receive the call.
+	time		- Alarm time. */
 public func AddAlarmListener(object listener, int time) {
 	time = NormaliseTime(time);
 	var listeners = HashGet(alarms, time, false);
@@ -337,7 +351,15 @@ public func AddAlarmListener(object listener, int time) {
 }
 
 /*	Function: RemoveAlarmListener
-*/
+	Removes a listener from the alarms list for the specified time.
+	After calling this, the listener will no longer receive alarm calls for the specified point in time,
+	but it will still receive the calls for other alarm times, if it was added to any.
+	If the listener was not added for the specified alarm time before calling this function,
+	the function call has no effect.
+
+	Parameters:
+	listener	- Listener to remove.
+	time		- Alarm time. */
 public func RemoveAlarmListener(object listener, int time) {
 	time = NormaliseTime(time);
 	var listeners = HashGet(alarms, time, false);
