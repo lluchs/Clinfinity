@@ -27,19 +27,12 @@ static const TIME_SecondsPerFrame = 4;
 static const TIME_DarkSkyBlue = 30;
 static const TIME_BrightSkyBlue = 255;
 
-/*	Variables: Characteristical points in time
-	These can be set in _Initialize()_. Changing the values afterwards has no effect.
 
-	*Important*: If you set custom values, you must make sure that nightfall and daybreak don't overlap.
-
-	daybreakHour	- Hour of daybreak.
-	daybreakMinute	- Precise minute of daybreak.
-	nightfallHour	- Hour of nightfall.
-	nightfallMinute	- Precise minute of nightfall. */
-local daybreakHour, daybreakMinute, nightfallHour, nightfallMinute;
+// These are set in Initialize(). Don't change them afterwards!
+local daybreak, nightfall;
 
 // These get calculated automatically. Internal use only, don't touch!
-local daybreak, day, nightfall, night;
+local day, night;
 local dayLength, nightLength;
 local currentSeconds;
 
@@ -49,10 +42,9 @@ local alarms;
 protected func Initialize() {
 	alarms = CreateHash();
 
-	daybreakHour = 5;
-	daybreakMinute = 0;
-	nightfallHour = 21;
-	nightfallMinute = 30;
+	// Important: If you set custom values, you absolutely must make sure that nightfall and daybreak don't overlap.
+	daybreak = Time(5, 00);
+	nightfall = Time(21, 30);
 
 	CalculateDaytimes();
 	CalculateDurations();
@@ -65,9 +57,7 @@ protected func Initialize() {
 }
 
 private func CalculateDaytimes() {
-	daybreak = daybreakHour * 3600 + daybreakMinute * 60;
 	day = daybreak + TIME_TwilightLength;
-	nightfall = nightfallHour * 3600 + nightfallMinute * 60;
 	night = (nightfall + TIME_TwilightLength) % TIME_TotalDayLength;
 }
 
