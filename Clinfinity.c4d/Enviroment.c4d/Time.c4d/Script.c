@@ -307,51 +307,53 @@ public func IsNight() {
 	time	- Time measured in seconds. */
 global func SetTime(int time) {
 	var timeObject = FindObject2(Find_ID(TIME));
-	return timeObject != 0 && timeObject->SetTime(time);
+	if(timeObject != 0) timeObject->SetTime(time);
 }
 
 /*	Function: GetTime
 	Returns the current time measured in seconds.
+	If no TIME object is present, it is always noon (12:00).
 
 	Returns:
 	The current time. */
 global func GetTime() {
 	var time = FindObject2(Find_ID(TIME));
-	return time != 0 && time->GetTime();
+	if(time != 0) return time->GetTime();
+	else return Time(12, 00);
 }
 
 /*	Function: PauseClock
 	Stops the advancement of the clock. */
 global func PauseClock() {
 	var time = FindObject2(Find_ID(TIME));
-	return time != 0 && time->PauseClock();	
+	if(time != 0) time->PauseClock();	
 }
 
 /*	Function: ResumeClock
 	Starts or resumes the advancement of the clock. */
 global func ResumeClock() {
 	var time = FindObject2(Find_ID(TIME));
-	return time != 0 && time->ResumeClock();
+	if(time != 0) time->ResumeClock();
 }
 
 global func GetDaybreakTime() {
 	var time = FindObject2(Find_ID(TIME));
-	return time != 0 && time->GetDaybreakTime();
+	if(time != 0) return time->GetDaybreakTime();
 }
 
 global func GetDayTime() {
 	var time = FindObject2(Find_ID(TIME));
-	return time != 0 && time->GetDayTime();
+	if(time != 0) return time->GetDayTime();
 }
 
 global func GetNightfallTime() {
 	var time = FindObject2(Find_ID(TIME));
-	return time != 0 && time->GetNightfallTime();
+	if(time != 0) return time->GetNightfallTime();
 }
 
 global func GetNightTime() {
 	var time = FindObject2(Find_ID(TIME));
-	return time != 0 && time->GetNightTime();
+	if(time != 0) return time->GetNightTime();
 }
 
 
