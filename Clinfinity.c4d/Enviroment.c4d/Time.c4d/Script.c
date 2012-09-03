@@ -210,37 +210,19 @@ global func Time(int hours, int minutes, int seconds) {
 	return hours * 3600 + minutes * 60 + seconds;
 }
 
-/*	Function: SetTime
-	Sets the clock to the specified time.
-
-	You should use the function _Time()_ for convenience.
-	A typical call that sets the time to 19:30 (7:30 PM) looks like this:
-	> SetTime(Time(19, 30))
-
-	Parameters:
-	time	- Time measured in seconds. */
 public func SetTime(int time) {
 	currentSeconds = NormaliseTime(time);
 	SetSkyColour();
 }
 
-/*	Function: GetTime
-	Returns the current time measured in seconds.
-
-	Returns:
-	The current time. */
 public func GetTime() {
 	return currentSeconds;
 }
 
-/*	Function: PauseClock
-	Stops the advancement of the clock. */
 public func PauseClock() {
 	ClearScheduleCall(this, "AdvanceClock");
 }
 
-/*	Function: ResumeClock
-	Starts or resumes the advancement of the clock. */
 public func ResumeClock() {
 	if(GetEffectCount("IntScheduleCall", this) == 0) {
 		ScheduleCall(this, "AdvanceClock", 1);
@@ -310,6 +292,66 @@ public func IsNight() {
 		// Night starts before midnight
 		return currentSeconds >= night || currentSeconds < daybreak;
 	}
+}
+
+/*	Re-routed global functions */
+
+/*	Function: SetTime
+	Sets the clock to the specified time.
+
+	You should use the function _Time()_ for convenience.
+	A typical call that sets the time to 19:30 (7:30 PM) looks like this:
+	> SetTime(Time(19, 30))
+
+	Parameters:
+	time	- Time measured in seconds. */
+global func SetTime(int time) {
+	var timeObject = FindObject2(Find_ID(TIME));
+	return timeObject != 0 && timeObject->SetTime(time);
+}
+
+/*	Function: GetTime
+	Returns the current time measured in seconds.
+
+	Returns:
+	The current time. */
+global func GetTime() {
+	var time = FindObject2(Find_ID(TIME));
+	return time != 0 && time->GetTime();
+}
+
+/*	Function: PauseClock
+	Stops the advancement of the clock. */
+global func PauseClock() {
+	var time = FindObject2(Find_ID(TIME));
+	return time != 0 && time->PauseClock();	
+}
+
+/*	Function: ResumeClock
+	Starts or resumes the advancement of the clock. */
+global func ResumeClock() {
+	var time = FindObject2(Find_ID(TIME));
+	return time != 0 && time->ResumeClock();
+}
+
+global func GetDaybreakTime() {
+	var time = FindObject2(Find_ID(TIME));
+	return time != 0 && time->GetDaybreakTime();
+}
+
+global func GetDayTime() {
+	var time = FindObject2(Find_ID(TIME));
+	return time != 0 && time->GetDayTime();
+}
+
+global func GetNightfallTime() {
+	var time = FindObject2(Find_ID(TIME));
+	return time != 0 && time->GetNightfallTime();
+}
+
+global func GetNightTime() {
+	var time = FindObject2(Find_ID(TIME));
+	return time != 0 && time->GetNightTime();
 }
 
 
@@ -384,7 +426,7 @@ global func IsDaybreak() {
 /*	Function: IsDay
 
 	Returns:
-	*true* if it is daytime currently, *false* otherwise. */
+	*true* if it is daytime currently or if no TIME object exists, *false* otherwise. */
 global func IsDay() {
 	var time = FindObject2(Find_ID(TIME));
 	return time == 0 || time->IsDay();
@@ -406,46 +448,4 @@ global func IsNightfall() {
 global func IsNight() {
 	var time = FindObject2(Find_ID(TIME));
 	return time != 0 && time->IsNight();
-}
-
-/*	Re-routed global functions */
-
-global func SetTime(int time) {
-	var timeObject = FindObject2(Find_ID(TIME));
-	return timeObject != 0 && timeObject->SetTime(time);
-}
-
-global func GetTime() {
-	var time = FindObject2(Find_ID(TIME));
-	return time != 0 && time->GetTime();
-}
-
-global func PauseClock() {
-	var time = FindObject2(Find_ID(TIME));
-	return time != 0 && time->PauseClock();	
-}
-
-global func ResumeClock() {
-	var time = FindObject2(Find_ID(TIME));
-	return time != 0 && time->ResumeClock();
-}
-
-global func GetDaybreakTime() {
-	var time = FindObject2(Find_ID(TIME));
-	return time != 0 && time->GetDaybreakTime();
-}
-
-global func GetDayTime() {
-	var time = FindObject2(Find_ID(TIME));
-	return time != 0 && time->GetDayTime();
-}
-
-global func GetNightfallTime() {
-	var time = FindObject2(Find_ID(TIME));
-	return time != 0 && time->GetNightfallTime();
-}
-
-global func GetNightTime() {
-	var time = FindObject2(Find_ID(TIME));
-	return time != 0 && time->GetNightTime();
 }
