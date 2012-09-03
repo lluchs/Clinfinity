@@ -1,0 +1,1 @@
+Basisdefinition für Spielregeln, Umweltsteuerungsobjekte, Spielziele, etc.
