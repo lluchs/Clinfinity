@@ -46,7 +46,7 @@ private func Singing() {
         if(ObjectCount2(Find_Category(C4D_StaticBack), Find_Func("IsTree")) >= 10) {
             //Sound("BirdSong*", 1);
             var sound = Random(15)+1;
-            Sound(Format("BirdSong%d", sound));
+            Sound(Format("BirdSong%d", sound), true);
             //Log("%d", sound);
         } else
 			Sound("Crow*", 1);
