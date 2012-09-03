@@ -18,5 +18,5 @@ protected func Initialize() {
 	}
 
 	SetCategory(GetCategory() | C4D_Parallax | C4D_Background);
-	Local(0) = Local(1) = Random(20) + brightness * 5 - 5;
+	Local(0) = Local(1) = Random(5) + brightness * 1 - 1;
 }
