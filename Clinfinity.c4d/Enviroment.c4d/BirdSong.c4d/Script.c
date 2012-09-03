@@ -14,13 +14,13 @@ private func Initialized(int ruleTypeCount) {
     var time = FindObject2(Find_ID(TIME));
     if(time == 0) return;
 
-    time->AddEventListener(this, "OnDay");
+    time->AddEventListener(this, ["OnDay", "ScheduleTweets"]);
     time->AddEventListener(this, "OnNightfall");
     time->AddAlarmListener(this, time->GetDaybreakTime() + TIME_TwilightLength / 4);
     time->AddAlarmListener(this, time->GetNightfallTime() + TIME_TwilightLength * 3 / 4);
 }
 
-private func ScheduleTweets() {
+protected func ScheduleTweets() {
     for(var i = 0; i < tweetCount; ++i) {
         // randomize start
         ScheduleCall(0, "Singing", 25 - Random(20));
@@ -30,10 +30,6 @@ private func ScheduleTweets() {
 public func OnAlarm(object clock, int time) {
     if(IsDaybreak()) Sound("Rooster*");
     else Sound("Owl");
-}
-
-public func OnDay(object clock) {
-    ScheduleTweets();
 }
 
 public func OnNightfall(object clock) {
