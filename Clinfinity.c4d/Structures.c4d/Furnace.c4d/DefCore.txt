@@ -13,7 +13,7 @@ VertexY=-25,-22
 VertexFriction=50,50,100,100
 Value=200
 Mass=1500
-Components=ROCK=5;METL=1
+Components=ROCK=5;WOOD=2;
 Picture=40,0,40,60
 Exclusive=1
 Construction=1

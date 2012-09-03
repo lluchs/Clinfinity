@@ -12,8 +12,8 @@ Mass=20
 Components=WOOD=1;
 Picture=0,12,64,64
 SolidMask=0,0,15,12,0,0
-Vertices=4
-VertexX=-6,-6,6,6
-VertexY=-5,5,-5,5
-VertexFriction=80,80,80,80
+Vertices=2
+VertexX=-6,6
+VertexY=5,5
+VertexFriction=80,80
  

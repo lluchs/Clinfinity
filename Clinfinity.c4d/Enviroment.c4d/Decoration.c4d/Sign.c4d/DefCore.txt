@@ -12,7 +12,6 @@ Mass=10
 Components=WOOD=1;
 Picture=0,0,16,23
 Grab=2
-GrabPutGet=C4D_GrabPut
 Vertices=2
 VertexX=0,0
 VertexY=9,-12
