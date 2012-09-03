@@ -2,28 +2,21 @@
 
 #strict 2
 
-protected func Initialize() {
-	SetPosition(0, 0);
-	ScheduleCall(0, "Initialized", 1);
-}
+#include RULE
 
-private func Initialized() {
+private func Initialized(int ruleTypeCount) {
 	var time = FindObject2(Find_ID(TIME));
 	if(time == 0) {
 		RemoveObject();
 		return;
 	}
+	SetPosition(0, 0);
 	time->AddEventListener(this, "OnNightfall");
 	time->AddAlarmListener(this, time->GetDaybreakTime() - 255 * TIME_SecondsPerFrame);
 
-	var maxStarsCount = (LandscapeWidth() * LandscapeHeight() * ObjectCount2(Find_ID(GetID()))) / 20000;
+	var maxStarsCount = (LandscapeWidth() * LandscapeHeight() * ruleTypeCount) / 20000;
 	for(var i = 0; i < maxStarsCount; ++i) {
 		CreateObject(STAR, Random(LandscapeWidth()), Random(LandscapeHeight()), NO_OWNER);
-	}
-
-	var others = FindObjects(Find_ID(GetID()), Find_Exclude(this));
-	for(var other in others) {
-		other->RemoveObject();
 	}
 }
 
