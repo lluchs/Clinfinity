@@ -14,12 +14,12 @@ protected func Initialize() {
     time->AddEventListener(this, ["OnDaybreak", "StopCicadas"]);
 }
 
-public func StartCicadas() {
+protected func StartCicadas() {
 	SetAction("Cicadas");
 	SetPhase(Random(20));
 }
 
-public func StopCicadas() {
+protected func StopCicadas() {
 	SetAction("Idle");
 }
 
