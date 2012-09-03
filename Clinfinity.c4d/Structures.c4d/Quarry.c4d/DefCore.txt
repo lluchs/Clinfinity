@@ -2,7 +2,7 @@
 id=QRRY
 Version=4,9,8
 Name=Steinbruch
-Category=1
+Category=C4D_Structure|C4D_SelectBuilding|C4D_SelectKnowledge
 MaxUserSelect=1
 Width=85
 Height=135

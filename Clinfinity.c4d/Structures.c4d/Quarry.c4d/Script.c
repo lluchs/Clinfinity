@@ -2,7 +2,8 @@
 
 #strict 2
 
-func Initialize() {
-  SetAction("Stomp"); 
-  return(1);
+#include STBO
+
+protected func Quarry() {
+	Sound("Quarry");
 }
