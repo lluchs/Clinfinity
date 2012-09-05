@@ -11,6 +11,7 @@ Components=METL=1;
 Picture=0,0,16,16
 Collection=-8,-8,16,16
 Rotate=1
+NoStabilize=1
 
 [Physical]
 Float=1000

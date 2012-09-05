@@ -8,6 +8,15 @@ NextAction=Fly
 PhaseCall=Flying
 
 [Action]
+Name=FlyIdle
+Procedure=FLOAT
+Length=10
+Delay=2
+Facet=0,0,16,16
+NextAction=FlyIdle
+StartCall=DecideAction
+
+[Action]
 Name=Drill
 Procedure=FLOAT
 Length=10
