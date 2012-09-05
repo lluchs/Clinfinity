@@ -5,6 +5,8 @@ static const DRNE_MovementAngleDeviation = 20;
 static const DRNE_MovementSpeed = 15;
 static const DRNE_PreciseMovementDistance = 30;
 static const DRNE_StopDistance = 2;
+static const DRNE_DrillTime = 80;
+static const DRNE_DrillRadius = 10;
 
 local targetX, targetY;
 
@@ -31,4 +33,12 @@ protected func Flying() {
 	var speedX = Sin(angle, DRNE_MovementSpeed);
 	var speedY = -Cos(angle, DRNE_MovementSpeed);
 	SetSpeed(speedX, speedY);
+}
+
+protected func Drilling() {
+	SetPosition(GetX(), GetY() + Sin(GetActTime() * 360 / GetActMapVal("Length", GetAction()), 1));
+	if(GetActTime() > DRNE_DrillTime) {
+		SetAction("Fly");
+		BlastFree(0, 0, DRNE_DrillRadius);
+	}
 }
