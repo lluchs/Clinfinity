@@ -1,8 +1,7 @@
 [DefCore]
 id=DRNE
-Name=Drone
 Version=4,9,5
-Category=1
+Category=C4D_Vehicle|C4D_MouseIgnore
 Width=16
 Height=16
 Offset=-8,-8
@@ -11,3 +10,6 @@ Mass=5
 Components=METL=1;
 Picture=0,0,16,16
 Rotate=1
+
+[Physical]
+Float=1000

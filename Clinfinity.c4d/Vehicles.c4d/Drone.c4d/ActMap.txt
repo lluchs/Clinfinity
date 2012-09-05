@@ -5,3 +5,4 @@ Length=10
 Delay=2
 Facet=0,0,16,16
 NextAction=Fly
+PhaseCall=Flying
