@@ -145,7 +145,7 @@ protected func Flying() {
 }
 
 protected func Drilling() {
-	SetPosition(GetX(), GetY() + Sin(GetActTime() * 360 / GetActMapVal("Length", GetAction()), 1));
+	SetPosition(GetX(), GetY() + Sin(GetActTime() * 2 * 360 / GetActMapVal("Length", GetAction()), 1));
 	if(GetActTime() > DRNE_DrillTime) {
 		SetAction("Fly");
 		BlastFree(0, 0, DRNE_DrillRadius);
