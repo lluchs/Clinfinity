@@ -10,7 +10,9 @@ local lastRockX, lastRockY;
 
 protected func Initialize() {
 	for(var i = 0; i < 5; ++i) {
-		DRNE->CreateDrone(GetX(), GetY(), GetOwner(), this);
+		var x = GetX() + RandomX(-GetDefWidth(GetID()) / 4, GetDefWidth(GetID()) / 4);
+		var y = GetY() + RandomX(-GetDefHeight(GetID()) / 4, GetDefHeight(GetID()) / 4) + GetDefHeight(DRNE) / 2;
+		DRNE->CreateDrone(x, y, GetOwner(), this);
 	}
 	return _inherited(...);
 }

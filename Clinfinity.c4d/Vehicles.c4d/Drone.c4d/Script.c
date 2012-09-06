@@ -73,12 +73,12 @@ protected func DecideAction() {
 			MoveTo(drillX, drillY);
 		}
 	} else if(ContentsCount(collectedMaterial) >= DRNE_MaxRockCollection) {
-		MoveTo(myQuarry->GetX(), myQuarry->GetY());
+		MoveToQuarry();
 	} else if(IsOtherDroneDrillingHere(0, 0) || !IsRockHere(0, 0)) {
 		if(FindDrillingPosition(drillX, drillY)) {
 			MoveTo(drillX, drillY);
 		} else {
-			MoveTo(myQuarry->GetX(), myQuarry->GetY());
+			MoveToQuarry();
 		}
 	} else {
 		Drill();
@@ -91,6 +91,14 @@ protected func DecideAction() {
 		- Detect: If at the destination there already is another drone drilling, find some other place - OK
 		- If full: Fly back to the quarry and deposit collected rock - OK
 	*/
+}
+
+private func MoveToQuarry() {
+	var width = GetDefWidth(GetID(myQuarry));
+	var height = GetDefHeight(GetID(myQuarry));
+	var x = myQuarry->GetX() + RandomX(-width / 4, width / 4);
+	var y = myQuarry->GetY() + RandomX(-height / 4, height / 4);
+	MoveTo(x, y);
 }
 
 private func IsAtQuarry() {
