@@ -70,6 +70,7 @@ protected func DecideAction() {
 	} else if(ContentsCount(collectedMaterial) >= DRNE_MaxRockCollection) {
 		if(IsAtQuarry()) {
 			MoveRockToQuarry();
+			// TODO: Ask quarry for new coordinates where to find rock
 		} else {
 			MoveTo(myQuarry->GetX(), myQuarry->GetY());
 		}
@@ -85,10 +86,10 @@ protected func DecideAction() {
 	/*
 
 	Drones should:
-		- Get a destination from the quarry and fly there
-		- Be able to find new rock to drill nearby
-		- Detect: If at the destination there already is another drone drilling, find some other place
-		- If full: Fly back to the quarry and deposit collected rock
+		- Get a destination from the quarry and fly there - TODO
+		- Be able to find new rock to drill nearby - OK
+		- Detect: If at the destination there already is another drone drilling, find some other place - TODO: Check *before* flying there
+		- If full: Fly back to the quarry and deposit collected rock - OK
 	*/
 }
 
