@@ -67,15 +67,13 @@ protected func DecideAction() {
 			- Fall out of the landscape
 			- Fade out and get removed
 		*/
-	} else if(ContentsCount(collectedMaterial) >= DRNE_MaxRockCollection) {
-		if(IsAtQuarry()) {
-			MoveRockToQuarry();
-			if(myQuarry->~FindDrillingPosition(drillX, drillY)) {
-				MoveTo(drillX, drillY);
-			}
-		} else {
-			MoveTo(myQuarry->GetX(), myQuarry->GetY());
+	} else if(IsAtQuarry()) {
+		MoveRockToQuarry();
+		if(myQuarry->~FindDrillingPosition(drillX, drillY)) {
+			MoveTo(drillX, drillY);
 		}
+	} else if(ContentsCount(collectedMaterial) >= DRNE_MaxRockCollection) {
+		MoveTo(myQuarry->GetX(), myQuarry->GetY());
 	} else if(IsOtherDroneDrillingHere(0, 0) || !IsRockHere(0, 0)) {
 		if(FindDrillingPosition(drillX, drillY)) {
 			MoveTo(drillX, drillY);
