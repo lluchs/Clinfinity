@@ -74,7 +74,7 @@ protected func DecideAction() {
 		} else {
 			MoveTo(myQuarry->GetX(), myQuarry->GetY());
 		}
-	} else if(IsOtherDroneDrillingHere() || !IsRockHere()) {
+	} else if(IsOtherDroneDrillingHere(0, 0) || !IsRockHere(0, 0)) {
 		if(FindDrillingPosition(drillX, drillY)) {
 			MoveTo(drillX, drillY);
 		} else {
@@ -104,12 +104,12 @@ private func MoveRockToQuarry() {
 	}
 }
 
-private func IsOtherDroneDrillingHere() {
-	return FindObject2(Find_ID(GetID()), Find_AtPoint(0, 0), Find_Exclude(this), Find_Action("Drill")) != 0;
+private func IsOtherDroneDrillingHere(int x, int y) {
+	return FindObject2(Find_ID(GetID()), Find_AtPoint(x, y), Find_Exclude(this), Find_Action("Drill")) != 0;
 }
 
-private func IsRockHere() {
-	return GetMaterial(0, 0) == Material(drilledMaterial);
+private func IsRockHere(int x, int y) {
+	return GetMaterial(x, y) == Material(drilledMaterial);
 }
 
 // 
@@ -119,7 +119,7 @@ private func FindDrillingPosition(&x, &y) {
 		for(var j = 0; j < 360; j += 10) {
 			var searchX = Sin(searchAngle + j, radius);
 			var searchY = -Cos(searchAngle + j, radius);
-			if(GetMaterial(searchX, searchY) == Material(drilledMaterial)) {
+			if(!IsOtherDroneDrillingHere(searchX, searchY) && IsRockHere(searchX, searchY)) {
 				x = searchX + GetX();
 				y = searchY + GetY();
 				return true;
