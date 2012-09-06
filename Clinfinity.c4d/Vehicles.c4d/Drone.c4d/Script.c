@@ -34,13 +34,14 @@ public func Drill() {
 }
 
 protected func DecideAction() {
-	if(FindObject2(Find_ID(GetID()), Find_AtPoint(0, 0), Find_Exclude(this)) != 0) {
-		if(FindDrillingPosition()) {
-			SetAction("Fly");
+	var drillX, drillY;
+	if(FindObject2(Find_ID(GetID()), Find_AtPoint(0, 0), Find_Exclude(this), Find_Action("Drill")) != 0) {
+		if(FindDrillingPosition(drillX, drillY)) {
+			MoveTo(drillX, drillY);
 		}
 	} else if(GetMaterial(0, 0) != Material("Rock")) {
-		if(FindDrillingPosition()) {
-			SetAction("Fly");
+		if(FindDrillingPosition(drillX, drillY)) {
+			MoveTo(drillX, drillY);
 		}
 	} else if(GetMaterial(0, 0) == Material("Rock")) {
 		Drill();
@@ -56,15 +57,15 @@ protected func DecideAction() {
 }
 
 // 
-private func FindDrillingPosition() {
+private func FindDrillingPosition(&x, &y) {
 	for(var radius = DRNE_DrillRadius * 2; radius < DRNE_DrillRadius * 10; radius += DRNE_DrillRadius) {
 		var searchAngle = Random(360);
 		for(var j = 0; j < 360; j += 10) {
 			var searchX = Sin(searchAngle + j, radius);
 			var searchY = -Cos(searchAngle + j, radius);
 			if(GetMaterial(searchX, searchY) == Material("Rock")) {
-				targetX = searchX + GetX();
-				targetY = searchY + GetY();
+				x = searchX + GetX();
+				y = searchY + GetY();
 				return true;
 			}
 		}
