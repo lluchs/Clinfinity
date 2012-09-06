@@ -7,20 +7,29 @@ static const DRNE_PreciseMovementDistance = 30;
 static const DRNE_StopDistance = 2;
 static const DRNE_DrillTime = 80;
 static const DRNE_DrillRadius = 10;
-static const DRNE_MaxRockCollection = 30; // TODO: Use RejectCollect to only collect ROCK
+static const DRNE_MaxRockCollection = 20;
 
 local myQuarry;
+local drilledMaterial, collectedMaterial;
 local targetX, targetY;
 
 public func CreateDrone(int x, int y, int owner, object forQuarry) {
 	var drone = CreateObject(DRNE, x, y, owner);
 	drone->LocalN("myQuarry") = forQuarry;
 	//drone->FadeIn();
+	return drone;
 }
 
 protected func Initialize() {
 	Stop();
+	drilledMaterial = "Rock";
+	collectedMaterial = ROCK;
 }
+
+protected func RejectCollect(id collectedObjectId, object collectedObject) {
+	return collectedObjectId != collectedMaterial;
+}
+
 
 
 /* Actions/Commands */
@@ -58,7 +67,7 @@ protected func DecideAction() {
 			- Fall out of the landscape
 			- Fade out and get removed
 		*/
-	} else if(ContentsCount(ROCK) >= DRNE_MaxRockCollection) {
+	} else if(ContentsCount(collectedMaterial) >= DRNE_MaxRockCollection) {
 		// TODO: Empty contents when arrived at quarry
 		MoveTo(myQuarry->GetX(), myQuarry->GetY());
 	} else if(IsOtherDroneDrillingHere() || !IsRockHere()) {
@@ -85,7 +94,7 @@ private func IsOtherDroneDrillingHere() {
 }
 
 private func IsRockHere() {
-	return GetMaterial(0, 0) == Material("Rock");
+	return GetMaterial(0, 0) == Material(drilledMaterial);
 }
 
 // 
@@ -95,7 +104,7 @@ private func FindDrillingPosition(&x, &y) {
 		for(var j = 0; j < 360; j += 10) {
 			var searchX = Sin(searchAngle + j, radius);
 			var searchY = -Cos(searchAngle + j, radius);
-			if(GetMaterial(searchX, searchY) == Material("Rock")) {
+			if(GetMaterial(searchX, searchY) == Material(drilledMaterial)) {
 				x = searchX + GetX();
 				y = searchY + GetY();
 				return true;
