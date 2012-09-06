@@ -31,7 +31,6 @@ protected func RejectCollect(id collectedObjectId, object collectedObject) {
 }
 
 
-
 /* Actions/Commands */
 
 public func MoveTo(int x, int y) {
@@ -83,14 +82,6 @@ protected func DecideAction() {
 	} else {
 		Drill();
 	}
-	/*
-
-	Drones should:
-		- Get a destination from the quarry and fly there - OK
-		- Be able to find new rock to drill nearby - OK
-		- Detect: If at the destination there already is another drone drilling, find some other place - OK
-		- If full: Fly back to the quarry and deposit collected rock - OK
-	*/
 }
 
 private func MoveToQuarry() {
@@ -120,7 +111,6 @@ private func IsRockHere(int x, int y) {
 	return GetMaterial(x, y) == Material(drilledMaterial);
 }
 
-// 
 private func FindDrillingPosition(&x, &y) {
 	for(var radius = DRNE_DrillRadius * 2; radius < DRNE_DrillRadius * 10; radius += DRNE_DrillRadius) {
 		var searchAngle = Random(360);
@@ -136,7 +126,6 @@ private func FindDrillingPosition(&x, &y) {
 	}
 	return false;
 }
-
 
 
 /* Action-Calls */
