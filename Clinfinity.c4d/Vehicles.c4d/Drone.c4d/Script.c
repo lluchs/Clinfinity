@@ -7,17 +7,30 @@ static const DRNE_PreciseMovementDistance = 30;
 static const DRNE_StopDistance = 2;
 static const DRNE_DrillTime = 80;
 static const DRNE_DrillRadius = 10;
+static const DRNE_MaxRockCollection = 30; // TODO: Use RejectCollect to only collect ROCK
 
+local myQuarry;
 local targetX, targetY;
+
+public func CreateDrone(int x, int y, int owner, object forQuarry) {
+	var drone = CreateObject(DRNE, x, y, owner);
+	drone->LocalN("myQuarry") = forQuarry;
+	//drone->FadeIn();
+}
 
 protected func Initialize() {
 	Stop();
 }
 
+
+/* Actions/Commands */
+
 public func MoveTo(int x, int y) {
 	targetX = x;
 	targetY = y;
-	SetAction("Fly");
+	if(GetAction() != "Fly") {
+		SetAction("Fly");
+	}
 }
 
 public func Stop() {
@@ -30,20 +43,31 @@ public func Stop() {
 }
 
 public func Drill() {
-	SetAction("Drill");
+	if(GetAction() != "Drill") {
+		SetAction("Drill");
+	}
 }
 
 protected func DecideAction() {
 	var drillX, drillY;
-	if(FindObject2(Find_ID(GetID()), Find_AtPoint(0, 0), Find_Exclude(this), Find_Action("Drill")) != 0) {
+	if(myQuarry == 0) {
+		// TODO: What should happen if the quarry is missing?
+		/* Ideas:
+			- Incinerate
+			- Explode
+			- Fall out of the landscape
+			- Fade out and get removed
+		*/
+	} else if(ContentsCount(ROCK) >= DRNE_MaxRockCollection) {
+		// TODO: Empty contents when arrived at quarry
+		MoveTo(myQuarry->GetX(), myQuarry->GetY());
+	} else if(IsOtherDroneDrillingHere() || !IsRockHere()) {
 		if(FindDrillingPosition(drillX, drillY)) {
 			MoveTo(drillX, drillY);
+		} else {
+			MoveTo(myQuarry->GetX(), myQuarry->GetY());
 		}
-	} else if(GetMaterial(0, 0) != Material("Rock")) {
-		if(FindDrillingPosition(drillX, drillY)) {
-			MoveTo(drillX, drillY);
-		}
-	} else if(GetMaterial(0, 0) == Material("Rock")) {
+	} else {
 		Drill();
 	}
 	/*
@@ -54,6 +78,14 @@ protected func DecideAction() {
 		- Detect: If at the destination there already is another drone drilling, find some other place
 		- If full: Fly back to the quarry and deposit collected rock
 	*/
+}
+
+private func IsOtherDroneDrillingHere() {
+	return FindObject2(Find_ID(GetID()), Find_AtPoint(0, 0), Find_Exclude(this), Find_Action("Drill")) != 0;
+}
+
+private func IsRockHere() {
+	return GetMaterial(0, 0) == Material("Rock");
 }
 
 // 
