@@ -22,7 +22,7 @@ public func CreateDrone(int x, int y, int owner, object forQuarry) {
 
 protected func Initialize() {
 	Stop();
-	drilledMaterial = "Rock";
+	drilledMaterial = "Metalearth";
 	collectedMaterial = ROCK;
 }
 
@@ -97,11 +97,9 @@ private func IsAtQuarry() {
 }
 
 private func MoveRockToQuarry() {
-	Log("Move rock to quarry");
 	var rocks = FindObjects(Find_ID(collectedMaterial), Find_Container(this));
 	for(var rock in rocks) {
 		rock->Enter(myQuarry);
-		Log("Move");
 	}
 }
 
