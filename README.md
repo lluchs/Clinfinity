@@ -14,3 +14,8 @@ Clonk Infinity uses sounds from the [Freesound project](http://www.freesound.org
 	- pang.wav by [jenc](http://www.freesound.org/people/jenc/)
 	- 5.wav and 38.wav by [adcbicycle](http://www.freesound.org/people/adcbicycle/)
 - Yo-yo whoosh.wav is swosh-22.flac by [qubodup](http://www.freesound.org/people/qubodup/)
+
+We also use objects from other authors:
+
+- The firefly was created by David Dormagen
+- Light and light cone were created by the Hazard team

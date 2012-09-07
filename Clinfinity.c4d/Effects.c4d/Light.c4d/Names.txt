@@ -1,0 +1,2 @@
+DE:Licht
+US:Light

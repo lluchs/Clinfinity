@@ -1,0 +1,7 @@
+[Action]
+Name=Shine
+Length=10
+Delay=0
+Facet=0,0,3,3
+FacetBase=0
+NextAction=Hold

@@ -1,0 +1,2 @@
+DE=Glühwurm
+US=Firefly
