@@ -5,6 +5,7 @@
 #include STBO
 
 static const QRRY_MaxSearchDistance = 500;
+static const QRRY_MaxSearchIterations = 100;
 
 local lastRockX, lastRockY;
 
@@ -31,7 +32,7 @@ public func FindDrillingPosition(&x, &y) {
 	var searchX = RandomX(-QRRY_MaxSearchDistance, QRRY_MaxSearchDistance);
 	var searchY = RandomX(-QRRY_MaxSearchDistance, QRRY_MaxSearchDistance);
 
-	for(var i = 0; i < 100; ++i) {
+	for(var i = 0; i < QRRY_MaxSearchIterations; ++i) {
 		if(GetMaterial(searchX, searchY) == Material("Metalearth")) {
 			x = searchX + GetX();
 			y = searchY + GetY();
