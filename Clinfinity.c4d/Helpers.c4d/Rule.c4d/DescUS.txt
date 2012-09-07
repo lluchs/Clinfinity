@@ -1,0 +1,1 @@
+Base definition for rules, environment control objects, goals, etc.

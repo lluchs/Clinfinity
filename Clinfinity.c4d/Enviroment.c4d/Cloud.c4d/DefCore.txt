@@ -1,0 +1,12 @@
+[DefCore]
+id=CLD1
+Name=Cloud
+Version=4,9,5
+Category=1
+Width=500
+Height=500
+Offset=-250,-250
+Value=1
+Mass=10
+Components=CLD1=1;
+Picture=0,0,500,500

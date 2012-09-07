@@ -1,0 +1,2 @@
+DE:Regel-Basisdefinition
+US:Rule base definition

@@ -1,0 +1,13 @@
+[DefCore]
+id=NSBD
+Name=Big Dipper
+Version=4,9,5
+Category=1
+Width=346
+Height=264
+Offset=-173,-132
+Value=1
+Mass=1
+Components=NSBD=1;
+Picture=0,0,346,264
+ 

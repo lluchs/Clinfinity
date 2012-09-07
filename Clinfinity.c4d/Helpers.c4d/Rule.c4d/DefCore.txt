@@ -1,0 +1,8 @@
+[DefCore]
+id=RULE
+Version=4,9,8
+Category=C4D_StaticBack
+Width=1
+Height=1
+Offset=0,0
+Picture=0,0,1,1
