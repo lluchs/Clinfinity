@@ -58,4 +58,4 @@ Rain=45,0,0,100
 Wind=1,100,-100,100
 
 [Environment]
-Objects=EGLN=1;EGRS=1;BRD2=1;STRS=2;TIME=1
+Objects=EGLN=1;EGRS=1;BRD2=1;STRS=2;TIME=1;CIC2=3
