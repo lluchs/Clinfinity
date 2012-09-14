@@ -19,6 +19,9 @@ protected func Initialize() {
 		clock->AddAlarmListener(this, GetNightfallTime());
 		clock->AddAlarmListener(this, GetDaybreakTime());
 	}
+	if(IsNightfall() || IsNight()) {
+		SetDayNightGraphics("Night");
+	}
 	return _inherited();
 }
 
