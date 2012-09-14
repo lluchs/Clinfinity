@@ -20,7 +20,9 @@ protected func Initialize() {
 }
 
 protected func Collection2(object collected) {
-	SetAction("Stomp");
+	if(GetAction() != "Stomp") {
+		SetAction("Stomp");
+	}
 }
 
 protected func Quarry() {
