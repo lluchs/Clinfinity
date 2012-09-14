@@ -19,16 +19,27 @@ protected func Initialize() {
 }
 
 protected func Collection2(object collected) {
-	var matSys = GetMatSys(GetOwner(), true);
-	var id = collected->GetID();
-	if(matSys != 0 && InArray(id, GetMatSysIDs())) {
-		matSys->DoFill(1, id);
-	}
-	collected->RemoveObject();
+	SetAction("Stomp");
 }
 
 protected func Quarry() {
 	Sound("Quarry");
+}
+
+protected func Stomping() {
+	var rock = Contents();
+	if(rock != 0) {
+		var matSys = GetMatSys(GetOwner(), true);
+		var id = rock->GetID();
+		if(matSys != 0 && InArray(id, GetMatSysIDs())) {
+			matSys->DoFill(1, id);
+		}
+		rock->RemoveObject();
+	}
+	// Stop when all contents have been stomped.
+	if(Contents() == 0) {
+		SetAction("Attach");
+	}
 }
 
 public func FindDrillingPosition(&x, &y) {

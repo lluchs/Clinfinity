@@ -6,6 +6,7 @@ Delay=2
 Length=50
 NextAction=Stomp
 StartCall=Quarry
+EndCall=Stomping
 
 [Action]
 Name=Attach
