@@ -1,0 +1,16 @@
+[Action]
+Name=Stomp
+Procedure=ATTACH
+Facet=0,0,85,135
+Delay=2
+Length=50
+NextAction=Stomp
+StartCall=Quarry
+EndCall=Stomping
+
+[Action]
+Name=Attach
+Procedure=ATTACH
+Facet=0,0,85,135
+Length=1
+NextAction=Hold

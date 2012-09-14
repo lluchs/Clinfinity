@@ -1,0 +1,17 @@
+[DefCore]
+id=DRNE
+Version=4,9,8
+Category=C4D_Vehicle|C4D_MouseIgnore
+Width=16
+Height=16
+Offset=-8,-8
+Value=10
+Mass=5
+Components=METL=1;
+Picture=0,0,16,16
+Collection=-8,-8,16,16
+Rotate=1
+NoStabilize=1
+
+[Physical]
+Float=1000
