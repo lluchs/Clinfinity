@@ -1,8 +1,8 @@
-/*-- Neues Objekt --*/
+#strict 2
 
-#strict
+// Local(0) and Local(1) are used for parallax movement
 
-func Initialize() {
-   
-  return(1);
+protected func Initialize() {
+	SetClrModulation(RGBa(255, 255, 255, 255));
+	Local(0) = Local(1) = Random(5);
 }
