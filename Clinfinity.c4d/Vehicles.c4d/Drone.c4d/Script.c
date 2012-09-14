@@ -47,6 +47,7 @@ public func Stop() {
 	SetSpeed(0);
 	if(GetAction() != "FlyIdle") {
 		SetAction("FlyIdle");
+		SetPhase(Random(GetActMapVal("Length", GetAction())));
 	}
 }
 
@@ -129,6 +130,10 @@ private func FindDrillingPosition(&x, &y) {
 
 
 /* Action-Calls */
+
+protected func Idling() {
+	SetPosition(targetX, targetY + Sin(GetPhase() * 360 / GetActMapVal("Length", GetAction()), 1));
+}
 
 protected func Flying() {
 	if(Distance(GetX(), GetY(), targetX, targetY) < DRNE_StopDistance) {
