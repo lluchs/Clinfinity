@@ -10,6 +10,7 @@ Offset=-20,-30
 Vertices=2
 VertexX=-16,13
 VertexY=-25,-22
+VertexCNAT=5,6
 VertexFriction=50,50,100,100
 Value=200
 Mass=1500
