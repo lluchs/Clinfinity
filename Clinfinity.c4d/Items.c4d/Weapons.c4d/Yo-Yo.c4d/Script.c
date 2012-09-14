@@ -41,7 +41,7 @@ static const YOYO_StateReturning = 2;
 	YOYO_ReturnSlowDownDistance	- Distance where the yo-yo slows down when approaching the thrower.
 	YOYO_MaxCollectionDistance	- Maximum distance in which the yo-yo returns itself to the thrower's inventory. */
 static const YOYO_ThrowFlightTime = 12;
-static const YOYO_ReturnMaxSpeed = 50;
+static const YOYO_ReturnMaxSpeed = 40;
 static const YOYO_ReturnSlowDownDistance = 5;
 static const YOYO_MaxCollectionDistance = 10;
 
