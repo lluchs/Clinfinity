@@ -9,6 +9,7 @@ static const DRNE_DrillTime = 80;
 static const DRNE_DrillRadius = 10;
 static const DRNE_MaxRockCollection = 20;
 
+local creationFrame;
 local myQuarry;
 local drilledMaterial, collectedMaterial;
 local targetX, targetY;
@@ -16,11 +17,11 @@ local targetX, targetY;
 public func CreateDrone(int x, int y, int owner, object forQuarry) {
 	var drone = CreateObject(DRNE, x, y, owner);
 	drone->LocalN("myQuarry") = forQuarry;
-	//drone->FadeIn();
 	return drone;
 }
 
 protected func Initialize() {
+	creationFrame = FrameCounter();
 	Stop();
 	drilledMaterial = "Metalearth";
 	collectedMaterial = ROCK;
@@ -60,13 +61,12 @@ public func Drill() {
 protected func DecideAction() {
 	var drillX, drillY;
 	if(myQuarry == 0) {
-		// TODO: What should happen if the quarry is missing?
-		/* Ideas:
-			- Incinerate
-			- Explode
-			- Fall out of the landscape
-			- Fade out and get removed
-		*/
+		if(FrameCounter() > creationFrame) {
+			if(GetAction() != "Idle") {
+				SetAction("Idle");
+				FadeOut();
+			}
+		}
 	} else if(IsAtQuarry()) {
 		MoveRockToQuarry();
 		if(myQuarry->~FindDrillingPosition(drillX, drillY)) {
