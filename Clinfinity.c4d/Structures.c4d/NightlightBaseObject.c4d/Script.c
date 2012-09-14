@@ -1,7 +1,15 @@
 /*	Script: Night light base object
-	Inheriting from this object automatically activates...
-	follow these rules:
-	- Provide an alternative GraphicsNight.png */
+	By inheriting from this object, a structure's graphics is automatically switched,
+	according to the current state of the day/night cycle.
+	With this, a structure can for example switch on spotlights at night.
+
+	A structure using alternate graphics for day and night must follow the following two rules
+	- Provide GraphicsNight.png
+	- Inherit from NLBO
+
+	The following events are then handled automatically
+	- Switching to the according graphics on daybreak and nightfall.
+	- Setting the according graphics when building the structure at nightfall or at night. */
 
 #strict 2
 
