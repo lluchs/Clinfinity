@@ -151,6 +151,11 @@ protected func Flying() {
 
 protected func Drilling() {
 	SetPosition(GetX(), GetY() + Sin(GetActTime() * 2 * 360 / GetActMapVal("Length", GetAction()), 1));
+	var colourIndex = Random(3);
+	var red =	GetMaterialColor(Material(drilledMaterial), colourIndex, 0);
+	var green =	GetMaterialColor(Material(drilledMaterial), colourIndex, 1);
+	var blue =	GetMaterialColor(Material(drilledMaterial), colourIndex, 2);
+	CastParticles("MatSpark", RandomX(1, 3), RandomX(10, 20), 0, 4, 20, 40, RGBa(red, green, blue, 50), RGBa(red, green, blue, 50));
 	if(GetActTime() > DRNE_DrillTime) {
 		SetAction("Fly");
 		BlastFree(0, 0, DRNE_DrillRadius);

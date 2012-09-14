@@ -1,0 +1,15 @@
+[Particle]
+Name=MatSpark
+MaxCount=300
+InitFn=StdInit
+ExecFn=StdExec
+DrawFn=Std
+Face=0,0,32,32,-16,-16
+Delay=1
+Repeats=6
+Reverse=1
+GravityAcc=50
+FadeOutLen=4
+FadeOutDelay=4
+AlphaFade=10
+Additive=0
