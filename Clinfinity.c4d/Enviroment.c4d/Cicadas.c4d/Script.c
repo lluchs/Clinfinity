@@ -15,7 +15,7 @@ protected func Initialize() {
 }
 
 protected func StartCicadas() {
-	SetAction("Cicadas");
+	SetAction("Cricket*");
 	SetPhase(Random(20));
 }
 
