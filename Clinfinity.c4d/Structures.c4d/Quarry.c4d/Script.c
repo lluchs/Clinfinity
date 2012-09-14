@@ -24,6 +24,7 @@ protected func Collection2(object collected) {
 	if(matSys != 0 && InArray(id, GetMatSysIDs())) {
 		matSys->DoFill(1, id);
 	}
+	collected->RemoveObject();
 }
 
 protected func Quarry() {
