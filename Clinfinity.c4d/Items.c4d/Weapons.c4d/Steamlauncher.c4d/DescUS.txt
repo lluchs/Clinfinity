@@ -1,0 +1,3 @@
+Fires steam grenades which explode on contact.
+
+Press 'throw' to fire.

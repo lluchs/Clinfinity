@@ -1,8 +1,13 @@
-/*-- Winchester --*/
+/*	Script: Musket
+	A long-range projectile weapon. */
 
 #strict 2
 
 #include L_SS
+
+// overlay position
+public func HandX() { return 9000; }
+public func HandY() { return 2000; }
 
 // clip size
 public func MaxFill() { return 6; }
@@ -94,7 +99,7 @@ public func StartLoading() {
 
 public func Load() {
 	if(MatSysDoTeamFill(-1, Contained()->GetOwner(), METL)) {
-		DoFill(6);
+		DoFill(MaxFill());
 	}
 	StartCharging();
 }
@@ -126,68 +131,64 @@ public func Fire(object clonk, int angle) {
 		return;
 	MatSysDoTeamFill(-5, owner, STEM);
 	DoFill(-1);
-	
-    var obj, obj2, x, y, r, xDir, yDir, rDir, dir, phase;
+
+	var obj, obj2, x, y, r, xDir, yDir, rDir, dir, phase;
 
 	var ammo = CreateContents(CSHO);
 
-    // Austrittsparameter
-    dir = GetDir(clonk) * 2 - 1;
-    phase = GetPhase(clonk);
-    //x = +Sin(phase * 19, 14) * dir;
-    //y = -Cos(phase * 19, 14) - 2;
-    r = angle * dir + 90;
-    xDir = (Sin(angle, 22) + 1) * dir;
-    yDir = -Cos(angle, 22);
-    rDir = 0;
+	// Launch parameter calculation
+	dir = clonk->GetDir() * 2 - 1;
+	phase = clonk->GetPhase();
+	r = angle * dir + 90;
+	xDir = (Sin(angle, 22) + 1) * dir;
+	yDir = -Cos(angle, 22);
+	rDir = 0;
 
-    // Besitzer des Projektils setzen
-    SetOwner( GetOwner(clonk), ammo );
+	// See AVTR::WeaponAt
+	var dst = 10 + GetDefWidth() - HandX() / 1000;
+	x = (Sin(angle, dst)) * dir;
+	y = -Cos(angle, dst) - HandY() / 1000;
 
-    // Abfeuern
-    Exit(ammo, AbsX(x + GetX(clonk)), AbsY(y + GetY(clonk)), r, xDir, yDir, rDir);
-    ammo->Launch(-1, CalcDamage(), ChargeKnockback());
+	// Owner is important for awarding kills
+	SetOwner(clonk->GetOwner(), ammo);
 
-    // Mündungsfeuer
-    // hax, weil die Animation nicht genauen Winkeln entspricht und der Partikel seltsam verdreht wird
-    if(dir == DIR_Left) {
-        if(Inside(phase, 0, 1)) x = +Sin(phase * 15, 15) * dir + 5;
-        else    x = +Sin(phase * 15, 15) * dir;
-    } else  x = +Sin(phase * 14, 15) * dir;
-    if(Inside(phase, 0, 7)) y = -Cos(phase * 15, 14) - 6;
-    else  y = -Cos(phase * 15, 14) - 3;
-    CreateParticle("MuzzleFlash", AbsX(x + GetX(clonk)), AbsY(y + GetY(clonk)), xDir, yDir, 35, RGBa(255, 255, 255, 0), clonk);
-    // Sound
-    Sound("MusketShoot*", 0, clonk);
-    // Rauch
-    Smoke(x, y, 2);
-    Smoke(x, y + Random(2), 3);
-    // Patronenhülse fliegt raus
-    CreateParticle("Casing", AbsX(x / 2 + GetX(clonk)), AbsY(y / 2 + GetY(clonk)), -dir * RandomX(1, 5), -RandomX(3, 7), 15, RGBa(250, 140, 80, 0));
-    // Der Clonk muss eine Kugel einladen
-    AddEffect("ReloadRifle", this, 101, 30);
+	Exit(ammo, AbsX(x + clonk->GetX()), AbsY(y + clonk->GetY()), r, xDir, yDir, rDir);
+	ammo->Launch(-1, CalcDamage(), ChargeKnockback());
+
+	// Muzzle flash particle: same position as ammo launch
+	CreateParticle("MuzzleFlash", AbsX(x + clonk->GetX()), AbsY(y + clonk->GetY()), xDir, yDir, 35, RGBa(255, 255, 255, 0), clonk);
+
+	Sound("MusketShoot*", 0, clonk);
+
+	Smoke(x, y, 2);
+	Smoke(x, y + Random(2), 3);
+
+	CreateParticle("Casing", AbsX(x / 2 + GetX(clonk)), AbsY(y / 2 + GetY(clonk)), -dir * RandomX(1, 5), -RandomX(3, 7), 15, RGBa(250, 140, 80, 0));
+
+	// Cooldown before the next shot can be fired
+	AddEffect("ReloadRifle", this, 101, 30);
 
 	// Restart charging.
 	StartCharging();
-    return 1;
+	return 1;
 }
 
 /* Objekt ist eine Waffe */
 public func IsWeapon () {
-    return 1;
+	return 1;
 }
 
 /* Objekt ist keine Handfeuerwaffe */
 public func IsGun () {
-    return 0;
+	return 0;
 }
 
 /* Objekt ist ein Gewehr */
 public func IsRifle () {
-    return 1;
+	return 1;
 }
 
 /* Objekt wurde ausgewählt */
 public func Selection () {
-    Sound("RevolverDraw");
+	Sound("RevolverDraw");
 }

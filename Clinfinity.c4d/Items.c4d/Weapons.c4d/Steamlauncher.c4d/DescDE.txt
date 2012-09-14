@@ -1,0 +1,3 @@
+Schießt Dampfgranaten, die bei Kontakt explodieren.
+
+Werfen für Schuss.

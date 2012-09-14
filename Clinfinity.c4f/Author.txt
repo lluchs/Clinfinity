@@ -18,6 +18,9 @@ B_E   - Factory, Pending Effect
 ala   - Cannon Tower
 Pitri - Pointer
 
+Other:
+Hazard team - Weapon overlay transformation
+
 ==================================================================
 
 Clonk Infinity uses sounds from the Freesound project:

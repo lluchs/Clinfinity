@@ -1,0 +1,2 @@
+Handle with care, contains steam under high pressure. May explode after severe hits.
+On detonation, nearby structures get damaged. Furthermore, crew members, vehicles and objects are flung. The flinging angle depends on the horizontal distance to the explosion.
