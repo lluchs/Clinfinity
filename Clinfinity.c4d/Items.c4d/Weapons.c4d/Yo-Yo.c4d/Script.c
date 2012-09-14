@@ -101,12 +101,16 @@ public func ContainerThrow() {
 	from	- The object the yo-yo departed from. */
 protected func Departure(object from) {
 	// If the yo-yo was thrown by a Clonk, act as weapon.
-	if((from->GetOCF() & OCF_CrewMember) != 0 && from->GetAction() == "Throw") {
+	if((from->GetOCF() & OCF_CrewMember) != 0 && from->GetAction() == "Throw" && !OtherYoyoThrownBy(from)) {
 		// Set speed to fly lower, because it's supposed to hit enemies.
 		SetXDir(GetXDir() * 3);
 		SetYDir(-5);
 		YoyoThrown(from);
 	}
+}
+
+private func OtherYoyoThrownBy(object clonk) {
+	return FindObject2(Find_ID(YOLN), Find_ActionTarget(clonk)) != 0;
 }
 
 /*	Function: Hit
@@ -233,7 +237,7 @@ protected func YoyoThrown(object by) {
 	currentState = YOYO_StateThrown;
 	thrower = by;
 	line = CreateObject(YOLN, 0, 0, GetOwner());
-	ObjectSetAction(line, "Connect", this, by);
+	ObjectSetAction(line, "Connect", by, this);
 	ScheduleCall(0, "YoyoReturn", YOYO_ThrowFlightTime);
 	Sound("Yo-yo spin", false, this, 100, 0, 1);
 
