@@ -5,16 +5,14 @@
 private func Chopping() {
 	if(_inherited()) {
 		var tree = GetActionTarget();
-		tree->Shrink();
-
-		var matSys = GetMatSys(GetOwner(), true);
-		if(matSys != 0 && InArray(WOOD, GetMatSysIDs())) {
-			matSys->DoFill(1, WOOD);
-		} else {
-			CreateContents(WOOD);
-		}
-
-		if(!tree)
+		if(tree->Shrink()) {
+			var matSys = GetMatSys(GetOwner(), true);
+			if(matSys != 0 && InArray(WOOD, GetMatSysIDs())) {
+				matSys->DoFill(1, WOOD);
+			} else {
+				CreateContents(WOOD);
+			}
+		} else
 			FinishCommand(this, true);
 	}
 	return true;

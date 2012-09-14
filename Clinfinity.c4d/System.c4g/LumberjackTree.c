@@ -20,14 +20,19 @@ public func Shrink() {
 	var oldHeight = GetObjHeight();
 
 
-	if(rest == 1) {
-		RemoveObject();
-	} else {
-		DoCon(-shrinkage);
-		// Unrotated trees shrink towards their offset instead their bottom. Thus, adjust their position so they stay on the ground.
-		if(GetR() != 0) {
-			var verticalAdjustment = (oldHeight - GetObjHeight()) / 3;
-			SetPosition(GetX(), GetY() + verticalAdjustment);
-		}
+	DoCon(-shrinkage);
+
+	// Unrotated trees shrink towards their offset instead their bottom. Thus, adjust their position so they stay on the ground.
+	if(GetR() != 0) {
+		var verticalAdjustment = (oldHeight - GetObjHeight()) / 3;
+		SetPosition(GetX(), GetY() + verticalAdjustment);
 	}
+
+	return GetCon();
+}
+
+protected func Destruction() {
+	// Replace the tree with a tiny one.
+	PlaceVegetation(GetID(), 0, 0, LandscapeWidth(), LandscapeHeight(), 1);
+	_inherited(...);
 }
