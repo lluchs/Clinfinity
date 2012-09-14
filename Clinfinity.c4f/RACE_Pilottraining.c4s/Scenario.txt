@@ -61,4 +61,4 @@ Lightning=10,0,0,100
 Meteorite=6,0,0,100
 
 [Environment]
-Objects=EGRS=1;BRD2=5
+Objects=EGRS=1;BRD2=3
