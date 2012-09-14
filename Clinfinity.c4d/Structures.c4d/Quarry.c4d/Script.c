@@ -3,6 +3,7 @@
 #strict 2
 
 #include STBO
+#include NLBO
 
 static const QRRY_MaxSearchDistance = 500;
 static const QRRY_MaxSearchIterations = 100;
