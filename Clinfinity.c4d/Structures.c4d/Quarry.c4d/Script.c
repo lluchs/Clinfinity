@@ -18,6 +18,14 @@ protected func Initialize() {
 	return _inherited(...);
 }
 
+protected func Collection2(object collected) {
+	var matSys = GetMatSys(GetOwner(), true);
+	var id = collected->GetID();
+	if(matSys != 0 && InArray(id, GetMatSysIDs())) {
+		matSys->DoFill(1, id);
+	}
+}
+
 protected func Quarry() {
 	Sound("Quarry");
 }
