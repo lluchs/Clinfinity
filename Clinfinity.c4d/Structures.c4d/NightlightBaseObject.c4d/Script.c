@@ -25,6 +25,15 @@ protected func Initialize() {
 	return _inherited();
 }
 
+protected func Destruction() {
+	var clock = FindObject2(Find_ID(TIME));
+	if(clock != 0) {
+		clock->RemoveAlarmListener(this, GetNightfallTime());
+		clock->RemoveAlarmListener(this, GetDaybreakTime());
+	}
+	return _inherited();
+}
+
 protected func OnAlarm(object clock, int time) {
 	if(IsNightfall()) {
 		ScheduleCall(this, "SetDayNightGraphics", RandomX(TIME_TwilightLength * 3 / 4 / TIME_SecondsPerFrame, TIME_TwilightLength / TIME_SecondsPerFrame), 0, "Night");
