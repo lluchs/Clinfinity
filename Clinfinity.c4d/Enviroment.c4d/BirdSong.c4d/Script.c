@@ -37,7 +37,7 @@ public func OnNightfall(object clock) {
 }
 
 private func Singing() {
-    if(!Random(8)) {
+    if(!Random(20)) {
 		// check if there are some trees left
         if(ObjectCount2(Find_Category(C4D_StaticBack), Find_Func("IsTree")) >= 10) {
             //Sound("BirdSong*", 1);
