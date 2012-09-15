@@ -36,7 +36,7 @@ protected func Stomping() {
 		var matSys = GetMatSys(GetOwner(), true);
 		var id = rock->GetID();
 		if(matSys != 0 && InArray(id, GetMatSysIDs())) {
-			matSys->DoFill(1, id);
+			MatSysDoTeamFill(1, GetOwner(), id);
 		}
 		rock->RemoveObject();
 	}
