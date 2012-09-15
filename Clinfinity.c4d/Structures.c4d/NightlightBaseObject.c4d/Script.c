@@ -3,9 +3,10 @@
 	according to the current state of the day/night cycle.
 	With this, a structure can for example switch on spotlights at night.
 
-	A structure using alternate graphics for day and night must follow the following two rules
+	A structure using alternate graphics for day and night must follow the following rules
 	- Provide GraphicsNight.png
 	- Inherit from NLBO
+	- Call _inherited() in the structure's Initialize() and Destruction() functions
 
 	The following events are then handled automatically
 	- Switching to the according graphics on daybreak and nightfall.
