@@ -38,16 +38,24 @@ local targetX, targetY;
 	*Note:* You should always create a drone using this method.
 
 	Parameters:
-	x			- Horizontal coordinate.
-	y			- Vertical coordinate.
-	owner		- Owner of the created drone: Player index. Use NO_OWNER for ownerless drones.
-	forQuarry	- Home quarry of the drone.
+	x					- Horizontal coordinate.
+	y					- Vertical coordinate.
+	owner				- Owner of the created drone: Player index. Use NO_OWNER for ownerless drones.
+	forQuarry			- Home quarry of the drone.
+	drilledMaterial		- [optional] Name of the material to drill.
+	collectedMaterial	- [optional] ID of the objects to collect.
 
 	Returns:
 	The created drone. */
-public func CreateDrone(int x, int y, int owner, object forQuarry) {
+public func CreateDrone(int x, int y, int owner, object forQuarry, string drilledMaterial, id collectedMaterial) {
 	var drone = CreateObject(DRNE, x, y, owner);
 	drone->LocalN("myQuarry") = forQuarry;
+	if(drilledMaterial != 0) {
+		drone->LocalN("drilledMaterial") = drilledMaterial;
+	}
+	if(collectedMaterial != 0) {
+		drone->LocalN("collectedMaterial") = collectedMaterial;
+	}
 	return drone;
 }
 
