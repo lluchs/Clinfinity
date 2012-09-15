@@ -5,13 +5,14 @@
 #include STBO
 #include NLBO
 
+static const QRRY_DroneCount = 5;
 static const QRRY_MaxSearchDistance = 500;
 static const QRRY_MaxSearchIterations = 100;
 
 local lastRockX, lastRockY;
 
 protected func Initialize() {
-	for(var i = 0; i < 5; ++i) {
+	for(var i = 0; i < QRRY_DroneCount; ++i) {
 		var x = GetX() + RandomX(-GetDefWidth(GetID()) / 4, GetDefWidth(GetID()) / 4);
 		var y = GetY() + RandomX(-GetDefHeight(GetID()) / 4, GetDefHeight(GetID()) / 4) + GetDefHeight(DRNE) / 2;
 		DRNE->CreateDrone(x, y, GetOwner(), this);
