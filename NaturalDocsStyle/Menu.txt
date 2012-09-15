@@ -46,10 +46,6 @@ Format: 1.52
 # --------------------------------------------------------------------------
 
 
-File: Aviator  (Clinfinity.c4d\Crew.c4d\Aviator.c4d\Script.c)
-File: Drafts  (Clinfinity.c4d\Rules.c4d\Draft.c4d\Script.c)
-File: Firefly  (Clinfinity.c4d\Animals.c4d\Firefly.c4d\Script.c)
-
 Group: Helpers.c4d  {
 
    File: AddTrajectory  (Clinfinity.c4d\Helpers.c4d\Trajectory.c4d\Script.c)
@@ -70,10 +66,11 @@ Group: Items.c4d  {
    File: Yo-yo  (Clinfinity.c4d\Items.c4d\Weapons.c4d\Yo-Yo.c4d\Script.c)
    }  # Group: Items.c4d
 
-File: King of the Hill  (Clinfinity.c4d\Goals.c4d\KOTH.c4d\Script.c)
-File: Light  (Clinfinity.c4d\Effects.c4d\Light.c4d\Script.c)
-File: Night light base object  (Clinfinity.c4d\Structures.c4d\NightlightBaseObject.c4d\Script.c)
-File: Structure base object  (Clinfinity.c4d\Structures.c4d\StructureBaseObject.c4d\Script.c)
+Group: Structures.c4d  {
+
+   File: Night light base object  (Clinfinity.c4d\Structures.c4d\NightlightBaseObject.c4d\Script.c)
+   File: Structure base object  (Clinfinity.c4d\Structures.c4d\StructureBaseObject.c4d\Script.c)
+   }  # Group: Structures.c4d
 
 Group: System.c4g  {
 
@@ -97,15 +94,21 @@ Group: System.c4g  {
    File: String.c  (Clinfinity.c4d\System.c4g\String.c)
    }  # Group: System.c4g
 
-File: Time  (Clinfinity.c4d\Enviroment.c4d\Time.c4d\Script.c)
-
 Group: Vehicles.c4d  {
 
    File: Control lever  (Clinfinity.c4d\Vehicles.c4d\Platform.c4d\ControlLever.c4d\Script.c)
    File: Control mediator  (Clinfinity.c4d\Vehicles.c4d\Platform.c4d\ControlMediator.c4d\Script.c)
+   File: Drone  (Clinfinity.c4d\Vehicles.c4d\Drone.c4d\Script.c)
    File: Platform  (Clinfinity.c4d\Vehicles.c4d\Platform.c4d\Script.c)
    File: Prop  (Clinfinity.c4d\Vehicles.c4d\Platform.c4d\Prop.c4d\Script.c)
    }  # Group: Vehicles.c4d
+
+File: Aviator  (Clinfinity.c4d\Crew.c4d\Aviator.c4d\Script.c)
+File: Drafts  (Clinfinity.c4d\Rules.c4d\Draft.c4d\Script.c)
+File: Firefly  (Clinfinity.c4d\Animals.c4d\Firefly.c4d\Script.c)
+File: King of the Hill  (Clinfinity.c4d\Goals.c4d\KOTH.c4d\Script.c)
+File: Light  (Clinfinity.c4d\Effects.c4d\Light.c4d\Script.c)
+File: Time  (Clinfinity.c4d\Enviroment.c4d\Time.c4d\Script.c)
 
 Group: Index  {
 

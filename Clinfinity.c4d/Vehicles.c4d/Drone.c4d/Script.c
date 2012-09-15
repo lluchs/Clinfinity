@@ -1,10 +1,28 @@
+/*	Script: Drone
+	Flying robot for drilling solid material.
+
+	A drone needs a "home quarry" where it asks for coordinates of material veins and where it delivers the drilled products.
+	After receiving a set of coordinates, the drone will move there and search a place to drill as nearby as possible.
+	It will drill the material and collect the resulting objects.
+	When a configurable number of these objects has been collected,
+	the drone will fly back to its quarry and deliver the objects there. */
 
 #strict 2
 
+/*	Constants: Movement
+	DRNE_MovementAngleDeviation		- When flying towards a target, this is the maximum deviation from flying straight.
+	DRNE_MovementSpeed				- Drone speed.
+	DRNE_PreciseMovementDistance	- When reaching this distance from its target, the drone will fly straight.
+	DRNE_StopDistance				- When reaching this distance from its target, the drone will stop. */
 static const DRNE_MovementAngleDeviation = 20;
 static const DRNE_MovementSpeed = 15;
 static const DRNE_PreciseMovementDistance = 30;
 static const DRNE_StopDistance = 2;
+
+/*	Constants: Drilling
+	DRNE_DrillTime			- Time (in frames) that the drilling animation is played.
+	DRNE_DrillRadius		- Radius of the drilled hole.
+	DRNE_MaxRockCollection	- Number of objects to collect before returning to the quarry. */
 static const DRNE_DrillTime = 80;
 static const DRNE_DrillRadius = 10;
 static const DRNE_MaxRockCollection = 20;
@@ -14,6 +32,19 @@ local myQuarry;
 local drilledMaterial, collectedMaterial;
 local targetX, targetY;
 
+/*	Function: CreateDrone
+	Factory method for drones.
+	The coordinates are relative to the calling object in local calls, otherwise global.
+	*Note:* You should always create a drone using this method.
+
+	Parameters:
+	x			- Horizontal coordinate.
+	y			- Vertical coordinate.
+	owner		- Owner of the created drone: Player index. Use NO_OWNER for ownerless drones.
+	forQuarry	- Home quarry of the drone.
+
+	Returns:
+	The created drone. */
 public func CreateDrone(int x, int y, int owner, object forQuarry) {
 	var drone = CreateObject(DRNE, x, y, owner);
 	drone->LocalN("myQuarry") = forQuarry;
@@ -32,8 +63,14 @@ protected func RejectCollect(id collectedObjectId, object collectedObject) {
 }
 
 
-/* Actions/Commands */
+/*	Section: Actions/Commands */
 
+/*	Function: MoveTo
+	Tells the drone to move to a position.
+
+	Parameters:
+	x	- Horizontal coordinate.
+	y	- Vertical coordinate. */
 public func MoveTo(int x, int y) {
 	targetX = x;
 	targetY = y;
@@ -42,6 +79,8 @@ public func MoveTo(int x, int y) {
 	}
 }
 
+/*	Function: Stop
+	Tells the drone to stop. */
 public func Stop() {
 	targetX = GetX();
 	targetY = GetY();
@@ -52,6 +91,8 @@ public func Stop() {
 	}
 }
 
+/*	Function: Drill
+	Makes the drone play the drilling animation. */
 public func Drill() {
 	if(GetAction() != "Drill") {
 		SetAction("Drill");
