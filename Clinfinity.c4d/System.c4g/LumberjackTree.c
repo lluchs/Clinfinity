@@ -14,6 +14,19 @@ protected func FxNoChopDownDamage(object target, int effectNumber, int damage, i
 	return 0;
 }
 
+// Catch calls by BlastObjects()
+public func CanBeHitByShockwaves() { return true; }
+public func BlastObjectsShockwaveCheck() { return true; }
+
+public func OnShockwaveHit(int level, int x, int y) {
+	var wood = CreateObject(WOOD, 0, 0, GetOwner());
+	var xdir = GetX() - x,
+	    ydir = GetY() - y;
+	wood->SetXDir(xdir * level, 0, 100);
+	wood->SetYDir(ydir * level, 0, 100);
+	return true;
+}
+
 public func Shrink() {
 	var rest = Max(GetComponent(WOOD), 1);
 	var shrinkage = GetCon() / rest;
