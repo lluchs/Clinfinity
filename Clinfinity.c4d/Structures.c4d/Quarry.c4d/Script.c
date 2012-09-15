@@ -5,7 +5,7 @@
 #include STBO
 #include NLBO
 
-static const QRRY_DroneCount = 5;
+static const QRRY_DroneCount = 3;
 static const QRRY_MaxSearchDistance = 500;
 static const QRRY_MaxSearchIterations = 100;
 
@@ -47,6 +47,10 @@ protected func Stomping() {
 }
 
 public func FindDrillingPosition(&x, &y) {
+	if(GetAction() == "Stomp") {
+		return false;
+	}
+
 	if(GetMaterial(lastRockX, lastRockY) == Material("Metalearth")) {
 		x = lastRockX + GetX();
 		y = lastRockY + GetY();
