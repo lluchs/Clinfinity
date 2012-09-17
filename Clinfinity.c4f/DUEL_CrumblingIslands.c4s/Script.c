@@ -208,10 +208,10 @@ protected func PlaceVines() {
 
 protected func PlaceWood() {
     var ids = [TRE1, TRE2, TRE3];
-		for(var i = 0; i <= 20; i++) {
+		for(var i = 0; i <= 12; i++) {
 				PlaceTree(ids[Random(GetLength(ids))], 0, 0, LandscapeWidth()/2, LandscapeHeight());
 		}
-		for(var i = 0; i <= 20; i++) {
+		for(var i = 0; i <= 12; i++) {
 				PlaceTree(ids[Random(GetLength(ids))], LandscapeWidth()/2, 0, LandscapeWidth()/2, LandscapeHeight());
 		}
 }
