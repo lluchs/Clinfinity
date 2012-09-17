@@ -1,0 +1,6 @@
+[Action]
+Name=Shine
+Facet=0,0,128,128
+Length=360
+Delay=90
+NextAction=Shine

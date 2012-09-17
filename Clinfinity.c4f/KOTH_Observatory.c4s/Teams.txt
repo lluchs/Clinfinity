@@ -1,0 +1,18 @@
+[Teams]
+Active=1
+AllowTeamSwitch=1
+TeamColors=1
+
+	[Team]
+	id=1
+	Name=Luna
+	PlrStartIndex=1
+	Color=14519062
+	MaxPlayer=0
+
+	[Team]
+	id=2
+	Name=Sol
+	PlrStartIndex=2
+	Color=7193151
+	MaxPlayer=0
