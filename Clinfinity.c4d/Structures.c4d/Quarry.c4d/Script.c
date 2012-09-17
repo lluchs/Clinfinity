@@ -6,7 +6,7 @@
 #include NLBO
 
 static const QRRY_DroneCount = 3;
-static const QRRY_MaxSearchDistance = 500;
+static const QRRY_MaxSearchDistance = 350;
 static const QRRY_MaxSearchIterations = 100;
 
 local lastRockX, lastRockY;
@@ -73,4 +73,13 @@ public func FindDrillingPosition(&x, &y) {
 		}
 	}
 	return false;
+}
+
+/* Controls */
+
+protected func ControlUp() {
+	[$TxtShowSearchRadius$]
+	// Show search radius
+	for(var i; i < 360; i++)
+		CreateParticle("PSpark", Cos(i, QRRY_MaxSearchDistance), Sin(i, QRRY_MaxSearchDistance), 0, 0, 70, RGBa(255, 255, 255, 128));
 }
