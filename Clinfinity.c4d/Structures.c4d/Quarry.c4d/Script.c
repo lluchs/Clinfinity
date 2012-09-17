@@ -58,7 +58,10 @@ public func FindDrillingPosition(&x, &y) {
 	}
 
 	var searchX = RandomX(-QRRY_MaxSearchDistance, QRRY_MaxSearchDistance);
-	var searchY = RandomX(-QRRY_MaxSearchDistance, QRRY_MaxSearchDistance);
+	// Search inside a circle: Limit randomly chosen points to the chord for the given x.
+	var h = QRRY_MaxSearchDistance - Abs(searchX);
+	var maxSearchY = Sqrt(2 * QRRY_MaxSearchDistance * h - h ** 2);
+	var searchY = RandomX(-maxSearchY, maxSearchY);
 
 	for(var i = 0; i < QRRY_MaxSearchIterations; ++i) {
 		if(GetMaterial(searchX, searchY) == Material("Metalearth")) {
