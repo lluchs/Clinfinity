@@ -1,4 +1,4 @@
-/*-- Planetary --*/
+/*-- KOTH_Observatory --*/
 
 #strict 2
 
@@ -58,9 +58,16 @@ func Initialize() {
 	
   var staticDraftObservatoryR=CreateObject(DRFT, 1430, 940); 
 	staticDraftObservatoryR -> SetPermanent();
+	
+	// Mountain Respawn
+  PeriodicIslandRespawn(3550, 0, 430, 570, 750); // left 'home' island
+ 	PeriodicIslandRespawn(3650, 2440, 400, 630, 770); // right 'home' island
+ 	
+ 	ScriptGo(true);
+}
 
-  
-  ScriptGo(1);
+protected func Script10(){
+	TutorialMessage("$Woodmessage$");
 }
 
 func GetStartPosition(int team) {
@@ -95,5 +102,4 @@ func InitializePlayer(int plr) {
 func CreateStartMaterial(int x, int y, int plr) {
 	PLTF->CreatePlatform(x, y, plr);
 	CreateConstruction(STMT, x + 10, y - 5, plr, 100);
-	CreateObject(CATA, x + Random(20), y - 5, plr);
 }

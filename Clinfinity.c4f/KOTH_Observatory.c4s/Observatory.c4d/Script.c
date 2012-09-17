@@ -22,7 +22,7 @@ public func EnablePoint() {
 }
 
 protected func LogMsg() {
-	Log("Punkt ist voll offen.");
+	Log("$PointOpen$");
 	Sound("cupola_open");
 }
 
