@@ -67,7 +67,12 @@ func Initialize() {
 }
 
 protected func Script10(){
-	TutorialMessage("$Woodmessage$");
+	Message("@$Woodmessage$");
+	Sound("Ding");
+}
+
+protected func Script60(){
+  Message("");
 }
 
 func GetStartPosition(int team) {
@@ -81,9 +86,11 @@ func InitializePlayer(int plr) {
 	CreateMatSys(plr);
 	// fill with material
 	var msys = GetMatSys(plr);
-	msys->DoFill(5, WOOD);
-	msys->DoFill(15, METL);
+	msys->DoFill(25, WOOD);
+	msys->DoFill(25, METL);
 	msys->DoFill(10, ROCK);
+	
+	CreateContents(FLNT, GetHiRank(plr), 3);
 
 	var team = GetPlayerTeam(plr);
 	var pos = GetStartPosition(team);
