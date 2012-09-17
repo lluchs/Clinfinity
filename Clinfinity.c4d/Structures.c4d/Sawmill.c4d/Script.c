@@ -60,6 +60,6 @@ protected func Chop() {
 }
 
 protected func Finish() {
-	MatSysDoTeamFill(1, GetOwner(), WOOD);
+	MatSysDoTeamFill(2, GetOwner(), WOOD);
 	StartChopping();
 }
