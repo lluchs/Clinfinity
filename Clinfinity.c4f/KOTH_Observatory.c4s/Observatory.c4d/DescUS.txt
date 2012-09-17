@@ -1,1 +1,5 @@
-A new object definition.
+This research facility marks the way to the stars. On top of that, it's the point to capture!
+
+Capturing starts automatically, as soon as your Clonks stand on the roof. The more team members are standing there, the faster the capturing process. On the other hand, enemy team members block this process.
+
+There is no limit to the times the facility can be captured. Each successful capture resumes the countdown of the capturing team, which has won when its countdown is over.
