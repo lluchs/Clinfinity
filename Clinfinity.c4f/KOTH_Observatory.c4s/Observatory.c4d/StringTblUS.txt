@@ -1,0 +1,1 @@
+PointOpen=The Observatory is ready for capture!
