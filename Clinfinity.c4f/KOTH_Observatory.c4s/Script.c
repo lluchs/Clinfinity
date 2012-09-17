@@ -110,3 +110,6 @@ func CreateStartMaterial(int x, int y, int plr) {
 	PLTF->CreatePlatform(x, y, plr);
 	CreateConstruction(STMT, x + 10, y - 5, plr, 100);
 }
+
+global func IsDay() { return false; }
+global func IsNight() { return true; }
