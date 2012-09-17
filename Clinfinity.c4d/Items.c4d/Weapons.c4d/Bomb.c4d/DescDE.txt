@@ -1,2 +1,2 @@
-Vorsicht, BehÃ¤lter steht unter Druck. Starke ErschÃ¼tterungen kÃ¶nnen zur Explosion fÃ¼hren!
-Bei Detonation werden GebÃ¤ude in der NÃ¤he beschÃ¤digt, sowie Mannschaftsmitglieder, Fahrzeuge und Objekte umhergeschleudert. Der Winkel, in dem diese Dinge geschleudert werden, hÃ¤ngt von der horizontalen Distanz zur Explosion ab.
+Vorsicht, Behälter steht unter Druck. Starke Erschütterungen können zur Explosion führen!
+Bei Detonation werden Gebäude in der Nähe beschädigt, sowie Mannschaftsmitglieder, Fahrzeuge und Objekte umhergeschleudert. Der Winkel, in dem diese Dinge geschleudert werden, hängt von der horizontalen Distanz zur Explosion ab.
