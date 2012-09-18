@@ -1,0 +1,17 @@
+[DefCore]
+id=MOON
+Name=Moon
+Version=4,9,5
+Category=C4D_StaticBack|C4D_Parallax|C4D_Background
+MaxUserSelect=0
+Width=128
+Height=128
+Offset=-64,-64
+Value=1
+Mass=100
+Components=ROCK=10;
+Picture=12800,0,128,128
+Vertices=1
+VertexY=1
+VertexFriction=20
+ 

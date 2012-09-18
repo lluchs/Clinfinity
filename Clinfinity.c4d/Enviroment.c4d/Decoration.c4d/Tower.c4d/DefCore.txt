@@ -1,0 +1,17 @@
+[DefCore]
+id=TW_1
+Name=Tower
+Version=4,9,5
+Category=C4D_StaticBack|C4D_Parallax|C4D_Background
+MaxUserSelect=0
+Width=29
+Height=100
+Offset=-15,-50
+Value=1
+Mass=100
+Components=TW_1=1;
+Picture=0,0,29,100
+Vertices=1
+VertexY=1
+VertexFriction=20
+ 

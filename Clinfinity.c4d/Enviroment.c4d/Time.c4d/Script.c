@@ -2,6 +2,8 @@
 	Controls the passage of time and the day/night cycle.
 	See <Day/night cycle> for details about the phases of the day/night cycle.
 
+	Time is measured in the standard 24-hour clock. The function <Time> should be used to express and compare points in time, see there and <SetTime> for examples.
+
 	Several events are sent by the Time object.
 	- OnClockStrike, sent every full hour. The current time is passed as parameter to the event handler function.
 	- OnDay, sent after daybreak is over and the day begins.
@@ -199,10 +201,17 @@ private func NormaliseTime(int time) {
 	Composes a time value from the given parameters _hours_, _minutes_ and _seconds_,
 	with the latter being optional.
 
+	You can also use this function to compare times.
+	The following example code checks if it is afternoon:
+	> var isAfternoon = GetTime() > Time(12, 00);
+
 	Parameters:
 	hours	- Hours part.
 	minutes	- Minutes part.
-	seconds	- [optional] Seconds part. */
+	seconds	- [optional] Seconds part.
+
+	Returns:
+	The specified point in time, measured in seconds. */
 global func Time(int hours, int minutes, int seconds) {
 	hours	= BoundBy(hours, 0, 23);
 	minutes	= BoundBy(minutes, 0, 59);

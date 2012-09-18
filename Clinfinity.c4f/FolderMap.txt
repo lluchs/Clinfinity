@@ -10,6 +10,11 @@ FullscreenBG=1
 	Area=612,127,301,77
 	
 	[Scenario]
+	File=KOTH_Observatory.c4s
+	OverlayImage=hl_observatory.png
+	Area=614,227,285,94
+	
+	[Scenario]
 	File=DUEL_CrumblingIslands.c4s
 	OverlayImage=hl_crumbling.png
 	Area=950,122,199,88

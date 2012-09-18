@@ -15,7 +15,7 @@ protected func Initialize() {
 }
 
 protected func StartCicadas() {
-	SetAction("Cricket*");
+	SetAction("Cicadas");
 	SetPhase(Random(20));
 }
 
@@ -23,4 +23,4 @@ protected func StopCicadas() {
 	SetAction("Idle");
 }
 
-private func Cicadas() { if(!Random(20)) Sound("Cicada*", true); }
+private func Cicadas() { if(!Random(20)) Sound("Cricket*", true); }

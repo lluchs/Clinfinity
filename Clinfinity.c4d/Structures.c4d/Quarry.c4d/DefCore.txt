@@ -14,7 +14,7 @@ VertexCNAT=5,6
 VertexFriction=50,50,100,100
 Value=100
 Mass=3500
-Components=WOOD=16;METL=3;
+Components=WOOD=9;METL=3;
 Picture=0,0,85,135
 Exclusive=1
 Construction=1

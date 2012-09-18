@@ -1,0 +1,11 @@
+Activate=Activate %s
+Deactivate=Deactivate %s
+
+Increase=Increase %s by %d
+Decrease=Decrease %s by %d
+
+Choose=Choose %s for %s
+
+OpenMenu=Open %s
+
+Finished=Finished

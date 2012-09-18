@@ -33,6 +33,9 @@ func Initialize() {
 	CreateObject(CRAT,987,340);
 	CreateObject(CRAT,994,329);
 	CreateObject(CRAT,1000,340);
+	
+	//drainer on frigate (no pool on deck allowed)
+	CreateObject(DRAI, 933, 338);
 
 	// steampunky flair
 	SetGamma(RGB(15, 15, 20), RGB(118, 118, 118), RGB(210, 215, 255));

@@ -1,0 +1,34 @@
+Ein System, welches das Erstellen von Optionsmenüs vereinfacht.
+
+Features:
+- Baut ein Menü von einem Template aus auf, daher sind viele Menüs mit kleinen Variationen leicht möglich.
+- Rückgabe an einen Callback in einem Objekt oder dem Szenario der ausgewählten Werte als Hash und einer zusätzlichen beliebigen Information, um z.B. Wahlen leicht zu ermöglichen
+- 3 mögliche Optionsarten: Checkbuttons, Radiobuttons, Integers, die man in gewählten Stufen in einem Intervall ändern kann.
+- Untermenüs und eine einfache Navigation in diesen
+- Ähnlich zu Find_* aufgebaute Bedingungen, mit denen man gewisse Einträge deaktivieren kann, die dann nach Wahl nicht im Hash auftauchen
+- Ausgabe der gewählten Optionen wahlweise in den Log und/oder als (globale) Message
+- Vollständige Unabhängigkeit von Objects
+
+Das System benutzt eine gefixte Version von den Hashmaps von Isilkor; die Grafik basiert auf der des Hazardchoosers (und MCMX).
+
+Die nach außen hin relevanten Funktionen befinden sich alle in System.c/Menu.c.
+
+Wichtige Funkionen:
+global func CreateMenuTemplate(id Symbol, string Caption)
+global func AddBoolChoice(&menu, array aPath, Key, array aCond, string szName, id idItem, bool fDefault)
+global func AddEnumChoice(&menu, array aPath, Key, array aCond, string szName, id idItem)
+global func AddEnumChoiceItem(&menu, array aPath, Enumkey, Itemkey, string szName, id idItem, Itemvalue, bool fDefault)
+global func AddRangeChoice(&menu, array aPath, Key, array aCond, string szName, id idItem, int iMin, int iMax, int iStep, int iDefault)
+global func AddSubmenu(&menu, array aPath, Key, array aCond, string szName, id idItem, array submenu)
+global func CreateMenuByTemplate(object pMenuObject, object pCommandObject, string szCallback, array aTemplate, ExtraData, int iVerbose)
+global func MenuCond_Not(Cond)
+global func MenuCond_And(array Criteria,  ...)
+global func MenuCond_Or(array Criteria,  ...)
+global func MenuCond_Activated(array Path, Key)
+global func MenuCond_Chosen(array Path, Enumkey, Itemkey)
+global func MenuCond_Less/Equal/Greater(array Path, Key, value)
+
+Wichtig sind die Keys. Diese können zwar jeden Types sein, sollten aber von den anderen Keys in der gleichen Ebene unterscheidbar sein.
+Wobei menu immer das zubearbeitende Menutemplate ist, welches durch CreateMenuTemplate erstellt wurde.
+aPath ist eine Angabe, in welchem Untermenü der zu behandele Key ist, dabei ist 0 oder [] das Hauptmenü, und [a, b] zeigt auf das Untermenü mit dem Key b von dem Untermenü mit dem Key a des Hauptmenüs.
+aCond ist die Bedingung, unter der dieses Element wählbar ist, diese Bedingunen werden analog zu Find_* erstellt, jedoch muss man, falls man mehrere Bedingungen haben will, Or oder And benutzen.

@@ -1,0 +1,1 @@
+TxtShowSearchRadius=Show search radius for rock

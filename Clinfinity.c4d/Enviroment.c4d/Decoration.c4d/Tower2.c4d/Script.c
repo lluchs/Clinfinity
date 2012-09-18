@@ -1,0 +1,8 @@
+/*-- Tower --*/
+
+#strict 2
+
+func Initialize() {
+	Local(0) = RandomX(99, 100);
+	Local(1) = 95;
+}

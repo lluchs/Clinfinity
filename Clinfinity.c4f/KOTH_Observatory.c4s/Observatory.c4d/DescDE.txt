@@ -1,0 +1,5 @@
+Diese wissenschaftliche Einrichtung ist das Tor zu den Sternen, welches erobert werden muss!
+
+Erobern erfolgt automatisch, sobald sich eigene Clonks auf dem Dach befinden. Mehrere Teammitglieder beschleunigen die Eroberung. Gegner auf dem Dach blockieren wiederum den Eroberungsvorgang. 
+
+Das Gebäude kann theoretisch beliebig oft erobert werden. Dabei setzt jede erfolgreiche Eroberung einen Countdown in Gang, der, wenn er abgelaufen ist, das Spiel für das jeweilige Team entscheidet.

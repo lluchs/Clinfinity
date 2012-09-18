@@ -21,6 +21,7 @@ protected func Initialize(sawmill) {
 }
 
 protected func ControlUp() {
+	[$TxtShowSearchRadius$]
 	//show Radius
 	for(var i; i < 360; i++)
 		CreateParticle("PSpark", Cos(i, SAWM_RADIUS), Sin(i, SAWM_RADIUS), 0, 0, 70, RGBa(255, 255, 255, 128));
@@ -59,6 +60,6 @@ protected func Chop() {
 }
 
 protected func Finish() {
-	MatSysDoTeamFill(1, GetOwner(), WOOD);
+	MatSysDoTeamFill(2, GetOwner(), WOOD);
 	StartChopping();
 }

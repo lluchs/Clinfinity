@@ -50,9 +50,12 @@ func Initialize() {
 	  //thousands of vines!
 	  PlaceVines();
 	  
+	  //mass epic wood
+	  PlaceWood();
+	  
 	  // Island Respawn
-  	PeriodicIslandRespawn(1993, 140, 750, 330, 100); // left 'home' island
-  	PeriodicIslandRespawn(2007, 1620, 730, 310, 100); // right 'home' island
+  	PeriodicIslandRespawn(1993, 140, 750, 330, 250); // left 'home' island
+  	PeriodicIslandRespawn(2007, 1620, 730, 310, 250); // right 'home' island
 }
 
 func InitializePlayer(int plr) {
@@ -201,4 +204,18 @@ protected func PlaceVines() {
     var obj41 = CreateObject(VINE, 981, 917, -1);
     obj41->SetCon(50);
     CreateObject(VINE, 740, 955, -1);
+}
+
+protected func PlaceWood() {
+    var ids = [TRE1, TRE2, TRE3];
+		for(var i = 0; i <= 20; i++) {
+				PlaceTree(ids[Random(GetLength(ids))], 0, 0, LandscapeWidth()/2, LandscapeHeight());
+		}
+		for(var i = 0; i <= 20; i++) {
+				PlaceTree(ids[Random(GetLength(ids))], LandscapeWidth()/2, 0, LandscapeWidth()/2, LandscapeHeight());
+		}
+}
+
+protected func PlaceTree(id tree, x, y, wdt, hgt) {
+		PlaceVegetation(tree, x, y, wdt, hgt, 100000);
 }
