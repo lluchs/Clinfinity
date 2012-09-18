@@ -14,8 +14,6 @@ Value=12
 Mass=15
 Components=METL=2;WOOD=1;
 Picture=10,0,64,64
-BurnTo=NONE
 Rebuy=1
-ConstructTo=NONE
 Collectible=1
 Rotate=1
