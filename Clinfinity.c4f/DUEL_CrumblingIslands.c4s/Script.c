@@ -4,8 +4,9 @@
 
 func Initialize() {
     //Ressource Buildings
-    CreateConstruction(RFLN, 810, 540, -1, 100, 1, 0); //Flintfactory
-    CreateConstruction(RSMG, 1315, 545, -1, 100, 1, 0); //Steamgenerator
+    CreateConstruction(RFLN, 1040, 740, -1, 100, 1, 0); //Flintfactory Middle
+    CreateConstruction(RSMG, 810, 540, -1, 100, 1, 0); //Steamgenerator Left
+    CreateConstruction(RSMG, 1315, 545, -1, 100, 1, 0); //Steamgenerator Left
     
     //Pipe to Steamgenerator
     CreateObject(PIPE, 1349, 1008);
@@ -37,15 +38,18 @@ func Initialize() {
 	  
 	  var MIsleL = CreateObject(DRFT, 992, 749);
 	  MIsleL -> SetPermanent();
-	  MIsleL -> SetR(-20);
+	  MIsleL -> SetR(-12);
 	  
-	  var MIsleR = CreateObject(DRFT, 1045, 780);
+	  var MIsleR = CreateObject(DRFT, 1095, 780);
 	  MIsleR -> SetPermanent();
-	  MIsleR -> SetR(20);
+	  MIsleR -> SetR(12);
 	  
 	  var IsleR = CreateObject(DRFT, 1310, 764);
 	  IsleR -> SetPermanent();
 	  IsleR -> SetR(-12);
+	  
+	  var IsleM = CreateObject(DRFT, 1060, 670);
+	  IsleM -> SetPermanent();
 	  
 	  //thousands of vines!
 	  PlaceVines();
