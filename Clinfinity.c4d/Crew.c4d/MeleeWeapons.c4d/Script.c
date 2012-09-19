@@ -28,15 +28,19 @@ private func WieldMeleeWeapon() {
 /*	Section: Calls to weapons
 	The functions described in this section are called in the weapon object at the appropriate times. */
 
-public func WieldStart() { CallToWeapon("WieldStart"); }
+public func WieldStart(int wieldDuration) {
+	var frames = GetActMapVal("Length", GetAction());
+	var delay = GetActMapVal("Delay", GetAction());;
+	CallToWeapon("WieldStart", frames * delay);
+}
 
 public func WieldEnd() { CallToWeapon("WieldEnd"); }
 
 public func WieldAbort() { CallToWeapon("WieldAbort"); }
 
-private func CallToWeapon(string callName) {
+private func CallToWeapon(string callName, a) {
 	var weapon = Contents(0);
 	if(weapon != 0 && weapon->~IsMeleeWeapon()) {
-		ObjectCall(weapon, callName);
+		ObjectCall(weapon, callName, a);
 	}
 }

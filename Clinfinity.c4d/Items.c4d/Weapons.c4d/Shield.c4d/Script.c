@@ -7,8 +7,8 @@ protected func Hit() {
 public func IsMeleeWeapon()		{ return true; }
 public func GetWieldDirection()	{ return AVMW_WieldUp; }
 
-public func WieldStart() {
-	Message("SHIT WieldStart");
+public func WieldStart(int wieldDuration) {
+	Message("SHIT WieldStart %d", this, wieldDuration);
 }
 
 public func WieldAbort() {

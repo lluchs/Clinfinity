@@ -3,8 +3,8 @@
 public func IsMeleeWeapon()		{ return true; }
 public func GetWieldDirection()	{ return AVMW_WieldDown; }
 
-public func WieldStart() {
-	Message("Sword WieldStart");
+public func WieldStart(int wieldDuration) {
+	Message("Sword WieldStart %d", this, wieldDuration);
 	// Add defence effect
 }
 
