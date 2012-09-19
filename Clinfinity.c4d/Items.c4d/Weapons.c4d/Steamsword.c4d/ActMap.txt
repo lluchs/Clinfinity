@@ -2,10 +2,10 @@
 Name=On
 Procedure=NONE
 Length=1
-Facet=0,3,18,3
+Facet=3,0,3,18,0,-10
 
 [Action]
 Name=Off
 Procedure=NONE
 Length=1
-Facet=0,0,8,3
+FacetBase=1
