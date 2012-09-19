@@ -3,6 +3,7 @@
 
 #strict 2
 #include CLNK
+#include AVMW
 
 static const AVTR_WeaponOverlay = 2;
 
@@ -316,6 +317,10 @@ protected func ControlThrow() {
 	var obj = Contents();
 	if(obj && obj->~IsWeapon()) {
 		StartAiming(obj);
+		return 1;
+	}
+	if(obj && obj->~IsMeleeWeapon() && ReadyToWield()) {
+		WieldMeleeWeapon();
 		return 1;
 	}
 	return inherited(...);
