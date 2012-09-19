@@ -1,0 +1,11 @@
+[Action]
+Name=On
+Procedure=NONE
+Length=1
+Facet=0,3,18,3
+
+[Action]
+Name=Off
+Procedure=NONE
+Length=1
+Facet=0,0,18,3
