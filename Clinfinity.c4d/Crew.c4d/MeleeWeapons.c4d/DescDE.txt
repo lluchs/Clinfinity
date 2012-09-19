@@ -1,0 +1,1 @@
+Funktionalität für den Umgang mit Nahkampfwaffen.

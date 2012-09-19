@@ -1,0 +1,8 @@
+[DefCore]
+id=AVMW
+Version=4,9,8
+Category=1
+Width=1
+Height=1
+Offset=0,0
+Picture=0,0,1,1
