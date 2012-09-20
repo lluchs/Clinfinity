@@ -71,7 +71,6 @@ private func DrawRotated(int angle, int x, int y, int xOffset, int yOffset) {
 	var cos2 = Cos(angle, 1000);
 	var x2 = x * cos2 - y * sin2;
 	var y2 = x * sin2 + y * cos2;
-	//SetObjDrawTransform(cos1, sin1, x2, -sin1, cos1, y2, this, AVTR_WeaponOverlay);
 	SetObjDrawTransform(1000, 0, 0, 0, 1000, 0, this, AVTR_WeaponOverlay);
 	activeMeleeWeapon->SetObjDrawTransform(cos1, sin1, x2 + xOffset * 1000, -sin1, cos1, y2 + yOffset * 1000);
 }

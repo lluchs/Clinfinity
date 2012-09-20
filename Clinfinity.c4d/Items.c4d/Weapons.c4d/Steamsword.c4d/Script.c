@@ -16,30 +16,11 @@ public func GetEndAngle(int direction) {
 }
 
 public func WieldStart(int wieldDuration) {
-/*	Log("Sword WieldStart %d", wieldDuration);
-	var clonk = Contained();
-	
-	RemoveVertex(1);
-	RemoveVertex(0);
-
-	SetAction("Wield", clonk);
-	var startAngle = 45;
-	var endAngle = 45 + 90;
-	var rotateSpeed = (endAngle - startAngle) / wieldDuration;
-	if(clonk->GetDir() == DIR_Left) {
-		startAngle = -startAngle;
-		rotateSpeed = -rotateSpeed;
-	}*/
 	SetAction("On");
-	Log("Sword rotation");
-	//SetR(startAngle);
-	//SetRDir(rotateSpeed);
 }
 
 public func WieldAbort() {
 	SetAction("Off");
-	Log("Sword WieldAbort");
-	// RemoveEffect(); remove defence effect
 }
 
 public func WieldEnd() {
@@ -47,23 +28,8 @@ public func WieldEnd() {
 		clonk->DoEnergy(-9000);
 	}*/
 	SetAction("Off");
-	Log("Sword WieldEnd");
 }
 
-protected func Wielding() {
-	//...
-}
-
-/*
-public func FxWhatever() {
-	for(var incoming in FindObjects(...)) {
-		if(correctAngleTo(incoming)) {
-			FlingAway(incoming);
-		}
-	}
-}
-*/
-
-protected func RejectEntrance(object into) {
-	return GetAction() == "Wield";
+private func Wielding() {
+	// Check for object defence, depending on current angle and stuff
 }

@@ -2,19 +2,13 @@
 Name=On
 Procedure=NONE
 Length=1
+Delay=1
 Facet=3,0,3,18,0,-10
+NextAction=On
+StartCall=Wielding
 
 [Action]
 Name=Off
 Procedure=NONE
 Length=1
 FacetBase=1
-
-[Action]
-Name=Wield
-Procedure=ATTACH
-Length=1
-Delay=1
-Facet=3,0,3,18,0,-10
-NextAction=Wield
-StartCall=Wielding
