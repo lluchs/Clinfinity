@@ -6,10 +6,22 @@
 static const AVMW_WieldUp	= 1;
 static const AVMW_WieldDown	= 2;
 
+static const AVMW_StandardHandX = 0;
+static const AVMW_StandardHandY = -5;
+
 local activeMeleeWeapon, startAngle, angularSpeed;
 
 public func ReadyToWield() {
 	return GetAction() == "Walk" || GetAction() == "Jump";
+}
+
+public func GetCurrentWieldData(&handX, &handY, &weaponAngle) {
+	if(activeMeleeWeapon != 0) {
+		weaponAngle = startAngle + GetActTime() * angularSpeed;
+		handX = AVMW_StandardHandX;
+		handY = AVMW_StandardHandY;
+		Rotate(weaponAngle, handX, handY);
+	}
 }
 
 private func WieldMeleeWeapon() {
@@ -43,9 +55,9 @@ private func Wielding() {
 	DrawMeleeWeaponOverlay();
 
 	var angle = startAngle + GetActTime() * angularSpeed;
-	var x = 0 + activeMeleeWeapon->~HandX();
+	var x = AVMW_StandardHandX + activeMeleeWeapon->~HandX();
 	if(GetDir() == DIR_Left) x = -x;
-	var y = -5 - activeMeleeWeapon->~HandY();
+	var y = AVMW_StandardHandY - activeMeleeWeapon->~HandY();
 
 	DrawRotated(angle, x, y, 0, -1);
 
@@ -85,15 +97,18 @@ private func RemoveMeleeWeaponOverlay() {
 public func WieldStart(int wieldDuration) {}
 
 public func WieldEnd() {
-	ClearScheduleCall(this, "Wielding");
-	RemoveMeleeWeaponOverlay();
 	CallToWeapon("WieldEnd");
+	ClearScheduleCall(this, "Wielding");
+	DrawRotated(0, 0, 0, 0, 0);
+	RemoveMeleeWeaponOverlay();
+	SetAction("Walk");
 }
 
 public func WieldAbort() {
-	ClearScheduleCall(this, "Wielding");
-	RemoveMeleeWeaponOverlay();
 	CallToWeapon("WieldAbort");
+	ClearScheduleCall(this, "Wielding");
+	DrawRotated(0, 0, 0, 0, 0);
+	RemoveMeleeWeaponOverlay();
 }
 
 private func CallToWeapon(string callName, a) {
