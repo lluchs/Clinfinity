@@ -1,1 +1,3 @@
-A new object definition.
+Automatically cuts wood, if a few trees are around.
+
+View radius by grabbing+jump.
