@@ -1,5 +1,9 @@
 #strict 2
 
+static const SWOR_DamageRectWidth = 25;
+static const SWOR_DamageRectHeight = 38;
+static const SWOR_Damage = 10;
+
 public func IsMeleeWeapon()		{ return true; }
 public func GetWieldDirection()	{ return AVMW_WieldDown; }
 
@@ -24,9 +28,13 @@ public func WieldAbort() {
 }
 
 public func WieldEnd() {
-	/*for(var clonk in FindObjects(...)) {
-		clonk->DoEnergy(-9000);
-	}*/
+	var searchX = 0;
+	if(Contained()->GetDir() == DIR_Left) searchX = -SWOR_DamageRectWidth;
+	for(var clonk in FindObjects(Find_Exclude(Contained()), Find_InRect(searchX, -SWOR_DamageRectHeight / 2, SWOR_DamageRectWidth, SWOR_DamageRectHeight), Find_NoContainer(), Find_OCF(OCF_Living))) {
+		if(PathFree(Contained()->GetX(), Contained()->GetY(), clonk->GetX(), clonk->GetY())) {
+			clonk->DoEnergy(-SWOR_Damage);
+		}
+	}
 	SetAction("Off");
 }
 
