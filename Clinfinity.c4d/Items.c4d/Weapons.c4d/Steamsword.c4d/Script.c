@@ -22,6 +22,7 @@ public func GetEndAngle(int direction) {
 }
 
 public func WieldStart(int wieldDuration) {
+	SetR(0);
 	SetAction("On");
 }
 
