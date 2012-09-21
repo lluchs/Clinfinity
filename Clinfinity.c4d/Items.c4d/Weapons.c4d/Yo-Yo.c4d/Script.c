@@ -170,6 +170,14 @@ protected func QueryStrikeBlow(object target) {
 	}
 }
 
+protected func Damage(int damage, int byPlayer) {
+	if(currentState == YOYO_StateThrown) {
+		HitEffect();
+		ClearScheduleCall(this, "YoyoReturn");
+		ScheduleCall(0, "YoyoReturn", YOYO_ThrowFlightTime);
+	}
+}
+
 private func HitEffect() {
 	Sound("Yo-yo hit");
 	CastParticles("PxSpark", RandomX(3, 5), 16, 0, 0, 15, 30, RGB(83, 41, 25), RGB(193, 95, 60));

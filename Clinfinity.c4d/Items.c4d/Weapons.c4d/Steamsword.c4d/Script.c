@@ -55,14 +55,23 @@ private func DeflectObjects() {
 
 	var objects = FindObjects(Find_NoContainer(), Find_Distance(8, bladeCentreX + handX, bladeCentreY + handY), Find_Category(C4D_Object), Find_OCF(OCF_InFree | OCF_HitSpeed1));
 	for(var object in objects) {
+		if(GetEffect("SwordDeflection", object) != 0) {
+			return;
+		}
 		var dx = object->GetX() - Contained()->GetX();
 		var dy = object->GetY() - Contained()->GetY();
 		Rotate(-swordAngle, dx, dy, handX, handY);
-		if(Inside(dx, -2, 2)) {
-			dx = 0;
-			dy = -SWOR_FlingSpeed;
-			Rotate(swordAngle, dx, dy);
-			Fling(object, dx, dy);
+		if(Inside(dx, -5, 5)) {
+			if(object->GetXDir() != 0) {
+				object->SetSpeed(-object->GetXDir(), -object->GetYDir());
+			} else {
+				var xSpeed = 0;
+				var ySpeed = -SWOR_FlingSpeed;
+				Rotate(swordAngle, xSpeed, ySpeed);
+				Fling(object, xSpeed, ySpeed);
+			}
+			AddEffect("SwordDeflection", object, 1, 5);
+			object->DoDamage(RandomX(SWOR_MinDamage, SWOR_MaxDamage));
 		}
 	}
 }
