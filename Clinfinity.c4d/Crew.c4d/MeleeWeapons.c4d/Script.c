@@ -12,7 +12,7 @@ static const AVMW_StandardHandY = -5;
 local activeMeleeWeapon, startAngle, angularSpeed;
 
 public func ReadyToWield() {
-	return GetAction() == "Walk" || GetAction() == "Jump";
+	return GetAction() == "Walk" /*|| GetAction() == "Jump"*/;
 }
 
 public func GetCurrentWieldData(&handX, &handY, &weaponAngle) {
@@ -31,9 +31,19 @@ private func WieldMeleeWeapon() {
 		if(wieldDirection == 0) return;
 
 		if(wieldDirection == AVMW_WieldUp) {
-			SetAction("WieldUp");
+			if(GetAction() == "Walk") {
+				SetAction("WieldUp");
+			} else {
+				// TODO: Jump+wield up animation
+				return;
+			}
 		} else if(wieldDirection == AVMW_WieldDown) {
-			SetAction("WieldDown");
+			if(GetAction() == "Walk") {
+				SetAction("WieldDown");
+			} else {
+				// TODO: Jump+wield down animation
+				return;
+			}
 		}
 		activeMeleeWeapon = weapon;
 
