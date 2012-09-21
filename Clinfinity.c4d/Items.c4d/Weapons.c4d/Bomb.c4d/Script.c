@@ -26,7 +26,7 @@ static const BOMB_SecondContactDelay = 5;
 	BOMB_OtherFlingSpeedY	- Vertical speed when the detonation flings objects and vehicles.
 	BOMB_OtherFlingSpeedX	- Maximum horizontal speed when the detonation flings objects and vehicles. */
 static const BOMB_DetonationRadius = 40;
-static const BOMB_DamageToStructures = 10;
+static const BOMB_DamageToStructures = 20;
 static const BOMB_CrewFlingSpeedY = 5;
 static const BOMB_CrewFlingSpeedX = 3;
 static const BOMB_OtherFlingSpeedY = 5;
