@@ -39,7 +39,14 @@ public func Launch() {
 	Sound("steam_exhaust", false, this, 20, 0, 1);
 }
 
-protected func LeakSteam() {
+private func Active() {
+	LeakSteam();
+	if(FindObject2(Find_AtPoint(0, 0), Find_Category(C4D_Structure)) != 0) {
+		Detonate();
+	}
+}
+
+private func LeakSteam() {
 	Smoke(0, -3, 5);
 }
 
