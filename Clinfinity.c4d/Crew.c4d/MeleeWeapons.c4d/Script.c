@@ -12,6 +12,8 @@ static const AVMW_StandardHandY = -5;
 local activeMeleeWeapon, startAngle, angularSpeed;
 
 public func ReadyToWield() {
+	// Can't use more than one melee weapon
+	if(YOYO->IsYoyoThrownBy(this)) return false;
 	return GetAction() == "Walk" /*|| GetAction() == "Jump"*/;
 }
 

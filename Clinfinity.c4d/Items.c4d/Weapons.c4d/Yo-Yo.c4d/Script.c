@@ -101,7 +101,7 @@ public func ContainerThrow() {
 	from	- The object the yo-yo departed from. */
 protected func Departure(object from) {
 	// If the yo-yo was thrown by a Clonk, act as weapon.
-	if((from->GetOCF() & OCF_CrewMember) != 0 && from->GetAction() == "Throw" && !OtherYoyoThrownBy(from)) {
+	if((from->GetOCF() & OCF_CrewMember) != 0 && from->GetAction() == "Throw" && !IsYoyoThrownBy(from)) {
 		// Set speed to fly lower, because it's supposed to hit enemies.
 		SetXDir(GetXDir() * 3);
 		SetYDir(-5);
@@ -109,7 +109,16 @@ protected func Departure(object from) {
 	}
 }
 
-private func OtherYoyoThrownBy(object clonk) {
+/*	Function: IsYoyoThrownBy
+	Returns if the specified Clonk has thrown a yo-yo,
+	which is currently still in use.
+
+	Parameters:
+	clonk	- Clonk who may have thrown a yo-yo.
+
+	Returns:
+	*true* if he has thrown one, *false* otherwise. */
+public func IsYoyoThrownBy(object clonk) {
 	return FindObject2(Find_ID(YOLN), Find_ActionTarget(clonk)) != 0;
 }
 
