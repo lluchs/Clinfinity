@@ -16,7 +16,7 @@ public func ContextConkit(object caller) {
 	var type; var i = 0;
 	while(type = GetPlrKnowledge(GetOwner(), 0, i++, C4D_Structure)) {
 		if(type->~IsConkitBuilding() || (!type->~IsIndianHandcraft() && !type->~IsTrapperHandcraft())) {
-			AddMenuItem("$TxtConstructions$", "CreateConstructionSite", type, this);
+			AddMaterialMenuItem("$TxtConstructions$", "CreateConstructionSite", type, this);
 		}
 	}
 
