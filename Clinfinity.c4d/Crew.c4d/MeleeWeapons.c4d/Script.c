@@ -54,12 +54,11 @@ private func WieldMeleeWeapon() {
 		var duration = frames * delay;
 
 		startAngle = NormaliseAngle(weapon->GetStartAngle(GetDir()));
-		var endAngle = NormaliseAngle(weapon->GetEndAngle(GetDir()));
-		angularSpeed = (endAngle - startAngle) / duration;
+		angularSpeed = weapon->GetCentralAngle(GetDir()) / duration;
 
 		Wielding();
 
-		weapon->WieldStart(duration);
+		weapon->WieldStart(GetDir());
 	}
 }
 
@@ -106,7 +105,7 @@ private func RemoveMeleeWeaponOverlay() {
 /*	Section: Calls to weapons
 	The functions described in this section are called in the weapon object at the appropriate times. */
 
-public func WieldStart(int wieldDuration) {}
+public func WieldStart(int direction) {}
 
 public func WieldEnd() {
 	CallToWeapon("WieldEnd");

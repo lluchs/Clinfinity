@@ -1,0 +1,6 @@
+[Action]
+Name=Shield
+Procedure=NONE
+Directions=2
+Length=1
+Facet=0,10,10,2,-1,0

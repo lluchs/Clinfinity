@@ -16,12 +16,12 @@ public func GetStartAngle(int direction) {
 	if(direction == DIR_Left) return -45;
 	else return 45;
 }
-public func GetEndAngle(int direction) {
-	if(direction == DIR_Left) return -135;
-	else return 135;
+public func GetCentralAngle(int direction) {
+	if(direction == DIR_Left) return -90;
+	else return 90;
 }
 
-public func WieldStart(int wieldDuration) {
+public func WieldStart(int direction) {
 	SetR(0);
 	SetAction("On");
 }
