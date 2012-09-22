@@ -56,9 +56,9 @@ private func WieldMeleeWeapon() {
 		startAngle = NormaliseAngle(weapon->GetStartAngle(GetDir()));
 		angularSpeed = weapon->GetCentralAngle(GetDir()) / duration;
 
-		Wielding();
-
+		weapon->SetR(0);
 		weapon->WieldStart(GetDir());
+		Wielding();
 	}
 }
 

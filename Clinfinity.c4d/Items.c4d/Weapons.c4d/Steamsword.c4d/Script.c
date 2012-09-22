@@ -22,7 +22,6 @@ public func GetCentralAngle(int direction) {
 }
 
 public func WieldStart(int direction) {
-	SetR(0);
 	SetAction("On");
 }
 
