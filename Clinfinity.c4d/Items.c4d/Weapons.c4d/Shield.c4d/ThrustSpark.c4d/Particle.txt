@@ -1,0 +1,15 @@
+[Particle]
+Name=ThrustSpark
+MaxCount=100
+InitFn=StdInit
+ExecFn=StdExec
+DrawFn=Std
+Face=0,0,32,32,-16,-16
+Delay=1
+Repeats=1
+Reverse=1
+FadeOutLen=8
+FadeOutDelay=2
+AlphaFade=0
+Additive=1
+Attach=1

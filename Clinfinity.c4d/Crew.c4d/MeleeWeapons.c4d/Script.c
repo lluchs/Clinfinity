@@ -5,6 +5,7 @@
 
 static const AVMW_WieldUp	= 1;
 static const AVMW_WieldDown	= 2;
+static const AVMW_WieldHold	= 3;
 
 static const AVMW_StandardHandX = 0;
 static const AVMW_StandardHandY = -5;
@@ -112,7 +113,20 @@ public func WieldEnd() {
 	ClearScheduleCall(this, "Wielding");
 	DrawRotated(0, 0, 0, 0, 0);
 	RemoveMeleeWeaponOverlay();
-	SetAction("Walk");
+	var weapon = Contents(0);
+	if(weapon != 0 && weapon->~IsMeleeWeapon()) {
+		var coolDown = weapon->~GetCoolDownDirection();
+		if(coolDown == AVMW_WieldUp) {
+			SetAction("WieldBackUp");
+		} else if(coolDown == AVMW_WieldDown) {
+			SetAction("WieldBackDown");
+		} else if(coolDown == AVMW_WieldHold) {
+			if(GetAction() == "WieldUp") SetAction("WieldUpHold");
+			if(GetAction() == "WieldDown") SetAction("WieldDownHold");
+		} else {
+			SetAction("Walk");
+		}
+	}
 }
 
 public func WieldAbort() {
