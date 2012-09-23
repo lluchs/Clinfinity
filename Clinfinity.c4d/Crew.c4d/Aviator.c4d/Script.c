@@ -332,8 +332,10 @@ protected func ControlThrow() {
 		StartAiming(obj);
 		return 1;
 	}
-	if(obj && obj->~IsMeleeWeapon() && ReadyToWield()) {
-		WieldMeleeWeapon();
+	if(obj && obj->~IsMeleeWeapon()) {
+		if(ReadyToWield()) {
+			WieldMeleeWeapon();
+		}
 		return 1;
 	}
 	return inherited(...);
