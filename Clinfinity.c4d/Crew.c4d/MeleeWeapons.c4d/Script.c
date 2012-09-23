@@ -76,6 +76,11 @@ private func Wielding() {
 	ScheduleCall(this, "Wielding", 1);
 }
 
+private func StopWielding() {
+	DrawRotated(0, 0, 0, 0, 0);
+	RemoveMeleeWeaponOverlay();
+}
+
 private func NormaliseAngle(int angle) {
 	angle %= 360;
 	if(angle < 0) {
@@ -111,8 +116,8 @@ public func WieldStart(int direction) {}
 public func WieldEnd() {
 	CallToWeapon("WieldEnd");
 	ClearScheduleCall(this, "Wielding");
-	DrawRotated(0, 0, 0, 0, 0);
-	RemoveMeleeWeaponOverlay();
+	//DrawRotated(0, 0, 0, 0, 0);
+	//RemoveMeleeWeaponOverlay();
 	var weapon = Contents(0);
 	if(weapon != 0 && weapon->~IsMeleeWeapon()) {
 		var coolDown = weapon->~GetCoolDownDirection();
@@ -124,6 +129,7 @@ public func WieldEnd() {
 			if(GetAction() == "WieldUp") SetAction("WieldUpHold");
 			if(GetAction() == "WieldDown") SetAction("WieldDownHold");
 		} else {
+			StopWielding();
 			SetAction("Walk");
 		}
 	}
@@ -134,6 +140,17 @@ public func WieldAbort() {
 	ClearScheduleCall(this, "Wielding");
 	DrawRotated(0, 0, 0, 0, 0);
 	RemoveMeleeWeaponOverlay();
+}
+
+public func CoolDownEnd() {
+	CallToWeapon("CoolDownEnd");
+	StopWielding();
+	SetAction("Walk");
+}
+
+public func CoolDownAbort() {
+	CallToWeapon("CoolDownAbort");
+	StopWielding();
 }
 
 private func CallToWeapon(string callName, a) {
