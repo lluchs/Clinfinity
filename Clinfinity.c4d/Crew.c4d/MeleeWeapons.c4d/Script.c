@@ -24,16 +24,27 @@ public func ReadyToWield() {
 
 public func GetCurrentWieldData(&handX, &handY, &weaponAngle) {
 	if(activeMeleeWeapon != 0) {
+		var shoulderY;
+		if(GetAction() == "WieldDown" || GetAction() == "WieldBackUp" || GetAction() == "WieldDownHold") {
+			shoulderY = AVMW_WieldDownShoulderY;
+		} else {
+			shoulderY = AVMW_WieldUpShoulderY;
+		}
+
 		var frames = GetActMapVal("Length", GetAction());
 		var delay = GetActMapVal("Delay", GetAction());
 		var duration = frames * delay;
-		if(GetActTime() >= duration)
+		if(GetAction() == "WieldDownHold" || GetAction() == "WieldUpHold") {
+			weaponAngle = startAngle;
+		} else if(GetActTime() >= duration) {
 			weaponAngle = endAngle;
-		else
+		} else {
 			weaponAngle = startAngle + GetActTime() * angularSpeed;
+		}
+
 		handX = AVMW_StandardHandX;
 		handY = AVMW_StandardHandY;
-		Rotate(weaponAngle, handX, handY, 0, AVMW_WieldDownShoulderY);
+		Rotate(weaponAngle, handX, handY, 0, shoulderY);
 	}
 }
 
@@ -84,6 +95,12 @@ private func Wielding() {
 	ScheduleCall(this, "Wielding", 1);
 }
 
+private func EndWielding() {
+	ClearScheduleCall(this, "Wielding");
+	RemoveMeleeWeaponOverlay();
+	activeMeleeWeapon = 0;
+}
+
 private func NormaliseAngle(int angle) {
 	angle %= 360;
 	if(angle < 0) {
@@ -112,41 +129,48 @@ private func RemoveMeleeWeaponOverlay() {
 public func WieldStart(int direction) {}
 
 public func WieldEnd() {
-	CallToWeapon("WieldEnd");
 	Wielding();
-	ClearScheduleCall(this, "Wielding");
-	var weapon = Contents(0);
-	if(weapon != 0 && weapon->~IsMeleeWeapon()) {
+	CallToWeapon("WieldEnd");
+	if(activeMeleeWeapon != 0) {
 		isRegularActionSwitch = true;
 
-		var coolDown = weapon->~GetCoolDownDirection();
-		if(coolDown == AVMW_WieldUp) {
-			SetAction("WieldBackUp");
-		} else if(coolDown == AVMW_WieldDown) {
-			SetAction("WieldBackDown");
-		} else if(coolDown == AVMW_WieldHold) {
+		var coolDown = activeMeleeWeapon->~GetCoolDownDirection();
+		if(coolDown == AVMW_WieldUp) SetAction("WieldBackUp");
+		else if(coolDown == AVMW_WieldDown) SetAction("WieldBackDown");
+		else if(coolDown == AVMW_WieldHold) {
 			if(GetAction() == "WieldUp") SetAction("WieldUpHold");
-			if(GetAction() == "WieldDown") SetAction("WieldDownHold");
+			else if(GetAction() == "WieldDown") SetAction("WieldDownHold");
 		} else {
-			RemoveMeleeWeaponOverlay();
-			SetAction("Walk");
+			EndWielding();
+			SetAction("Walk"); // TODO: Or set "Jump" when in flight.
+			return;
 		}
+		CoolDownStart();
 	}
 }
 
 public func WieldAbort() {
 	if(!isRegularActionSwitch) {
 		CallToWeapon("WieldAbort");
-		ClearScheduleCall(this, "Wielding");
-		RemoveMeleeWeaponOverlay();
+		EndWielding();
 	} else {
 		isRegularActionSwitch = false;
 	}
 }
 
+public func CoolDownStart() {
+	CallToWeapon("CoolDownStart");
+	// For cool down animations, the direction is reversed.
+	var oldEndAngle = endAngle;
+	endAngle = startAngle;
+	startAngle = oldEndAngle;
+	angularSpeed *= -1;
+}
+
 public func CoolDownEnd() {
+	Wielding();
 	CallToWeapon("CoolDownEnd");
-	RemoveMeleeWeaponOverlay();
+	EndWielding();
 	isRegularActionSwitch = true;
 	SetAction("Walk");
 }
@@ -154,7 +178,7 @@ public func CoolDownEnd() {
 public func CoolDownAbort() {
 	if(!isRegularActionSwitch) {
 		CallToWeapon("CoolDownAbort");
-		RemoveMeleeWeaponOverlay();
+		EndWielding();
 	} else {
 		isRegularActionSwitch = false;
 	}
