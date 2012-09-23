@@ -10,7 +10,8 @@ static const AVMW_WieldHold	= 3;
 static const AVMW_StandardHandX = 0;
 static const AVMW_StandardHandY = -5;
 
-local activeMeleeWeapon, startAngle, angularSpeed;
+local activeMeleeWeapon, startAngle, angularSpeed, endAngle;
+local isRegularActionSwitch;
 
 public func ReadyToWield() {
 	// Can't use more than one melee weapon
@@ -20,7 +21,13 @@ public func ReadyToWield() {
 
 public func GetCurrentWieldData(&handX, &handY, &weaponAngle) {
 	if(activeMeleeWeapon != 0) {
-		weaponAngle = startAngle + GetActTime() * angularSpeed;
+		var frames = GetActMapVal("Length", GetAction());
+		var delay = GetActMapVal("Delay", GetAction());
+		var duration = frames * delay;
+		if(GetActTime() >= duration)
+			weaponAngle = endAngle;
+		else
+			weaponAngle = startAngle + GetActTime() * angularSpeed;
 		handX = AVMW_StandardHandX;
 		handY = AVMW_StandardHandY;
 		Rotate(weaponAngle, handX, handY);
@@ -56,6 +63,7 @@ private func WieldMeleeWeapon() {
 
 		startAngle = NormaliseAngle(weapon->GetStartAngle(GetDir()));
 		angularSpeed = weapon->GetCentralAngle(GetDir()) / duration;
+		endAngle = NormaliseAngle(weapon->GetStartAngle(GetDir())) + weapon->GetCentralAngle(GetDir());
 
 		weapon->SetR(0);
 		weapon->WieldStart(GetDir());
@@ -64,21 +72,16 @@ private func WieldMeleeWeapon() {
 }
 
 private func Wielding() {
-	DrawMeleeWeaponOverlay();
+	var x, y, angle;
+	GetCurrentWieldData(x, y, angle);
 
-	var angle = startAngle + GetActTime() * angularSpeed;
 	var x = AVMW_StandardHandX + activeMeleeWeapon->~HandX();
 	if(GetDir() == DIR_Left) x = -x;
 	var y = AVMW_StandardHandY - activeMeleeWeapon->~HandY();
 
-	DrawRotated(angle, x, y, 0, -1);
+	DrawMeleeWeaponOverlay(angle, x, y, 0, -1);
 
 	ScheduleCall(this, "Wielding", 1);
-}
-
-private func StopWielding() {
-	DrawRotated(0, 0, 0, 0, 0);
-	RemoveMeleeWeaponOverlay();
 }
 
 private func NormaliseAngle(int angle) {
@@ -89,23 +92,19 @@ private func NormaliseAngle(int angle) {
 	return angle;
 }
 
-private func DrawMeleeWeaponOverlay() {
+private func DrawMeleeWeaponOverlay(int angle, int x, int y, int xOffset, int yOffset) {
 	SetGraphics(0, this, activeMeleeWeapon->GetID(), AVTR_WeaponOverlay, GFXOV_MODE_Object, 0, 0, activeMeleeWeapon);
-}
-
-private func DrawRotated(int angle, int x, int y, int xOffset, int yOffset) {
+	SetObjDrawTransform(1000, 0, 0, 0, 1000, 0, this, AVTR_WeaponOverlay);
+	Rotate(angle, x, y, xOffset, yOffset);
 	var sin1 = Sin(360 - angle, 1000);
 	var cos1 = Cos(360 - angle, 1000);
-	var sin2 = Sin(angle, 1000);
-	var cos2 = Cos(angle, 1000);
-	var x2 = x * cos2 - y * sin2;
-	var y2 = x * sin2 + y * cos2;
-	SetObjDrawTransform(1000, 0, 0, 0, 1000, 0, this, AVTR_WeaponOverlay);
-	activeMeleeWeapon->SetObjDrawTransform(cos1, sin1, x2 + xOffset * 1000, -sin1, cos1, y2 + yOffset * 1000);
+	activeMeleeWeapon->SetObjDrawTransform(cos1, sin1, x * 1000, -sin1, cos1, y * 1000);
 }
 
 private func RemoveMeleeWeaponOverlay() {
 	SetGraphics(0, this, 0, AVTR_WeaponOverlay);
+	SetObjDrawTransform(1000, 0, 0, 0, 1000, 0, this, AVTR_WeaponOverlay);
+	activeMeleeWeapon->SetObjDrawTransform(1000, 0, 0, 0, 1000, 0);
 }
 
 /*	Section: Calls to weapons
@@ -115,11 +114,14 @@ public func WieldStart(int direction) {}
 
 public func WieldEnd() {
 	CallToWeapon("WieldEnd");
+	Wielding();
 	ClearScheduleCall(this, "Wielding");
 	//DrawRotated(0, 0, 0, 0, 0);
 	//RemoveMeleeWeaponOverlay();
 	var weapon = Contents(0);
 	if(weapon != 0 && weapon->~IsMeleeWeapon()) {
+		isRegularActionSwitch = true;
+
 		var coolDown = weapon->~GetCoolDownDirection();
 		if(coolDown == AVMW_WieldUp) {
 			SetAction("WieldBackUp");
@@ -129,28 +131,36 @@ public func WieldEnd() {
 			if(GetAction() == "WieldUp") SetAction("WieldUpHold");
 			if(GetAction() == "WieldDown") SetAction("WieldDownHold");
 		} else {
-			StopWielding();
+			RemoveMeleeWeaponOverlay();
 			SetAction("Walk");
 		}
 	}
 }
 
 public func WieldAbort() {
-	CallToWeapon("WieldAbort");
-	ClearScheduleCall(this, "Wielding");
-	DrawRotated(0, 0, 0, 0, 0);
-	RemoveMeleeWeaponOverlay();
+	if(!isRegularActionSwitch) {
+		CallToWeapon("WieldAbort");
+		ClearScheduleCall(this, "Wielding");
+		RemoveMeleeWeaponOverlay();
+	} else {
+		isRegularActionSwitch = false;
+	}
 }
 
 public func CoolDownEnd() {
 	CallToWeapon("CoolDownEnd");
-	StopWielding();
+	RemoveMeleeWeaponOverlay();
+	isRegularActionSwitch = true;
 	SetAction("Walk");
 }
 
 public func CoolDownAbort() {
-	CallToWeapon("CoolDownAbort");
-	StopWielding();
+	if(!isRegularActionSwitch) {
+		CallToWeapon("CoolDownAbort");
+		RemoveMeleeWeaponOverlay();
+	} else {
+		isRegularActionSwitch = false;
+	}
 }
 
 private func CallToWeapon(string callName, a) {
