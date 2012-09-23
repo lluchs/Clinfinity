@@ -11,7 +11,7 @@ static const AVMW_StandardHandX = 0;
 static const AVMW_StandardHandY = -5;
 
 static const AVMW_WieldDownShoulderY	= -1;
-static const AVMW_WieldUpShoulderY		= -2;
+static const AVMW_WieldUpShoulderY		= 0;
 
 local activeMeleeWeapon, startAngle, angularSpeed, endAngle;
 local isRegularActionSwitch;
@@ -129,7 +129,6 @@ private func RemoveMeleeWeaponOverlay() {
 public func WieldStart(int direction) {}
 
 public func WieldEnd() {
-	Wielding();
 	CallToWeapon("WieldEnd");
 	if(activeMeleeWeapon != 0) {
 		isRegularActionSwitch = true;
