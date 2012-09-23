@@ -30,11 +30,6 @@ public func WieldStart(int direction) {
 }
 
 public func WieldAbort() {
-	Log("WieldAbort"); // TODO: Oh no, this is called even though the action isn't 'really' aborted!
-	// This is because the wielding actions continue (NextAction is themselves) and SetAction() is
-	// called to start the cool down, I believe.
-	// The wielding actions continue because we need GetActTime() to still count the wielding action on finishing wielding.
-	// Perhaps we can hack this/calculate the action time ourselves, so this won'n be necessary.
 	SetAction("Idle");
 }
 
