@@ -10,6 +10,9 @@ static const AVMW_WieldHold	= 3;
 static const AVMW_StandardHandX = 0;
 static const AVMW_StandardHandY = -5;
 
+static const AVMW_WieldDownShoulderY	= -1;
+static const AVMW_WieldUpShoulderY		= -2;
+
 local activeMeleeWeapon, startAngle, angularSpeed, endAngle;
 local isRegularActionSwitch;
 
@@ -30,7 +33,7 @@ public func GetCurrentWieldData(&handX, &handY, &weaponAngle) {
 			weaponAngle = startAngle + GetActTime() * angularSpeed;
 		handX = AVMW_StandardHandX;
 		handY = AVMW_StandardHandY;
-		Rotate(weaponAngle, handX, handY);
+		Rotate(weaponAngle, handX, handY, 0, AVMW_WieldDownShoulderY);
 	}
 }
 
@@ -72,15 +75,12 @@ private func WieldMeleeWeapon() {
 }
 
 private func Wielding() {
-	var x, y, angle;
-	GetCurrentWieldData(x, y, angle);
-
-	var x = AVMW_StandardHandX + activeMeleeWeapon->~HandX();
-	if(GetDir() == DIR_Left) x = -x;
-	var y = AVMW_StandardHandY - activeMeleeWeapon->~HandY();
-
-	DrawMeleeWeaponOverlay(angle, x, y, 0, -1);
-
+	var handX, handY, angle;
+	GetCurrentWieldData(handX, handY, angle);
+	var addHandX = activeMeleeWeapon->~HandX();
+	var addHandY = activeMeleeWeapon->~HandY();
+	Rotate(angle, addHandX, addHandY);
+	DrawMeleeWeaponOverlay(angle, handX - addHandX, handY - addHandY);
 	ScheduleCall(this, "Wielding", 1);
 }
 
@@ -92,10 +92,9 @@ private func NormaliseAngle(int angle) {
 	return angle;
 }
 
-private func DrawMeleeWeaponOverlay(int angle, int x, int y, int xOffset, int yOffset) {
+private func DrawMeleeWeaponOverlay(int angle, int x, int y) {
 	SetGraphics(0, this, activeMeleeWeapon->GetID(), AVTR_WeaponOverlay, GFXOV_MODE_Object, 0, 0, activeMeleeWeapon);
 	SetObjDrawTransform(1000, 0, 0, 0, 1000, 0, this, AVTR_WeaponOverlay);
-	Rotate(angle, x, y, xOffset, yOffset);
 	var sin1 = Sin(360 - angle, 1000);
 	var cos1 = Cos(360 - angle, 1000);
 	activeMeleeWeapon->SetObjDrawTransform(cos1, sin1, x * 1000, -sin1, cos1, y * 1000);
@@ -116,8 +115,6 @@ public func WieldEnd() {
 	CallToWeapon("WieldEnd");
 	Wielding();
 	ClearScheduleCall(this, "Wielding");
-	//DrawRotated(0, 0, 0, 0, 0);
-	//RemoveMeleeWeaponOverlay();
 	var weapon = Contents(0);
 	if(weapon != 0 && weapon->~IsMeleeWeapon()) {
 		isRegularActionSwitch = true;
