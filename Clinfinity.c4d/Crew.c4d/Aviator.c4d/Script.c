@@ -333,6 +333,9 @@ protected func ControlThrow() {
 		return 1;
 	}
 	if(obj && obj->~IsMeleeWeapon()) {
+		if(GetPlrDownDouble(GetOwner())) {
+			return 0;
+		}
 		if(ReadyToWield()) {
 			WieldMeleeWeapon();
 		}
