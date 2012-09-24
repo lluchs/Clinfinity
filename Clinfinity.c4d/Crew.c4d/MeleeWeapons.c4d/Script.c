@@ -52,23 +52,17 @@ private func WieldMeleeWeapon() {
 	var weapon = Contents(0);
 	if(weapon != 0 && weapon->~IsMeleeWeapon()) {
 		var wieldDirection = weapon->GetWieldDirection();
-		if(wieldDirection == 0) return;
+		var wieldDirectionName;
+		var movementName = "";
 
-		if(wieldDirection == AVMW_WieldUp) {
-			if(GetAction() == "Walk") {
-				SetAction("WieldUp");
-			} else {
-				// TODO: Jump+wield up animation
-				return;
-			}
-		} else if(wieldDirection == AVMW_WieldDown) {
-			if(GetAction() == "Walk") {
-				SetAction("WieldDown");
-			} else {
-				SetAction("WieldDownJump");
-				return;
-			}
-		}
+		if(wieldDirection == AVMW_WieldUp) wieldDirectionName = "WieldUp";
+		else if(wieldDirection == AVMW_WieldDown) wieldDirectionName = "WieldDown";
+		else return;
+
+		if(GetAction() == "Jump") movementName = "Jump";
+
+		SetAction(Format("%s%s", wieldDirectionName, movementName));
+
 		activeMeleeWeapon = weapon;
 
 		var frames = GetActMapVal("Length", GetAction());
