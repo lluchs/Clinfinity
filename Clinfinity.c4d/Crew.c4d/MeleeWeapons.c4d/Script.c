@@ -184,8 +184,7 @@ public func CoolDownAbort() {
 }
 
 private func CallToWeapon(string callName, a) {
-	var weapon = Contents(0);
-	if(weapon != 0 && weapon->~IsMeleeWeapon()) {
-		ObjectCall(weapon, callName, a);
+	if(activeMeleeWeapon != 0) {
+		ObjectCall(activeMeleeWeapon, callName, a);
 	}
 }
