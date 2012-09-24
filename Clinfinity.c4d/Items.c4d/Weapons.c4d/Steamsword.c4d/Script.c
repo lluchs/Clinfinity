@@ -1,5 +1,7 @@
 #strict 2
 
+#include MWEP
+
 static const SWOR_DamageRectWidth = 25;
 static const SWOR_DamageRectHeight = 38;
 static const SWOR_MinDamage = 10;
@@ -30,13 +32,7 @@ public func WieldAbort() {
 }
 
 public func WieldEnd() {
-	var searchX = 0;
-	if(Contained()->GetDir() == DIR_Left) searchX = -SWOR_DamageRectWidth;
-	for(var clonk in FindObjects(Find_Exclude(Contained()), Find_InRect(searchX, -SWOR_DamageRectHeight / 2, SWOR_DamageRectWidth, SWOR_DamageRectHeight), Find_NoContainer(), Find_OCF(OCF_Living))) {
-		if(PathFree(Contained()->GetX(), Contained()->GetY(), clonk->GetX(), clonk->GetY())) {
-			clonk->DoEnergy(RandomX(-SWOR_MinDamage, -SWOR_MaxDamage));
-		}
-	}
+	MeleeHit(SWOR_DamageRectWidth, SWOR_DamageRectHeight, RandomX(SWOR_MinDamage, SWOR_MaxDamage));
 	DeflectObjects();
 	SetAction("Off");
 }
