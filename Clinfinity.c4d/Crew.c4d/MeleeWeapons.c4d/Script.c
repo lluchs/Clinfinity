@@ -19,7 +19,7 @@ local isRegularActionSwitch;
 public func ReadyToWield() {
 	// Can't use more than one melee weapon
 	if(YOYO->IsYoyoThrownBy(this)) return false;
-	return GetAction() == "Walk" /*|| GetAction() == "Jump"*/;
+	return GetAction() == "Walk" || GetAction() == "Jump";
 }
 
 public func GetCurrentWieldData(&handX, &handY, &weaponAngle) {
@@ -65,7 +65,7 @@ private func WieldMeleeWeapon() {
 			if(GetAction() == "Walk") {
 				SetAction("WieldDown");
 			} else {
-				// TODO: Jump+wield down animation
+				SetAction("WieldDownJump");
 				return;
 			}
 		}

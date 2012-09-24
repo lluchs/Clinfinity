@@ -540,3 +540,17 @@ NextAction=WieldUpHold
 EndCall=CoolDownEnd
 AbortCall=CoolDownAbort
 InLiquidAction=Swim
+
+[Action]
+Name=WieldDownJump
+Procedure=FLIGHT
+Directions=2
+FlipDir=1
+Length=6
+Reverse=1
+Delay=2
+Facet=0,460,16,20
+NextAction=WieldDown
+EndCall=WieldEnd
+AbortCall=WieldAbort
+InLiquidAction=Swim

@@ -1,5 +1,8 @@
 #strict 2
 
+// TODO: Check if ownership is a problem with weapons
+// In other words: If I pick up your weapon and kill you with it - does it count as a self-kill for you?
+
 // Hit living beings, vertically centered in front of the user of the weapon
 public func MeleeHit(int rectangleWidth, int rectangleHeight, int damage) {
 	for(var target in FindTargets(rectangleWidth, rectangleHeight)) {
