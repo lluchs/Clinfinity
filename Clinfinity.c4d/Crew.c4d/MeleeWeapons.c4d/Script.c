@@ -21,7 +21,8 @@ local isRegularActionSwitch;
 public func ReadyToWield() {
 	// Can't use more than one melee weapon
 	if(YOYO->IsYoyoThrownBy(this)) return false;
-	return GetAction() == "Walk" || GetAction() == "Jump"; // TODO: No using weapons while gliding with wing suit
+	if(IsGliding()) return false;
+	return GetAction() == "Walk" || GetAction() == "Jump";
 }
 
 public func IsWielding(object weapon) {
