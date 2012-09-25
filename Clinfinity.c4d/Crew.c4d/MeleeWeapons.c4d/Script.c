@@ -24,6 +24,11 @@ public func ReadyToWield() {
 	return GetAction() == "Walk" || GetAction() == "Jump"; // TODO: No using weapons while gliding with wing suit
 }
 
+public func IsWielding(object weapon) {
+	if(weapon == 0) return activeMeleeWeapon != 0;
+	else return activeMeleeWeapon == weapon;
+}
+
 public func GetCurrentWieldData(&handX, &handY, &weaponAngle) {
 	if(activeMeleeWeapon != 0) {
 		var shoulderY;
@@ -81,7 +86,16 @@ private func WieldMeleeWeapon() {
 	}
 }
 
+private func NormaliseAngle(int angle) {
+	angle %= 360;
+	if(angle < 0) {
+		angle += 360;
+	}
+	return angle;
+}
+
 private func Wielding() {
+	if(activeMeleeWeapon == 0) EndWielding();
 	var handX, handY, angle;
 	GetCurrentWieldData(handX, handY, angle);
 	var addHandX = activeMeleeWeapon->~HandX();
@@ -89,20 +103,6 @@ private func Wielding() {
 	Rotate(angle, addHandX, addHandY);
 	DrawMeleeWeaponOverlay(angle, handX - addHandX, handY - addHandY);
 	ScheduleCall(this, "Wielding", 1);
-}
-
-private func EndWielding() {
-	ClearScheduleCall(this, "Wielding");
-	RemoveMeleeWeaponOverlay();
-	activeMeleeWeapon = 0;
-}
-
-private func NormaliseAngle(int angle) {
-	angle %= 360;
-	if(angle < 0) {
-		angle += 360;
-	}
-	return angle;
 }
 
 private func DrawMeleeWeaponOverlay(int angle, int x, int y) {
@@ -154,7 +154,8 @@ private func ChooseCoolDownActionFrom(string standardAction, string reverseActio
 		}
 		StartCoolDown();
 	} else {
-		// Error handling: TODO
+		EndWielding();
+		SetAction(standardAction);
 	}
 }
 
@@ -165,6 +166,12 @@ private func WieldAnyAbort() {
 	} else {
 		isRegularActionSwitch = false;
 	}
+}
+
+private func EndWielding() {
+	ClearScheduleCall(this, "Wielding");
+	RemoveMeleeWeaponOverlay();
+	activeMeleeWeapon = 0;
 }
 
 private func StartCoolDown() {
@@ -179,19 +186,11 @@ private func StartCoolDown() {
 // Action calls: Cool down phase
 
 private func CoolDownAnyEnd() {
-	Wielding();
-	CallToWeapon("CoolDownEnd");
-	EndWielding();
-	isRegularActionSwitch = true;
-	SetAction("Walk");	
+	EndCoolDown("Walk");
 }
 
 private func CoolDownAnyJumpEnd() {
-	Wielding();
-	CallToWeapon("CoolDownEnd");
-	EndWielding();
-	isRegularActionSwitch = true;
-	SetAction("Jump");
+	EndCoolDown("Jump");
 }
 
 private func CoolDownAnyAbort() {
@@ -201,6 +200,13 @@ private func CoolDownAnyAbort() {
 	} else {
 		isRegularActionSwitch = false;
 	}
+}
+
+private func EndCoolDown(string nextAction) {
+	CallToWeapon("CoolDownEnd");
+	EndWielding();
+	isRegularActionSwitch = true;
+	SetAction(nextAction);	
 }
 
 // Utility functions for action calls
