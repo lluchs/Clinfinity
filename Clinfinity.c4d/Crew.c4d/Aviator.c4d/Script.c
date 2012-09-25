@@ -334,8 +334,8 @@ protected func ControlThrow() {
 	}
 	if(obj && obj->~IsMeleeWeapon()) {
 		if(GetPlrDownDouble(GetOwner())) {
-			// TODO: No dropping while being used or abort animation
-			return 0;
+			if(!IsWielding(Contents(0))) return 0;
+			else return 1;
 		}
 		if(ReadyToWield()) {
 			WieldMeleeWeapon();
