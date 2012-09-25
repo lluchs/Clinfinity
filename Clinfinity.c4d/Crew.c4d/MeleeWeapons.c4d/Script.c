@@ -5,7 +5,9 @@
 
 static const AVMW_WieldUp	= 1;
 static const AVMW_WieldDown	= 2;
-static const AVMW_WieldHold	= 3;
+
+static const AVMW_WieldReverse	= 3;
+static const AVMW_WieldHold		= 4;
 
 static const AVMW_StandardHandX = 0;
 static const AVMW_StandardHandY = -5;
@@ -19,13 +21,13 @@ local isRegularActionSwitch;
 public func ReadyToWield() {
 	// Can't use more than one melee weapon
 	if(YOYO->IsYoyoThrownBy(this)) return false;
-	return GetAction() == "Walk" || GetAction() == "Jump";
+	return GetAction() == "Walk" || GetAction() == "Jump"; // TODO: No using weapons while gliding with wing suit
 }
 
 public func GetCurrentWieldData(&handX, &handY, &weaponAngle) {
 	if(activeMeleeWeapon != 0) {
 		var shoulderY;
-		if(GetAction() == "WieldDown" || GetAction() == "WieldBackUp" || GetAction() == "WieldDownHold") {
+		if(WildcardMatch(GetAction(), "WieldDown*") || WildcardMatch(GetAction(), "WieldBackUp*")) {
 			shoulderY = AVMW_WieldDownShoulderY;
 		} else {
 			shoulderY = AVMW_WieldUpShoulderY;
@@ -34,7 +36,7 @@ public func GetCurrentWieldData(&handX, &handY, &weaponAngle) {
 		var frames = GetActMapVal("Length", GetAction());
 		var delay = GetActMapVal("Delay", GetAction());
 		var duration = frames * delay;
-		if(GetAction() == "WieldDownHold" || GetAction() == "WieldUpHold") {
+		if(WildcardMatch(GetAction(), "Wield*Hold*")) {
 			weaponAngle = startAngle;
 		} else if(GetActTime() >= duration) {
 			weaponAngle = endAngle;
@@ -117,32 +119,46 @@ private func RemoveMeleeWeaponOverlay() {
 	activeMeleeWeapon->SetObjDrawTransform(1000, 0, 0, 0, 1000, 0);
 }
 
-/*	Section: Calls to weapons
-	The functions described in this section are called in the weapon object at the appropriate times. */
+// Action calls: Initial wielding phase
 
-public func WieldStart(int direction) {}
-
-public func WieldEnd() {
+private func WieldDownEnd() {
 	CallToWeapon("WieldEnd");
+	ChooseCoolDownActionFrom("Walk", "WieldBackUp", "WieldDownHold");
+}
+
+private func WieldUpEnd() {
+	CallToWeapon("WieldEnd");
+	ChooseCoolDownActionFrom("Walk", "WieldBackDown", "WieldUpHold");
+}
+
+private func WieldDownJumpEnd() {
+	CallToWeapon("WieldEnd");
+	ChooseCoolDownActionFrom("Jump", "WieldBackUpJump", "WieldDownHoldJump");
+}
+
+private func WieldUpJumpEnd() {
+	CallToWeapon("WieldEnd");
+	ChooseCoolDownActionFrom("Jump", "WieldBackDownJump", "WieldUpHoldJump");
+}
+
+private func ChooseCoolDownActionFrom(string standardAction, string reverseAction, string holdAction) {
 	if(activeMeleeWeapon != 0) {
 		isRegularActionSwitch = true;
-
 		var coolDown = activeMeleeWeapon->~GetCoolDownDirection();
-		if(coolDown == AVMW_WieldUp) SetAction("WieldBackUp");
-		else if(coolDown == AVMW_WieldDown) SetAction("WieldBackDown");
-		else if(coolDown == AVMW_WieldHold) {
-			if(GetAction() == "WieldUp") SetAction("WieldUpHold");
-			else if(GetAction() == "WieldDown") SetAction("WieldDownHold");
-		} else {
+		if(coolDown == AVMW_WieldReverse) SetAction(reverseAction);
+		else if(coolDown == AVMW_WieldHold) SetAction(holdAction);
+		else {
 			EndWielding();
-			SetAction("Walk"); // TODO: Or set "Jump" when in flight.
+			SetAction(standardAction);
 			return;
 		}
-		CoolDownStart();
+		StartCoolDown();
+	} else {
+		// Error handling: TODO
 	}
 }
 
-public func WieldAbort() {
+private func WieldAnyAbort() {
 	if(!isRegularActionSwitch) {
 		CallToWeapon("WieldAbort");
 		EndWielding();
@@ -151,7 +167,7 @@ public func WieldAbort() {
 	}
 }
 
-public func CoolDownStart() {
+private func StartCoolDown() {
 	CallToWeapon("CoolDownStart");
 	// For cool down animations, the direction is reversed.
 	var oldEndAngle = endAngle;
@@ -160,15 +176,25 @@ public func CoolDownStart() {
 	angularSpeed *= -1;
 }
 
-public func CoolDownEnd() {
+// Action calls: Cool down phase
+
+private func CoolDownAnyEnd() {
 	Wielding();
 	CallToWeapon("CoolDownEnd");
 	EndWielding();
 	isRegularActionSwitch = true;
-	SetAction("Walk");
+	SetAction("Walk");	
 }
 
-public func CoolDownAbort() {
+private func CoolDownAnyJumpEnd() {
+	Wielding();
+	CallToWeapon("CoolDownEnd");
+	EndWielding();
+	isRegularActionSwitch = true;
+	SetAction("Jump");
+}
+
+private func CoolDownAnyAbort() {
 	if(!isRegularActionSwitch) {
 		CallToWeapon("CoolDownAbort");
 		EndWielding();
@@ -177,8 +203,25 @@ public func CoolDownAbort() {
 	}
 }
 
+// Utility functions for action calls
+
 private func CallToWeapon(string callName, a) {
 	if(activeMeleeWeapon != 0) {
 		ObjectCall(activeMeleeWeapon, callName, a);
 	}
 }
+
+/*	Section: Calls to weapons
+	The functions described in this section are called in the weapon object at the appropriate times. */
+
+public func WieldStart(int direction) {}
+
+public func WieldEnd() {}
+
+public func WieldAbort() {}
+
+public func CoolDownStart() {}
+
+public func CoolDownEnd() {}
+
+public func CoolDownAbort() {}
