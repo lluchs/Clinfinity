@@ -25,6 +25,10 @@ public func ReadyToWield() {
 	return GetAction() == "Walk" || GetAction() == "Jump";
 }
 
+private func IsGliding() {
+	return _inherited();
+}
+
 public func IsWielding(object weapon) {
 	if(weapon == 0) return activeMeleeWeapon != 0;
 	else return activeMeleeWeapon == weapon;
