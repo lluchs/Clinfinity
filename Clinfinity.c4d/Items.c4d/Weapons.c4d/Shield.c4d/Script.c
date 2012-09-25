@@ -48,7 +48,7 @@ public func WieldEnd() {
 		var xSpeed = RandomX(12, 15);
 		if(GetDir() == DIR_Left) xSpeed = -xSpeed;
 		var y = handY - 6 + Random(13);
-		CreateParticle("ThrustSpark", handX, y, xSpeed, y * 2 / 3, 50, RGBa(255,255,255, 200));
+		CreateParticle("ThrustSpark", handX, y, xSpeed + Contained()->GetXDir(), y * 2 / 3, 50, RGBa(255,255,255, 200));
 	}
 	// CreateParticle("ThrustSpark", 10, 0, 15, 0, 50, RGBa(255,255,255, 150))
 	//CreateObject(SHID, handX -4 + GetDir() * 8, handY + 6, Contained()->GetOwner());
