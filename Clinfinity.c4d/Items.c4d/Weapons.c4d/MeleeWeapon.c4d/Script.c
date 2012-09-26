@@ -4,8 +4,7 @@
 public func MeleeHit(int rectangleWidth, int rectangleHeight, int damage) {
 	for(var target in FindTargets(rectangleWidth, rectangleHeight)) {
 		if(PathFree(Contained()->GetX(), Contained()->GetY(), target->GetX(), target->GetY())) {
-			SetKiller(GetController(), target);
-			target->DoEnergy(-damage);
+			target->InflictDamage(damage, this);
 		}
 	}
 }
@@ -27,3 +26,5 @@ private func FindTargets(int rectangleWidth, int rectangleHeight) {
 	if(Contained()->GetDir() == DIR_Left) rectangleX = -rectangleWidth;
 	return FindObjects(Find_Exclude(Contained()), Find_InRect(rectangleX, -rectangleHeight / 2, rectangleWidth, rectangleHeight), Find_NoContainer(), Find_OCF(OCF_Alive));
 }
+
+public func GetDamageType() { return DamageType_Melee; }
