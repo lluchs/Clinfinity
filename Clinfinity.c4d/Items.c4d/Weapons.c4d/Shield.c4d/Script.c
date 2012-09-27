@@ -54,7 +54,7 @@ public func WieldEnd() {
 	// CreateParticle("ThrustSpark", 10, 0, 15, 0, 50, RGBa(255,255,255, 150))
 	//CreateObject(SHID, handX -4 + GetDir() * 8, handY + 6, Contained()->GetOwner());
 	MeleeHit(SHIT_KnockbackRectWidth, SHIT_KnockbackRectHeight, RandomX(SHIT_MinDamage, SHIT_MaxDamage));
-	ThrowBack(SHIT_KnockbackRectWidth, SHIT_KnockbackRectHeight, SHIT_FlingSpeed);
+	ThrowBack(SHIT_KnockbackRectWidth, SHIT_KnockbackRectHeight, SHIT_FlingSpeed, false);
 }
 
 public func CoolDownEnd() {
