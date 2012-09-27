@@ -54,7 +54,7 @@ global func InflictDamage(int amount, object weapon) {
 	Parameters:
 	amount	- Amount of damage.
 	weapon	- Damage source. */
-global func GetResistance(int amount, object weapon) { Log("Global resistance"); return _inherited(amount, weapon); }
+global func GetResistance(int amount, object weapon) { return 0; }
 
 /*	Function: OnDamage
 	Called in the object being damaged, after damage reduction has been calculated.
