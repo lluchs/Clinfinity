@@ -4,20 +4,30 @@
 public func MeleeHit(int rectangleWidth, int rectangleHeight, int damage) {
 	for(var target in FindTargets(rectangleWidth, rectangleHeight)) {
 		if(PathFree(Contained()->GetX(), Contained()->GetY(), target->GetX(), target->GetY())) {
-			target->InflictDamage(damage, this);
+			MeleeHitObject(target, damage);
 		}
 	}
 }
 
+public func MeleeHitObject(object target, int damage) {
+	target->InflictDamage(damage, this);
+}
+
 // Throw back living beings (this is worse than a simple knockback)
-public func ThrowBack(int rectangleWidth, int rectangleHeight, int throwSpeed) {
+public func ThrowBack(int rectangleWidth, int rectangleHeight, int throwSpeed, bool tumble) {
 	for(var target in FindTargets(rectangleWidth, rectangleHeight)) {
 		if(PathFree(Contained()->GetX(), Contained()->GetY(), target->GetX(), target->GetY())) {
-			var away = -1;
-			if(target->GetX() > Contained()->GetX()) away = 1;
-			Fling(target, away * throwSpeed, -throwSpeed);
-			target->SetAction("Jump");
+			ThrowBackObject(target, throwSpeed, tumble);
 		}
+	}
+}
+
+public func ThrowBackObject(object target, int throwSpeed, bool tumble) {
+	var away = -1;
+	if(target->GetX() > Contained()->GetX()) away = 1;
+	Fling(target, away * throwSpeed, -throwSpeed);
+	if(!tumble) {
+		target->SetAction("Jump");
 	}
 }
 
