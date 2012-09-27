@@ -42,6 +42,7 @@ public func WieldAbort() {
 }
 
 public func WieldEnd() {
+	SetAction("Block");
 	var handX, handY, weaponAngle;
 	Contained()->~GetCurrentWieldData(handX, handY, weaponAngle);
 	for(var i = 0; i < 20; ++i) {
@@ -62,4 +63,16 @@ public func CoolDownEnd() {
 
 public func CoolDownAbort() {
 	SetAction("Idle");	
+}
+
+public func GetResistance(int amount, object weapon) {
+	// While holding up the shield, block sword and bullet hits from the direction the shield is held in
+	if(GetAction() == "Block") {
+		if(weapon->GetDamageType() == DamageType_Bullet || weapon->GetID() == SWOR) {
+			if((Contained()->GetDir() == DIR_Left && weapon->GetX() < Contained()->GetX()) ||
+				(Contained()->GetDir() == DIR_Right && weapon->GetX() > Contained()->GetX())) {
+				return 100;
+			}
+		}
+	}
 }
