@@ -3,6 +3,7 @@
 #strict 2
 
 #include ARRW
+#include MWEP
 
 local xdir, ydir, dam, knockback;
 
@@ -59,23 +60,31 @@ private func Travel() {
 }
 
 private func CheckHit() {
-    // Nur wenn schon passende Werte da sind
+    // No check if bullet didn't travel yet
     if(!oldX && !oldY) return;
-    // Distance zur letzten Position berechnen
-    var xDist = GetX() - oldX;
-    var yDist = GetY() - oldY;
-    // Treffer-Überprüfung
+
+    var newX = GetX();
+    var newY = GetY();
+    var xDist = newX - oldX;
+    var yDist = newY - oldY;
+
+    // Go back to old position so objects can correctly determine from which direction the bullet came
+    SetPosition(oldX, oldY);
+
     var steps = Abs(xDist / 4);
     if(Abs(GetXDir()) < Abs(GetYDir())) steps = Abs(yDist / 4);
     var x, y, obj;
-    // Mit Schleife alle Zwischenpunkte abklappern
-    for(var i = steps; i; i--) {
-        x = -xDist * i / steps;
-        y = -yDist * i / steps;
-        if(!y) y = 1;
-        //CreateParticle("NoGravSpark", x, y, 0, 0, 30, RGB(i*255/steps, (steps-i)*255/steps));
-        if(obj = FindObject(0, x, y, 0, 0, OCF_Alive, 0, 0, NoContainer())) return HitLiving(obj);
+    for(var i = 0; i < steps; ++i) {
+        x = xDist * i / steps;
+        y = yDist * i / steps;
+        if(y == 0) y = 1;
+        if(obj = FindObject(0, x, y, 0, 0, OCF_Alive, 0, 0, NoContainer())) {
+            HitLiving(obj);
+            break;
+        }
     }
+
+    SetPosition(newX, newY);
 }
 
 /* Treffer */
@@ -90,14 +99,12 @@ protected func Hit() {
 
 private func HitLiving(living) {
     Sound("Punch*");
-    // Schaden machen
-    if(knockback)
-        // Damage with knockback.
-        Punch(living, dam);
-    else
-        DoEnergy(-dam, living);
+    if(knockback) ThrowBackObject(living, 2, true);
+    living->InflictDamage(dam, this);
     return RemoveObject();
 }
+
+public func GetDamageType() { return DamageType_Bullet; }
 
 public func Entrance(clonk) {
     if(clonk->~IsWeapon() || GetID(clonk) == WCHR) return;
