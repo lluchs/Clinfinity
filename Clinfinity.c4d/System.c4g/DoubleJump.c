@@ -1,6 +1,6 @@
 #strict 2
 
-#appendto CLNK
+#appendto AVTR
 
 local doubleJumpPossible;
 local jumpParticleColour;
@@ -34,9 +34,9 @@ protected func ControlRight() {
 protected func ControlUp() {
 	var result = _inherited();
 	if( result == 0 ) {
-		if( GetAction() == "Jump" ) {
-			if( doubleJumpPossible ) {
-				doubleJumpPossible = false;
+		if( doubleJumpPossible ) {
+			doubleJumpPossible = false;
+			if( GetAction() == "Jump" ) {
 				if( GetDir() == DIR_Left ) {
 					SetXDir( -1 * Abs( GetXDir() ) );
 				} else {
@@ -53,12 +53,36 @@ protected func ControlUp() {
 				}
 				Sound("DoubleJump");
 				return true;
+			} else if(GetAction() == "Tumble") {
+				// Currently tumbling, do a directional jump!
+				var angle = [0, 10, 22, 40, 57, 90, 146, 157, 177, -169, -160, -145, -130, -90, -40, -20][GetPhase()];
+				var xdir = +Sin(angle, doubleJumpAcceleration);
+				var ydir = -Cos(angle, doubleJumpAcceleration);
+				SetXDir(GetXDir() + xdir);
+				SetYDir(GetYDir() + ydir);
+				var hgt = 9;
+				for(var i = -3; i < 4; i++) {
+					var a = 8*i + angle;
+					CreateParticle("MSpark", -Sin(a, hgt - Random(3)), Cos(a, hgt - Random(3)), -xdir/2, -ydir/2, 40, jumpParticleColour);
+				}
+				Sound("DoubleJump");
+				return true;
+			} else {
+				// We didn't do any jump, it's still possible!
+				doubleJumpPossible = true;
 			}
 		}
 	} else {
 		return result;
 	}
 	return 0;
+}
+
+protected func ControlSpecial() {
+	if(GetAction() == "Jump") {
+		SetAction("Tumble");
+	}
+	return _inherited(...);
 }
 
 protected func MakeDoubleJumpPossible() {
