@@ -1,5 +1,5 @@
 /*	Script: Grenade steam
-	Visual steam shockwave effect for the <Steam grenade>.
+	Visual steam shock wave effect for the <Steam grenade>.
 	Its animation is divided into two phases: Expansion and fuming.
 
 	Expansion:
