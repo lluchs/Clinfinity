@@ -441,4 +441,13 @@ protected func LoadGunEnd() {}
 
 /* Control functions end }}} */
 
+public func GetResistance(int amount, object weapon) {
+	var total = 0;
+	var contents = FindObjects(Find_Container(this));
+	for(var item in contents) {
+		total += item->~GetResistance(amount, weapon);
+	}
+	return total;
+}
+
 // vim: fdm=marker
