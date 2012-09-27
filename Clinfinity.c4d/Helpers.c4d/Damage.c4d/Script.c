@@ -54,6 +54,9 @@ public func Damage(int iChange) {
 	for (var i = 0; i < frazzlecount; ++i) {
 		CastParticles("Fragment1", 1, RandomX(30,50), ox+Random(wdt), oy+Random(hgt), 20, 20);		
 	}
+	// Important: This assumes that structures are not faded in any other way.
+	RemoveEffect("Fade", this);
+	FadeFromTo(RGB(255, 200, 200), RGB(255, 255, 255));
 	
 	/* Components verlieren */
 	

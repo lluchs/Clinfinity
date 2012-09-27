@@ -26,10 +26,10 @@ static const BOMB_SecondContactDelay = 5;
 	BOMB_OtherFlingSpeedY	- Vertical speed when the detonation flings objects and vehicles.
 	BOMB_OtherFlingSpeedX	- Maximum horizontal speed when the detonation flings objects and vehicles. */
 static const BOMB_DetonationRadius = 40;
-static const BOMB_DamageToStructures = 10;
-static const BOMB_CrewFlingSpeedY = 5;
-static const BOMB_CrewFlingSpeedX = 3;
-static const BOMB_OtherFlingSpeedY = 5;
+static const BOMB_DamageToStructures = 20;
+static const BOMB_CrewFlingSpeedY = 3;
+static const BOMB_CrewFlingSpeedX = 4;
+static const BOMB_OtherFlingSpeedY = 3;
 static const BOMB_OtherFlingSpeedX = 5;
 
 local isBounced;
@@ -39,7 +39,14 @@ public func Launch() {
 	Sound("steam_exhaust", false, this, 20, 0, 1);
 }
 
-protected func LeakSteam() {
+private func Active() {
+	LeakSteam();
+	if(FindObject2(Find_AtPoint(0, 0), Find_Category(C4D_Structure)) != 0) {
+		Detonate();
+	}
+}
+
+private func LeakSteam() {
 	Smoke(0, -3, 5);
 }
 
@@ -48,6 +55,9 @@ private func Detonate() {
 	var crew = FindObjects(Find_Category(C4D_Living), Find_OCF(OCF_CrewMember | OCF_InFree), Find_Distance(BOMB_DetonationRadius), Find_NoContainer());
 	for(var member in crew) {
 		var xDistance = member->GetX() - GetX();
+		if(Abs(xDistance) < 10 && GetXDir() != 0) {
+			xDistance = 10 * GetXDir() / Abs(GetXDir());
+		}
 		var xFlingSpeed = BOMB_CrewFlingSpeedX * xDistance / BOMB_DetonationRadius;
 		Fling(member, xFlingSpeed, -BOMB_CrewFlingSpeedY);
 	}
