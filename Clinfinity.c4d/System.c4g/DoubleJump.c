@@ -56,6 +56,8 @@ protected func ControlUp() {
 			} else if(GetAction() == "Tumble") {
 				// Currently tumbling, do a directional jump!
 				var angle = [0, 10, 22, 40, 57, 90, 146, 157, 177, -169, -160, -145, -130, -90, -40, -20][GetPhase()];
+				if(GetDir() == DIR_Right)
+					angle *= -1;
 				var xdir = +Sin(angle, doubleJumpAcceleration);
 				var ydir = -Cos(angle, doubleJumpAcceleration);
 				SetXDir(GetXDir() + xdir);
