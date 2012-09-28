@@ -2,6 +2,8 @@
 
 #strict 2
 
+static tumbleMode;
+
 protected func Initialize() {
 	// ozone
 	SetGamma(RGB(0,0,8), RGB(115,125,125), RGB(255,255,255));
@@ -83,7 +85,25 @@ func GetRACEEndOffset() { return 100; }
 
 /* Spielerinitialisierung */
 
-protected func InitializePlayer(int plr) { return JoinPlayer(plr); }
+protected func InitializePlayer(int plr) {
+	if(plr == 0)
+		SelectGamemode();
+	return JoinPlayer(plr);
+}
+
+private func SelectGamemode() {
+	var menu = CreateMenuTemplate(AVTR, "Options");
+	AddEnumChoice(menu, 0, "Gamemode", 0, "Gamemode");
+	AddEnumChoiceItem(menu, 0, "Gamemode", "Normal", "Normal", ROCK, false, true);
+	AddEnumChoiceItem(menu, 0, "Gamemode", "Tumble", "Tumble", EFLN, true, false);
+	CreateMenuByTemplate(GetCrew(), 0, "SetGameOptions", menu);
+}
+
+public func SetGameOptions(array options) {
+	tumbleMode = HashGet(options, "Gamemode");
+	if(tumbleMode)
+		Message("Tumble mode \\o/");
+}
 
 private func JoinPlayer(int plr) {
 	var clonk = GetCrew(plr);
