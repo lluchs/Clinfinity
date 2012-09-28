@@ -94,15 +94,22 @@ protected func InitializePlayer(int plr) {
 private func SelectGamemode() {
 	var menu = CreateMenuTemplate(AVTR, "Options");
 	AddEnumChoice(menu, 0, "Gamemode", 0, "Gamemode");
-	AddEnumChoiceItem(menu, 0, "Gamemode", "Normal", "Normal", ROCK, false, true);
-	AddEnumChoiceItem(menu, 0, "Gamemode", "Tumble", "Tumble", EFLN, true, false);
+	AddEnumChoiceItem(menu, 0, "Gamemode", "Normal", "Normal", HAT9, false, true);
+	AddEnumChoiceItem(menu, 0, "Gamemode", "Tumble", "Tumble", HAT2, true, false);
+
+	AddSubmenu(menu, 0, "TumbleSettings", MenuCond_Chosen(0, "Gamemode", "Tumble"), "Tumble Options", HAT6);
+	AddRangeChoice(menu, ["TumbleSettings"], "GameSpeed", 0, "Game Speed", BOMB, 10, 50, 1, 36);
 	CreateMenuByTemplate(GetCrew(), 0, "SetGameOptions", menu);
 }
 
 public func SetGameOptions(array options) {
 	tumbleMode = HashGet(options, "Gamemode");
-	if(tumbleMode)
-		Message("Tumble mode \\o/");
+	if(tumbleMode) {
+		var tumbleSettings = HashGet(options, "TumbleSettings");
+		var speed = HashGet(tumbleSettings, "GameSpeed");
+		Message("Tumble mode @ %dfps \\o/", 0, speed);
+		SetGameSpeed(speed);
+	}
 }
 
 private func JoinPlayer(int plr) {
