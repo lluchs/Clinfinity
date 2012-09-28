@@ -10,7 +10,7 @@ protected func CannonAmmo(object obj) { return obj && obj->GetOCF() & OCF_Collec
 protected func CannonPowerArray(object obj) { return [6, 8, 12, 14, 18]; }
 protected func CannonPower(object obj) { return CannonPowerArray(obj)[power]; }
 protected func CannonSteamUsage(object obj) { return [2, 3, 5, 7, 10][power]; } // SteamUsage*ObjectMass
-protected func CannonSound(object obj) { return "Blast3"; }
+protected func CannonSound(object obj) { return "Cannon"; }
 protected func CannonSmoke(object obj) { return 1; }
 
 // Legacy stuff
