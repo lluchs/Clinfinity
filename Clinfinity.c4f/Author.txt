@@ -9,7 +9,8 @@ Luchs - Script
 ==================================================================
 
 Thanks to all testers:
-Sir_Jones, Pitri, ManuN, Sven2, B_E, Zapper
+Sir_Jones, Pitri, ManuN, Sven2, B_E, Zapper, jok, Mave, Apfelclonk,
+Pflasterface, JCaesar, Zargul, Kingster
 
 ==================================================================
 
@@ -34,6 +35,8 @@ pang.wav by jenc
 
 Yo-yo whoosh.wav is swosh-22.flac by qubodup
 Rooster1+2.wav by acclivity
+Rock_burst.wav is rockfall-04.flac by corsica-s
+Cannon.wav is boom.wav by dj-chronos
 
 Quarry.wav is a mix of following sounds:
 Paternoster.wav by Donalfonso
