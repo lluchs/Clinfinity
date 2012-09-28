@@ -45,3 +45,5 @@ Earth1.aif by pushtobreak
 imp01_.wav by blaukreuz
 Cracksound from Metal & Magic
 woosh_01.wav by Glaneur de sons
+
+drill*.wav consists of City_Drilling_01.wav from Koops
