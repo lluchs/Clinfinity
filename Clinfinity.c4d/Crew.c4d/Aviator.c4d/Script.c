@@ -298,19 +298,24 @@ protected func ControlThrow() {
 		return 1;
 	}
 	var obj = Contents();
-	if(obj && obj->~IsWeapon()) {
-		StartAiming(obj);
-		return 1;
-	}
-	if(obj && obj->~IsMeleeWeapon()) {
-		if(GetPlrDownDouble(GetOwner())) {
-			if(!IsWielding(Contents(0))) return 0;
-			else return 1;
+	if(obj != 0) {
+		if(obj->~IsWeapon()) {
+			StartAiming(obj);
+			return 1;
 		}
-		if(ReadyToWield()) {
-			WieldMeleeWeapon();
+		if(obj->~IsMeleeWeapon()) {
+			if(GetPlrDownDouble(GetOwner())) {
+				if(!IsWielding(Contents(0))) return 0;
+				else return 1;
+			}
+			if(ReadyToWield()) {
+				WieldMeleeWeapon();
+			}
+			return 1;
 		}
-		return 1;
+		if(YOYO->IsYoyoThrownBy(this)) {
+			return 1;
+		}
 	}
 	return inherited(...);
 }
