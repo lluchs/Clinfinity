@@ -9,11 +9,13 @@ static const AVMW_WieldDown	= 2;
 static const AVMW_WieldReverse	= 3;
 static const AVMW_WieldHold		= 4;
 
-static const AVMW_StandardHandX = 0;
-static const AVMW_StandardHandY = -5;
+static const AVMW_WieldDownHandX = 0;
+static const AVMW_WieldDownHandY = -5;
+static const AVMW_WieldUpHandX = 0;
+static const AVMW_WieldUpHandY = -3;
 
 static const AVMW_WieldDownShoulderY	= -1;
-static const AVMW_WieldUpShoulderY		= 0;
+static const AVMW_WieldUpShoulderY		= 1;
 
 local activeMeleeWeapon, startAngle, angularSpeed, endAngle;
 local isRegularActionSwitch;
@@ -39,8 +41,12 @@ public func GetCurrentWieldData(&handX, &handY, &weaponAngle) {
 		var shoulderY;
 		if(WildcardMatch(GetAction(), "WieldDown*") || WildcardMatch(GetAction(), "WieldBackUp*")) {
 			shoulderY = AVMW_WieldDownShoulderY;
+			handX = AVMW_WieldDownHandX;
+			handY = AVMW_WieldDownHandY;
 		} else {
 			shoulderY = AVMW_WieldUpShoulderY;
+			handX = AVMW_WieldUpHandX;
+			handY = AVMW_WieldUpHandY;
 		}
 
 		var frames = GetActMapVal("Length", GetAction());
@@ -54,8 +60,6 @@ public func GetCurrentWieldData(&handX, &handY, &weaponAngle) {
 			weaponAngle = startAngle + GetActTime() * angularSpeed;
 		}
 
-		handX = AVMW_StandardHandX;
-		handY = AVMW_StandardHandY;
 		Rotate(weaponAngle, handX, handY, 0, shoulderY);
 	}
 }
