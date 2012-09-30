@@ -8,10 +8,6 @@ static const SHIT_MinDamage = 2;
 static const SHIT_MaxDamage = 3;
 static const SHIT_FlingSpeed = 2;
 
-protected func Hit() {
-	Sound("MetalHit*");
-}
-
 public func IsMeleeWeapon()			{ return true; }
 public func GetWieldDirection()		{ return AVMW_WieldUp; }
 public func GetCoolDownDirection()	{ return AVMW_WieldHold; }
@@ -30,6 +26,10 @@ public func GetCentralAngle(int direction) {
 	} else {
 		return -50;
 	}
+}
+
+protected func Hit() {
+	Sound("MetalHit*");
 }
 
 public func WieldStart(int direction) {

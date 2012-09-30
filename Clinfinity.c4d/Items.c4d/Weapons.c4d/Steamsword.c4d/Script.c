@@ -23,6 +23,10 @@ public func GetCentralAngle(int direction) {
 	else return 90;
 }
 
+protected func Hit() {
+	Sound("MetalHit*");
+}
+
 public func WieldStart(int direction) {
 	SetAction("On");
 }
