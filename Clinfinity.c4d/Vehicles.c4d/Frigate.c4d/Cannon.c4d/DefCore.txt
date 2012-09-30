@@ -1,0 +1,11 @@
+[DefCore]
+id=FRCN
+Name=Cannon
+Category=C4D_Vehicle
+Offset=-53,-53
+Width=106
+Height=53
+Vertices=1
+VertexX=0
+VertexY=0
+Grab=2

@@ -1,0 +1,11 @@
+[DefCore]
+id=FRFK
+Name=Flak
+Category=C4D_Vehicle
+Offset=-23,-29
+Width=46
+Height=29
+Vertices=1
+VertexX=0
+VertexY=0
+Grab=2

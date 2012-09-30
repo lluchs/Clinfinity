@@ -6,6 +6,7 @@
 #include L_CP
 
 local flag;
+local cannon, flak;
 local t;
 
 public func Initialize() {
@@ -13,10 +14,18 @@ public func Initialize() {
 
 	flag = CreateObject(FLAG, 0, 0, NO_OWNER);
 	flag->SetAction("FlyBase", this);
+
+	cannon = CreateObject(FRCN, -166+53, 24, NO_OWNER);
+	cannon->AttachTo(this);
+	flak = CreateObject(FRFK, 77+23, 15, NO_OWNER);
+	flak->AttachTo(this);
 }
 
 private func Captured() {
-	flag->SetOwner(GetOwner());
+	var o = GetOwner();
+	for(var obj in [flag, cannon, flak])
+		obj->SetOwner(o);
+
 	return inherited(...);
 }
 
