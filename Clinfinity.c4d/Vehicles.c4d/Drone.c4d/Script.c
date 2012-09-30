@@ -199,6 +199,7 @@ protected func Flying() {
 }
 
 protected func Drilling() {
+  Sound("drill*");
 	SetPosition(GetX(), GetY() + Sin(GetActTime() * 2 * 360 / GetActMapVal("Length", GetAction()), 1));
 	var colourIndex = Random(3);
 	var red =	GetMaterialColor(Material(drilledMaterial), colourIndex, 0);

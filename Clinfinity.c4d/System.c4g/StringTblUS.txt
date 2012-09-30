@@ -1,5 +1,5 @@
 # Conkit
-TxtCreateconstructionsi=Create construction site
+CtxConkit=Construct building
 TxtNoconstructionplansa=No construction plans available
 TxtConstructions=Construction: %s
 TxtCantConstruct=%s can't build.

@@ -8,7 +8,7 @@ protected func Construction() {
 }
 
 protected func FxNoChopDownDamage(object target, int effectNumber, int damage, int cause) {
-	if(cause != FX_Call_DmgChop) {
+	if(cause != FX_Call_DmgChop && cause != FX_Call_EngFire) {
 		Shrink();
 	}
 	return 0;

@@ -7,7 +7,3 @@ CtrlMenuDesc=Menü
 TxtDescend=Abspringen
 TxtEnergysupply=Energieversorgung
 CtrlInventoryDesc=Inventar auswählen
-CtxConkit=Gebäude errichten
-TxtCantConstruct=%s kann nicht bauen.
-TxtNoconstructionplansa=Keine Baupläne verfügbar
-TxtConstructions=Konstruktion: %s
