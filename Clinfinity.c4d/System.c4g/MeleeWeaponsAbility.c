@@ -1,4 +1,4 @@
-/*	Script: Melee weapons
+/*	Script: MeleeWeaponsAbility.c
 	Functionality for using melee weapons.
 
 	Melee weapons are short range weapons wielded with both hands.
@@ -39,6 +39,7 @@
 								  Return one of the defined <Cool down directions> here. */
 
 #strict 2
+#appendto AVTR
 
 /*	Constants: Wield directions
 	AVMW_WieldUp	- Direction: Wield weapon upwards.

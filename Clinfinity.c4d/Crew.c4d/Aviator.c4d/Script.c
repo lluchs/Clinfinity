@@ -3,7 +3,6 @@
 
 #strict 2
 #include CLNK
-#include AVMW
 
 static const AVTR_WeaponOverlay = 2;
 
