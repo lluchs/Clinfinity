@@ -6,6 +6,7 @@ Delay=1
 Facet=3,0,3,18,0,-10
 NextAction=On
 StartCall=Wielding
+Sound=SteamSword
 
 [Action]
 Name=Off

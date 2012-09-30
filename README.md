@@ -40,6 +40,8 @@ Clonk Infinity uses sounds from the [Freesound project](http://www.freesound.org
 	- Cracksound from the [Metal & Magic pack](http://clonkforge.net/pr.php?pr=585) for [Clonk Rage](http://www.clonk.de/cr.php?lng=en)
 	- woosh_01.wav by [Glaneur de sons](http://www.freesound.org/people/Glaneur%20de%20sons/)
 - drill*.wav is based on sections of City_Drilling_01.wav by [Koops](http://www.freesound.org/people/Koops/)
+- SteamSword.wav is based on steam_burst.wav by [pengo_au](http://www.freesound.org/people/pengo_au/)
+- WingShield.wav is a section of "classic double swwosh .wav" by [martian](http://www.freesound.org/people/martian/)
 
 Additional objects
 ------------------

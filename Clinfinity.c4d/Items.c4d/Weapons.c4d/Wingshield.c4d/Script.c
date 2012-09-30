@@ -33,6 +33,7 @@ public func GetCentralAngle(int direction) {
 }
 
 public func WieldStart(int direction) {
+	Sound("WingShield");
 	SetAction("Shield");
 	SetDir(direction);
 }
