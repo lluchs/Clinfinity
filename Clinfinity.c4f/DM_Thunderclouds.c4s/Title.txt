@@ -1,0 +1,2 @@
+DE:Infinity - <c de7e30>Donnerwolken</c>
+US:Infinity - <c de7e30>Thunder clouds</c>

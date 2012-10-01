@@ -1,0 +1,19 @@
+MsgGo=Und los geht's!
+
+MsgRelaunch1=%s tritt schon das %d. Mal neu bei.
+MsgRelaunch2=%s erreicht die %d-Beitrittsmarke.
+MsgRelaunch3=%s, zum %dten!
+MsgRelaunch4=%s zeigt mit dem %d. Versuch, was er drauf hat.
+MsgRelaunch5=Schön, %s, und Nummer %d...
+
+MsgDeath1=%s hat versagt.
+MsgDeath2=Netter Versuch, %s!
+MsgDeath3=%s versucht es nochmal.
+MsgDeath4=Nicht schlecht, %s.
+MsgDeath5=Der Weg des %s endet hier.
+MsgDeath6=Ein Rejoin für %s!
+MsgDeath7=Genialer Abgang von %s.
+MsgDeath8=%s könnte Stuntman werden.
+MsgDeath9=%s bekommt die Höhenluft nicht.
+MsgDeath10=%s ist platt.
+MsgDeath11=%s verdient ein Denkmal.
