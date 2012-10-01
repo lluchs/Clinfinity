@@ -6,19 +6,19 @@ protected func Initialize() {
 	PLTF->CreatePlatform(535, 335, NO_OWNER);
 
 	var draft;
-	draft = CreateObject(DRFT, 120, 380);
+	draft = CreateObject(DRFT, 120, 380, NO_OWNER);
 	draft->SetPermanent();
 	draft->SetR(-5);
 
-	draft = CreateObject(DRFT, 60, 180);
+	draft = CreateObject(DRFT, 60, 180, NO_OWNER);
 	draft->SetPermanent();
 	draft->SetR(60);
 
-	draft = CreateObject(DRFT, 750, 350);
+	draft = CreateObject(DRFT, 750, 350, NO_OWNER);
 	draft->SetPermanent();
 	draft->SetR(-10);
 
-	draft = CreateObject(DRFT, 750, 180);
+	draft = CreateObject(DRFT, 750, 180, NO_OWNER);
 	draft->SetPermanent();
 	draft->SetR(-60);
 }
@@ -75,3 +75,5 @@ private func RndRelaunchMsg() {
 }
 
 public func IsDraftPermanent() { return true; }
+
+
