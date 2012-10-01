@@ -7,12 +7,12 @@ protected func Initialize() {
 	SetGamma(RGB(0,0,8), RGB(115,125,125), RGB(255,255,255));
 
 	// trailsign
-	CreateObject(SIGN,150,300);
+	CreateObject(SIGN,150,300, NO_OWNER);
 
 	// Rails
-	CreateObject(RAIL, 30,300);
-	CreateObject(RAIL, 90,300);
-	CreateObject(RAIL, 120, 300);
+	CreateObject(RAIL, 30,300, NO_OWNER);
+	CreateObject(RAIL, 90,300, NO_OWNER);
+	CreateObject(RAIL, 120, 300, NO_OWNER);
 
 	// rotate drafts
 	for(var draft in FindObjects(Find_ID(DRFT))) {
@@ -20,9 +20,9 @@ protected func Initialize() {
 	}
 
 	// Windmill
-	var windmill = CreateObject(WMIL, 850, 50, -1);
-	var windmill2 = CreateObject(WMIL, 2000, 10, -1);
-	var pump = CreateObject(PUMP, 1260, 10, -1);
+	var windmill = CreateObject(WMIL, 850, 50, NO_OWNER);
+	var windmill2 = CreateObject(WMIL, 2000, 10, NO_OWNER);
+	var pump = CreateObject(PUMP, 1260, 10, NO_OWNER);
 	MoveToGround(windmill);
 	MoveToGround(windmill2);
 	MoveToGround(pump);

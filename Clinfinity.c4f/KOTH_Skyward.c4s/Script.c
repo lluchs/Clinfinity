@@ -10,32 +10,32 @@ func Initialize() {
 	
 	//static drafts
 	
-	var DraftL = CreateObject(DRFT,320, 590);
+	var DraftL = CreateObject(DRFT,320, 590, NO_OWNER);
 	DraftL -> SetPermanent();
 	DraftL -> SetR(20);
 	
-	var DraftR = CreateObject(DRFT,1500, 690);
+	var DraftR = CreateObject(DRFT,1500, 690, NO_OWNER);
 	DraftR -> SetPermanent();
 	DraftR -> SetR(8);
 	 
-	var DraftL2=CreateObject(DRFT, 799, 600); 
+	var DraftL2=CreateObject(DRFT, 799, 600, NO_OWNER); 
 	DraftL2 -> SetPermanent();
 	DraftL2 -> SetR(-15);
 	
-	var DraftR2=CreateObject(DRFT, 1122, 600);
+	var DraftR2=CreateObject(DRFT, 1122, 600, NO_OWNER);
 	DraftR2 -> SetPermanent();
 	DraftR2 -> SetR(20);
 	
 	//crates on frigate
-	CreateObject(CRAT,855,340);
-	CreateObject(CRAT,869,340);
-	CreateObject(CRAT,860,329);
-	CreateObject(CRAT,987,340);
-	CreateObject(CRAT,994,329);
-	CreateObject(CRAT,1000,340);
+	CreateObject(CRAT,855,340, NO_OWNER);
+	CreateObject(CRAT,869,340, NO_OWNER);
+	CreateObject(CRAT,860,329, NO_OWNER);
+	CreateObject(CRAT,987,340, NO_OWNER);
+	CreateObject(CRAT,994,329, NO_OWNER);
+	CreateObject(CRAT,1000,340, NO_OWNER);
 	
 	//drainer on frigate (no pool on deck allowed)
-	CreateObject(DRAI, 933, 338);
+	CreateObject(DRAI, 933, 338, NO_OWNER);
 
 	// steampunky flair
 	SetGamma(RGB(15, 15, 20), RGB(118, 118, 118), RGB(210, 215, 255));
@@ -45,14 +45,14 @@ func Initialize() {
 		CreateParticle("Cloud", Random(LandscapeWidth()), Random(LandscapeHeight()*2/3), RandomX(3, 9), 0, RandomX(1000, 1500), RGBa(116, 131, 145, 0));
 	
 	// place decoration
-	CreateObject(BEAM, 318, 441, -1) -> SetAction("Right"); //beam big-Left
-	CreateObject(BEAM, 1610, 472, -1) -> SetAction("Left"); //beam big-right
+	CreateObject(BEAM, 318, 441, NO_OWNER) -> SetAction("Right"); //beam big-Left
+	CreateObject(BEAM, 1610, 472, NO_OWNER) -> SetAction("Left"); //beam big-right
 	
-	CreateObject(RUIN,863,613,-1); // ruin in the middle
+	CreateObject(RUIN,863,613,NO_OWNER); // ruin in the middle
 	
 	//place skylands
-	CreateObject(SKYL, 293, 500, -1) -> SetClrModulation(RGBa(150, 180, 255, 150));
-	var isle2=CreateObject(SKYL, 1400, 545, -1);
+	CreateObject(SKYL, 293, 500, NO_OWNER) -> SetClrModulation(RGBa(150, 180, 255, 150));
+	var isle2=CreateObject(SKYL, 1400, 545, NO_OWNER);
 	isle2 -> SetClrModulation(RGBa(150, 180, 255, 155));
 	isle2 -> SetAction("2");
 
