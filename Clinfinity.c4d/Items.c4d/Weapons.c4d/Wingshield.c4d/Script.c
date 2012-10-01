@@ -2,7 +2,7 @@
 
 #include MWEP
 
-static const SHIT_KnockbackRectWidth = 16;
+static const SHIT_KnockbackRectWidth = 20;
 static const SHIT_KnockbackRectHeight = 38;
 static const SHIT_MinDamage = 2;
 static const SHIT_MaxDamage = 3;
