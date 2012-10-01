@@ -76,4 +76,18 @@ private func RndRelaunchMsg() {
 
 public func IsDraftPermanent() { return true; }
 
+global func FxSkyLightningTimer(object target, int effectNumber, int effectTime) {
+	var brightness = 255 - 15 * effectTime;
+	SetSkyColourModulation(RGB(brightness, brightness, brightness), false, 7);
+	if(brightness == 0) {
+		return FX_Execute_Kill;
+	} else {
+		return FX_OK;
+	}
+}
 
+global func FxSkyLightningEffect(string newEffectName, object target, int effectNumber, int newEffectNumber, var1, var2, var3, var4) {
+	if(newEffectName == "SkyLightning") {
+		return FX_Effect_Deny;
+	}
+}
