@@ -71,7 +71,7 @@ func Script60() {
 
 func Script70() {
 	TutorialMessage("$TutIntroduceDraft$");
-	var Draft = CreateObject(DRFT, 700, 330, -1);
+	var Draft = CreateObject(DRFT, 700, 330, NO_OWNER);
 	Draft->SetPermanent();
 	Sound("Wind2");
   SetArrow(790, 90);
