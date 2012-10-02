@@ -4,6 +4,8 @@
 
 /* Dieses Objekt stellt die Grundfunktionalität für Gebäudeexplosionen
    zur Verfügung. */
+
+static const L_DC_CollapseDuration = 80;
    
 static StructComp;
 
@@ -203,4 +205,48 @@ public func Repair(int percent) {
 	// success!
 	DoDamage(-iChange);
 	return 1;
+}
+
+public func Collapse() {
+	AddEffect("Collapse", this, 100, 1, this);
+}
+
+protected func FxCollapseStart(object target, int effectNumber, int temporary) {
+	RemoveEffect("Fade", this);
+	// TODO: Perhaps set darker colour modulation
+	target->~OnCollapseStart();
+}
+
+protected func FxCollapseTimer(object target, int effectNum, int effectTime) {
+	var offsetX, offsetY, width, height;
+	GetRect(GetID(), offsetX, offsetY, width, height);
+
+	var smokeX = Random(width) + offsetX;
+	var smokeY = height + offsetY + 10;
+	Smoke(smokeX, smokeY, 10);
+	// TODO: Use other particle instead of smoke
+
+	var heightStretch = 1000 * (L_DC_CollapseDuration - effectTime) / L_DC_CollapseDuration;
+	var heightAdjust = 1000 * height / 2 * effectTime / L_DC_CollapseDuration;
+	SetObjDrawTransform(1000, 0, 0, 0, heightStretch, heightAdjust);
+
+	offsetY += height * effectTime / L_DC_CollapseDuration;
+	height = height * (L_DC_CollapseDuration - effectTime) / L_DC_CollapseDuration;
+	var glasscount = Random(2);
+	for (var i = 0; i < glasscount; ++i) {
+		CastParticles("Glas", 1, RandomX(30, 50), offsetX + Random(width), offsetY + Random(height), 20, 20);
+	}
+	var frazzlecount = Random(2);
+	for (var i = 0; i < frazzlecount; ++i) {
+		CastParticles("Fragment1", 1, RandomX(30, 50), offsetX + Random(width), offsetY + Random(height), 20, 20);		
+	}
+
+	if(effectTime == L_DC_CollapseDuration) return FX_Execute_Kill;
+	return FX_OK;
+}
+
+protected func FxCollapseStop(object target, int effectNumber, int reason, bool temporary) {
+	if(!temporary) {
+		DestroyBlast();
+	}
 }
