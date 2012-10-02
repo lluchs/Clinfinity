@@ -213,7 +213,7 @@ public func Collapse() {
 
 protected func FxCollapseStart(object target, int effectNumber, int temporary) {
 	RemoveEffect("Fade", this);
-	// TODO: Perhaps set darker colour modulation
+	SetClrModulation(RGB(128, 128, 128));
 	target->~OnCollapseStart();
 }
 
