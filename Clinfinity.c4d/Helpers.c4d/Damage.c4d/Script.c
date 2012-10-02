@@ -38,13 +38,16 @@ protected func Construction() {
 }
 
 public func Damage(int iChange) {
+	if(IsCollapsing())
+		return;
+
 	UpdateDamageGraphic();
 
 	if(iChange <= 0)
 		return;
 	
 	if (GetDamage() > MaxDamage()) {
-		DestroyBlast();
+		Collapse();
 		return;
 	}
 
@@ -163,6 +166,9 @@ public func DoRepairComponent(id ID, int num) {
 }
 
 public func Repair(int percent) {
+	if(IsCollapsing())
+		return false;
+
 	var iChange = Max(ChangeRange(percent, 0, 100, 0, MaxDamage()), 1);
 	if(GetDamage() - iChange < 0)
 		iChange = GetDamage();
@@ -207,8 +213,12 @@ public func Repair(int percent) {
 	return 1;
 }
 
-public func Collapse() {
+private func Collapse() {
 	AddEffect("Collapse", this, 100, 1, this);
+}
+
+private func IsCollapsing() {
+	return GetEffect("Collapse", this) != 0;
 }
 
 protected func FxCollapseStart(object target, int effectNumber, int temporary) {
