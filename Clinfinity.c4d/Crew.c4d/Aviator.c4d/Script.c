@@ -305,45 +305,31 @@ protected func ControlThrow() {
 }
 
 public func ControlCommand(string command, object pClonk, int iX, int iY) {
-    if(!IsAiming())
+	if(!IsAiming())
 		return inherited(command, pClonk, iX, iY, ...);
-    // lädt noch nach
-    if(GetAction(pClonk) != "AimRifle" && GetAction(pClonk) != "RideAimRifle")
+	if(GetAction(pClonk) != "AimRifle" && GetAction(pClonk) != "RideAimRifle")
 		return 1;
 
-    // Zielwinkel
+	var iAngle = Angle(GetX(pClonk), GetY(pClonk), iX, iY);
 
-    var iAngle = Angle(GetX(pClonk), GetY(pClonk), iX, iY);
+	// Shoot into correct direction
+	if(iAngle < 180) {
+		SetDir(1, pClonk);
+		SetPhase(BoundBy(iAngle, 0, 135) / 15, pClonk);
+		if(GetAction(pClonk) == "RideAimRifle" && GetDir(GetActionTarget(0, pClonk)) == DIR_Left) GetActionTarget(0, pClonk)->~TurnRight();
+	} else {
+		SetDir(0, pClonk);
+		SetPhase((360 - BoundBy(iAngle, 225, 360)) / 15, pClonk);
+		if(GetAction(pClonk) == "RideAimRifle" && GetDir(GetActionTarget(0, pClonk)) == DIR_Right) GetActionTarget(0, pClonk)->~TurnLeft();
+	}
+	if(iAngle > 180) iAngle = -iAngle + 360;
 
-    // Bei größerer Distanz höher zielen
-
-    if (Inside(iX - GetX(pClonk), +1, +300))
-
-        iAngle -= Abs(iX - GetX(pClonk)) / 50;
-
-    if (Inside(iX - GetX(pClonk), -300, -1))
-
-        iAngle += Abs(iX - GetX(pClonk)) / 50;
-
-    // zur richtigen Seite hin schießen
-    if(iAngle < 180) {
-        SetDir(1, pClonk);
-        SetPhase(BoundBy(iAngle, 0, 135) / 15, pClonk);
-        if(GetAction(pClonk) == "RideAimRifle" && GetDir(GetActionTarget(0, pClonk)) == DIR_Left) GetActionTarget(0, pClonk)->~TurnRight();
-    } else {
-        SetDir(0, pClonk);
-        SetPhase((360 - BoundBy(iAngle, 225, 360)) / 15, pClonk);
-        if(GetAction(pClonk) == "RideAimRifle" && GetDir(GetActionTarget(0, pClonk)) == DIR_Right) GetActionTarget(0, pClonk)->~TurnLeft();
-    }
-    //if(iDevitation) iAngle += RandomX(-iDevitation / 2, iDevitation / 2);
-    if(iAngle > 180) iAngle = -iAngle + 360;
-
-    aimAngle = iAngle;
-    UpdateAimPhase();
+	aimAngle = iAngle;
+	UpdateAimPhase();
 
 	activeRifle->Fire(this, iAngle);
 
-    return 1;
+	return 1;
 }
 
 protected func ControlDig() {
