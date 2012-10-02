@@ -56,7 +56,7 @@ public func Damage(int iChange) {
 	}
 	// Important: This assumes that structures are not faded in any other way.
 	RemoveEffect("Fade", this);
-	FadeFromTo(RGB(255, 200, 200), RGB(255, 255, 255));
+	FadeFromTo(RGB(255, 190, 190), RGB(255, 255, 255));
 	
 	/* Components verlieren */
 	
