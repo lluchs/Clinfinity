@@ -41,8 +41,10 @@ public func Damage(int iChange) {
 	if(iChange <= 0)
 		return;
 	
-	if (GetDamage() > MaxDamage())
+	if (GetDamage() > MaxDamage()) {
 		DestroyBlast();
+		return;
+	}
 
 	var ox, oy, wdt, hgt;
 	GetRect(GetID(), ox, oy, wdt, hgt);
