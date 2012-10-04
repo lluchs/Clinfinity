@@ -23,6 +23,11 @@ FullscreenBG=1
 	File=RACE_Pilottraining.c4s
 	OverlayImage=hl_pilottraining.png
 	Area=357,536,259,80
+
+	[Scenario]
+	File=DM_Thunderclouds.c4s
+	OverlayImage=hl_thunderclouds.png
+	Area=675,541,262,69
 	
 	[Scenario]
 	File=Tutorial_Agility.c4s
