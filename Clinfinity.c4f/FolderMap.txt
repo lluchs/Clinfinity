@@ -27,7 +27,7 @@ FullscreenBG=1
 	[Scenario]
 	File=DM_Thunderclouds.c4s
 	OverlayImage=hl_thunderclouds.png
-	Area=675,541,262,69
+	Area=669,542,262,69
 	
 	[Scenario]
 	File=Tutorial_Agility.c4s
