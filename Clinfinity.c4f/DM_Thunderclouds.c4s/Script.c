@@ -2,7 +2,7 @@
 #strict 2
 
 protected func Initialize() {
-	PLTF->CreatePlatform(400, 260, NO_OWNER);
+	PLTF->CreatePlatform(400, 280, NO_OWNER);
 	PLTF->CreatePlatform(535, 335, NO_OWNER);
 
 	var draft;
