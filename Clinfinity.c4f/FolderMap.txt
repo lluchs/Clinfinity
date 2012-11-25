@@ -25,7 +25,7 @@ FullscreenBG=1
 	Area=357,536,259,80
 
 	[Scenario]
-	File=DM_Thunderclouds.c4s
+	File=DM_ClockworkHeart.c4s
 	OverlayImage=hl_thunderclouds.png
 	Area=669,542,262,69
 	

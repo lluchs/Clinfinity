@@ -30,7 +30,6 @@ Vegetation=TRE3=3;TRE2=3;TRE1=3;BUSH=1
 VegetationLevel=35,0,0,100
 InEarth=LOAM=1
 InEarthLevel=15,0,0,100
-Sky=Sky_Cloudset
 SkyFade=0,0,100,255,255,255
 BottomOpen=1
 MapWidth=160,0,64,250

@@ -2,6 +2,11 @@
 #strict 2
 
 protected func Initialize() {
+  //heart
+  CreateObject(HART,270,710, NO_OWNER);
+  
+  CreateObject(FOG_,400,850);
+
 	PLTF->CreatePlatform(400, 280, NO_OWNER);
 	PLTF->CreatePlatform(535, 335, NO_OWNER);
 
