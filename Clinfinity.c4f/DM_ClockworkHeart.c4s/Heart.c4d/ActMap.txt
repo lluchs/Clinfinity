@@ -1,0 +1,15 @@
+[Action]
+Name=Open
+Length=50
+Delay=2
+FacetBase=1
+Facet=0,500,103,103,190,341
+NextAction=Work
+
+[Action]
+Name=Work
+Length=50
+Delay=2
+FacetBase=1
+Facet=0,603,349,180,100,264
+NextAction=Work
