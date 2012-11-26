@@ -1,0 +1,13 @@
+[DefCore]
+id=GRD1
+Name=Foreground
+Version=4,9,5
+Category=C4D_Parallax
+Width=800
+Height=419
+Offset=-400,-210
+Value=1
+Mass=1
+Components=GRD1=1;
+Picture=0,0,800,419
+TopFace=0,0,800,419

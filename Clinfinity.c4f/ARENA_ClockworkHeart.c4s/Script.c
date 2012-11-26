@@ -3,7 +3,10 @@
 
 protected func Initialize() {
   //heart
-  CreateObject(HART,270,710, NO_OWNER);
+  CreateObject(HART, 270, 710, NO_OWNER);
+  
+  //Foreground
+  CreateObject(GRD1, 400, 805, NO_OWNER);
   
   CreateObject(FOG_,400,850);
 
