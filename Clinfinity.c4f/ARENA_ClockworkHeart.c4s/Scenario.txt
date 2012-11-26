@@ -1,6 +1,8 @@
 [Head]
 Icon=35
-Version=4,9,8
+Title=ARENA_Clockwork Heart
+MaxPlayer=6
+MaxPlayerLeague=12
 
 [Definitions]
 Definition1=Objects.c4d
