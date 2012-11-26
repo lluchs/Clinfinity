@@ -26,6 +26,9 @@ protected func Initialize() {
 	draft = CreateObject(DRFT, 750, 180, NO_OWNER);
 	draft->SetPermanent();
 	draft->SetR(-60);
+	
+	//Remove the levers -> ControlLever.c in System.c4g still needed?
+	RemoveAll(COLV);
 }
 
 protected func InitializePlayer(int plr) { return JoinPlayer(plr); }
