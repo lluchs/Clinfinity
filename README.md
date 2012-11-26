@@ -40,6 +40,18 @@ Clonk Infinity uses sounds from the [Freesound project](http://www.freesound.org
 	- Cracksound from the [Metal & Magic pack](http://clonkforge.net/pr.php?pr=585) for [Clonk Rage](http://www.clonk.de/cr.php?lng=en)
 	- woosh_01.wav by [Glaneur de sons](http://www.freesound.org/people/Glaneur%20de%20sons/)
 - drill*.wav is based on sections of City_Drilling_01.wav by [Koops](http://www.freesound.org/people/Koops/)
+- Heart_Open.wav is a mix of following sounds:
+	- 
+
+- Heart_Working.watv is amix of following sounds:
+	- tv on hum off.wav by [ERH] (http://freesound.org/people/ERH/)
+	- 1243_pressure_cooker.wav by [reinsamba] (http://freesound.org/people/reinsamba/)
+	- COFFEE espresso.wav by [juskiddink] (http://freesound.org/people/juskiddink/)
+	- steam engine at museum.wav by [3bagbrew] (http://freesound.org/people/3bagbrew/)(modified)
+	- ambience03.wav by [yewbic] (http://freesound.org/people/yewbic/)(modified)
+	- HardBassDrum002.wav by [HardPCM] (http://freesound.org/people/HardPCM/) (modified)
+	- air pump drone and hum.aif by Tomlija (http://freesound.org/people/Tomlija/)
+	
 
 Additional objects
 ------------------
