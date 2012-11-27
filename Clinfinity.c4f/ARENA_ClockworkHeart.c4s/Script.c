@@ -9,15 +9,17 @@ protected func Initialize() {
   CreateObject(GRD1, 400, 805, NO_OWNER);
   
   CreateObject(FOG_,400,850);
+	
+	var platform;
+	platform = PLTF->CreatePlatform(460, 255, NO_OWNER);
+	platform->SetColorDw(RGBa(55, 43, 41, 0));
+	
+	platform = PLTF->CreatePlatform(560, 290, NO_OWNER);
+	platform->SetColorDw(RGBa(55, 43, 41, 0));
+	
+	platform = PLTF->CreatePlatform(555, 390, NO_OWNER);
+	platform->SetColorDw(RGBa(55, 43, 41, 0));
 
-	PLTF->CreatePlatform(460, 255, NO_OWNER);
-	PLTF->CreatePlatform(560, 290, NO_OWNER);
-	PLTF->CreatePlatform(555, 390, NO_OWNER);
-
-/*
-	PLTF->CreatePlatform(400, 280, NO_OWNER);
-	PLTF->CreatePlatform(535, 335, NO_OWNER);
-*/
 	var draft;
 	draft = CreateObject(DRFT, 120, 380, NO_OWNER);
 	draft->SetPermanent();
