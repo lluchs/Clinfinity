@@ -11,3 +11,5 @@ Mass=1
 Components=HART=1;
 Picture=0,0,500,500
 SolidMask=500,0,500,500
+TimerCall=MakeSmoke2
+Timer=80

@@ -2,7 +2,7 @@
 id=GRD1
 Name=Foreground
 Version=4,9,5
-Category=C4D_Parallax
+Category=C4D_Parallax|C4D_StaticBack
 Width=800
 Height=419
 Offset=-400,-210
