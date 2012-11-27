@@ -3,8 +3,7 @@
 #strict 2
 
 func Initialize(obj) {
-	//ScheduleCall(obj, "OpenHeart", 500);
-	SetAction("Work");
+	ScheduleCall(obj, "OpenHeart", RandomX(400, 600);
   return(1);
 }
 
