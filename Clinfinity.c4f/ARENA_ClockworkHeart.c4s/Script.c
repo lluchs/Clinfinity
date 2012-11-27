@@ -10,9 +10,14 @@ protected func Initialize() {
   
   CreateObject(FOG_,400,850);
 
+	PLTF->CreatePlatform(460, 255, NO_OWNER);
+	PLTF->CreatePlatform(560, 290, NO_OWNER);
+	PLTF->CreatePlatform(555, 390, NO_OWNER);
+
+/*
 	PLTF->CreatePlatform(400, 280, NO_OWNER);
 	PLTF->CreatePlatform(535, 335, NO_OWNER);
-
+*/
 	var draft;
 	draft = CreateObject(DRFT, 120, 380, NO_OWNER);
 	draft->SetPermanent();
