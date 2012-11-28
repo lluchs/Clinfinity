@@ -1,9 +1,12 @@
+Clonk
+Saboteur
 Passenger
 Gardener
 Warehouser
-Skywatcher
-Machinist
+Hatmaker
 Geologist
+Meteorologist
+Machinist
 Engineer
 Stewardess
 Flight Controller
@@ -11,6 +14,11 @@ Co Pilot
 Pilot
 Squadron Chief
 Fleet Commander 
+Jules Verne
+Dr. Jekyll
+Mr. Hyde
 Peter
-Einstein
+Zweistein
 Haxton Sale
+Baron Munchhausen
+Knufflwipf
