@@ -1,0 +1,16 @@
+[Action]
+Name=WarmUp
+Procedure=ATTACH
+FacetBase=1
+Facet=0,110,49,110
+Length=25
+Delay=2
+NextAction=Work
+
+[Action]
+Name=Work
+Procedure=ATTACH
+Facet=0,170,49,110
+Length=50
+Delay=2
+NextAction=Work

@@ -1,0 +1,26 @@
+[DefCore]
+id=SGEN
+Version=4,9,8
+Name=Shield Generator
+Category=C4D_Structure|C4D_SelectBuilding|C4D_SelectKnowledge
+MaxUserSelect=1
+Width=49
+Height=110
+Offset=-25,-55
+Vertices=4
+VertexX=-24,24,-24,24
+VertexY=-55,55,-55,55
+VertexCNAT=5,6,5,6
+VertexFriction=50,50,100,100
+Value=200
+Mass=1000
+Components=METL=5;SGLR=1;
+Picture=0,0,49,110
+Exclusive=1
+Construction=1
+ContainBlast=1
+AutoContextMenu=1
+Grab=2
+
+[Physical]
+Energy=100000
