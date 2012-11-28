@@ -1,4 +1,5 @@
 [Action]
+Procedure=FLOAT
 Name=Shrub1
 Directions=2
 FlipDir=1
@@ -8,6 +9,7 @@ FacetBase=0
 NextAction=Shrub1
 
 [Action]
+Procedure=FLOAT
 Name=Shrub2
 Directions=2
 FlipDir=1
