@@ -39,6 +39,24 @@ protected func Initialize() {
 	
 	//Remove the levers -> ControlLever.c in System.c4g still needed?
 	RemoveAll(COLV);
+	
+	CreateObject(VINE,626,392,-1);
+	CreateObject(VINE,687,396,-1);
+	CreateObject(VINE,757,386,-1);
+	CreateObject(VINE,638,433,-1);
+	CreateObject(VINE,670,440,-1);
+	CreateObject(VINE,705,420,-1);
+	CreateObject(VINE,719,445,-1);
+	CreateObject(VINE,741,413,-1);
+	CreateObject(VINE,758,400,-1);
+	CreateObject(VINE,753,408,-1);
+	CreateObject(VINE,635,450,-1);
+	CreateObject(VINE,646,459,-1);
+	CreateObject(VINE,673,461,-1);
+	CreateObject(VINE,695,460,-1);
+	CreateObject(VINE,676,471,-1);
+	CreateObject(VINE,726,486,-1);
+	CreateObject(VINE,733,462,-1);
 }
 
 protected func InitializePlayer(int plr) { return JoinPlayer(plr); }
