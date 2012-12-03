@@ -63,7 +63,7 @@ protected func Initialize() {
 }
 
 private func CreateDraft() {
-	var draft = CreateObject(DRFT);
+	var draft = CreateObject(DRFT, 0, 0, NO_OWNER);
 	draft->SetR(180);
 	draft->SetSize(25, 50);
 	draft->SetAction("Attach", this);
