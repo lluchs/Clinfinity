@@ -3,12 +3,12 @@ Name=Shield
 Procedure=NONE
 Directions=2
 Length=1
-Facet=0,10,10,2,-1,0
+Facet=0,12,12,2,-1,0
 
 [Action]
 Name=Block
 Procedure=NONE
 Directions=2
 Length=1
-Facet=0,10,10,2,-1,0
+Facet=0,12,4,12,-1,0
 
