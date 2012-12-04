@@ -49,7 +49,7 @@ public func WieldEnd() {
 	for(var i = 0; i < 20; ++i) {
 		var xSpeed = RandomX(12, 15);
 		if(GetDir() == DIR_Left) xSpeed = -xSpeed;
-		var y = handY - 6 + Random(13);
+		var y = handY - 7 + Random(15);
 		CreateParticle("ThrustSpark", handX, y, xSpeed + Contained()->GetXDir(), y * 2 / 3, 50, RGBa(255,255,255, 200));
 	}
 	MeleeHit(SHIT_KnockbackRectWidth, SHIT_KnockbackRectHeight, RandomX(SHIT_MinDamage, SHIT_MaxDamage));
