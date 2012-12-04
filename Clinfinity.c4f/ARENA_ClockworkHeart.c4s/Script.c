@@ -77,13 +77,17 @@ private func JoinPlayer(int plr) {
 }
 
 private func SetRandomPosition(object clonk) {
-	var spawnArea = Random(3);
+	var spawnArea = Random(5);
 	if(spawnArea == 0) {
-		SetPosition(RandomX(150, 495), 389, clonk);
+		SetPosition(RandomX(260, 460), 399, clonk);
 	} else if(spawnArea == 1) {
-		SetPosition(RandomX(645, 740), 359, clonk);
+		SetPosition(RandomX(540, 580), 274, clonk);
+	} else if(spawnArea == 2) {
+		SetPosition(RandomX(250, 360), 201, clonk);
+	} else if(spawnArea == 3) {
+		SetPosition(RandomX(535, 575), 374, clonk);
 	} else {
-		SetPosition(RandomX(230, 315), 165, clonk);
+		SetPosition(RandomX(170, 212), 360, clonk);
 	}
 }
 
