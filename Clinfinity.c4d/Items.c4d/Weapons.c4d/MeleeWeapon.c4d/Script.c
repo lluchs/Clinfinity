@@ -11,6 +11,7 @@ public func MeleeHit(int rectangleWidth, int rectangleHeight, int damage) {
 
 public func MeleeHitObject(object target, int damage) {
 	target->InflictDamage(damage, this);
+	target->CastParticles("PxSpark", RandomX(3, 5), 16, 0, 0, 15, 30, RGB(83, 41, 25), RGB(193, 95, 60));
 }
 
 // Throw back living beings (this is worse than a simple knockback)
