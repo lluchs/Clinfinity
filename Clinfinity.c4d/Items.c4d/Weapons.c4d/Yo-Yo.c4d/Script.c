@@ -39,11 +39,15 @@ static const YOYO_StateReturning = 2;
 	YOYO_ThrowFlightTime		- The time between getting thrown and switching to the "Returning" state.
 	YOYO_ReturnMaxSpeed			- Maximum speed the yo-yo moves while returning to the thrower.
 	YOYO_ReturnSlowDownDistance	- Distance where the yo-yo slows down when approaching the thrower.
-	YOYO_MaxCollectionDistance	- Maximum distance in which the yo-yo returns itself to the thrower's inventory. */
+	YOYO_MaxCollectionDistance	- Maximum distance in which the yo-yo returns itself to the thrower's inventory.
+	YOYO_SlowMotionNumerator	- Numerator for slow motion calculation. Speed, private gravity, flight time etc. are adjusted according to this.
+	YOYO_SlowMotionDenominator	- Denominator for slow motion calculation. Speed, private gravity, flight time etc. are adjusted according to this. */
 static const YOYO_ThrowFlightTime = 12;
 static const YOYO_ReturnMaxSpeed = 40;
 static const YOYO_ReturnSlowDownDistance = 5;
 static const YOYO_MaxCollectionDistance = 10;
+static const YOYO_SlowMotionNumerator = 2;
+static const YOYO_SlowMotionDenominator = 3;
 
 /*	Constants: Yo-yo hits
 	YOYO_Damage				- Damage one single yo-yo hit does.
@@ -103,8 +107,9 @@ protected func Departure(object from) {
 	// If the yo-yo was thrown by a Clonk, act as weapon.
 	if((from->GetOCF() & OCF_CrewMember) != 0 && from->GetAction() == "Throw" && !IsYoyoThrownBy(from)) {
 		// Set speed to fly lower, because it's supposed to hit enemies.
-		SetXDir(GetXDir() * 3);
-		SetYDir(-5);
+		SetXDir(GetXDir() * 3 * YOYO_SlowMotionNumerator / YOYO_SlowMotionDenominator);
+		SetYDir(-5 * YOYO_SlowMotionNumerator / YOYO_SlowMotionDenominator);
+		SetPrivateGravity(GetGravity() * YOYO_SlowMotionNumerator / YOYO_SlowMotionDenominator);
 		YoyoThrown(from);
 	}
 }
@@ -183,7 +188,7 @@ protected func Damage(int damage, int byPlayer) {
 	if(currentState == YOYO_StateThrown) {
 		HitEffect();
 		ClearScheduleCall(this, "YoyoReturn");
-		ScheduleCall(0, "YoyoReturn", YOYO_ThrowFlightTime);
+		ScheduleCall(0, "YoyoReturn", YOYO_ThrowFlightTime * YOYO_SlowMotionDenominator / YOYO_SlowMotionNumerator);
 	}
 }
 
@@ -255,7 +260,7 @@ protected func YoyoThrown(object by) {
 	thrower = by;
 	line = CreateObject(YOLN, 0, 0, GetOwner());
 	ObjectSetAction(line, "Connect", by, this);
-	ScheduleCall(0, "YoyoReturn", YOYO_ThrowFlightTime);
+	ScheduleCall(0, "YoyoReturn", YOYO_ThrowFlightTime * YOYO_SlowMotionDenominator / YOYO_SlowMotionNumerator);
 	Sound("Yo-yo spin", false, this, 100, 0, 1);
 
 }
