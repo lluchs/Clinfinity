@@ -51,16 +51,19 @@ static const YOYO_SlowMotionDenominator = 3;
 
 /*	Constants: Yo-yo hits
 	YOYO_Damage				- Damage one single yo-yo hit does.
+	YOYO_DamageIncrease		- Additional damage dealt after the yo-yo has been deflected.
 	YOYO_MaxHitMoveDistance	- Maximum distance a target that was hit gets knocked away from the thrower.
 	YOYO_FlingTargetChance	- Determines the chance for a "lucky strike" that flings a target. The chance is calculated as 1/YOYO_FlingTargetChance.
 	YOYO_FlingSpeed			- Fling speed for the "lucky strike". */
 static const YOYO_Damage = 2;
+static const YOYO_DamageIncrease = 4;
 static const YOYO_MaxHitMoveDistance = 5; // 
 static const YOYO_FlingTargetChance = 6; // Chance: 1 of YOYO_FlingTargetChance is a lucky strike/critical hit
 static const YOYO_FlingSpeed = 2;
 
 local thrower;
 local line;
+local bonusDamage;
 local currentState;
 
 /*	Section: Events */
@@ -158,7 +161,7 @@ protected func QueryStrikeBlow(object target) {
 		if(currentState == YOYO_StateThrown || currentState == YOYO_StateReturning) {
 			HitEffect();
 
-			target->DoEnergy(-YOYO_Damage);
+			target->DoEnergy(-YOYO_Damage - bonusDamage);
 			var awayFromThrower = -1;
 			if(GetX() > thrower->GetX()) awayFromThrower = 1;
 
@@ -186,6 +189,8 @@ protected func QueryStrikeBlow(object target) {
 
 protected func Damage(int damage, int byPlayer) {
 	if(currentState == YOYO_StateThrown) {
+		Sound("Fuse");
+		bonusDamage += YOYO_DamageIncrease;
 		HitEffect();
 		ClearScheduleCall(this, "YoyoReturn");
 		ScheduleCall(0, "YoyoReturn", YOYO_ThrowFlightTime * YOYO_SlowMotionDenominator / YOYO_SlowMotionNumerator);
@@ -259,6 +264,7 @@ protected func YoyoThrown(object by) {
 	currentState = YOYO_StateThrown;
 	thrower = by;
 	line = CreateObject(YOLN, 0, 0, GetOwner());
+	bonusDamage = 0;
 	ObjectSetAction(line, "Connect", by, this);
 	ScheduleCall(0, "YoyoReturn", YOYO_ThrowFlightTime * YOYO_SlowMotionDenominator / YOYO_SlowMotionNumerator);
 	Sound("Yo-yo spin", false, this, 100, 0, 1);
