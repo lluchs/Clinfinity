@@ -37,8 +37,13 @@ protected func Initialize() {
 	draft->SetPermanent();
 	draft->SetR(-60);
 	
-	//Remove the levers -> ControlLever.c in System.c4g still needed?
-	RemoveAll(COLV);
+	// Remove the levers
+	for(var platform in FindObjects(Find_ID(PLTF))) {
+		var lever = FindObject2(Find_ID(COLV), Find_ActionTarget(platform));
+		var mediator = platform->LocalN("controlMediator");
+		mediator->RemoveMovementEventListener(lever);
+		lever->RemoveObject();
+	}
 	
 	CreateObject(VINE,626,392,-1);
 	CreateObject(VINE,687,396,-1);
