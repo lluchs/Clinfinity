@@ -33,7 +33,7 @@ global func FxPrivateGravityTimer(object target, int effectNumber, int effectTim
 		antiGravityRoundingCorrection = -1;
 	}
 
-	var privateGravity = EffectVar(0, target, effectNumber);
+	var privateGravity = EffectVar(0, target, effectNumber) / 50;
 
 	SetYDir(GetYDir() + antiGravity + antiGravityRoundingCorrection + privateGravity);
 
