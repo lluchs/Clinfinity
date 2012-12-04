@@ -1,0 +1,2 @@
+DE:Killvorsprung
+US:Kill margin

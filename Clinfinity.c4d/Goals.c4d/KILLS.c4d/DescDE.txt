@@ -1,0 +1,3 @@
+Ein Spieler hat gewonnen, wenn er einen bestimmten Vorsprung an Kills vor dem n‰chstbesten Spieler erreicht hat. Auﬂerdem ist das Spiel vorbei, wenn eine Gesamtzahl an Kills erreicht wird.
+
+Der Vorsprung ist die eingestellte Anzahl des Spielziels, die maximale Gesamtzahl das Vierfache davon.
