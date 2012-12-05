@@ -161,7 +161,7 @@ protected func QueryStrikeBlow(object target) {
 		if(currentState == YOYO_StateThrown || currentState == YOYO_StateReturning) {
 			HitEffect();
 
-			target->DoEnergy(-YOYO_Damage - bonusDamage);
+			target->InflictDamage(YOYO_Damage + bonusDamage, this);
 			var awayFromThrower = -1;
 			if(GetX() > thrower->GetX()) awayFromThrower = 1;
 
@@ -186,6 +186,8 @@ protected func QueryStrikeBlow(object target) {
 		}
 	}
 }
+
+public func GetDamageType() { return DamageType_Melee; }
 
 protected func Damage(int damage, int byPlayer) {
 	if(currentState == YOYO_StateThrown) {
