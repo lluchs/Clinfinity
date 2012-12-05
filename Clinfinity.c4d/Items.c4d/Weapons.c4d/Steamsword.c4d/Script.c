@@ -1,11 +1,37 @@
+/*	Script: Steam sword
+	A short-range melee weapon.
+
+	Deflection and hits:
+	- Objects are deflected every frame, while the sword is wielded
+	- If a deflected object has no horizontal speed, it is flung in the direction of the sword
+	- Otherwise, the object is "returned to sender" by inverting its movement
+	- Living beings are hit at the end of the wielding animation
+
+	Critical hits:
+	- When dealing a critical hit, the damage value is increased by multiples of the damage increase factor
+	- Having a vertical speed of at least SWOR_MinCriticalHitSpeed is awarded with 1x the damage increase factor
+	- For every further 10 speed units above this limit, another 1x damage increase factor is awarded */
+
 #strict 2
 
 #include MWEP
 
+/*	Constants: Damage
+	SWOR_DamageRectWidth	- Width of the sword's hit zone.
+	SWOR_DamageRectHeight	- Height of the sword's hit zone.
+	SWOR_MinDamage			- Minimum standard damage dealt for each hit.
+	SWOR_MaxDamage			- Maximum standard damage dealt for each hit. */
 static const SWOR_DamageRectWidth = 25;
 static const SWOR_DamageRectHeight = 38;
 static const SWOR_MinDamage = 10;
 static const SWOR_MaxDamage = 15;
+
+/*	Constants: Deflection and knockback
+	SWOR_FlingSpeed					- Speed to set for deflected objects that have no horizontal speed.
+	SWOR_KnockbackChance			- Chance to knock back a hit living being.
+	SWOR_MaxKnockbackSpeed			- Maximum speed to knock back a hit living being.
+	SWOR_MinCriticalHitSpeed		- Vertical speed necessary to deal a critical hit.
+	SWOR_CriticalHitDamageIncrease	- Damage increase factor for critical hits. */
 static const SWOR_FlingSpeed = 3;
 static const SWOR_KnockbackChance = 3; // Chance is calculated as 1/SWOR_KnockbackChance
 static const SWOR_MaxKnockbackSpeed = 2;
