@@ -1,0 +1,1 @@
+Indicates received damage as a small message.

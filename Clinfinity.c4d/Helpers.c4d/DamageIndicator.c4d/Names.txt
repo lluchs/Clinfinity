@@ -1,0 +1,2 @@
+DE:Schadensindikator
+US:Damage indicator

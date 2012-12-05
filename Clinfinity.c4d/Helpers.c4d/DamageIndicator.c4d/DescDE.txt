@@ -1,0 +1,1 @@
+Zeigt erlittenen Schaden als kleine Nachricht an.
