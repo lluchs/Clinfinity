@@ -3,12 +3,14 @@
 #strict 2
 
 func Initialize(obj) {
-	ScheduleCall(obj, "OpenHeart", RandomX(400, 600));
+	//ScheduleCall(obj, "OpenHeart", RandomX(50, 100));
   return(1);
 }
 
 protected func OpenHeart() {
+	Sound("Heart_Open");
 	SetAction("Open");
+	CreateObject(WIPF, 0, 0);
 	}
 
 protected func Breathe(obj){
