@@ -1,2 +1,2 @@
-DE:Schild
-US:Shield
+DE:Flügelschild
+US:Wing shield
