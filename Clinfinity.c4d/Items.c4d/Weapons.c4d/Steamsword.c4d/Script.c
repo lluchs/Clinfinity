@@ -9,6 +9,8 @@ static const SWOR_MaxDamage = 15;
 static const SWOR_FlingSpeed = 3;
 static const SWOR_KnockbackChance = 3; // Chance is calculated as 1/SWOR_KnockbackChance
 static const SWOR_MaxKnockbackSpeed = 2;
+static const SWOR_MinCriticalHitSpeed = 30;
+static const SWOR_CriticalHitDamageIncrease = 5;
 
 public func IsMeleeWeapon()		{ return true; }
 public func GetWieldDirection()	{ return AVMW_WieldDown; }
@@ -38,7 +40,13 @@ public func WieldAbort() {
 }
 
 public func WieldEnd() {
-	MeleeHit(SWOR_DamageRectWidth, SWOR_DamageRectHeight, RandomX(SWOR_MinDamage, SWOR_MaxDamage));
+	var dealtDamage = RandomX(SWOR_MinDamage, SWOR_MaxDamage);
+	if(GetYDir() >= SWOR_MinCriticalHitSpeed) {
+		var speedFactor = GetYDir() - SWOR_MinCriticalHitSpeed;
+		speedFactor = speedFactor / 10 + 1;
+		dealtDamage += speedFactor * SWOR_CriticalHitDamageIncrease;
+	}
+	MeleeHit(SWOR_DamageRectWidth, SWOR_DamageRectHeight, dealtDamage);
 	if(!Random(SWOR_KnockbackChance)) {
 		ThrowBack(SWOR_DamageRectWidth, SWOR_DamageRectHeight, RandomX(1, Max(1, SWOR_MaxKnockbackSpeed)), false);
 	}
