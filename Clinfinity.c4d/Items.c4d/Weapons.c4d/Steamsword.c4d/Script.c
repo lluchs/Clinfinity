@@ -67,13 +67,15 @@ public func WieldAbort() {
 
 public func WieldEnd() {
 	var dealtDamage = RandomX(SWOR_MinDamage, SWOR_MaxDamage);
+	var isCriticalHit = false;
 	if(GetYDir() >= SWOR_MinCriticalHitSpeed) {
 		var speedFactor = GetYDir() - SWOR_MinCriticalHitSpeed;
 		speedFactor = speedFactor / 10 + 1;
 		dealtDamage += speedFactor * SWOR_CriticalHitDamageIncrease;
+		isCriticalHit = true;
 	}
 	MeleeHit(SWOR_DamageRectWidth, SWOR_DamageRectHeight, dealtDamage);
-	if(!Random(SWOR_KnockbackChance)) {
+	if(!Random(SWOR_KnockbackChance) || isCriticalHit) {
 		ThrowBack(SWOR_DamageRectWidth, SWOR_DamageRectHeight, RandomX(1, Max(1, SWOR_MaxKnockbackSpeed)), false);
 	}
 	DeflectObjects();
