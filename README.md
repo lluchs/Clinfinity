@@ -42,6 +42,7 @@ Clonk Infinity uses sounds from the [Freesound project](http://www.freesound.org
 - drill*.wav is based on sections of City_Drilling_01.wav by [Koops](http://www.freesound.org/people/Koops/)
 - SteamSword.wav is based on steam_burst.wav by [pengo_au](http://www.freesound.org/people/pengo_au/)
 - WingShield.wav is a section of "classic double swwosh .wav" by [martian](http://www.freesound.org/people/martian/)
+- Heart_Open wav is Compactor3.ogg by [PhreaKsAccount](http://freesound.org/people/PhreaKsAccount/)
 
 Additional objects
 ------------------
