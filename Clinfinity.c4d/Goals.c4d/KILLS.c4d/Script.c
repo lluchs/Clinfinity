@@ -3,13 +3,15 @@
 #include RULE
 #include GOAL
 
-local playerScore;
-local totalKills;
+local winMargin, winTotalKills;
+local playerScores, totalKills;
 local isFulfilled;
 
-protected func Completion() {
+private func Initialized(int ruleTypeCount) {
 	CreateObject(RVLR, 0, 0, NO_OWNER);
-	playerScore = CreateHash();
+	winMargin = ruleTypeCount;
+	winTotalKills = ruleTypeCount * 4;
+	playerScores = CreateHash();
 	totalKills = 0;
 }
 
@@ -18,19 +20,35 @@ public func IsFulfilled() {
 }
 
 public func IsFulfilledforPlr(int plr) {
-	var win = !FindObject2(Find_ID(STMT), Find_Hostile(plr));
-	if(win)
-		isFulfilled = true;
-	return win;
+	// TODO
+	return false;
 }
 
 protected func InitializePlayer(int playerNumber) {
-	HashPut(playerScore, playerNumber, 0);
+	HashPut(playerScores, playerNumber, 0);
 }
 
 public func OnClonkDeath(object oldClonk, int killingPlayerNumber) {
-	var currentScore = HashGet(playerScore, killingPlayerNumber) + 1;
-	HashPut(playerScore, killingPlayerNumber, currentScore);
+	var currentScore = HashGet(playerScores, killingPlayerNumber);
+	HashPut(playerScores, killingPlayerNumber, currentScore + 1);
 	totalKills++;
+
 	// TODO: Determine if round is over
+	var bestPlayer, bestScore, marginToSecondBest;
+	var iterator = HashIter(playerScores);
+	while(HashIterHasNext(iterator)) {
+		var entry = HashIterNext(iterator);
+		var player = entry[0];
+		var score = entry[1];
+
+		if(score > bestScore) {
+			marginToSecondBest = score - bestScore;
+			bestScore = score;
+			bestPlayer = player;
+		}
+	}
+
+	if((marginToSecondBest >= winMargin) || (totalKills >= winTotalKills)) {
+		// TODO: GAME OUVEURE
+	}
 }
