@@ -3,11 +3,13 @@
 #include GOAL
 
 local playerScore;
+local totalKills;
 local fulfilled;
 
 protected func Completion() {
 	CreateObject(RVLR, 0, 0, NO_OWNER);
 	playerScore = CreateHash();
+	totalKills = 0;
 }
 
 public func IsFulfilled() {
@@ -22,10 +24,11 @@ public func IsFulfilledforPlr(int plr) {
 }
 
 protected func InitializePlayer(int playerNumber) {
-	// TODO: Set player score to 0
+	HashPut(playerScore, playerNumber, 0);
 }
 
-public func OnClonkDeath(object oldClonk) {
+public func OnClonkDeath(object oldClonk, int killingPlayerNumber) {
 	// TODO: Award kill to killer
+	totalKills++;
 	// TODO: Determine if round is over
 }
