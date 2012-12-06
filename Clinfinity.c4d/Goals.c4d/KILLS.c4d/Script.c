@@ -26,7 +26,7 @@ public func IsFulfilled() {
 }
 
 public func IsFulfilledforPlr(int player) {
-	return winner == player;
+	return winner == player || (isFulfilled && winner == NO_OWNER);
 }
 
 protected func InitializePlayer(int playerNumber) {
@@ -34,11 +34,13 @@ protected func InitializePlayer(int playerNumber) {
 }
 
 public func OnClonkDeath(object oldClonk, int killingPlayerNumber) {
+	if(oldClonk->GetOwner() == killingPlayerNumber) Log("Warning: %d killed himself", killingPlayerNumber);
+	if(killingPlayerNumber == NO_OWNER) Log("Warning: %d was killed by noone", oldClonk->GetOwner());
 	var currentScore = HashGet(playerScores, killingPlayerNumber);
 	HashPut(playerScores, killingPlayerNumber, currentScore + 1);
 	totalKills++;
 
-	var bestPlayer, bestScore, marginToSecondBest;
+	var bestPlayer, bestScore, secondBestScore;
 	var iterator = HashIter(playerScores);
 	while(HashIterHasNext(iterator)) {
 		var entry = HashIterNext(iterator);
@@ -46,17 +48,17 @@ public func OnClonkDeath(object oldClonk, int killingPlayerNumber) {
 		var score = entry[1];
 
 		if(score > bestScore) {
-			marginToSecondBest = score - bestScore;
 			bestScore = score;
 			bestPlayer = player;
-			Log("Evaluation: Current best player is %d", bestPlayer);
+		} else if(score > secondBestScore) {
+			secondBestScore = score;
 		}
 	}
 
-	if(marginToSecondBest >= winMargin) {
+	if((bestScore - secondBestScore) >= winMargin) {
 		winner = bestPlayer;
 		isFulfilled = true;
-		Log("Player %d has won with a margin of %d", winner, marginToSecondBest);
+		Log("Player %d has won with a margin of %d", winner, (bestScore - secondBestScore));
 	} else if(totalKills >= winTotalKills) {
 		// TODO: Instead of having no winner under this condition, make the best players (there may be more than one with the same score!) the winners
 		Log("Game over due to total kills.");
