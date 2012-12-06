@@ -1,10 +1,11 @@
 #strict 2
 
+#include RULE
 #include GOAL
 
 local playerScore;
 local totalKills;
-local fulfilled;
+local isFulfilled;
 
 protected func Completion() {
 	CreateObject(RVLR, 0, 0, NO_OWNER);
@@ -13,13 +14,13 @@ protected func Completion() {
 }
 
 public func IsFulfilled() {
-	return fulfilled;
+	return isFulfilled;
 }
 
 public func IsFulfilledforPlr(int plr) {
 	var win = !FindObject2(Find_ID(STMT), Find_Hostile(plr));
 	if(win)
-		fulfilled = true;
+		isFulfilled = true;
 	return win;
 }
 
@@ -28,7 +29,8 @@ protected func InitializePlayer(int playerNumber) {
 }
 
 public func OnClonkDeath(object oldClonk, int killingPlayerNumber) {
-	// TODO: Award kill to killer
+	var currentScore = HashGet(playerScore, killingPlayerNumber) + 1;
+	HashPut(playerScore, killingPlayerNumber, currentScore);
 	totalKills++;
 	// TODO: Determine if round is over
 }
