@@ -34,8 +34,9 @@ protected func InitializePlayer(int playerNumber) {
 }
 
 public func OnClonkDeath(object oldClonk, int killingPlayerNumber) {
-	if(oldClonk->GetOwner() == killingPlayerNumber) Log("Warning: %d killed himself", killingPlayerNumber);
-	if(killingPlayerNumber == NO_OWNER) Log("Warning: %d was killed by noone", oldClonk->GetOwner());
+	// No kills awarded for suicide or for the game engine
+	if(oldClonk->GetOwner() == killingPlayerNumber || killingPlayerNumber == NO_OWNER) return;
+
 	var currentScore = HashGet(playerScores, killingPlayerNumber);
 	HashPut(playerScores, killingPlayerNumber, currentScore + 1);
 	totalKills++;
@@ -58,10 +59,8 @@ public func OnClonkDeath(object oldClonk, int killingPlayerNumber) {
 	if((bestScore - secondBestScore) >= winMargin) {
 		winner = bestPlayer;
 		isFulfilled = true;
-		Log("Player %d has won with a margin of %d", winner, (bestScore - secondBestScore));
 	} else if(totalKills >= winTotalKills) {
-		// TODO: Instead of having no winner under this condition, make the best players (there may be more than one with the same score!) the winners
-		Log("Game over due to total kills.");
+		// TODO: Instead of having everyone win under this condition, make the best players (there may be more than one with the same score!) the winners
 		isFulfilled = true;
 	}
 }
