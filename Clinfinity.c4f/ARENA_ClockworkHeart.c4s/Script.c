@@ -44,6 +44,15 @@ protected func Initialize() {
 		mediator->RemoveMovementEventListener(lever);
 		lever->RemoveObject();
 	}
+
+	// Spawners
+	CreateObject(_ISP, 245, 210, NO_OWNER);
+	CreateObject(_ISP, 307, 210, NO_OWNER);
+	CreateObject(_ISP, 370, 210, NO_OWNER);
+	CreateObject(_ISP, 460, 248, NO_OWNER);
+	CreateObject(_ISP, 560, 282, NO_OWNER);
+	CreateObject(_ISP, 191, 368, NO_OWNER);
+	CreateObject(_ISP, 82, 408, NO_OWNER);
 	
 	CreateObject(VINE,626,392,-1);
 	CreateObject(VINE,687,396,-1);
