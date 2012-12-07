@@ -10,10 +10,18 @@ static aMaterialSystem;
 
 local hIcons; // HashGet(GetMatSys()->LocalN("hIcons"), WOOD)
 
+private func Unlimited() { return GameCall("UnlimitedMatSys"); }
+
 public func Initialize() {
+	// Global initialization
 	if(GetType(aMaterialSystem) != C4V_Array)
 		aMaterialSystem = CreateArray(GetPlayerCount());
 	aMaterialSystem[GetOwner()] = this;
+
+	// Dummy mode
+	if(Unlimited())
+		return;
+
 	var aIDs = GetMatSysIDs();
 	var iX = -166, pIcon;
 	hIcons = CreateHash();
@@ -44,7 +52,16 @@ public func OnFillChange(Key, &iChange, bool dontNotify) {
 	return 1;
 }
 
+public func GetFill() {
+	if(Unlimited())
+		return INT_MAX;
+	else
+		return inherited(...);
+}
+
 public func DoFill(int change, id ID, bool noUpdate) {
+	if(Unlimited())
+		return change;
 	if(!noUpdate)
 		change = UpdateFillEffects(ID, change);
 	return inherited(change, ID);
@@ -79,7 +96,7 @@ private func UpdateFillEffects(id ID, int change) {
 
 local fNoStatusMessage;
 public func Timer() {
-	if(fNoStatusMessage)
+	if(fNoStatusMessage || Unlimited())
 		return;
 	var owner = GetOwner();
 	var iter = HashIter(hIcons), node;
