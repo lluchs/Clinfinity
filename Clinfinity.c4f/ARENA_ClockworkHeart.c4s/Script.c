@@ -2,21 +2,21 @@
 #strict 2
 
 protected func Initialize() {
-  //heart
-  CreateObject(HART, 270, 710, NO_OWNER);
-  
-  //Foreground
-  CreateObject(GRD1, 400, 805, NO_OWNER);
-  
-  CreateObject(FOG_,400,850);
-	
+	// Heart
+	CreateObject(HART, 270, 710, NO_OWNER);
+
+	// Foreground
+	CreateObject(GRD1, 400, 805, NO_OWNER);
+
+	CreateObject(FOG_,400,850);
+
 	var platform;
 	platform = PLTF->CreatePlatform(460, 255, NO_OWNER);
 	platform->SetColorDw(RGBa(55, 43, 41, 0));
-	
+
 	platform = PLTF->CreatePlatform(560, 290, NO_OWNER);
 	platform->SetColorDw(RGBa(55, 43, 41, 0));
-	
+
 	platform = PLTF->CreatePlatform(555, 390, NO_OWNER);
 	platform->SetColorDw(RGBa(55, 43, 41, 0));
 
