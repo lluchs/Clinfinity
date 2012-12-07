@@ -10,7 +10,7 @@ public func LightningStrike() {
 }
 
 private func SelectRandomId() {
-	var r = 6;//Random(7);
+	var r = Random(7);
 	if(!r)   return FLNT;
 	if(!--r) return SFLN;
 	if(!--r) return EFLN;
