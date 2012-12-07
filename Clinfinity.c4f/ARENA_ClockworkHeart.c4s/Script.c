@@ -45,6 +45,9 @@ protected func Initialize() {
 		lever->RemoveObject();
 	}
 
+	// Respawn the island
+	PeriodicIslandRespawn(1000, 615, 330, 150, 192);
+
 	// Spawners
 	CreateObject(_ISP, 245, 210, NO_OWNER);
 	CreateObject(_ISP, 307, 210, NO_OWNER);
