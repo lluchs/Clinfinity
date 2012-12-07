@@ -1,0 +1,1 @@
+Spawnt zufällige Gegenstände bei Blitzeinschlag.

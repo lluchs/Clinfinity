@@ -1,0 +1,1 @@
+Spawns random stuff on lightning strike.

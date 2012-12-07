@@ -1,0 +1,2 @@
+DE:Unsichtbarer Spawner
+US:Invisible spawner
