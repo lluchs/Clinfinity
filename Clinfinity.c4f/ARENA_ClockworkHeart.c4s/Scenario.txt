@@ -45,3 +45,4 @@ SkyScrollMode=2
 Climate=40,10,0,100
 YearSpeed=20,10,0,100
 Wind=1,100,-100,100
+Lightning=100,0,0,100
