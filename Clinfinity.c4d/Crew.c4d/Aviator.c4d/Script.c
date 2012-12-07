@@ -299,8 +299,12 @@ protected func ControlThrow() {
 	var obj = Contents();
 	if(obj != 0) {
 		if(obj->~IsWeapon()) {
-			StartAiming(obj);
-			return 1;
+			if(GetPlrDownDouble(GetOwner()))
+				return 0;
+			else {
+				StartAiming(obj);
+				return 1;
+			}
 		}
 		if(obj->~IsMeleeWeapon()) {
 			if(GetPlrDownDouble(GetOwner())) {
