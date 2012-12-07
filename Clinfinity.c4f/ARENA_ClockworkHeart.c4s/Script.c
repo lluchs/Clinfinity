@@ -133,6 +133,8 @@ private func RndRelaunchMsg() {
 
 public func IsDraftPermanent() { return true; }
 
+public func UnlimitedMatSys() { return true; }
+
 global func FxSkyLightningTimer(object target, int effectNumber, int effectTime) {
 	var brightness = 255 - 15 * effectTime;
 	SetSkyColourModulation(RGB(brightness, brightness, brightness), false, 7);
