@@ -4,6 +4,7 @@
 
 #include STBO
 #include L_DC
+#include NLBO  //Nightlight
 
 static const FTRY_ProductionActions = 3;
 
