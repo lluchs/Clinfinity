@@ -4,6 +4,7 @@
 
 #include L_CP
 #include B_70
+#include NLBO	//Nightlight
 
 static const RSMG_ProductionTime = 200;
 static const RSMG_ProductionRate = 50;
