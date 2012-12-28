@@ -5,7 +5,7 @@
 private func GetBarrelLength() { return 10; }
 
 private func GetAmmo() {
-	return CreateContents(FLNT);
+	return CreateContents(ADB1);
 }
 
 /* Fixes the shooting angle. */
