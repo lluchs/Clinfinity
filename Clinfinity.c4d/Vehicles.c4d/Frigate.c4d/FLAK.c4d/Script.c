@@ -4,6 +4,7 @@
 
 private func GetBarrelLength() { return 10; }
 private func GetCooldown() { return 25; }
+private func CannonSound() { return "Arrow"; }
 
 private func GetAmmo() {
 	return CreateContents(ADB1);

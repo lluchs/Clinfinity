@@ -85,5 +85,6 @@ private func Shoot() {
 	
 	Exit(ammo, x, y, 0, xdir, ydir);
 	StartCooldown();
+	Sound(CannonSound());
 	return ammo;
 }
