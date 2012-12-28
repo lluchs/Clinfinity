@@ -60,6 +60,8 @@ private func Shoot() {
 	if(!ammo)
 		return;
 	var angle = GetAngle();
+	// Randomize the angle a little bit.
+	angle += RandomX(-5, 5);
 	var power = GetPower();
 	
 	var x = Sin(angle, GetBarrelLength()),
