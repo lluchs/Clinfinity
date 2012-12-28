@@ -9,6 +9,11 @@ static const AVTR_WeaponOverlay = 2;
 /* Itemlimit */
 public func MaxContentsCount() { return 3; }
 
+protected func RejectCollect(id ID, object obj) {
+	// Only two flints at any time.
+	return obj->~IsFlint() && ObjectCount2(Find_Container(this), Find_Func("IsFlint")) >= 2;
+}
+
 /* Inhalt durchwechseln */
 protected func ControlSpecial() { ShiftContents(); }
 
