@@ -2,8 +2,8 @@
 
 #strict 2
 
-#include L_CP
-#include B_70
+#include L_CP	//ControlPoint
+#include B_70	//Basement
 #include NLBO	//Nightlight
 
 static const RSMG_ProductionTime = 200;

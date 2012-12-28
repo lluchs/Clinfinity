@@ -4,8 +4,8 @@
 
 local cannon;
 
-#include STBO
-#include L_DC
+#include STBO	//StructureBaseObject
+#include L_DC	//Damagecontrol
 
 public func MaxDamage() {
 	return 50;

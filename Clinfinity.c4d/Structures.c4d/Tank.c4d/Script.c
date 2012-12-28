@@ -2,9 +2,9 @@
 
 #strict 2
 
-#include STBO
-#include L_DC
-#include L_SS
+#include STBO	//StructureBaseObject
+#include L_DC	//Damagecontrol
+#include L_SS	//StorageSystem
 
 static steamTrendWarnEffects;
 

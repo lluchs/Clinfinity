@@ -2,9 +2,9 @@
 
 #strict 2
 
-#include L_CP
-#include B100  //Basement
-#include NLBO  //Nightlight
+#include L_CP	//ControlPoint
+#include B100 //Basement
+#include NLBO //Nightlight
 
 static const RFLN_MaxFlints = 4;
 

@@ -2,8 +2,8 @@
 
 #strict 2
 
-#include STBO
-#include NLBO
+#include STBO	////StructureBaseObject
+#include NLBO	//Nightlight
 
 static const QRRY_DroneCount = 3;
 static const QRRY_MaxSearchDistance = 350;
