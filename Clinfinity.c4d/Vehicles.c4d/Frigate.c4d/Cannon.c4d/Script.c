@@ -17,21 +17,21 @@ private func TurnRight() {
 }
 
 protected func ControlLeft(object clonk) {
-	if(GetOwner() != clonk->GetOwner())
+	if(Hostile(GetOwner(), clonk->GetOwner()))
 		return;
 	TurnLeft();
 	return true;
 }
 
 protected func ControlRight(object clonk) {
-	if(GetOwner() != clonk->GetOwner())
+	if(Hostile(GetOwner(), clonk->GetOwner()))
 		return;
 	TurnRight();
 	return true;
 }
 
 protected func ControlThrow(object clonk) {
-	if(GetOwner() != clonk->GetOwner())
+	if(Hostile(GetOwner(), clonk->GetOwner()))
 		return;
 	Shoot();
 	return true;
