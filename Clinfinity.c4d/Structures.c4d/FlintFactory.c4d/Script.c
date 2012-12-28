@@ -3,7 +3,8 @@
 #strict 2
 
 #include L_CP
-#include B100
+#include B100  //Basement
+#include NLBO  //Nightlight
 
 static const RFLN_MaxFlints = 4;
 
