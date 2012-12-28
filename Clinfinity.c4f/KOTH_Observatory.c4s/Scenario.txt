@@ -63,4 +63,4 @@ Wind=1,100,-100,100
 Meteorite=42,0,0,100
 
 [Environment]
-Objects=EGLN=10;CIC2=3
+Objects=EGLN=10;CIC2=3;TIME=1;FLSS=1
