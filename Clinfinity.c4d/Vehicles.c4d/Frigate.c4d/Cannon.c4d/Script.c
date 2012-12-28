@@ -54,8 +54,22 @@ private func GetAmmo() {
 
 private func GetPower() { return 20; }
 private func GetBarrelLength() { return 25; }
+private func GetCooldown() { return 50; }
+private func CannonSound() { return "Blast3"; }
+
+local cooldown;
+private func StartCooldown() {
+	cooldown = true;
+	ScheduleCall(this, "FinishCooldown", GetCooldown());
+}
+
+protected func FinishCooldown() {
+	cooldown = false;
+}
 
 private func Shoot() {
+	if(cooldown)
+		return;
 	var ammo = GetAmmo();
 	if(!ammo)
 		return;
@@ -70,5 +84,6 @@ private func Shoot() {
 		ydir = -Cos(angle, power);
 	
 	Exit(ammo, x, y, 0, xdir, ydir);
+	StartCooldown();
 	return ammo;
 }

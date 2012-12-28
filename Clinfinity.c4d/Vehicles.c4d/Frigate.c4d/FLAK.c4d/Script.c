@@ -3,6 +3,7 @@
 #include FRCN
 
 private func GetBarrelLength() { return 10; }
+private func GetCooldown() { return 25; }
 
 private func GetAmmo() {
 	return CreateContents(ADB1);
