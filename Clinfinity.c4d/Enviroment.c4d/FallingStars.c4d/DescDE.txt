@@ -1,0 +1,1 @@
+Sorgt für das nächtliche Sternenzelt. Der Platzierungsfaktor bestimmt, wie dicht der Nachthimmel mit Sternen übersät ist. Die Dichte wird relativ zur Landschaftsgröße bestimmt, der gleiche Platzierungsfaktor wird also immer zu einer ähnlichen Dichte führen, auch bei verschieden großen Landschaften.
