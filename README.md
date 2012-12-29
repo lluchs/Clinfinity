@@ -49,7 +49,8 @@ Clonk Infinity uses sounds from the [Freesound project](http://www.freesound.org
 	- air pump drone and hum.aif by [Tomlija] (http://freesound.org/people/Tomlija/)
 	- HeartbeatEnhanced.wav by [HerbertBoland] (http://freesound.org/people/HerbertBoland/)
 - Steam1-3.wav consists of pitched variants from 41_STEAM.wav by [ReWired] (http://freesound.org/people/ReWired/) 
-- CriticalHit1-3.wav consists of pitched variants from Anime Sword SFX.wav [alkanetexe] (http://freesound.org/people/alkanetexe/)
+- CriticalHit1-3.wav consists of pitched variants from Anime Sword SFX.wav by [alkanetexe] (http://freesound.org/people/alkanetexe/)
+- FallingStars1-3.wav consists of pitched and reversed variants from FireworkCloseCrack.mp3 by [HerbertBoland] (http://freesound.org/people/HerbertBoland/)
 	
 
 Additional objects
