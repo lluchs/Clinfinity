@@ -35,7 +35,14 @@ protected func InitializePlayer(int playerNumber) {
 
 public func OnClonkDeath(object oldClonk, int killingPlayerNumber) {
 	// No kills awarded for suicide or for the game engine
-	if(oldClonk->GetOwner() == killingPlayerNumber || killingPlayerNumber == NO_OWNER) return;
+	if(oldClonk->GetOwner() == killingPlayerNumber || killingPlayerNumber == NO_OWNER) {
+		// But maybe somebody has just dealt damage?
+		var finishedOff = oldClonk->FinishedOff();
+		if(finishedOff == NO_OWNER)
+			return;
+		else
+			killingPlayerNumber = finishedOff;
+	}
 
 	var currentScore = HashGet(playerScores, killingPlayerNumber);
 	HashPut(playerScores, killingPlayerNumber, currentScore + 1);
