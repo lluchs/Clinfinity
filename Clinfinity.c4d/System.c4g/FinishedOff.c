@@ -11,12 +11,10 @@ global func AddFinishedOffListener() {
 }
 
 /*  Function: FinishedOff
-	Returns the player who killed or finished off this clonk, or NO_OWNER. */
+	Returns the player who finished off this clonk, or NO_OWNER.
+	
+	"Finished off" means that somebody has just dealt damage to the clonk. */
 global func FinishedOff() {
-	var killer = GetKiller();
-	if(GetKiller() != NO_OWNER)
-		return killer;
-
 	var effect = GetEffect("FinishedOffListener", this);
 	if(effect && FrameCounter() - EffectVar(1, this, effect) < FINISHED_OFF_TIMEOUT)
 		return EffectVar(0, this, effect);
@@ -26,7 +24,7 @@ global func FinishedOff() {
 
 global func FxFinishedOffListenerDamage(object target, int effectNum, int amount, int cause) {
 	var killer = target->GetKiller();
-	if(killer != NO_OWNER) {
+	if(killer != NO_OWNER && killer != GetOwner()) {
 		EffectVar(0, target, effectNum) = killer;
 		EffectVar(1, target, effectNum) = FrameCounter();
 	}
