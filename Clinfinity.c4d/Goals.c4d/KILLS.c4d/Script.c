@@ -5,7 +5,7 @@
 
 local winMargin, winTotalKills;
 local playerScores, totalKills;
-local isFulfilled, winner;
+local isFulfilled, winner, winningScore;
 
 protected func Initialize() {
 	CreateObject(RVLR, 0, 0, NO_OWNER);
@@ -27,11 +27,12 @@ public func IsFulfilled() {
 }
 
 public func IsFulfilledforPlr(int player) {
-	return winner == player || (isFulfilled && winner == NO_OWNER);
+	var pid = GetPlayerID(player);
+	return winner == pid || (isFulfilled && HashGet(playerScores, pid) >= winningScore);
 }
 
 protected func InitializePlayer(int playerNumber) {
-	HashPut(playerScores, playerNumber, 0);
+	HashPut(playerScores, GetPlayerID(playerNumber), 0);
 }
 
 public func OnClonkDeath(object oldClonk, int killingPlayerNumber) {
@@ -70,7 +71,7 @@ public func OnClonkDeath(object oldClonk, int killingPlayerNumber) {
 		winner = bestPlayer;
 		isFulfilled = true;
 	} else if(totalKills >= winTotalKills) {
-		// TODO: Instead of having everyone win under this condition, make the best players (there may be more than one with the same score!) the winners
+		winningScore = bestScore;
 		isFulfilled = true;
 	}
 
