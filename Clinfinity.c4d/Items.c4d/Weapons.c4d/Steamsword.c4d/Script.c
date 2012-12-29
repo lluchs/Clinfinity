@@ -90,6 +90,8 @@ private func DeflectObjects() {
 	var handX, handY, swordAngle;
 	Contained()->~GetCurrentWieldData(handX, handY, swordAngle);
 
+	var controller = GetOwner(Contained());
+
 	var bladeCentreX = 0;
 	var bladeCentreY = -8;
 	Rotate(swordAngle, bladeCentreX, bladeCentreY);
@@ -112,6 +114,7 @@ private func DeflectObjects() {
 				Fling(object, xSpeed, ySpeed);
 			}
 			AddEffect("SwordDeflection", object, 1, 5);
+			object->SetController(controller);
 			object->DoDamage(RandomX(SWOR_MinDamage, SWOR_MaxDamage));
 		}
 	}
