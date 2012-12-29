@@ -1,1 +1,1 @@
-Provides stars for the night sky. The placement factor determines how densely the sky is filled with stars. The star density is calculated relative to the landscape size. Thus, the same placement factor corresponds to about the same density, even for landscapes of different sizes.
+Insert desc here.
