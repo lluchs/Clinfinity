@@ -100,4 +100,5 @@ private func UpdateScoreboard(int bestScore, int secondBestScore) {
 		SetScoreboardData(pid, 1, Format("%d", score));
 		SetScoreboardData(pid, 2, Format("%d", needed));
 	}
+	SortScoreboard(1, true);
 }
