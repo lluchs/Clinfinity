@@ -2,20 +2,19 @@
 
 #strict 2
 
-func Initialize(obj) {
-	//ScheduleCall(obj, "OpenHeart", RandomX(50, 100));
-  return(1);
+func Initialize() {
+	ScheduleCall(this, "OpenHeart", RandomX(50, 100));
 }
 
 protected func OpenHeart() {
 	Sound("Heart_Open");
 	SetAction("Open");
 	CreateObject(WIPF, 0, 0);
-	}
+}
 
 protected func Breathe(obj){
-  ScheduleCall(obj, "MakeNoise", 55);
-  ScheduleCall(obj, "MakeSmoke", 50);
+	ScheduleCall(obj, "MakeNoise", 55);
+	ScheduleCall(obj, "MakeSmoke", 50);
 }
 
 protected func MakeNoise() {
@@ -29,8 +28,8 @@ protected func MakeSmoke() {
 }
 
 protected func MakeSmoke2() {	//(TimerCall)
- Sound("Steam*.wav");
- CastParticles("Smoke", RandomX(20, 30), RandomX(30, 60), -114, 82, 50, 70, RGBa(200, 200, 200, 10), RGBa(200, 200, 200, 190));
- CastParticles("Smoke", RandomX(20, 30), RandomX(30, 60), -103, 71, 50, 70, RGBa(200, 200, 200, 10), RGBa(200, 200, 200, 190));
- CastParticles("Smoke", RandomX(20, 30), RandomX(30, 60), -89, 60, 50, 70, RGBa(200, 200, 200, 10), RGBa(200, 200, 200, 190));
+	Sound("Steam*.wav");
+	CastParticles("Smoke", RandomX(20, 30), RandomX(30, 60), -114, 82, 50, 70, RGBa(200, 200, 200, 10), RGBa(200, 200, 200, 190));
+	CastParticles("Smoke", RandomX(20, 30), RandomX(30, 60), -103, 71, 50, 70, RGBa(200, 200, 200, 10), RGBa(200, 200, 200, 190));
+	CastParticles("Smoke", RandomX(20, 30), RandomX(30, 60), -89, 60, 50, 70, RGBa(200, 200, 200, 10), RGBa(200, 200, 200, 190));
 }
