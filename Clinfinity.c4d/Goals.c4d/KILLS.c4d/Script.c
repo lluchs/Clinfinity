@@ -13,6 +13,7 @@ protected func Initialize() {
 	totalKills = 0;
 	isFulfilled = false;
 	winner = NO_OWNER;
+	InitializeScoreboard();
 	return _inherited();
 }
 
@@ -44,6 +45,8 @@ public func OnClonkDeath(object oldClonk, int killingPlayerNumber) {
 			killingPlayerNumber = finishedOff;
 	}
 
+	killingPlayerNumber = GetPlayerID(killingPlayerNumber);
+
 	var currentScore = HashGet(playerScores, killingPlayerNumber);
 	HashPut(playerScores, killingPlayerNumber, currentScore + 1);
 	totalKills++;
@@ -69,5 +72,31 @@ public func OnClonkDeath(object oldClonk, int killingPlayerNumber) {
 	} else if(totalKills >= winTotalKills) {
 		// TODO: Instead of having everyone win under this condition, make the best players (there may be more than one with the same score!) the winners
 		isFulfilled = true;
+	}
+
+	UpdateScoreboard(bestScore, secondBestScore);
+}
+
+/* Scoreboard */
+
+private func InitializeScoreboard() {
+	SetScoreboardData(SBRD_Caption, SBRD_Caption, "KILLS");
+	SetScoreboardData(SBRD_Caption, 0, "{{AVTR}}");
+	SetScoreboardData(SBRD_Caption, 1, "{{MUSK}}");
+	SetScoreboardData(SBRD_Caption, 2, "{{RVLR}}");
+}
+
+private func UpdateScoreboard(int bestScore, int secondBestScore) {
+	SetScoreboardData(SBRD_Caption, SBRD_Caption, Format("KILLS: %d (%d to go)", totalKills, Max(winTotalKills - totalKills, 0)));
+	for(var count = GetPlayerCount(), i = 0; i < count; i++) {
+		var p = GetPlayerByIndex(i), name = GetPlayerName(p), pid = GetPlayerID(p);
+		var score = HashGet(playerScores, pid), needed;
+		if(score == bestScore)
+			needed = winMargin - (bestScore - secondBestScore);
+		else
+			needed = winMargin + bestScore - score;
+		SetScoreboardData(pid, 0, name);
+		SetScoreboardData(pid, 1, Format("%d", score));
+		SetScoreboardData(pid, 2, Format("%d", needed));
 	}
 }
