@@ -12,6 +12,11 @@ public func MaxContentsCount() { return 3; }
 /* Inhalt durchwechseln */
 protected func ControlSpecial() { ShiftContents(); }
 
+protected func Initialize() {
+	AddFinishedOffListener();
+	return inherited(...);
+}
+
 protected func Death(int killedBy) {
 	/* Respawn */
 	var tank = FindObject2(Find_ID(STMT), Find_Allied(GetOwner()));
