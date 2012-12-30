@@ -37,10 +37,12 @@ protected func ControlDig(object clonk) {
 		chopping = false;
 		ClearScheduleCall(this, "Chop");
 		Sound("Command");
+		Message("$TxtOff$", this);
 	} else {
 		chopping = true;
 		StartChopping();
 		Sound("Ding");
+		Message("$TxtOn$", this);
 	}
 }
 

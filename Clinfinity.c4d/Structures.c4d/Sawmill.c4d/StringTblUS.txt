@@ -1,1 +1,3 @@
 TxtShowSearchRadius=Show search radius for wood
+TxtOn=On!
+TxtOff=Off!
