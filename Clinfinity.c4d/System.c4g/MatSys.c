@@ -56,6 +56,9 @@ global func MatSysGetFill(int iPlr, id Key) {
 	Returns:
 	The combined fill level of all team members. */
 global func MatSysGetTeamFill(int plr, id Key) {
+	if(GameCall("UnlimitedMatSys"))
+		return INT_MAX;
+
 	var fill = 0;
 	for(var count = GetPlayerCount(), i = 0; i < count; i++) {
 		var p = GetPlayerByIndex(i);
