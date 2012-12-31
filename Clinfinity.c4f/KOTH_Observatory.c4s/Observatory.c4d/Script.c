@@ -23,7 +23,7 @@ public func EnablePoint() {
 
 protected func LogMsg() {
 	Log("$PointOpen$");
-	Sound("cupola_open");
+	Sound("Status");
 }
 
 private func Captured() {
