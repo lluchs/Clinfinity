@@ -12,7 +12,7 @@ Definition2=Clinfinity.c4d
 
 [Game]
 StructNeedEnergy=0
-Rules=DRFT=20;ENRG=1
+Rules=DRFT=20;ENRG=1;FTKL=1
 
 [Player1]
 Position=20,41
