@@ -92,10 +92,12 @@ protected func Initialize() {
 	If a crew member throws the grenade or drops it in various situations, it activates.
 
 	Parameters:
-	from	- The object the grenade departed from. */
-protected func Departure(object from) {
-	if((from->GetOCF() & OCF_CrewMember) != 0 && (from->GetAction() == "Throw" || from->GetProcedure() == "FLIGHT" || from->GetProcedure() == "SCALE" || from->GetProcedure() == "HANGLE")) {
+	thrower	- The object the grenade departed from. */
+protected func Departure(object thrower) {
+	var proc = thrower->GetProcedure();
+	if((thrower->GetOCF() & OCF_CrewMember) != 0 && (thrower->GetAction() == "Throw" || proc == "FLIGHT" || proc == "SCALE" || proc == "HANGLE")) {
 		Launch();
+		thrower->ThrowProjectile(this);
 	}
 }
 
