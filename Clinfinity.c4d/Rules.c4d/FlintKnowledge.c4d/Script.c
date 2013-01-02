@@ -12,12 +12,12 @@ protected func ActivateSuperFlints() {
 	Sound("Status");
 	//Count the number of actual players
 	for(var playernumber = 0; playernumber < GetPlayerCount(); playernumber++)
-  	SetPlrKnowledge(playernumber, SFLN);
+		SetPlrKnowledge(GetPlayerByIndex(playernumber), EFLN);
 }
 
 protected func ActivateTeraFlints() {
 	Log("$TxtKnowledgeEFLN$");
 	Sound("Status");
 	for(var playernumber = 0; playernumber < GetPlayerCount(); playernumber++)
-  	SetPlrKnowledge(playernumber, EFLN);
+  	SetPlrKnowledge(GetPlayerByIndex(playernumber), EFLN);
 }
