@@ -26,8 +26,8 @@ FullscreenBG=1
 
 	[Scenario]
 	File=ARENA_ClockworkHeart.c4s
-	OverlayImage=hl_thunderclouds.png
-	Area=669,542,262,69
+	OverlayImage=hl_clockwork.png
+	Area=669,542,270,67
 	
 	[Scenario]
 	File=Tutorial_Agility.c4s
