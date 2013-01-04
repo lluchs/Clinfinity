@@ -25,7 +25,7 @@ public func ThrowBack(int rectangleWidth, int rectangleHeight, int throwSpeed, b
 
 public func ThrowBackObject(object target, int throwSpeed, bool tumble) {
 	var away = -1;
-	if(target->GetX() > Contained()->GetX()) away = 1;
+	if(target->GetX() > GetX()) away = 1;
 	Fling(target, away * throwSpeed, -throwSpeed);
 	if(!tumble) {
 		target->SetAction("Jump");
