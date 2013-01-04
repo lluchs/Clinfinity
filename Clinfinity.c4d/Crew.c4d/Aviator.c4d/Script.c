@@ -220,10 +220,18 @@ public func AutoAim() {
 	if(!IsAiming())
 		return;
 	var x = GetX(), y = GetY(), tx, ty;
-	var targets = activeRifle->GetTargets();
+	var targets = activeRifle->GetTargets(), shotSpeed = activeRifle->~ShotSpeed();
 	for(var target in targets) {
 		tx = target->GetX();
 		ty = target->GetY();
+		// improve aiming for moving targets
+		if(shotSpeed && !GetContact(target, -1)) {
+			var distance = Distance(x, y, tx, ty);
+			var time = distance * 10 / shotSpeed;
+			var xy = target->SimulateFlight(time);
+			tx = xy[0];
+			ty = xy[1];
+		}
 		// check angle
 		var angle = Angle(x, y, tx, ty);
 		if(GetDir() == DIR_Left)

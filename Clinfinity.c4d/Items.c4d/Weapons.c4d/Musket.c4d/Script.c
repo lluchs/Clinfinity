@@ -13,6 +13,9 @@ public func HandY() { return 2000; }
 public func MaxFill() { return 6; }
 private func FillPicture() { return 0; }
 
+// shot speed (for auto aiming)
+public func ShotSpeed() { return 230; } // / 10 px per frame
+
 // minimum and maximum damage
 static const MUSK_MinDamage = 5;
 static const MUSK_MaxDamage = 20;
