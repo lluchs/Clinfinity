@@ -161,7 +161,10 @@ protected func QueryStrikeBlow(object target) {
 		if(currentState == YOYO_StateThrown || currentState == YOYO_StateReturning) {
 			HitEffect();
 
-			target->InflictDamage(YOYO_Damage + bonusDamage, this);
+			// Prevent several hits at (almost) the same time by tagging the target as hit for a few frames.
+			if(AddEffect("YoyoDamageTag", target, 101, 5, target, 0, this) != 0) {
+				target->InflictDamage(YOYO_Damage + bonusDamage, this);
+			}
 			var awayFromThrower = -1;
 			if(GetX() > thrower->GetX()) awayFromThrower = 1;
 
@@ -329,4 +332,20 @@ protected func FxYoyoReturningStop(object target, int effectNumber, int reason, 
 	if(!temporary) {
 		YoyoInactive();
 	}
+}
+
+
+/* Yo-yo tagging effect: Prevents several hits at (almost) the same time */
+
+global func FxYoyoDamageTagStart(object target, int effectNumber, int temporary, object yoyo) {
+	EffectVar(0, target, effectNumber) = yoyo;
+}
+
+global func FxYoyoDamageTagEffect(string newEffectName, object target, int effectNumber, int newEffectNumber, var1, var2, var3, var4) {
+	if(newEffectName == "YoyoDamageTag") {
+		if(var1 == EffectVar(0, target, effectNumber)) {
+			return FX_Effect_Deny;
+		}
+	}
+	return FX_OK;
 }
