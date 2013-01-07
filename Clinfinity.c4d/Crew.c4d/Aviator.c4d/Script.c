@@ -326,8 +326,8 @@ protected func ControlThrow() {
 			}
 			if(ReadyToWield()) {
 				WieldMeleeWeapon();
+				return 1;
 			}
-			return 1;
 		}
 		if(YOYO->IsYoyoThrownBy(this)) {
 			return 1;
