@@ -49,9 +49,6 @@ global func ThrowProjectile(object obj) {
 
 	if (!x_dir) return;
 
-	// Position anpassen
-	obj->SetPosition(GetX() + x_dir / 5, GetY() - 2 + GetYDir() / 2);
-
 	// Geschwindigkeit setzen
 	obj->SetXDir(x_dir);
 	obj->SetYDir(y_dir);
