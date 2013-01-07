@@ -4,10 +4,11 @@
 #appendto XBOW
 
 public func Fire(bool fAuto, object pClonk) {
-	_inherited(...);
+	var result = _inherited(...);
 	if(!Contents()) {
 		FadeOut();
 	}
+	return result;
 }
 
 public func OnFadeFinish() {
