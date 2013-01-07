@@ -52,6 +52,10 @@ global func FadeIn(int targetColourModulation) {
 global func FadeOut(int initialColourModulation) {
 	if(initialColourModulation == 0) {
 		initialColourModulation = GetClrModulation();
+		// Workaround: GetClrModulation() may return 0 - this is the same as full visibility, but we want RGB(255, 255, 255) in that case.
+		if(initialColourModulation == 0) {
+			initialColourModulation = RGB(255, 255, 255);
+		}
 	}
 	return FadeFromTo(initialColourModulation, SetRGBaValue(initialColourModulation, 255, 0));
 }
