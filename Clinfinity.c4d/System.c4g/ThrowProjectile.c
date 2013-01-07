@@ -49,6 +49,11 @@ global func ThrowProjectile(object obj) {
 
 	if (!x_dir) return;
 
+	// When throwing in direction of travel: Prevent hitting yourself
+	if(GetXDir() * x_dir > 0) {
+		obj->SetPosition(GetX() + x_dir / 5, obj->GetY());
+	}
+
 	// Geschwindigkeit setzen
 	obj->SetXDir(x_dir);
 	obj->SetYDir(y_dir);
