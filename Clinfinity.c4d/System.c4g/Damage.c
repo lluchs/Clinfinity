@@ -71,5 +71,7 @@ global func OnDamage(int amount, object weapon) {
 	} else {
 		DoDamage(amount);
 	}
-	DIND->IndicateDamage(this, amount);
+	if(amount > 0) {
+		DIND->IndicateDamage(this, amount);
+	}
 }
