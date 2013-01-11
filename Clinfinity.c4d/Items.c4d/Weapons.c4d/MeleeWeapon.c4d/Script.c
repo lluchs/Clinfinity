@@ -37,6 +37,53 @@ public func MeleeHitObject(object target, int damage) {
 }
 
 
+/*	Section: Knock back
+	"Knock back" pushes targets away from a weapon, or the user of the weapon, etc.
+	It is ensured that they do not get stuck by being moved.
+	If targets are knocked back on the ground, their kneeling up animation is set to disable them for a very short period of time. */
+
+/*	Function: KnockBack
+	Knock back living beings in a rectangular area vertically centered in front of the user of the weapon.
+
+	Parameters:
+	rectangleWidth	- Width of the area.
+	rectangleHeight	- Height of the area.
+	distance		- Distance to knock the target back.
+	awayFromThis	- [optional] Knock target back from this object instead of away from the weapon's position. */
+public func KnockBack(int rectangleWidth, int rectangleHeight, int distance, object awayFromThis) {
+	for(var target in FindTargets(rectangleWidth, rectangleHeight)) {
+		if(PathFree(Contained()->GetX(), Contained()->GetY(), target->GetX(), target->GetY())) {
+			KnockBackObject(target, distance, awayFromThis);
+		}
+	}
+}
+
+/*	Function: KnockBackObject
+	Knock back a single object.
+
+	Parameters:
+	target			- Object to knock back.
+	distance		- Distance to knock the target back.
+	awayFromThis	- [optional] Knock target back from this object instead of away from the weapon's position. */
+public func KnockBackObject(object target, int distance, object awayFromThis) {
+	if(awayFromThis == 0) awayFromThis = this;
+	var away = -1;
+	if(target->GetX() > awayFromThis->GetX()) away = 1;
+
+	if(target->GetProcedure() != "FLIGHT") {
+		target->SetAction("KneelUp");
+	}
+	// Move target, but don't make it stuck in solid materials.
+	for(var i = 0; i < distance; i++) {
+		target->SetPosition(target->GetX() + away, target->GetY());
+		if(target->Stuck()) {
+			target->SetPosition(target->GetX() - away, target->GetY());
+			break;
+		}
+	}
+}
+
+
 /*	Section: Throw back
 	"Throw back" is worse than a simple knockback: Instead of just pushing targets away from the user of the weapon, this sends them *flying* away.
 	Usually, targets get thrown further away than knocked back, which poses an additional threat, e.g. to fall off a cliff.
@@ -49,11 +96,12 @@ public func MeleeHitObject(object target, int damage) {
 	rectangleWidth	- Width of the area.
 	rectangleHeight	- Height of the area.
 	throwSpeed		- Flying speed for hit objects
-	tumble			- Determines whether hit objects just fly or also tumble while flying. */
-public func ThrowBack(int rectangleWidth, int rectangleHeight, int throwSpeed, bool tumble) {
+	tumble			- Determines whether hit objects just fly or also tumble while flying.
+	awayFromThis	- [optional] Throw target away from this object instead of away from the weapon's position. */
+public func ThrowBack(int rectangleWidth, int rectangleHeight, int throwSpeed, bool tumble, object awayFromThis) {
 	for(var target in FindTargets(rectangleWidth, rectangleHeight)) {
 		if(PathFree(Contained()->GetX(), Contained()->GetY(), target->GetX(), target->GetY())) {
-			ThrowBackObject(target, throwSpeed, tumble);
+			ThrowBackObject(target, throwSpeed, tumble, awayFromThis);
 		}
 	}
 }
@@ -62,12 +110,14 @@ public func ThrowBack(int rectangleWidth, int rectangleHeight, int throwSpeed, b
 	Throw back a single object.
 
 	Parameters:
-	target		- Object to throw back.
-	throwSpeed	- Flying speed for the target.
-	tumble		- Determines whether the target just flies or also tumbles while flying. */
-public func ThrowBackObject(object target, int throwSpeed, bool tumble) {
+	target			- Object to throw back.
+	throwSpeed		- Flying speed for the target.
+	tumble			- Determines whether the target just flies or also tumbles while flying.
+	awayFromThis	- [optional] Throw target away from this object instead of away from the weapon's position. */
+public func ThrowBackObject(object target, int throwSpeed, bool tumble, object awayFromThis) {
+	if(awayFromThis == 0) awayFromThis = this;
 	var away = -1;
-	if(target->GetX() > GetX()) away = 1;
+	if(target->GetX() > awayFromThis->GetX()) away = 1;
 	Fling(target, away * throwSpeed, -throwSpeed);
 	if(!tumble) {
 		target->SetAction("Jump");

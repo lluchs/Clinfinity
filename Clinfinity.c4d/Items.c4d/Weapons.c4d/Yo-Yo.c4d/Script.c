@@ -27,6 +27,8 @@
 
 #strict 2
 
+#include MWEP
+
 /*	Constants: Internal yo-yo states
 	YOYO_StateInactive	- Denotes the inactive state without special behaviour.
 	YOYO_StateThrown	- Denotes the state: Yo-yo has been thrown.
@@ -165,22 +167,11 @@ protected func QueryStrikeBlow(object target) {
 			if(AddEffect("YoyoDamageTag", target, 101, 5, target, 0, this) != 0) {
 				target->InflictDamage(YOYO_Damage + bonusDamage, this);
 			}
-			var awayFromThrower = -1;
-			if(GetX() > thrower->GetX()) awayFromThrower = 1;
 
-			if(target->GetProcedure() != "FLIGHT") {
-				target->SetAction("KneelUp");
-				// Move target away from thrower, but don't make it stuck in solid materials.
-				for(var i = 0; i < YOYO_MaxHitMoveDistance; i++) {
-					target->SetPosition(target->GetX() + awayFromThrower, target->GetY());
-					if(target->Stuck()) {
-						target->SetPosition(target->GetX() - awayFromThrower, target->GetY());
-						break;
-					}
-				}
-			}
 			if(!Random(YOYO_FlingTargetChance)) {
-				Fling(target, awayFromThrower * YOYO_FlingSpeed, -YOYO_FlingSpeed);
+				ThrowBackObject(target, YOYO_FlingSpeed, true, thrower);
+			} else {
+				KnockBackObject(target, YOYO_MaxHitMoveDistance, thrower);
 			}
 
 			if(currentState == YOYO_StateThrown)
