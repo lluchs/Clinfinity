@@ -119,3 +119,20 @@ private func DeflectObjects() {
 		}
 	}
 }
+
+public func GetResistance(int amount, object weapon) {
+	// You can parry other swords if you wield yours early enough
+	if(Contained() && Contained()->~IsWielding(this)) {
+		if(weapon->GetID() == SWOR) {
+			if((Contained()->GetDir() == DIR_Left && weapon->GetX() < Contained()->GetX()) ||
+				(Contained()->GetDir() == DIR_Right && weapon->GetX() > Contained()->GetX())) {
+					var handX, handY, swordAngle;
+					Contained()->~GetCurrentWieldData(handX, handY, swordAngle);
+					if(Abs(swordAngle) >= (GetStartAngle(DIR_Right) + GetCentralAngle(DIR_Right) / 2)) {
+						return 100;
+					}
+			}
+		}
+	}
+	return 0;
+}
