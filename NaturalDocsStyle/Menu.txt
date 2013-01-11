@@ -60,9 +60,11 @@ Group: Items.c4d  {
 
    File: Grenade steam  (Clinfinity.c4d\Items.c4d\Weapons.c4d\Bomb.c4d\BombSteam.c4d\Script.c)
    File: Hats  (Clinfinity.c4d\Items.c4d\Hats.c4d\Script.c)
+   File: MeleeWeapon  (Clinfinity.c4d\Items.c4d\Weapons.c4d\MeleeWeapon.c4d\Script.c)
    File: Musket  (Clinfinity.c4d\Items.c4d\Weapons.c4d\Musket.c4d\Script.c)
    File: Steam grenade  (Clinfinity.c4d\Items.c4d\Weapons.c4d\Bomb.c4d\Script.c)
    File: Steam grenade launcher  (Clinfinity.c4d\Items.c4d\Weapons.c4d\Steamlauncher.c4d\Script.c)
+   File: Steam sword  (Clinfinity.c4d\Items.c4d\Weapons.c4d\Steamsword.c4d\Script.c)
    File: Yo-yo  (Clinfinity.c4d\Items.c4d\Weapons.c4d\Yo-Yo.c4d\Script.c)
    }  # Group: Items.c4d
 
@@ -78,20 +80,26 @@ Group: System.c4g  {
    File: Arrays  (Clinfinity.c4d\System.c4g\Arrays.c)
    File: Attach.c  (Clinfinity.c4d\System.c4g\Attach.c)
    File: ContainerControl.c  (Clinfinity.c4d\System.c4g\ContainerControl.c)
+   File: Damage.c  (Clinfinity.c4d\System.c4g\Damage.c)
    File: DrawResource.c  (Clinfinity.c4d\System.c4g\DrawResource.c)
    File: Ease.c  (Clinfinity.c4d\System.c4g\Ease.c)
    File: Events.c  (Clinfinity.c4d\System.c4g\Events.c)
    File: Fade.c  (Clinfinity.c4d\System.c4g\Fade.c)
    File: Find_Procedure.c  (Clinfinity.c4d\System.c4g\Find_Procedure.c)
+   File: FinishedOff.c  (Clinfinity.c4d\System.c4g\FinishedOff.c)
    File: GetPlayersByTeam  (Clinfinity.c4d\System.c4g\GetPlayersByTeam.c)
    File: Isle Respawn  (Clinfinity.c4d\System.c4g\IsleRespawn.c)
    File: Material.c  (Clinfinity.c4d\System.c4g\Material.c)
    File: MatSys.c  (Clinfinity.c4d\System.c4g\MatSys.c)
+   File: MeleeWeaponsAbility.c  (Clinfinity.c4d\System.c4g\MeleeWeaponsAbility.c)
    File: Message.c  (Clinfinity.c4d\System.c4g\Message.c)
+   File: PrivateGravity.c  (Clinfinity.c4d\System.c4g\PrivateGravity.c)
    File: QueryCatchBlow.c  (Clinfinity.c4d\System.c4g\QueryCatchBlow.c)
    File: Respawntime.c  (Clinfinity.c4d\System.c4g\Respawntime.c)
+   File: SimulateFlight.c  (Clinfinity.c4d\System.c4g\SimulateFlight.c)
    File: SkyColourModulation.c  (Clinfinity.c4d\System.c4g\SkyColourModulation.c)
    File: String.c  (Clinfinity.c4d\System.c4g\String.c)
+   File: ThrowProjectile.c  (Clinfinity.c4d\System.c4g\ThrowProjectile.c)
    }  # Group: System.c4g
 
 Group: Vehicles.c4d  {
