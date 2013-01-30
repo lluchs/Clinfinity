@@ -21,6 +21,8 @@ protected func Initialize() {
 	UpdateDisplay();
 	// position the display correctly
 	SetObjDrawTransform(1000, 0, -25000, 0, 1000, 34000, this, 1);
+	
+	return inherited(...);
 }
 
 private func NumberOfFlints() {
