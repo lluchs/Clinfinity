@@ -51,6 +51,7 @@ Clonk Infinity uses sounds from the [Freesound project](http://www.freesound.org
 - Steam1-3.wav consists of pitched variants from 41_STEAM.wav by [ReWired] (http://freesound.org/people/ReWired/) 
 - CriticalHit1-3.wav consists of pitched variants from Anime Sword SFX.wav by [alkanetexe] (http://freesound.org/people/alkanetexe/)
 - FallingStars1-3.wav consists of pitched and reversed variants from FireworkCloseCrack.mp3 by [HerbertBoland] (http://freesound.org/people/HerbertBoland/)
+- SwordvsSword1-2.wav are sections of electric_sparks.mp3 by [Connum] (http://freesound.org/people/Connum/)
 	
 
 Additional objects
