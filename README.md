@@ -1,19 +1,18 @@
 Clonk Infinity
 ==============
-
  - [Project Page](http://clonkforge.net/pr.php?pr=1454)
  - [Documentation](http://lluchs.github.com/Clinfinity/Documentation/)
 
 The team
-========
-- Nachtfalter - Teamleader, Graphics, Script
+------
+- Nachtfalter - Teamleader, Graphics, Sound, Script
 - Nachtschatten - Teamleader, Script
 - Luchs - Teamleader, Script
 
 Attributions
 ============
 
-Thanks to all testers
+Thanks to all testers!
 ---------------------
 Sir_Jones, Pitri, ManuN, Sven2, B_E, Zapper, jok, Mave, Apfelclonk,
 Pflasterface, JCaesar, Zargul, Kingster

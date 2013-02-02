@@ -1,16 +1,24 @@
+Clonk
+Saboteur
 Passagier
 Gärtner
 Lagerarbeiter
-Wetterbeobachter
-Maschinist
+Hutmacher
 Geologe
+Meteorologe
+Maschinist
 Techniker
 Stewardess
 Fluglotse
-Co Pilot
+Copilot
 Pilot
 Flottenoffizier
 Geschwaderkommandant
+Jules Verne
+Dr. Jekyll
+Mr. Hyde
 Peter
-Einstein
+Zweistein
 Haxton Sale
+Baron Münchhausen
+Knufflwipf

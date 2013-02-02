@@ -2,10 +2,10 @@
 
 #strict 2
 
-#include STBO
-#include NLBO
-#include L_DC
-#include L_SS
+#include STBO	//StructureBaseObject
+#include NLBO	//Nightlight
+#include L_DC	//Damagecontrol
+#include L_SS	//StorageSystem
 
 static const SAWM_RADIUS = 350; // Radius in px
 static const SAWM_DELAY = 300;
@@ -37,10 +37,12 @@ protected func ControlDig(object clonk) {
 		chopping = false;
 		ClearScheduleCall(this, "Chop");
 		Sound("Command");
+		Message("$TxtOff$", this);
 	} else {
 		chopping = true;
 		StartChopping();
 		Sound("Ding");
+		Message("$TxtOn$", this);
 	}
 }
 

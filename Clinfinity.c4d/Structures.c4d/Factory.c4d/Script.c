@@ -2,8 +2,9 @@
 
 #strict 2
 
-#include STBO
-#include L_DC
+#include STBO	//StructureBaseObject
+#include L_DC	//Damagecontrol
+#include NLBO	//Nightlight
 
 static const FTRY_ProductionActions = 3;
 

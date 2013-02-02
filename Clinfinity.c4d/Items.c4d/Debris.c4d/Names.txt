@@ -1,2 +1,2 @@
 DE:Trümmerteil
-US:Fragment
+US:Debris

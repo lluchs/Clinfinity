@@ -37,7 +37,7 @@ protected func Destruction() {
 
 protected func OnAlarm(object clock, int time) {
 	if(IsNightfall()) {
-		ScheduleCall(this, "SetDayNightGraphics", RandomX(TIME_TwilightLength * 3 / 4 / TIME_SecondsPerFrame, TIME_TwilightLength / TIME_SecondsPerFrame), 0, "Night");
+		ScheduleCall(this, "SetDayNightGraphics", RandomX(TIME_TwilightLength * 1 / 4 / TIME_SecondsPerFrame, TIME_TwilightLength / TIME_SecondsPerFrame), 0, "Night");
 	} else {
 		ScheduleCall(this, "SetDayNightGraphics", RandomX(1, TIME_TwilightLength / 4 / TIME_SecondsPerFrame), 0, "");
 	}

@@ -1,0 +1,2 @@
+TxtKnowledgeSFLN={{SFLN}} Description needed
+TxtKnowledgeEFLN={{EFLN}} Description needed

@@ -11,7 +11,7 @@ func Initialize() {
 protected func Activate(){
   var i = Random(5);
   while(i--) {
-  	CastObject([METL, PSTC][Random(2)]);
+  	CastObject([METL] [Random(2)]);
   }
   Sound("Connect");
   RemoveObject();

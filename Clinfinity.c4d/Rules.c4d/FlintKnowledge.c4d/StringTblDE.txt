@@ -1,0 +1,2 @@
+TxtKnowledgeSFLN={{SFLN}} Superflints sind nun herstellbar!
+TxtKnowledgeEFLN={{EFLN}} Teraflints sind nun herstellbar. Auf zum Gefecht!

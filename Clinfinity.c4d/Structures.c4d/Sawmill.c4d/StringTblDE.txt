@@ -1,1 +1,3 @@
-TxtShowSearchRadius=Suchradius für Holz anzeigen
+TxtShowSearchRadius=Suchradius für Bäume
+TxtOn=An!
+TxtOff=Aus!

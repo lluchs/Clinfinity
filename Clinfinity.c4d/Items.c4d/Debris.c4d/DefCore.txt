@@ -1,20 +1,20 @@
 [DefCore]
-id=ORE1
-Name=Trümmerteil
+id=DEBR
+Name=Debris
 Version=4,9,5
-Category=18960
+Category=C4D_Object
 MaxUserSelect=10
 Width=16
 Height=16
 Offset=-8,-8
 Value=5
 Mass=35
-Components=METL=1;PSTC=2
-Picture=0,16,64,64
+Components=METL=1;WOOD=1;
+Picture=0,0,16,16
 Vertices=2
 VertexX=
 VertexY=1
-VertexFriction=20
+VertexFriction=40
 Collectible=1
 Rotate=1
  
