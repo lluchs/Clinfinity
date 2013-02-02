@@ -3,7 +3,7 @@
 #include GOAL
 #include RULE
 
-local winMargin, winTotalKills;
+local winMargin;
 local playerScores, totalKills;
 local isFulfilled, winner, winningScore;
 
@@ -19,7 +19,10 @@ protected func Initialize() {
 
 private func Initialized(int ruleTypeCount) {
 	winMargin = ruleTypeCount;
-	winTotalKills = ruleTypeCount * 4;
+}
+
+public func GetWinTotalKills() {
+	return GetPlayerCount() * winMargin * 4;
 }
 
 public func IsFulfilled() {
@@ -70,7 +73,7 @@ public func OnClonkDeath(object oldClonk, int killingPlayerNumber) {
 	if((bestScore - secondBestScore) >= winMargin) {
 		winner = bestPlayer;
 		isFulfilled = true;
-	} else if(totalKills >= winTotalKills) {
+	} else if(totalKills >= GetWinTotalKills()) {
 		winningScore = bestScore;
 		isFulfilled = true;
 	}
@@ -88,7 +91,7 @@ private func InitializeScoreboard() {
 }
 
 private func UpdateScoreboard(int bestScore, int secondBestScore) {
-	SetScoreboardData(SBRD_Caption, SBRD_Caption, Format("KILLS: %d (%d to go)", totalKills, Max(winTotalKills - totalKills, 0)));
+	SetScoreboardData(SBRD_Caption, SBRD_Caption, Format("KILLS: %d (%d to go)", totalKills, Max(GetWinTotalKills() - totalKills, 0)));
 	for(var count = GetPlayerCount(), i = 0; i < count; i++) {
 		var p = GetPlayerByIndex(i), name = GetPlayerName(p), pid = GetPlayerID(p);
 		var score = HashGet(playerScores, pid), needed;
