@@ -6,7 +6,7 @@
 	A structure using alternate graphics for day and night must follow the following rules
 	- Provide GraphicsNight.png
 	- Inherit from NLBO
-	- Call _inherited() in the structure's Initialize() and Destruction() functions
+	- Call inherited() in the structure's Initialize() and Destruction() functions
 
 	The following events are then handled automatically
 	- Switching to the according graphics on daybreak and nightfall.
