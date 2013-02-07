@@ -17,7 +17,7 @@ protected func Initialize() {
 		var y = GetY() + RandomX(-GetDefHeight(GetID()) / 4, GetDefHeight(GetID()) / 4) + GetDefHeight(DRNE) / 2;
 		DRNE->CreateDrone(x, y, GetOwner(), this);
 	}
-	return _inherited(...);
+	return inherited(...);
 }
 
 protected func Collection2(object collected) {
