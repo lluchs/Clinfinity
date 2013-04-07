@@ -21,6 +21,14 @@ private func Initialized(int ruleTypeCount) {
 	winMargin = ruleTypeCount;
 }
 
+public func GetTotalKills() {
+	return totalKills;
+}
+
+public func GetWinMargin() {
+	return winMargin;
+}
+
 public func GetWinTotalKills() {
 	return GetPlayerCount() * winMargin * 4;
 }
@@ -79,6 +87,8 @@ public func OnClonkDeath(object oldClonk, int killingPlayerNumber) {
 	}
 
 	UpdateScoreboard(bestScore, secondBestScore);
+	// Emit an event for external handling.
+	Emit("ScoreUpdate", bestScore, secondBestScore);
 }
 
 /* Scoreboard */

@@ -3,7 +3,10 @@
 
 protected func Initialize() {
 	// Heart
-	CreateObject(HART, 270, 710, NO_OWNER);
+	var heart = CreateObject(HART, 270, 710, NO_OWNER);
+	// Only one goal will remain the next frame.
+	for(var kills in FindObjects(Find_ID(KILS)))
+		kills->AddEventListener(heart, "ScoreUpdate");
 
 	// Foreground
 	CreateObject(GRD1, 400, 805, NO_OWNER);

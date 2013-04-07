@@ -3,7 +3,18 @@
 #strict 2
 
 func Initialize() {
-	ScheduleCall(this, "OpenHeart", RandomX(50, 100));
+}
+
+/*	Event Handler: ScoreUpdate
+	Handles events from the KILS goal.
+
+	Will open the heart if the round seems to end soon. */
+public func ScoreUpdate(object kills, int bestScore, int secondBestScore) {
+	if(GetAction() == "Idle" && (
+			bestScore - secondBestScore >= (kills->GetWinMargin() - 1) ||
+			kills->GetTotalKills() >= (kills->GetWinTotalKills() - 5))) {
+		OpenHeart();
+	}
 }
 
 protected func OpenHeart() {
